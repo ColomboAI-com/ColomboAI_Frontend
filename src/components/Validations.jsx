@@ -1,7 +1,6 @@
 import { isContainRestrictedKeywords } from "@/utlils/commonFunctions"
 import { MIN_USERNAME_LENGTH } from "@/utlils/constant"
 
-
 export function UsernameValidation({ value }) {
   return (
     <div className="text-error">

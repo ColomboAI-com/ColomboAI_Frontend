@@ -28,7 +28,7 @@ export const getShortUsername = (username) => {
 
 export const getImageSource = (image) => {
   if (!image) return '/assets/imgs/default_profile.svg'
-  if (typeof image == "string" && (image.startsWith("http") || image.startsWith("https")))
+  if (typeof image === "string" && (image.startsWith("http") || image.startsWith("https")))
     return image
   else if (image instanceof Blob) {
     const blobUrl = URL.createObjectURL(image)

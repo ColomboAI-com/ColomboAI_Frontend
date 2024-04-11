@@ -27,3 +27,9 @@ export const isValidEmail = (email) => {
     if (!EMAIL_REGEX.test(email)) return false
     return true
 }
+
+export const isValidOTP = (otp) => {
+    if (!otp) return false
+    if (!otp.length < 6) return false
+    return true
+}

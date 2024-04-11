@@ -1,19 +1,19 @@
 import cogoToast from "cogo-toast"
 
 export const MessageBox = (type, message) => {
-  if (type == 'success') {
+  if (type === 'success') {
     cogoToast.success(message, { hideAfter: 3, position: 'top-right' })
     return
   }
-  if (type == 'error') {
+  if (type === 'error') {
     cogoToast.error(message, { hideAfter: 3, position: 'top-right' })
     return
   }
-  if (type == 'warn') {
+  if (type === 'warn') {
     cogoToast.warn(message, { hideAfter: 3, position: 'top-right' })
     return
   }
-  if (type == 'info') {
+  if (type === 'info') {
     cogoToast.info(message, { hideAfter: 3, position: 'top-right' })
     return
   }

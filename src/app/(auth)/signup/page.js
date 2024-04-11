@@ -1,6 +1,5 @@
 'use client'
 import SocialAuthentication from '@/components/auth/SocialAuthentication'
-import Link from 'next/link'
 import { useContext } from 'react'
 import { useRouter } from 'next/navigation'
 import Button from '@/elements/Button'
@@ -8,6 +7,8 @@ import { EmailValidation, NameValidation, PhoneValidation, UsernameValidation } 
 import { AuthContext } from '@/context/AuthContext'
 import { isValidEmail, isValidName, isValidPhone, isValidUserName } from '@/utlils/validate'
 import { setSessionStorage } from '@/utlils/utils'
+import AgreeTermAndConditions from '@/components/auth/AgreeTermAndConditions'
+import RedirectLink from '@/components/auth/RedirectLink'
 
 const SignUp = () => {
 
@@ -16,23 +17,24 @@ const SignUp = () => {
 
   const onSignUp = async () => {
     if (!isValidUserName(inputs.username)) {
-      setValidations({ ...validations, username: true })
+      setValidations(prev => ({ ...prev, username: true }))
       return
     }
     if (!isValidName(inputs.name)) {
-      setValidations({ ...validations, name: true })
+      setValidations(prev => ({ ...prev, name: true }))
       return
     }
     if (inputs.phone && !isValidPhone(inputs.phone)) {
-      setValidations({ ...validations, phone: true })
+      setValidations(prev => ({ ...prev, phone: true }))
       return
     }
     if (!isValidEmail(inputs.email)) {
-      setValidations({ ...validations, email: true })
+      setValidations(prev => ({ ...prev, email: true }))
       return
     }
-    const res = await getOTP('/otp')
+    const res = await getOTP()
     if (res) {
+      setSessionStorage('otp-page', 'SIGNUP')
       setSessionStorage('sign-up-details', JSON.stringify(inputs))
       router.push('/otp')
     }
@@ -43,7 +45,7 @@ const SignUp = () => {
       <div className='h-full flex flex-col justify-center'>
         <div>
           <div className='border- w-[50%] mx-auto my-2'>
-            <img src="/images/auth/welcome_colomboai.png" alt="welcome_to_colomboai" className="object-cover" />
+            <img src="/images/auth/welcome_colomboai.png" className="object-cover" alt="welcome_to_colomboai" />
           </div>
           <div className="w-[60%] mx-auto">
             <input
@@ -96,27 +98,15 @@ const SignUp = () => {
               onClick={onSignUp}
             />
           </div>
-          <div className="my-7 text-center">
-            <p className="text-lg text-brandprimary">
-              Or Signup with
-            </p>
-          </div>
           <SocialAuthentication />
-          <div className="my-3 text-center">
-            <p className="text-lg">
-              Already have an account?
-              <Link href='/login' className='text-brandprimary focus:text-brandprimary'>
-                &nbsp;Login
-              </Link>
-            </p>
-          </div>
+          <RedirectLink
+            title={'Already have an account?'}
+            href='/login'
+            linkName={'Login'}
+          />
         </div>
       </div>
-      <div className="my-2 text-center">
-        <p className="text-lg text-[#A7A7A7]">
-          By using our service you are agreeing <br /> to our Term and Conditions
-        </p>
-      </div>
+      <AgreeTermAndConditions />
     </div>
   )
 }

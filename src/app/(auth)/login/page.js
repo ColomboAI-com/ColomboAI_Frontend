@@ -8,7 +8,7 @@ const Login = () => {
       <div className='h-full flex flex-col justify-center'>
         <div>
           <div className='border- w-[50%] mx-auto my-2'>
-            <img src="/images/auth/welcome_back_colomboai.png" alt="welcome_back_to_colomboai" className="object-cover" />
+            <img src="/images/auth/welcome_back_colomboai.png" className="object-cover" alt="welcome_back_to_colomboai"/>
           </div>
           <form className="w-[60%] mt-8 mx-auto">
             <input
