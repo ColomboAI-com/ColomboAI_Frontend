@@ -1,14 +1,14 @@
 'use client'
-import SocialAuthentication from '@/components/auth/SocialAuthentication'
-import { useContext } from 'react'
-import { useRouter } from 'next/navigation'
-import Button from '@/elements/Button'
-import { EmailValidation, NameValidation, PhoneValidation, UsernameValidation } from '@/components/Validations'
-import { AuthContext } from '@/context/AuthContext'
-import { isValidEmail, isValidName, isValidPhone, isValidUserName } from '@/utlils/validate'
-import { setSessionStorage } from '@/utlils/utils'
-import AgreeTermAndConditions from '@/components/auth/AgreeTermAndConditions'
-import RedirectLink from '@/components/auth/RedirectLink'
+import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
+import RedirectLink from "@/components/auth/RedirectLink"
+import SocialAuthentication from "@/components/auth/SocialAuthentication"
+import { EmailValidation, NameValidation, PhoneValidation, UsernameValidation } from "@/components/Validations"
+import { AuthContext } from "@/context/AuthContext"
+import Button from "@/elements/Button"
+import { setSessionStorage } from "@/utlils/utils"
+import { isValidEmail, isValidName, isValidPhone, isValidUserName } from "@/utlils/validate"
+import { useRouter } from "next/router"
+import { useContext } from "react"
 
 const SignUp = () => {
 
@@ -35,7 +35,7 @@ const SignUp = () => {
     const res = await getOTP()
     if (res) {
       setSessionStorage('otp-page', 'SIGNUP')
-      setSessionStorage('sign-up-details', JSON.stringify(inputs))
+      setSessionStorage('auth-details', JSON.stringify(inputs))
       router.push('/otp')
     }
   }
@@ -101,8 +101,8 @@ const SignUp = () => {
           <SocialAuthentication />
           <RedirectLink
             title={'Already have an account?'}
-            href='/login'
-            linkName={'Login'}
+            href={'/login'}
+            linkName={'Sign in'}
           />
         </div>
       </div>

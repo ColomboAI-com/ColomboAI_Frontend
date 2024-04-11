@@ -7,16 +7,16 @@ import Button from "@/elements/Button"
 import { setUserCookies } from "@/utlils/commonFunctions"
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
 import { isValidOTP } from "@/utlils/validate"
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
 
 const OTP = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loading, signUp } = useContext(AuthContext)
+  const { inputs, setInputs, validations, setValidations, handleInputs, loading, signUp, signIn } = useContext(AuthContext)
   const router = useRouter()
 
   useEffect(() => {
-    const userDetails = getSessionStorage('sign-up-details')
+    const userDetails = getSessionStorage('auth-details')
     if (userDetails)
       setInputs(prev => ({ ...prev, ...JSON.parse(userDetails) }))
     return () => clearSessionStorage()

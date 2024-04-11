@@ -1,53 +1,69 @@
-/* eslint-disable @next/next/no-img-element */
-import SocialAuthentication from '@/components/auth/SocialAuthentication';
-import Link from 'next/link';
+'use client'
+import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
+import RedirectLink from "@/components/auth/RedirectLink"
+import SocialAuthentication from "@/components/auth/SocialAuthentication"
+import { EmailValidation } from "@/components/Validations"
+import { AuthContext } from "@/context/AuthContext"
+import Button from "@/elements/Button"
+import { setSessionStorage } from "@/utlils/utils"
+import { isValidEmail } from "@/utlils/validate"
+import { useRouter } from "next/router"
+import { useContext } from "react"
 
 const Login = () => {
+
+  const { inputs, validations, setValidations, handleInputs, loading, getOTP } = useContext(AuthContext)
+  const router = useRouter()
+
+  const onSignIn = async () => {
+    if (!isValidEmail(inputs.email)) {
+      setValidations(prev => ({ ...prev, email: true }))
+      return
+    }
+    const res = await getOTP()
+    if (res) {
+      setSessionStorage('otp-page', 'SIGNIN')
+      setSessionStorage('auth-details', JSON.stringify(inputs))
+      router.push('/otp')
+    }
+  }
+
   return (
     <div className='h-full flex flex-col justify-around'>
       <div className='h-full flex flex-col justify-center'>
         <div>
           <div className='border- w-[50%] mx-auto my-2'>
-            <img src="/images/auth/welcome_back_colomboai.png" className="object-cover" alt="welcome_back_to_colomboai"/>
+            <img src="/images/auth/welcome_back_colomboai.png" className="object-cover" alt="welcome_back_to_colomboai" />
           </div>
-          <form className="w-[60%] mt-8 mx-auto">
+          <div className="w-[60%] mt-8 mx-auto">
             <input
-              type="email"
-              name="email"
-              placeholder="Enter Email"
-              className="my-2 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white  focus:outline-none "
-              required
+              type="text"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              placeholder="Email address"
+              autoComplete="off"
+              name={"email"}
+              value={inputs.email}
+              onChange={handleInputs}
             />
-            <button
-              type="submit"
-              className="mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in "
-            >
-              Get OTP
-            </button>
-          </form>
-          <div className="my-7 text-center">
-            <p className="text-lg text-brandprimary">
-              Or Login with
-            </p>
+            {validations.email && <EmailValidation value={inputs.email} />}
+            <Button
+              title={'Sign in'}
+              className={'mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              loading={loading}
+              onClick={onSignIn}
+            />
           </div>
           <SocialAuthentication />
-          <div className="my-12 text-center">
-            <p className="text-lg ">
-              Don’t have an account?
-              <Link href='/signup' className='text-brandprimary focus:text-brandprimary'>
-                &nbsp;Signup
-              </Link>
-            </p>
-          </div>
+          <RedirectLink
+            title={'Don’t have an account?'}
+            href={'/signup'}
+            linkName={'Sign up'}
+          />
         </div>
       </div>
-      <div className="my-2 text-center">
-        <p className="text-lg text-[#A7A7A7]">
-          By using our service you are agreeing <br /> to our Term and Conditions
-        </p>
-      </div>
+      <AgreeTermAndConditions />
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login
