@@ -8,25 +8,33 @@ import { MessageBox } from "@/components/MessageBox"
 
 export const AuthContext = createContext()
 
+const defaultInputs = {
+  username: '',
+  name: '',
+  email: '',
+  phone: '',
+  otp: ''
+}
+
+const defaultValidations = {
+  username: false,
+  name: false,
+  email: false,
+  phone: false,
+  otp: false
+}
+
+const defaultLoadings = {
+  otp: false,
+  auth: false,
+  sso: false
+}
+
 export const AuthContextProvider = ({ children }) => {
 
-  const [inputs, setInputs] = useState({
-    username: '',
-    name: '',
-    email: '',
-    phone: '',
-    otp: ''
-  })
-  const [validations, setValidations] = useState({
-    username: false,
-    name: false,
-    email: false,
-    phone: false,
-    otp: false
-  })
-  const [loadingGetOTP, setLoadingGetOTP] = useState(false)
-  const [loadingAuth, setLoadingAuth] = useState(false)
-  const [loadingSSO, setLoadingSSO] = useState(false)
+  const [inputs, setInputs] = useState(defaultInputs)
+  const [validations, setValidations] = useState(defaultValidations)
+  const [loadings, setLoadings] = useState(defaultLoadings)
 
   const handleInputs = (event) => {
     const { name, value } = event.target
@@ -39,7 +47,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const getOTP = async (action, type = 'email') => {
     try {
-      setLoadingGetOTP(true)
+      setLoadings(prev => ({ ...prev, otp: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/get-otp`,
         {
           type,
@@ -53,13 +61,13 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoadingGetOTP(false)
+      setLoadings(prev => ({ ...prev, otp: false }))
     }
   }
 
   const signUp = async (type = 'email') => {
     try {
-      setLoadingAuth(true)
+      setLoadings(prev => ({ ...prev, auth: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-up`,
         {
           type,
@@ -75,13 +83,13 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoadingAuth(false)
+      setLoadings(prev => ({ ...prev, auth: false }))
     }
   }
 
   const signIn = async (type = 'email') => {
     try {
-      setLoadingAuth(true)
+      setLoadings(prev => ({ ...prev, auth: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-in`,
         {
           type,
@@ -94,13 +102,13 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoadingAuth(false)
+      setLoadings(prev => ({ ...prev, auth: false }))
     }
   }
 
   const ssoAuthentication = async ({ provider, token, userid }) => {
     try {
-      setLoadingSSO(true)
+      setLoadings(prev => ({ ...prev, sso: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/ssoAuthentication`,
         { provider, token, userid }
       )
@@ -109,20 +117,25 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoadingSSO(false)
+      setLoadings(prev => ({ ...prev, sso: false }))
     }
+  }
+
+  const resetAuthValues = () => {
+    setInputs(prev => ({ ...prev, ...defaultInputs }))
+    setValidations(prev => ({ ...prev, ...defaultValidations }))
+    setLoadings(prev => ({ ...prev, ...defaultLoadings }))
   }
 
   return (
     <AuthContext.Provider value={{
       inputs, setInputs,
       validations, setValidations,
+      loadings, setLoadings,
       handleInputs,
-      loadingGetOTP, setLoadingGetOTP,
-      loadingAuth, setLoadingAuth,
-      loadingSSO, setLoadingSSO,
       getOTP, signUp, signIn,
-      ssoAuthentication
+      ssoAuthentication,
+      resetAuthValues
     }}>
       {children}
     </AuthContext.Provider>

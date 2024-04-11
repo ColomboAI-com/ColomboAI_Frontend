@@ -8,12 +8,16 @@ import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
 import { isValidEmail } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 const SignIn = () => {
 
-  const { inputs, validations, setValidations, handleInputs, loadingGetOTP, getOTP } = useContext(AuthContext)
+  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = useContext(AuthContext)
   const router = useRouter()
+
+  useEffect(() => {
+    return () => resetAuthValues()
+  }, [])
 
   const onSignIn = async () => {
     if (!isValidEmail(inputs.email)) {
@@ -49,7 +53,7 @@ const SignIn = () => {
             <Button
               title={'Sign in'}
               className={'mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in'}
-              loading={loadingGetOTP}
+              loading={loadings.otp}
               onClick={onSignIn}
             />
           </div>

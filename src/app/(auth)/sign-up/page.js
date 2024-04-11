@@ -12,8 +12,12 @@ import { useContext } from "react"
 
 const SignUp = () => {
 
-  const { inputs, validations, setValidations, handleInputs, loadingGetOTP, getOTP } = useContext(AuthContext)
+  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = useContext(AuthContext)
   const router = useRouter()
+
+  useEffect(() => {
+    return () => resetAuthValues()
+  }, [])
 
   const onSignUp = async () => {
     if (!isValidUserName(inputs.username)) {
@@ -94,7 +98,7 @@ const SignUp = () => {
             <Button
               title={'Sign up'}
               className={'mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in'}
-              loading={loadingGetOTP}
+              loading={loadings.otp}
               onClick={onSignUp}
             />
           </div>
