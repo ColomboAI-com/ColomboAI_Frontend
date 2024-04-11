@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { RESEND_TIME } from '@/utlils/constant'
 import { AuthContext } from '@/context/AuthContext'
+import { getSessionStorage } from '@/utlils/utils'
 
 export default function ResendOTP() {
 
@@ -29,7 +30,7 @@ export default function ResendOTP() {
   const onResendOTP = () => {
     setIsStart(true)
     setCount(RESEND_TIME)
-    getOTP()
+    getOTP(getSessionStorage('otp-page'))
   }
 
   return (

@@ -32,9 +32,9 @@ const SignUp = () => {
       setValidations(prev => ({ ...prev, email: true }))
       return
     }
-    const res = await getOTP()
+    const res = await getOTP('sign-up')
     if (res) {
-      setSessionStorage('otp-page', 'SIGNUP')
+      setSessionStorage('otp-page', 'sign-up')
       setSessionStorage('auth-details', JSON.stringify(inputs))
       router.push('/otp-verification')
     }
@@ -71,7 +71,7 @@ const SignUp = () => {
             />
             {validations.name && <NameValidation value={inputs.name} />}
             <input
-              type="text"
+              type="email"
               className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
               autoComplete="off"

@@ -18,7 +18,7 @@ export const AuthContextProvider = ({ children }) => {
     otp: ''
   })
   const [validations, setValidations] = useState({
-    username: '',
+    username: false,
     name: false,
     email: false,
     phone: false,
@@ -37,13 +37,15 @@ export const AuthContextProvider = ({ children }) => {
     setValidations(prev => ({ ...prev, [name]: false }))
   }
 
-  const getOTP = async () => {
+  const getOTP = async (action, type = 'email') => {
     try {
       setLoadingGetOTP(true)
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/get-otp`,
         {
-          type: 'email',
-          email: inputs.email
+          type,
+          action: action || 'sign-in',
+          email: inputs.email,
+          user_name: inputs.username
         }
       )
       MessageBox('success', res.data.message)
@@ -55,15 +57,16 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const signUp = async () => {
+  const signUp = async (type = 'email') => {
     try {
       setLoadingAuth(true)
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-up`,
         {
-          type: ' email',
-          email: inputs.email,
+          type,
+          user_name: inputs.username,
           name: inputs.name,
-          username: inputs.username,
+          email: inputs.email,
+          contact_number: inputs.phone,
           otp: inputs.otp
         }
       )
@@ -76,12 +79,12 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const signIn = async () => {
+  const signIn = async (type = 'email') => {
     try {
       setLoadingAuth(true)
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-in`,
         {
-          type: ' email',
+          type,
           email: inputs.email,
           otp: inputs.otp
         }

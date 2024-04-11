@@ -22,7 +22,7 @@ const SignIn = () => {
     }
     const res = await getOTP()
     if (res) {
-      setSessionStorage('otp-page', 'SIGNIN')
+      setSessionStorage('otp-page', 'sign-in')
       setSessionStorage('auth-details', JSON.stringify(inputs))
       router.push('/otp-verification')
     }
@@ -37,7 +37,7 @@ const SignIn = () => {
           </div>
           <div className="w-[60%] mt-8 mx-auto">
             <input
-              type="text"
+              type="email"
               className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
               autoComplete="off"

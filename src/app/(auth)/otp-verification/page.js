@@ -28,11 +28,11 @@ const OTPVerification = () => {
       return
     }
     let res
-    if (getSessionStorage('otp-page') === 'SIGNUP') res = await signUp()
+    if (getSessionStorage('otp-page') === 'sign-up') res = await signUp()
     else res = await signIn()
     if (res) {
       setUserCookies(res.data)
-      router.push('/')
+      router.replace('/')
     }
   }
 
@@ -58,6 +58,7 @@ const OTPVerification = () => {
               className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Enter OTP"
               autoComplete="off"
+              autoFocus
               maxLength={6}
               name={"otp"}
               value={inputs.otp}
