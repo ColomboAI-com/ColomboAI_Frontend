@@ -30,6 +30,6 @@ export const isValidEmail = (email) => {
 
 export const isValidOTP = (otp) => {
     if (!otp) return false
-    if (!otp.length < 6) return false
+    if (otp.length < 6) return false
     return true
 }

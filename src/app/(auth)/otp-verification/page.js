@@ -7,12 +7,12 @@ import Button from "@/elements/Button"
 import { setUserCookies } from "@/utlils/commonFunctions"
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
 import { isValidOTP } from "@/utlils/validate"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { useContext, useEffect } from "react"
 
-const OTP = () => {
+const OTPVerification = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loading, signUp, signIn } = useContext(AuthContext)
+  const { inputs, setInputs, validations, setValidations, handleInputs, loadingAuth, signUp, signIn } = useContext(AuthContext)
   const router = useRouter()
 
   useEffect(() => {
@@ -53,24 +53,22 @@ const OTP = () => {
             </p>
           </div>
           <div className="w-[60%] mt-8 mx-auto">
-            <div className="inline-flex w-full items-center">
-              <input
-                type="tel"
-                className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="Enter OTP"
-                autoComplete="off"
-                maxLength={6}
-                name={"otp"}
-                value={inputs.otp}
-                onChange={handleInputs}
-              />
-              {validations.otp && <OTPValidation value={inputs.otp} />}
-            </div>
+            <input
+              type="tel"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              placeholder="Enter OTP"
+              autoComplete="off"
+              maxLength={6}
+              name={"otp"}
+              value={inputs.otp}
+              onChange={handleInputs}
+            />
+            {validations.otp && <OTPValidation value={inputs.otp} />}
             <ResendOTP />
             <Button
               title={'Verify'}
               className="mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in "
-              loading={loading}
+              loading={loadingAuth}
               onClick={onVerify}
             />
           </div>
@@ -81,4 +79,4 @@ const OTP = () => {
   )
 }
 
-export default OTP
+export default OTPVerification

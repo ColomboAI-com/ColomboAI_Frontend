@@ -4,11 +4,8 @@ export default function Button({ title, className, height, width, loading, onCli
   return (
     <button
       className={className}
-      onClick={(e) => { if (onClick && !loading) { onClick(e) } }}
-      style={{
-        height: height,
-        width: width
-      }}
+      onClick={event => { if (onClick && !loading) onClick(event) }}
+      style={{ height, width }}
       disabled={disabled}
     >
       {loading ? <Loader /> : title}

@@ -7,12 +7,12 @@ import { AuthContext } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
 import { isValidEmail, isValidName, isValidPhone, isValidUserName } from "@/utlils/validate"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { useContext } from "react"
 
 const SignUp = () => {
 
-  const { inputs, validations, setValidations, handleInputs, loading, getOTP } = useContext(AuthContext)
+  const { inputs, validations, setValidations, handleInputs, loadingGetOTP, getOTP } = useContext(AuthContext)
   const router = useRouter()
 
   const onSignUp = async () => {
@@ -36,7 +36,7 @@ const SignUp = () => {
     if (res) {
       setSessionStorage('otp-page', 'SIGNUP')
       setSessionStorage('auth-details', JSON.stringify(inputs))
-      router.push('/otp')
+      router.push('/otp-verification')
     }
   }
 
@@ -94,14 +94,14 @@ const SignUp = () => {
             <Button
               title={'Sign up'}
               className={'mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in'}
-              loading={loading}
+              loading={loadingGetOTP}
               onClick={onSignUp}
             />
           </div>
           <SocialAuthentication />
           <RedirectLink
             title={'Already have an account?'}
-            href={'/login'}
+            href={'/sign-in'}
             linkName={'Sign in'}
           />
         </div>

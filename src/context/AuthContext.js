@@ -24,7 +24,9 @@ export const AuthContextProvider = ({ children }) => {
     phone: false,
     otp: false
   })
-  const [loading, setLoading] = useState(false)
+  const [loadingGetOTP, setLoadingGetOTP] = useState(false)
+  const [loadingAuth, setLoadingAuth] = useState(false)
+  const [loadingSSO, setLoadingSSO] = useState(false)
 
   const handleInputs = (event) => {
     const { name, value } = event.target
@@ -37,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const getOTP = async () => {
     try {
-      setLoading(true)
+      setLoadingGetOTP(true)
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/get-otp`,
         {
           type: 'email',
@@ -49,13 +51,13 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoading(false)
+      setLoadingGetOTP(false)
     }
   }
 
   const signUp = async () => {
     try {
-      setLoading(true)
+      setLoadingAuth(true)
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-up`,
         {
           type: ' email',
@@ -70,13 +72,13 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoading(false)
+      setLoadingAuth(false)
     }
   }
 
   const signIn = async () => {
     try {
-      setLoading(true)
+      setLoadingAuth(true)
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-in`,
         {
           type: ' email',
@@ -89,7 +91,22 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoading(false)
+      setLoadingAuth(false)
+    }
+  }
+
+  const ssoAuthentication = async ({ provider, token, userid }) => {
+    try {
+      setLoadingSSO(true)
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/ssoAuthentication`,
+        { provider, token, userid }
+      )
+      MessageBox('success', res.data.message)
+      return res
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadingSSO(false)
     }
   }
 
@@ -97,9 +114,12 @@ export const AuthContextProvider = ({ children }) => {
     <AuthContext.Provider value={{
       inputs, setInputs,
       validations, setValidations,
-      loading, setLoading,
       handleInputs,
-      getOTP, signUp, signIn
+      loadingGetOTP, setLoadingGetOTP,
+      loadingAuth, setLoadingAuth,
+      loadingSSO, setLoadingSSO,
+      getOTP, signUp, signIn,
+      ssoAuthentication
     }}>
       {children}
     </AuthContext.Provider>

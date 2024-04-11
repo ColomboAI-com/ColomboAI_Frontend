@@ -1,4 +1,4 @@
-import { AuthContextProvider } from "@/context/AuthContext";
+import { AuthContextProvider } from "@/context/AuthContext"
 
 const AuthLayout = ({ children }) => {
   return (
@@ -14,7 +14,7 @@ const AuthLayout = ({ children }) => {
         </div>
       </div>
     </AuthContextProvider>
-  );
+  )
 }
 
-export default AuthLayout;
+export default AuthLayout

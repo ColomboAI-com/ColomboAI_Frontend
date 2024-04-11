@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { RESEND_TIME } from '@/utlils/constant'
 import { AuthContext } from '@/context/AuthContext'
 
@@ -12,12 +12,12 @@ export default function ResendOTP() {
     let interval = null
     if (isStart) {
       interval = setInterval(() => {
-        setCount((prevCount) => {
-          if (prevCount === 1) {
+        setCount(prev => {
+          if (prev === 1) {
             clearInterval(interval)
             setIsStart(false)
           }
-          return prevCount - 1
+          return prev - 1
         })
       }, 1000)
     }
