@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "set port=5454 && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^1.6.8",
+    "cogo-toast": "^4.2.3",
+    "cookies-next": "^4.1.1",
+    "copy-to-clipboard": "^3.3.3",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
