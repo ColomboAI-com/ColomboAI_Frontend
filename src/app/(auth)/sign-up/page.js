@@ -8,7 +8,7 @@ import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
 import { isValidEmail, isValidName, isValidPhone, isValidUserName } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 const SignUp = () => {
 

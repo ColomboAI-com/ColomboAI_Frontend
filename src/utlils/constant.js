@@ -9,5 +9,5 @@ export const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w+)+$/
 export const PHONE_REGEX = /^[0-9]{10}$/
 export const USERNAME_REGEX = /^[a-zA-Z0-9_]{0,30}$|^$/
 
-export const RESEND_TIME = 60
+export const RESEND_TIME = 1
 export const MIN_USERNAME_LENGTH = 5
