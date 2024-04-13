@@ -56,12 +56,96 @@ export default function Home() {
                   <img src="/images/home/avtar-img.png" className="w-[42px]" />
                   <p className="pl-[17px] c">acch._.hhsn</p>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
                   <p className="font-sans text-sidebarlabel tex-[12px]">2 mins ago</p>
                   <img src="/images/home/more_horiz.png" />
                 </div>
               </div>
               <img src="/images/home/feed-banner-img.png" className="w-full" />
+              <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
+                <div className="flex items-center justify-between"> 
+                  <div className="flex items-center gap-[19px]">
+                    <div className="flex items-center gap-4">
+                      <img src="/images/home/wishlist.png" />
+                      <p className="text-sidebarlabel">121</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/home/Chat.png" />
+                        <p className="text-sidebarlabel">88</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/home/refresh.png" />
+                        <p className="text-sidebarlabel">23</p>
+                    </div>
+                    <div className="flex items-center">
+                        <img src="/images/home/Magic-pen.png" />
+                    </div>
+                  </div>  
+                  <div className="flex items-center gap-[19px]">
+                    <div className="flex items-center gap-4">
+                      <img src="/images/home/Arrow.png" />
+                      <p className="text-sidebarlabel">10</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/home/bookmark.png" />
+                        <p className="text-sidebarlabel">40</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <p className="text-[#333333] tex-[16px] font-sans font-[700]">Anna</p>
+                  <p className="text-[#515151] tex-[16px] font-sans font-[450]">Most beautiful view of my trip</p>
+                </div>
+              </div>  
+            </div>
+
+            <div className="border-[1px] border-brandprimary rounded-[10px] mt-4">
+              <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px]">
+                <div className="flex items-center">
+                  <img src="/images/home/avtar-img.png" className="w-[42px]" />
+                  <p className="pl-[17px] c">acch._.hhsn</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <p className="font-sans text-sidebarlabel tex-[12px]">2 mins ago</p>
+                  <img src="/images/home/more_horiz.png" />
+                </div>
+              </div>
+              <div className="py-[27px] pl-[37px] pr-[41px]">
+                <p className="text-[#515151] tex-[24px] font-sans font-[450]">Nature reminds us of life's simple joys and the beauty in every moment. Grateful for moments of peace and wonder amidst the chaos.</p>
+                <p className="text-brandprimary mt-4">#NatureInspires</p>
+              </div>  
+              <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
+                <div className="flex items-center justify-between"> 
+                  <div className="flex items-center gap-[19px]">
+                    <div className="flex items-center gap-4">
+                      <img src="/images/home/wishlist.png" />
+                      <p className="text-sidebarlabel">121</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/home/Chat.png" />
+                        <p className="text-sidebarlabel">88</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/home/refresh.png" />
+                        <p className="text-sidebarlabel">23</p>
+                    </div>
+                    <div className="flex items-center">
+                        <img src="/images/home/Magic-pen.png" />
+                    </div>
+                  </div>  
+                  <div className="flex items-center gap-[19px]">
+                    <div className="flex items-center gap-4">
+                      <img src="/images/home/Arrow.png" />
+                      <p className="text-sidebarlabel">10</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <img src="/images/home/bookmark.png" />
+                        <p className="text-sidebarlabel">40</p>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>  
             </div>
         </div>
       </div>
