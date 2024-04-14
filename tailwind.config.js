@@ -16,7 +16,8 @@ module.exports = {
         'brandprimary': '#1E71F2',
         'brandplaceholder': '#8B8B8B',
         'error': '#ff4949',
-        'sidebarlabel': '#8E8E93'
+        'sidebaricon': '#8E8E93',
+        'navbaraction': '#646464',
       }
     },
   },

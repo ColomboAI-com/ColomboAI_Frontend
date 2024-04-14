@@ -1,20 +1,58 @@
-import cogoToast from "cogo-toast"
+import { toast } from 'react-toastify';
 
-export const MessageBox = (type, message) => {
-  if (type === 'success') {
-    cogoToast.success(message, { hideAfter: 3, position: 'top-right' })
-    return
-  }
-  if (type === 'error') {
-    cogoToast.error(message, { hideAfter: 3, position: 'top-right' })
-    return
-  }
-  if (type === 'warn') {
-    cogoToast.warn(message, { hideAfter: 3, position: 'top-right' })
-    return
-  }
-  if (type === 'info') {
-    cogoToast.info(message, { hideAfter: 3, position: 'top-right' })
-    return
-  }
-}              
+const MessageBox = (type, message) => {
+    if (type === 'success') {
+        toast.success(message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
+        return
+      }
+      if (type === 'error') {
+        toast.error(message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
+        return
+      }
+      if (type === 'warn') {
+        toast.warn(message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
+        return
+      }
+      if (type === 'info') {
+        toast.info(message, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        })
+        return
+      }
+}
+
+export default MessageBox;
