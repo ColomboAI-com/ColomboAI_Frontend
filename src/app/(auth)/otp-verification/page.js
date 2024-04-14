@@ -12,14 +12,17 @@ import { useContext, useEffect } from "react"
 
 const OTPVerification = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loadingAuth, signUp, signIn } = useContext(AuthContext)
+  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = useContext(AuthContext)
   const router = useRouter()
 
   useEffect(() => {
     const userDetails = getSessionStorage('auth-details')
     if (userDetails)
       setInputs(prev => ({ ...prev, ...JSON.parse(userDetails) }))
-    return () => clearSessionStorage()
+    return () => {
+      clearSessionStorage()
+      resetAuthValues()
+    }
   }, [])
 
   const onVerify = async () => {
@@ -69,7 +72,7 @@ const OTPVerification = () => {
             <Button
               title={'Verify'}
               className="mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in "
-              loading={loadingAuth}
+              loading={loadings.auth}
               onClick={onVerify}
             />
           </div>
