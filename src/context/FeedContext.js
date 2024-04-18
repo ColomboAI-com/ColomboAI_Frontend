@@ -3,9 +3,9 @@ import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
 import axios from "axios"
-import { createContext, useState } from "react"
+import { createContext, useContext, useState } from "react"
 
-export const FeedContext = createContext()
+const FeedContext = createContext()
 
 export default function FeedContextProvider({ children }) {
 
@@ -221,4 +221,8 @@ export default function FeedContextProvider({ children }) {
       {children}
     </FeedContext.Provider>
   )
+}
+
+export const feed = () => {
+  return useContext(FeedContext)
 }

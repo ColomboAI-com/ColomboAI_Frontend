@@ -2,17 +2,18 @@
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
 import RedirectLink from "@/components/auth/RedirectLink"
 import SocialAuthentication from "@/components/auth/SocialAuthentication"
+import { MessageBox } from "@/components/MessageBox"
 import { EmailValidation } from "@/components/Validations"
-import { AuthContext } from "@/context/AuthContext"
+import { auth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
 import { isValidEmail } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 
 const SignIn = () => {
 
-  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = useContext(AuthContext)
+  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = auth()
   const router = useRouter()
 
   useEffect(() => {

@@ -1,5 +1,5 @@
-import "./globals.css";
-import { Providers } from "./provider";
+import ProviderComponent from "@/components/provider-component"
+import "./globals.css"
 
 export const metadata = {
   title: "ColomboAI",
@@ -10,9 +10,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Providers>
+        <ProviderComponent>
           {children}
-        </Providers>
+        </ProviderComponent>
       </body>
     </html>
   )

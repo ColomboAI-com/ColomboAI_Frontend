@@ -3,16 +3,16 @@ import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
 import RedirectLink from "@/components/auth/RedirectLink"
 import SocialAuthentication from "@/components/auth/SocialAuthentication"
 import { EmailValidation, NameValidation, PhoneValidation, UsernameValidation } from "@/components/Validations"
-import { AuthContext } from "@/context/AuthContext"
+import { auth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
 import { isValidEmail, isValidName, isValidPhone, isValidUserName } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 
 const SignUp = () => {
 
-  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = useContext(AuthContext)
+  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = auth()
   const router = useRouter()
 
   useEffect(() => {

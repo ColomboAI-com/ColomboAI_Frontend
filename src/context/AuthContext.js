@@ -1,12 +1,12 @@
 'use client'
-import { createContext, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import { INT_NUMBER_REGEX, NAME_REGEX, USERNAME_REGEX } from "@/utlils/constant"
 import axios from "axios"
 import { ROOT_URL_AUTH } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError"
 import { MessageBox } from "@/components/MessageBox"
 
-export const AuthContext = createContext()
+const AuthContext = createContext()
 
 const defaultInputs = {
   username: '',
@@ -27,7 +27,9 @@ const defaultValidations = {
 const defaultLoadings = {
   otp: false,
   auth: false,
-  sso: false
+  google: false,
+  meta: false,
+  microsoft: false
 }
 
 export const AuthContextProvider = ({ children }) => {
@@ -108,8 +110,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const ssoAuthentication = async ({ provider, token, userid }) => {
     try {
-      setLoadings(prev => ({ ...prev, sso: true }))
-      const res = await axios.post(`${ROOT_URL_AUTH}/auth/ssoAuthentication`,
+      setLoadings(prev => ({ ...prev, [provider]: true }))
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/sso-authentication`,
         { provider, token, userid }
       )
       MessageBox('success', res.data.message)
@@ -117,7 +119,7 @@ export const AuthContextProvider = ({ children }) => {
     } catch (err) {
       handleError(err)
     } finally {
-      setLoadings(prev => ({ ...prev, sso: false }))
+      setLoadings(prev => ({ ...prev, [provider]: false }))
     }
   }
 
@@ -140,4 +142,8 @@ export const AuthContextProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   )
+}
+
+export const auth = () => {
+  return useContext(AuthContext)
 }

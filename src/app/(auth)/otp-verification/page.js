@@ -2,17 +2,17 @@
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
 import ResendOTP from "@/components/auth/ResendOTP"
 import { OTPValidation } from "@/components/Validations"
-import { AuthContext } from "@/context/AuthContext"
+import { auth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setUserCookies } from "@/utlils/commonFunctions"
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
 import { isValidOTP } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 
 const OTPVerification = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = useContext(AuthContext)
+  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = auth()
   const router = useRouter()
 
   useEffect(() => {
