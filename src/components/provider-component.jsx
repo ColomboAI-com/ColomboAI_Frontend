@@ -1,5 +1,4 @@
 'use client'
-
 import { Suspense } from "react"
 import Loader from "./Loader"
 import App from "../../App"
