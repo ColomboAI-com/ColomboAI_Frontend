@@ -5,10 +5,21 @@ const AuthLayout = ({ children }) => {
   return (
     <AuthContextProvider>
       <SocialAuthContextProvider>
-        <div className="grid grid-cols-2 gap- h-screen font-sans">
+        <div className="xl:grid grid-cols-2 gap- h-screen font-sans sm:hidden lg:hidden md:hidden">
           <div className="bg-brandprimary flex items-center justify-center">
             <div>
-              <img src="/images/auth/auth_mockup.png" className="object-cover mx-auto w-[85%]" alt="mockup_image" />
+              <img src="/images/auth/auth_mockup.png" className="object-cover mx-auto w-[60%]" alt="mockup_image" />
+            </div>
+          </div>
+          <div>
+            {children}
+          </div>
+        </div>
+        <div className="xl:hidden h-screen font-sans sm:block lg:block md:block">
+          <div className="bg-[url('/images/auth/mobile-verification.png')] bg-no-repeat bg-[length:100%_100%] bg-top sm:h-[322px] md:h-[450px] lg:h-[450px] flex items-center justify-center">
+            <div >
+              <h5 className="text-[32px] font-sans text-[#fff] text-center">Welcome to</h5>
+              <img src="/images/auth/ColomboAI-logo.png" className="object-cover mx-auto" alt="mockup_image" />
             </div>
           </div>
           <div>

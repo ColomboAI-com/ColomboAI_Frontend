@@ -5,8 +5,8 @@ export default function RedirectLink({ title, href = '', linkName }) {
     <div className="my-3 text-center">
       <p className="text-lg">
         {title}
-        <Link href={href} className='text-brandprimary focus:text-brandprimary'>
-          &nbsp;{linkName}
+        <Link href={href} className='text-brandprimary focus:text-brandprimary text-[16px] font-sans'>
+          &nbsp;<span className='text-[#1E71F2] text-[16px]'>{linkName}</span>
         </Link>
       </p>
     </div>

@@ -12,7 +12,7 @@ const DefaultLayout = ({ children }) => {
       </header>
       <div className="flex">
         <Sidebar />
-        <div className="w-full">
+        <div className="w-[93%]">
           <Header />
           <div className="border- border-red-400 max-h-[82.8vh] overflow-y-auto overflow-x-hidden">
             {children}

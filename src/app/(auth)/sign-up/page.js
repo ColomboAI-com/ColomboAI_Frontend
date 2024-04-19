@@ -45,16 +45,18 @@ const SignUp = () => {
   }
 
   return (
-    <div className='h-full flex flex-col justify-around'>
+    <div className='xl:h-full xl:flex xl:flex-col xl:justify-around'>
       <div className='h-full flex flex-col justify-center'>
         <div>
-          <div className='border- w-[50%] mx-auto my-2'>
-            <img src="/images/auth/welcome_colomboai.png" className="object-cover" alt="welcome_to_colomboai" />
+          <div className='border- w-[50%] mx-auto mt-[44px] xl:block sm:hidden md:hidden lg:hidden'>
+            <img src="/images/auth/Star.svg" className="object-cover mx-auto" alt="welcome_to_colomboai" />
+            <h5 className="text-[24px] font-sans text-center">Create an account for <span className="text-[#1E71F2]">Free</span></h5>
           </div>
-          <div className="w-[60%] mx-auto">
+        
+          <div className="xl:w-[60%] sm:w-[70%] lg:w-[70%] md:w-[50%] mx-auto">
             <input
               type="text"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Username"
               autoComplete="off"
               maxLength={30}
@@ -65,7 +67,7 @@ const SignUp = () => {
             {validations.username && <UsernameValidation value={inputs.username} />}
             <input
               type="text"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Display name"
               autoComplete="off"
               maxLength={50}
@@ -76,7 +78,7 @@ const SignUp = () => {
             {validations.name && <NameValidation value={inputs.name} />}
             <input
               type="email"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
               autoComplete="off"
               name={"email"}
@@ -86,7 +88,7 @@ const SignUp = () => {
             {validations.email && <EmailValidation value={inputs.email} />}
             <input
               type="tel"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Phone number (optional)"
               autoComplete="off"
               maxLength={10}
@@ -96,17 +98,18 @@ const SignUp = () => {
             />
             {validations.phone && <PhoneValidation value={inputs.phone} />}
             <Button
-              title={'Sign up'}
-              className={'mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              title={'GET OTP'}
+              className={'mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
               loading={loadings.otp}
               onClick={onSignUp}
             />
           </div>
+          <div className="text-center text-[16px] text-[#1E6DE9] font-sans py-[34px]">OR</div>
           <SocialAuthentication />
           <RedirectLink
             title={'Already have an account?'}
             href={'/sign-in'}
-            linkName={'Sign in'}
+            linkName={'LOG IN'}
           />
         </div>
       </div>
