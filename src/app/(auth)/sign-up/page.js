@@ -48,7 +48,7 @@ const SignUp = () => {
     <div className='xl:h-full xl:flex xl:flex-col xl:justify-around'>
       <div className='h-full flex flex-col justify-center'>
         <div>
-          <div className='border- w-[50%] mx-auto mt-[44px] xl:block sm:hidden md:hidden lg:hidden'>
+          <div className='border- w-[50%] mx-auto pt-[75px] xl:block sm:hidden md:hidden lg:block'>
             <img src="/images/auth/Star.svg" className="object-cover mx-auto" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Create an account for <span className="text-[#1E71F2]">Free</span></h5>
           </div>
