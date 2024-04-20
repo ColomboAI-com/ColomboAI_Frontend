@@ -11,13 +11,13 @@ var settings = {
     arrow: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 7,
+    slidesToShow: 6,
     slidesToScroll: 1,
     responsive: [
         {
-            breakpoint: 1366,
+            breakpoint: 1200,
             setting:{
-                slidesToShow: 4,
+                slidesToShow: 5,
             }
         },
         {
@@ -40,17 +40,11 @@ var sugeested = {
     arrow: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     responsive: [
         {
-            breakpoint: 1920,
-            setting:{
-                slidesToShow: 7,
-            }
-        },
-        {
-            breakpoint: 1366,
+            breakpoint: 1200,
             setting:{
                 slidesToShow: 4,
             }
@@ -74,19 +68,12 @@ var sugeested = {
     arrows: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 2,
+    slidesToShow: 2.5,
     slidesToScroll: 1,
     gutterSpace:16,
     responsive: [
         {
-            breakpoint: 1920,
-            setting:{
-                slidesToShow: 3,
-                arrows: false,
-            }
-        },
-        {
-            breakpoint: 1366,
+            breakpoint: 1200,
             setting:{
                 slidesToShow: 3,
                 arrows: false,
@@ -108,6 +95,39 @@ var sugeested = {
         }
     ]
   };
+  var likethis = {
+    dots: false,
+    arrows: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    gutterSpace:16,
+    responsive: [
+        {
+            breakpoint: 1200,
+            setting:{
+                slidesToShow: 3,
+                arrows: false,
+            }
+        },
+        {
+            breakpoint: 1000,
+            setting:{
+                slidesToShow: 2,
+                arrows: false,
+            }
+        },
+        {
+            breakpoint: 650,
+            setting:{
+                slidesToShow: 2,
+                arrows: false,
+            }
+        }
+    ]
+  };
+  
 const Feed = () => {
     return (
         <div className="flex">
@@ -119,85 +139,103 @@ const Feed = () => {
                 
                 <div className="mb-8">
                     <Slider {...settings}>
-                        <div className="bg-[url('/images/home/create-story.svg')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-14 px-6">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/add-new-story.svg" />
+                        <div>
+                            <div className="bg-[url('/images/home/create-story.svg')] bg-[length:100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-14 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/add-new-story.svg" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center relative top-9">Create New Story</h6>
                                 </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center relative top-9">Create New Story</h6>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
+                        <div>    
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
                                 </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
+                        <div>
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
                                 </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
+                            </div>
+                        </div> 
+                        <div>                           
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
+                        <div>    
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
                                 </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
+                            </div>
+                        </div> 
+                        <div> 
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
+                                </div>
+                            </div>
+                        </div>      
+                        <div>                      
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
+                                </div>
+                            </div>
+                        </div>     
+                        <div>                      
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
+                        <div>
+                            <div className="bg-[url('/images/home/story-img.png')] bg-[length:100%_100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="absolute bottom-5 w-full">
+                                    <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                                        <img src="/images/home/story-profile-img.png" />
+                                    </div>
+                                    <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
                                 </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
-                                </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
-                                </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
-                                </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/story-img.png')] relative h-[167px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="absolute bottom-5 px-8">
-                                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
-                                    <img src="/images/home/story-profile-img.png" />
-                                </div>
-                                <h6 className="text-[12px] font-[450px] font-sans text-white text-center">@Anna_xvz</h6>
                             </div>
                         </div>
                     </Slider>
@@ -258,50 +296,60 @@ const Feed = () => {
                 </div>
                 <div className="mt-4 mb-4">
                     <Slider {...sugeested}>
-                        
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-[length:100%_100%] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-[length:100%_100%] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-[length:100%_100%] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-[length:100%_100%] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-[length:100%_100%] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-[length:100%_100%] ml-[5px] mr-[5px]  bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
-                            </div>
-                        </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[100px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
-                            </div>
-                        </div>
-                        
                     </Slider>
                 </div> 
 
@@ -350,10 +398,143 @@ const Feed = () => {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
+                
+                <div className="mt-2">
+                    <h5 className="text-[24px] font-sans text-[#333333] font-[700]">You might like these</h5>
+                </div>
+                <div className="mt-4 mb-4">
+                    <Slider {...likethis}>
+                        <div>
+                            <div class="border-[1px] border-brandprimary rounded-[10px] ml-[15px]">
+                                <div class="flex items-center justify-between px-[10px] py-[12px]">
+                                    <div class="flex items-center">
+                                        <img src="/images/home/add-logo.png" class="w-[30px]" />
+                                        <div>
+                                            <p class="pl-[4px] text-[#333333] text-[14px] font-sans">dior</p>
+                                            <p class="pl-[4px] text-[#D1D1D1] text-[8px] font-sans">Sponsored</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <img src="/images/home/more_horiz.png" />
+                                    </div>
+                                </div>
+                                <img src="/images/home/add-image.png" class="w-full" />
+                                <div class="px-[10px] py-[12px]">
+                                    <p class="text-[#333333] text-[12px] font-sans font-[700]">Dior Official</p>
+                                    <p class="text-[#646464] text-[12px] font-sans font-[450]">Inspired by Christian Dior’s superstitions, Lucky whispers the tale of his devotion to the lily-of-the-valley, his lucky flower</p>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="border-[1px] border-brandprimary rounded-[10px] ml-[15px]">
+                                <div class="flex items-center justify-between px-[10px] py-[12px]">
+                                    <div class="flex items-center">
+                                        <img src="/images/home/add-logo.png" class="w-[30px]" />
+                                        <div>
+                                            <p class="pl-[4px] text-[#333333] text-[14px] font-sans">dior</p>
+                                            <p class="pl-[4px] text-[#D1D1D1] text-[8px] font-sans">Sponsored</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <img src="/images/home/more_horiz.png" />
+                                    </div>
+                                </div>
+                                <img src="/images/home/add-image.png" class="w-full" />
+                                <div class="px-[10px] py-[12px]">
+                                    <p class="text-[#333333] text-[12px] font-sans font-[700]">Dior Official</p>
+                                    <p class="text-[#646464] text-[12px] font-sans font-[450]">Inspired by Christian Dior’s superstitions, Lucky whispers the tale of his devotion to the lily-of-the-valley, his lucky flower</p>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="border-[1px] border-brandprimary rounded-[10px] ml-[15px]">
+                                <div class="flex items-center justify-between px-[10px] py-[12px]">
+                                    <div class="flex items-center">
+                                        <img src="/images/home/add-logo.png" class="w-[30px]" />
+                                        <div>
+                                            <p class="pl-[4px] text-[#333333] text-[14px] font-sans">dior</p>
+                                            <p class="pl-[4px] text-[#D1D1D1] text-[8px] font-sans">Sponsored</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <img src="/images/home/more_horiz.png" />
+                                    </div>
+                                </div>
+                                <img src="/images/home/add-image.png" class="w-full" />
+                                <div class="px-[10px] py-[12px]">
+                                    <p class="text-[#333333] text-[12px] font-sans font-[700]">Dior Official</p>
+                                    <p class="text-[#646464] text-[12px] font-sans font-[450]">Inspired by Christian Dior’s superstitions, Lucky whispers the tale of his devotion to the lily-of-the-valley, his lucky flower</p>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="border-[1px] border-brandprimary rounded-[10px] ml-[15px]">
+                                <div class="flex items-center justify-between px-[10px] py-[12px]">
+                                    <div class="flex items-center">
+                                        <img src="/images/home/add-logo.png" class="w-[30px]" />
+                                        <div>
+                                            <p class="pl-[4px] text-[#333333] text-[14px] font-sans">dior</p>
+                                            <p class="pl-[4px] text-[#D1D1D1] text-[8px] font-sans">Sponsored</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <img src="/images/home/more_horiz.png" />
+                                    </div>
+                                </div>
+                                <img src="/images/home/add-image.png" class="w-full" />
+                                <div class="px-[10px] py-[12px]">
+                                    <p class="text-[#333333] text-[12px] font-sans font-[700]">Dior Official</p>
+                                    <p class="text-[#646464] text-[12px] font-sans font-[450]">Inspired by Christian Dior’s superstitions, Lucky whispers the tale of his devotion to the lily-of-the-valley, his lucky flower</p>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="border-[1px] border-brandprimary rounded-[10px] ml-[15px]">
+                                <div class="flex items-center justify-between px-[10px] py-[12px]">
+                                    <div class="flex items-center">
+                                        <img src="/images/home/add-logo.png" class="w-[30px]" />
+                                        <div>
+                                            <p class="pl-[4px] text-[#333333] text-[14px] font-sans">dior</p>
+                                            <p class="pl-[4px] text-[#D1D1D1] text-[8px] font-sans">Sponsored</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <img src="/images/home/more_horiz.png" />
+                                    </div>
+                                </div>
+                                <img src="/images/home/add-image.png" class="w-full" />
+                                <div class="px-[10px] py-[12px]">
+                                    <p class="text-[#333333] text-[12px] font-sans font-[700]">Dior Official</p>
+                                    <p class="text-[#646464] text-[12px] font-sans font-[450]">Inspired by Christian Dior’s superstitions, Lucky whispers the tale of his devotion to the lily-of-the-valley, his lucky flower</p>
+                                </div>
+                            </div>
+                        </div> 
+                        <div>
+                            <div class="border-[1px] border-brandprimary rounded-[10px] ml-[15px]">
+                                <div class="flex items-center justify-between px-[10px] py-[12px]">
+                                    <div class="flex items-center">
+                                        <img src="/images/home/add-logo.png" class="w-[30px]" />
+                                        <div>
+                                            <p class="pl-[4px] text-[#333333] text-[14px] font-sans">dior</p>
+                                            <p class="pl-[4px] text-[#D1D1D1] text-[8px] font-sans">Sponsored</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <img src="/images/home/more_horiz.png" />
+                                    </div>
+                                </div>
+                                <img src="/images/home/add-image.png" class="w-full" />
+                                <div class="px-[10px] py-[12px]">
+                                    <p class="text-[#333333] text-[12px] font-sans font-[700]">Dior Official</p>
+                                    <p class="text-[#646464] text-[12px] font-sans font-[450]">Inspired by Christian Dior’s superstitions, Lucky whispers the tale of his devotion to the lily-of-the-valley, his lucky flower</p>
+                                </div>
+                            </div>
+                        </div>
+                    </Slider>
+                </div>
 
             </div>
             <div className="w-[30%] mt-10">
@@ -366,46 +547,58 @@ const Feed = () => {
                 <div className="mt-4 mb-4">
                     <Slider arrows={false} {...trending}>
                         
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[145px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-cover ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[145px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-cover ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[145px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-cover ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[145px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-cover ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[145px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-cover ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
-                        <div className="bg-[url('/images/home/reel-img.svg')] relative h-[240px] !w-[145px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
-                            <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
-                            <div className="flex items-center pl-[9px] absolute bottom-2">
-                                <img src="/images/home/play-icon.svg" />
-                                <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                        <div>
+                            <div className="bg-[url('/images/home/reel-img.svg')] relative h-[220px] bg-cover ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]">
+                                <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+                                <div className="flex items-center pl-[9px] absolute bottom-2">
+                                    <img src="/images/home/play-icon.svg" />
+                                    <h6 className="text-[14px] font-[450px] font-sans text-white">154k</h6>
+                                </div>
                             </div>
                         </div>
                         
@@ -465,7 +658,7 @@ const Feed = () => {
                                 <img src="/images/home/more_horiz.png" />
                             </div>
                         </div>
-                        <img src="/images/home/add-image.png" className="w-full" />
+                        <img src="/images/home/coca-cola-img.svg" className="w-full" />
                         
                     </div>
                 </div>
