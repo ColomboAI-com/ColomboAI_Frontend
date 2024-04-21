@@ -34,7 +34,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className='xl:h-full xl:flex xl:flex-col xl:justify-around'>
+    <div className='h-full flex flex-col justify-around'>
       <div className='h-full flex flex-col justify-center'>
         <div>
           <div className='border- w-[50%] mx-auto pt-[75px] xl:block sm:hidden md:hidden lg:block'>
@@ -42,7 +42,7 @@ const SignIn = () => {
             <h5 className="text-[24px] font-sans text-center">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>
           </div>
         
-          <div className="xl:w-[60%] sm:w-[70%] lg:w-[70%] md:w-[50%] mx-auto">
+          <div className="w-[60%] sm:w-[70%] lg:w-[70%] md:w-[50%] mx-auto">
           <input
               type="email"
               className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"

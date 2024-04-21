@@ -40,7 +40,7 @@ const OTPVerification = () => {
   }
 
   return (
-    <div className='xl:h-full xl:flex xl:flex-col xl:justify-around'>
+    <div className='h-full flex flex-col justify-around'>
       <div className='h-full flex flex-col justify-center'>
         <div>
           <div className='border- w-[55%] mx-auto pt-[75px] xl:block sm:hidden md:hidden lg:block'>
@@ -49,7 +49,7 @@ const OTPVerification = () => {
             <p className="text-[#737373] text-[16px] font-sans text-center">Enter the OTP you received on <span className="text-[#1E71F2]">cr****@gmail.com</span></p>
           </div>
         
-          <div className="xl:w-[60%] sm:w-[70%] lg:w-[60%] md:w-[50%] mx-auto mt-[90px]">
+          <div className="w-[60%] sm:w-[70%] lg:w-[60%] md:w-[50%] mx-auto mt-[90px]">
           <input
               type="tel"
               className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
