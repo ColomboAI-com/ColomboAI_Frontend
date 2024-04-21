@@ -1,4 +1,5 @@
 import Header from "@/components/layouts/Header"
+import RightSidebar from "@/components/layouts/RightSidebar"
 import Sidebar from "@/components/layouts/Sidebar"
 import FeedContextProvider from "@/context/FeedContext"
 
@@ -12,10 +13,15 @@ const DefaultLayout = ({ children }) => {
       </header>
       <div className="flex">
         <Sidebar />
-        <div className="w-[93%]">
+        <div className="w-[95%]">
           <Header />
-          <div className="border- border-red-400 overflow-x-hidden">
-            {children}
+          <div className="flex">
+            <div className="overflow-x-hidden w-[70%] px-20">
+              {children}
+            </div>
+            <div className="w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
+              <RightSidebar/>
+            </div>
           </div>
         </div>
       </div>
