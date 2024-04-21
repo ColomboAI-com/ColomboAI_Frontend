@@ -3,9 +3,9 @@ import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
 import axios from "axios"
-import { createContext, useState } from "react"
+import { createContext, useContext, useState } from "react"
 
-export const FeedContext = createContext()
+const FeedContext = createContext()
 
 export default function FeedContextProvider({ children }) {
 
@@ -17,7 +17,8 @@ export default function FeedContextProvider({ children }) {
     addComment: false,
     deleteComment: false,
     generatePost: false,
-    generateComment: false
+    generateComment: false,
+    GetUserPost: false
   })
 
   const getPosts = async () => {
@@ -134,7 +135,7 @@ export default function FeedContextProvider({ children }) {
 
   const rePost = async (postId = '') => {
     try {
-      const res = await axios.put(`${ROOT_URL_FEED}/post/re-post/${postId}`,
+      const res = await axios.patch(`${ROOT_URL_FEED}/post/re-post/${postId}`,
         null,
         {
           headers: {
@@ -189,6 +190,24 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
+  const getPostsOfUser = async (username = '') => {
+    try {
+      setLoadings(prev => ({ ...prev, GetUserPost: true }))
+      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${username}`,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      return res.data
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadings(prev => ({ ...prev, GetUserPost: false }))
+    }
+  }
+
   return (
     <FeedContext.Provider value={{
       posts, setPosts,
@@ -196,9 +215,14 @@ export default function FeedContextProvider({ children }) {
       createPost, deletePost,
       likePost, rePost,
       addComment, deleteComment,
-      generatePost, generateComment
+      generatePost, generateComment,
+      getPostsOfUser
     }}>
       {children}
     </FeedContext.Provider>
   )
+}
+
+export const feed = () => {
+  return useContext(FeedContext)
 }

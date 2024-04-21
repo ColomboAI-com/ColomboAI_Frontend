@@ -10,8 +10,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-          <ProviderComponent>{children}</ProviderComponent>
-        </body>
+        <ProviderComponent>
+          {children}
+        </ProviderComponent>
+      </body>
     </html>
   )
 }

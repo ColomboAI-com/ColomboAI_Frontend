@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react'
-import { RESEND_TIME } from '@/utlils/constant'
-import { AuthContext } from '@/context/AuthContext'
-import { getSessionStorage } from '@/utlils/utils'
+import { auth } from "@/context/AuthContext"
+import { RESEND_TIME } from "@/utlils/constant"
+import { getSessionStorage } from "@/utlils/utils"
+import { useEffect, useState } from "react"
 
 export default function ResendOTP() {
 
   const [count, setCount] = useState(RESEND_TIME)
   const [isStart, setIsStart] = useState(true)
-  const { getOTP } = useContext(AuthContext)
+  const { getOTP } = auth()
 
   useEffect(() => {
     let interval = null
@@ -41,7 +41,7 @@ export default function ResendOTP() {
             Resend OTP in <span className='text-brandprimary'>{count > 9 ? count : '0' + count} sec.</span>
           </p>
           :
-          <p className="text-lg text-brandprimary" onClick={onResendOTP}>
+          <p className="text-[16px] text-[#333333] font-sans tracking-[3px] text-center" onClick={onResendOTP}>
             Re-send OTP
           </p>
       }

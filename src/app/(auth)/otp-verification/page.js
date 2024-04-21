@@ -2,17 +2,17 @@
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
 import ResendOTP from "@/components/auth/ResendOTP"
 import { OTPValidation } from "@/components/Validations"
-import { AuthContext } from "@/context/AuthContext"
+import { auth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setUserCookies } from "@/utlils/commonFunctions"
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
 import { isValidOTP } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 
 const OTPVerification = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = useContext(AuthContext)
+  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = auth()
   const router = useRouter()
 
   useEffect(() => {
@@ -40,26 +40,20 @@ const OTPVerification = () => {
   }
 
   return (
-    <div className="h-full flex flex-col justify-around">
-      <div className="h-full flex flex-col justify-center">
-        <div className="h-[80%]">
-          <div className="border- w-[50%] mx-auto my-2">
-            <img src="/images/auth/colomboai.png" className="object-cover" alt="colomboai" />
+    <div className='xl:h-full xl:flex xl:flex-col xl:justify-around'>
+      <div className='h-full flex flex-col justify-center'>
+        <div>
+          <div className='border- w-[55%] mx-auto pt-[75px] xl:block sm:hidden md:hidden lg:block'>
+            <img src="/images/auth/Star.svg" className="object-cover mx-auto" alt="welcome_to_colomboai" />
+            <h5 className="text-[24px] font-sans text-center">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
+            <p className="text-[#737373] text-[16px] font-sans text-center">Enter the OTP you received on <span className="text-[#1E71F2]">cr****@gmail.com</span></p>
           </div>
-          <div className="my-2 text-center">
-            <p className="text-3xl my-2 tracking-wide text-brandprimary">
-              Verification
-            </p>
-            <p className="text-lg">
-              A message with verification code <br /> was sent to your
-              registered E-mail ID
-            </p>
-          </div>
-          <div className="w-[60%] mt-8 mx-auto">
-            <input
+        
+          <div className="xl:w-[60%] sm:w-[70%] lg:w-[60%] md:w-[50%] mx-auto mt-[90px]">
+          <input
               type="tel"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-7 py-6 text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-              placeholder="Enter OTP"
+              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              placeholder="Type verification code"
               autoComplete="off"
               autoFocus
               maxLength={6}
@@ -68,18 +62,21 @@ const OTPVerification = () => {
               onChange={handleInputs}
             />
             {validations.otp && <OTPValidation value={inputs.otp} />}
-            <ResendOTP />
-            <Button
-              title={'Verify'}
-              className="mt-6 block w-full rounded-[22px] bg-brandprimary py-6 text-white focus:bg-brandprimary transition duration-300 ease-in "
-              loading={loadings.auth}
-              onClick={onVerify}
+            
+             <Button
+               title={'VERIFY'}
+               className="mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in "
+               loading={loadings.auth}
+               onClick={onVerify}
             />
+            <ResendOTP />
+            {/* <p className="text-[16px] text-[#333333] font-sans tracking-[3px] text-center">RE-SEND THE OTP</p> */}
           </div>
         </div>
       </div>
-      <AgreeTermAndConditions />
+      {/* <AgreeTermAndConditions /> */}
     </div>
+
   )
 }
 
