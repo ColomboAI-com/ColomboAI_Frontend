@@ -42,7 +42,7 @@ const OTPVerification = () => {
   return (
     <div className=''>
       <div className=''>
-        <div className="w-[380px] my-[247px] mx-auto sm:w-full sm:px-[54px] sm:mt-[30px] sm:pb-[50px] md:w-full md:px-[227px] md:mt-[30px]">
+        <div className="w-[380px] my-[247px] mx-auto sm:w-full sm:px-[54px] sm:mt-[30px] sm:pb-[50px] md:w-full md:px-[227px] md:mt-[30px] sm2:px-[120px]">
           <div className=''>
             <img src="/images/auth/Star.svg" className="object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
