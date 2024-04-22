@@ -25,6 +25,8 @@ module.exports = {
       'sm': {'min': '320px', 'max': '767px'},
       // => @media (min-width: 640px and max-width: 767px) { ... }
 
+      'sm2': {'min':'600px', 'max': '767px'},
+
       'md': {'min': '768px', 'max': '1023px'},
       // // => @media (min-width: 768px and max-width: 1023px) { ... }
 
