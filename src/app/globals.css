@@ -37,3 +37,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: transparent;
 }
+
+.slick-track {
+  display: flex;
+}
