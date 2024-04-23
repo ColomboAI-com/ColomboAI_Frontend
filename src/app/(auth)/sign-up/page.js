@@ -45,7 +45,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className="h-screen overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:100%_100%] bg-no-repeat bg-center sm:bg-none sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
+    <div className="h-screen overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96s%] bg-no-repeat bg-center sm:bg-none sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
       <div className=''>
         <div className="max-w-[380px] w-full my-[40px] mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
           <div className=''>
@@ -99,7 +99,7 @@ const SignUp = () => {
             {validations.phone && <PhoneValidation value={inputs.phone} />}
             <Button
               title={'GET OTP'}
-              className={'mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              className={'mt-[17px] block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
               loading={loadings.otp}
               onClick={onSignUp}
             />
