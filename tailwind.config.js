@@ -22,18 +22,18 @@ module.exports = {
     },
 
     screens: {
-      'sm': { 'min': '320px' },
+      'sm': { 'min': '320px', 'max': '767px' },
       // => @media (min-width: 640px and max-width: 767px) { ... }
 
       'sm2': { 'min': '600px', 'max': '767px' },
 
-      'md': { 'min': '768px' },
+      'md': { 'min': '768px', 'max': '1023px' },
       // // => @media (min-width: 768px and max-width: 1023px) { ... }
 
-      'lg': { 'min': '1024px' },
+      'lg': { 'min': '1024px', 'max': '1279px' },
       // => @media (min-width: 1024px and max-width: 1279px) { ... }
 
-      'xl': { 'min': '1280px' },
+      'xl': { 'min': '1280px', 'max': '1535px' },
       // => @media (min-width: 1280px and max-width: 1535px) { ... }
 
       'xxl': { 'min': '1920px', 'max': '2560px' },
