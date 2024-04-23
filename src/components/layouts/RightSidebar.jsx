@@ -41,7 +41,7 @@ var trending = {
 
 const RightSidebar = () => {
     return (
-        <div>
+        <div className=" w-[100%]">
             <div className="px-[35px]">
                 <div className="mt-2">
                     <h5 className="text-[19px] font-sans text-[#333333] font-[700]">
