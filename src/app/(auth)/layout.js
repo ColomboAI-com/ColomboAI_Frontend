@@ -5,9 +5,9 @@ const AuthLayout = ({ children }) => {
   return (
     <AuthContextProvider>
       <SocialAuthContextProvider>
-        <div className="grid grid-cols-2 gap- h-screen font-sans sm:hidden md:hidden lg:grid">
-          <div className="bg-brandprimary flex justify-center">
-            <div className="w-[457px] mt-[205px] mb-[169px] mx-auto">
+        <div className="grid grid-cols-2 h-screen font-sans sm:hidden md:hidden lg:grid">
+          <div className="bg-brandprimary flex justify-center h-screen">
+            <div className="max-w-[350px] w-full mt-[144px] mb-[100px] mx-auto flex items-center">
               <img src="/images/auth/auth_mockup.png" className="w-full" alt="mockup_image" />
             </div>
           </div>

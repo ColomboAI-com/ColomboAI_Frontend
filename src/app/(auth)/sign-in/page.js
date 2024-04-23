@@ -34,9 +34,9 @@ const SignIn = () => {
   }
 
   return (
-    <div className=''>
+    <div className='h-screen overflow-auto sm:h-auto sm:overflow-hidden md:h-auto md:overflow-hidden'>
       <div className=''>
-        <div className="w-[380px] my-[247px] mx-auto sm:w-full sm:px-[54px] sm:mt-[30px] sm:pb-[50px] md:w-full md:px-[227px] md:mt-[30px] sm2:px-[120px]">
+        <div className="max-w-[380px] w-full my-[40px] mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
           <div className='xl:block sm:hidden md:hidden lg:block'>
             <img src="/images/auth/Star.svg" className="object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>
