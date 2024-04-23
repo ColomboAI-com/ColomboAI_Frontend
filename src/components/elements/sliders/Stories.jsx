@@ -33,7 +33,7 @@ var settings = {
 
 const Stories = () => {
     return (
-        <div className="mb-8">
+        <div className="my-8">
             <Slider {...settings}>
                 <CreateStory/>
                 <ViewStory/>

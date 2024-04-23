@@ -14,20 +14,13 @@ import Stories from "@/components/elements/sliders/Stories";
 import Sugeested from "@/components/elements/sliders/Sugeested";
 import LikeThis from "@/components/elements/sliders/LikeThis";
 import SectionHeading from "@/components/elements/SectionHeading";
+import InputBar from "@/components/layouts/InputBar";
 
 const Feed = () => {
   return (
     <div>
-      <div className="relative pt-[26px] pb-[31px]">
-        <input
-          type="text"
-          placeholder="Ask or create anything..."
-          className="w-full h-[80px] border-[1px] border-brandprimary rounded-[50px] py-[28px] px-[35px] text-[#ACACAC] text-[20px] tracking-[4px] font-sans"
-        ></input>
-        <img
-          src="/images/home/search-icon.png"
-          className="absolute top-[52px] right-[35px]"
-        />
+      <div className="hidden lg:block">
+        <InputBar/>
       </div>
 
       <Stories />
