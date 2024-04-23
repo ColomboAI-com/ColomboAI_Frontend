@@ -34,7 +34,7 @@ export default function ResendOTP() {
   }
 
   return (
-    <div className='my-7 text-center'>
+    <div className='my-7 text-center sm: mt-[33px] mb-[24px]'>
       {
         count > 0 ?
           <p className='text-lg'>
@@ -42,7 +42,7 @@ export default function ResendOTP() {
           </p>
           :
           <p className="text-[16px] text-[#333333] font-sans tracking-[3px] text-center" onClick={onResendOTP}>
-            Re-send OTP
+            RE-SEND THE CODE
           </p>
       }
     </div>

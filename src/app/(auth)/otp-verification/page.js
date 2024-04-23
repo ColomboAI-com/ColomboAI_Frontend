@@ -40,16 +40,16 @@ const OTPVerification = () => {
   }
 
   return (
-    <div className='xl:h-full xl:flex xl:flex-col xl:justify-around'>
-      <div className='h-full flex flex-col justify-center'>
-        <div>
-          <div className='border- w-[55%] mx-auto pt-[75px] xl:block sm:hidden md:hidden lg:block'>
-            <img src="/images/auth/Star.svg" className="object-cover mx-auto" alt="welcome_to_colomboai" />
+    <div className='h-screen overflow-auto sm:h-auto sm:overflow-hidden md:h-auto md:overflow-hidden'>
+      <div className=''>
+        <div className="max-w-[380px] w-full my-[40px] mx-auto translate-y-[50%] sm:max-w-full sm:w-full sm:translate-y-[0] sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px]md:translate-y-[0] sm2:px-[50px]">
+          <div className=''>
+            <img src="/images/auth/Star.svg" className="object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
-            <p className="text-[#737373] text-[16px] font-sans text-center">Enter the OTP you received on <span className="text-[#1E71F2]">cr****@gmail.com</span></p>
+            <p className="text-[#737373] text-[16px] font-sans text-center sm:grid sm:mt-[35px]">Enter the OTP you received on <span className="text-[#1E71F2]">cr****@gmail.com</span></p>
           </div>
         
-          <div className="xl:w-[60%] sm:w-[70%] lg:w-[60%] md:w-[50%] mx-auto mt-[90px]">
+          <div className="">
           <input
               type="tel"
               className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
@@ -62,14 +62,15 @@ const OTPVerification = () => {
               onChange={handleInputs}
             />
             {validations.otp && <OTPValidation value={inputs.otp} />}
-            
-             <Button
-               title={'VERIFY'}
-               className="mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in "
-               loading={loadings.auth}
-               onClick={onVerify}
-            />
-            <ResendOTP />
+            <div className="sm:flex flex-col-reverse">
+              <Button
+                title={'VERIFY'}
+                className="mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in sm:mt-[0]"
+                loading={loadings.auth}
+                onClick={onVerify}
+              />
+              <ResendOTP/>
+            </div>  
             {/* <p className="text-[16px] text-[#333333] font-sans tracking-[3px] text-center">RE-SEND THE OTP</p> */}
           </div>
         </div>
