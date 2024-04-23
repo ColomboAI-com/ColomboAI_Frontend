@@ -34,18 +34,18 @@ const SignIn = () => {
   }
 
   return (
-    <div className='h-screen overflow-auto sm:h-auto sm:overflow-hidden md:h-auto md:overflow-hidden'>
-      <div className=''>
-        <div className="max-w-[380px] w-full my-[40px] mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
+    <div className="flex items-center justify-center bg-[url('/images/home/star-bg.png')] bg-[length:100%_100%] bg-no-repeat bg-center h-screen overflow-auto sm:bg-contain sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
+      {/* <div className=''> */}
+        <div className="max-w-[380px] w-full mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
           <div className='xl:block sm:hidden md:hidden lg:block'>
-            <img src="/images/auth/Star.svg" className="object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
+            <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>
           </div>
         
           <div className="">
           <input
               type="email"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-[24px] mb-[17px] w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
               autoComplete="off"
               name={"email"}
@@ -55,7 +55,7 @@ const SignIn = () => {
             
             {validations.email && <EmailValidation value={inputs.email} />}
             <Button
-              title={'Sign in'}
+              title={'GET OTP'}
               className={'mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
               loading={loadings.otp}
               onClick={onSignIn}
@@ -69,7 +69,7 @@ const SignIn = () => {
             linkName={'Sign up'}
           />
         </div>
-      </div>
+      {/* </div> */}
       {/* <AgreeTermAndConditions /> */}
     </div>
 
