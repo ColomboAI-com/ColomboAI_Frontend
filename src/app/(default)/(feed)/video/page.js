@@ -1,9 +1,8 @@
-import VideoPost from "@/components/elements/cards/VideoPost";
 
 const Feed = () => {
     return (
         <div>
-            <VideoPost/>
+            {/* <VideoPost/> */}
         </div>
     );
 }
