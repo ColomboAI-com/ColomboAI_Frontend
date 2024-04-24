@@ -19,9 +19,9 @@ import InputBar from "@/components/layouts/InputBar";
 const Feed = () => {
   return (
     <div>
-      <div className="hidden lg:block">
+      {/* <div className="hidden lg:block">
         <InputBar/>
-      </div>
+      </div> */}
 
       <Stories />
 

@@ -10,11 +10,7 @@ const Sidebar = () => {
 
     const pathname = usePathname();
 
-    const sideNavigation = [
-        { name: "Feed", link: "/feed" },
-        { name: "Explore", link: "/explore" },
-        { name: "Profile", link: "/profile" },
-    ];
+    const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
 
     return (
         <>
@@ -45,9 +41,9 @@ const Sidebar = () => {
                 <Link href="/feed">
                     <div className="mb-12 ">
                         <div className="w-[29px] mx-auto">
-                            <FeedIcon w="30" h="30" fill={pathname.includes('/feed') ? "#1E71F2" : "#8E8E93"} />
+                            <FeedIcon w="30" h="30" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
                         </div>
-                        <p className={`${pathname.includes('/feed') ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Feed</p>
+                        <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Feed</p>
                     </div>
                 </Link>
 
