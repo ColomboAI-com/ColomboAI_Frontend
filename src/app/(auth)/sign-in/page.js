@@ -34,7 +34,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className="flex items-center justify-center bg-[url('/images/home/star-bg.png')] bg-[length:100%_100%] bg-no-repeat bg-center h-screen overflow-auto sm:bg-contain sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
+    <div className="flex items-center justify-center bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center h-screen overflow-auto sm:bg-contain sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
       {/* <div className=''> */}
         <div className="max-w-[380px] w-full mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
           <div className='xl:block sm:hidden md:hidden lg:block'>
@@ -45,7 +45,7 @@ const SignIn = () => {
           <div className="">
           <input
               type="email"
-              className="mt-[24px] mb-[17px] w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-[24px] w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
               autoComplete="off"
               name={"email"}
@@ -56,7 +56,7 @@ const SignIn = () => {
             {validations.email && <EmailValidation value={inputs.email} />}
             <Button
               title={'GET OTP'}
-              className={'mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              className={'mt-[17px] block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
               loading={loadings.otp}
               onClick={onSignIn}
             />
