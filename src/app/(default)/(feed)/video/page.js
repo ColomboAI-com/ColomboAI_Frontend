@@ -1,8 +1,9 @@
+import VideoPost from "@/components/elements/cards/VideoPost";
+
 const Feed = () => {
     return (
         <div>
-            Video Page Content
-            lorem5000
+            <VideoPost/>
         </div>
     );
 }

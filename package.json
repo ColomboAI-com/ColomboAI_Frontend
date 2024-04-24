@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.19",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.6.8",
     "cookies-next": "^4.1.1",
     "copy-to-clipboard": "^3.3.3",
