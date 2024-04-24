@@ -40,9 +40,9 @@ const OTPVerification = () => {
   }
 
   return (
-    <div className="flex items-center justify-center bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center h-screen overflow-auto sm:bg-contain sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
+    <div className="lg:flex lg:items-center lg:justify-center bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center lg:h-screen lg:overflow-auto sm:block sm:bg-contain md:bg-contain">
       {/* <div className=''> */}
-        <div className="max-w-[380px] w-full mx-auto sm:max-w-full sm:w-full sm:translate-y-[0] sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px]md:translate-y-[0] sm2:px-[50px]">
+        <div className="max-w-[380px] w-full mx-auto sm:max-w-full sm:w-full sm:translate-y-[0] sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[130px] md:mt-[30px]md:translate-y-[0] sm2:px-[50px]">
           <div className=''>
             <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
@@ -65,7 +65,7 @@ const OTPVerification = () => {
             <div className="sm:flex flex-col-reverse">
               <Button
                 title={'VERIFY'}
-                className="mt-[17px] block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in sm:mt-[0]"
+                className="mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in sm:mt-[0]"
                 loading={loadings.auth}
                 onClick={onVerify}
               />

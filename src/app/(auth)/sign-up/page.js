@@ -45,11 +45,11 @@ const SignUp = () => {
   }
 
   return (
-    <div className="h-screen overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96s%] bg-no-repeat bg-center sm:bg-none sm:h-auto sm:overflow-hidden md:bg-contain md:h-auto md:overflow-hidden">
+    <div className="h-screen overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center">
       <div className=''>
         <div className="max-w-[380px] w-full my-[40px] mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
           <div className=''>
-            <img src="/images/auth/Star.svg" className="mb-[12px] mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
+            <img src="/images/auth/Star.svg" className="lg:mb-[12px] lg:mx-auto lg:block sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Create an account for <span className="text-[#1E71F2]">Free</span></h5>
           </div>
         
@@ -99,7 +99,7 @@ const SignUp = () => {
             {validations.phone && <PhoneValidation value={inputs.phone} />}
             <Button
               title={'GET OTP'}
-              className={'mt-[17px] block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              className={'mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
               loading={loadings.otp}
               onClick={onSignUp}
             />

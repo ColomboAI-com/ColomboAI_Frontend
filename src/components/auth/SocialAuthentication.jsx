@@ -11,24 +11,24 @@ export default function SocialAuthentication() {
   const { loadings } = auth()
 
   return (
-    <div className="sm:flex sm:items-center sm:justify-center sm:gap-[16px]">
-      <div className='flex align-middle bg-opacity-45 rounded-full border-[1px] border-brandprimary sm:bg-[#E2F2FF]  p-3 2xl:px-[24px] xl:px-[24px] mb-[15px] cursor-pointer' onClick={continueWithGoogle}>
+    <div className="sm:flex sm:items-center sm:justify-center sm:gap-[16px] lg:block">
+      <div className='flex align-middle bg-opacity-45 rounded-full border-[1px] border-brandprimary sm:bg-[#E2F2FF] 2xl:px-[24px] px-[24px] py-[13px] mb-[15px] cursor-pointer lg:bg-transparent' onClick={continueWithGoogle}>
         {
           loadings.google ? <Loader /> :
             <img src="/images/auth/google.svg" alt="google_logo" className="w-[20.25px] object-cover" /> }
-        <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans sm:hidden'>Continue with Google</h6>
+        <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden lg:block lg:font-[500]'>Continue with Google</h6>
       </div>
-      <div className='flex align-middle bg-opacity-45 rounded-full border-[1px] border-brandprimary sm:bg-[#E2F2FF] p-3 2xl:px-[24px] xl:px-[24px] mb-[15px] cursor-pointer' onClick={continueWithMeta}>
+      <div className='flex align-middle bg-opacity-45 rounded-full border-[1px] border-brandprimary sm:bg-[#E2F2FF] 2xl:px-[24px] px-[24px] py-[13px] mb-[15px] cursor-pointer lg:bg-transparent' onClick={continueWithMeta}>
         {
           loadings.meta ? <Loader /> :
             <img src="/images/auth/meta.svg" alt="meta_logo" className="w-[20.25px] object-cover" />}
-            <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden'>Continue with Meta</h6>
+            <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden lg:block lg:font-[500]'>Continue with Meta</h6>
       </div>
-      <div className='flex align-middle bg-opacity-45 rounded-full border-[1px] border-brandprimary sm:bg-[#E2F2FF] p-3 2xl:px-[24px] xl:px-[24px] mb-[15px] cursor-pointer' onClick={continueWithMicrosoft}>
+      <div className='flex align-middle bg-opacity-45 rounded-full border-[1px] border-brandprimary sm:bg-[#E2F2FF] 2xl:px-[24px] px-[24px] py-[13px] cursor-pointer lg:bg-transparent' onClick={continueWithMicrosoft}>
         {
           loadings.microsoft ? <Loader /> :
             <img src="/images/auth/microsoft.svg" alt="microsoft_logo" className="w-[20.25px] object-cover" />}
-            <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden'>Continue with Microsoft</h6>
+            <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden lg:block lg:font-[500]'>Continue with Microsoft</h6>
       </div>
     </div>
   )
