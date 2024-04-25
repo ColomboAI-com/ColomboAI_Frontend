@@ -11,5 +11,5 @@ export const USERNAME_REGEX = /^[a-zA-Z0-9_]{0,30}$|^$/
 export const HASHTAG_REGEX = /#(\w+)/g
 export const MENTION_REGEX = /@(\w+)/g
 
-export const RESEND_TIME = 1
+export const RESEND_TIME = 60
 export const MIN_USERNAME_LENGTH = 5
