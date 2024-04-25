@@ -36,7 +36,7 @@ const SignIn = () => {
   return (
     <div className="lg:flex lg:items-center lg:justify-center bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center lg:h-screen lg:overflow-auto sm:h-auto sm:bg-contain md:bg-contain">
       {/* <div className=''> */}
-        <div className="max-w-[380px] w-full mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[100px] md:mt-[30px] sm2:px-[50px]">
+        <div className="max-w-[380px] w-full mx-auto xl:px-[150px] sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[100px] md:mt-[30px] sm2:px-[50px]">
           <div className='xl:block sm:hidden md:hidden lg:block'>
             <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center font-[450]">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>
