@@ -108,11 +108,11 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const ssoAuthentication = async ({ provider, token, userid }) => {
+  const ssoAuthentication = async ({ provider, token }) => {
     try {
       setLoadings(prev => ({ ...prev, [provider]: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sso-authentication`,
-        { provider, token, userid }
+        { provider, token }
       )
       MessageBox('success', res.data.message)
       return res

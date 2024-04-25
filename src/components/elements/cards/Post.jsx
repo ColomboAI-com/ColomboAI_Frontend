@@ -1,61 +1,37 @@
-/* eslint-disable @next/next/no-img-element */
-const Post = () => {
-    return (
-        <div className="border-[1px] border-brandprimary rounded-[10px]">
-            <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px]">
-            <div className="flex items-center">
-                <img src="/images/home/avtar-img.png" alt="user_avatar" className="w-[42px]" />
-                <p className="pl-[17px] c">acch._.hhsn</p>
-            </div>
-            <div className="flex items-center gap-4">
-                <p className="font-sans text-sidebarlabel tex-[12px]">
-                2 mins ago
-                </p>
-                <img src="/images/home/more_horiz.png" alt="more_option_image" />
-            </div>
-            </div>
-            <img src="/images/home/feed-banner-img.png" alt="post_image" className="w-full" />
-            <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[19px]">
-                <div className="flex items-center gap-4">
-                    <img src="/images/home/wishlist.png" alt="like_button_image" />
-                    <p className="text-sidebarlabel font-sans text-[14px]">121</p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <img src="/images/home/Chat.png" alt="comment_image" />
-                    <p className="text-sidebarlabel font-sans text-[14px]">88</p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <img src="/images/home/refresh.png" alt="repost_button_image" />
-                    <p className="text-sidebarlabel font-sans text-[14px]">23</p>
-                </div>
-                <div className="flex items-center">
-                    <img src="/images/home/Magic-pen.png" alt="magic_pen_button_image" />
-                </div>
-                </div>
-                <div className="flex items-center gap-[19px]">
-                <div className="flex items-center gap-4">
-                    <img src="/images/home/Arrow.png" alt="share_button_image" />
-                    <p className="text-sidebarlabel font-sans text-[14px]">10</p>
-                </div>
-                <div className="flex items-center gap-4">
-                    <img src="/images/home/bookmark.png" alt="save_button_image" />
-                    <p className="text-sidebarlabel font-sans text-[14px]">40</p>
-                </div>
-                </div>
-            </div>
-            <div className="flex items-center gap-4">
-                <p className="text-[#333333] tex-[16px] font-sans font-[700]">
-                Anna
-                </p>
-                <p className="text-[#515151] tex-[16px] font-sans font-[450]">
-                Most beautiful view of my trip
-                </p>
-            </div>
-            </div>
+import RecentComments from "@/components/feed/post/RecentComments"
+import ImageBlock from "@/components/feed/post/ImageBlock"
+import PostActions from "@/components/feed/post/PostActions"
+import ProfilePicture from "../ProfilePicture"
+import Username from "../Username"
+import { formatTimeAgo } from "@/utlils/commonFunctions"
+import ContentBlock from "@/components/feed/post/ContentBlock"
+import VideoBlock from "@/components/feed/post/VideoBlock"
+import Link from "next/link"
+
+const Post = ({ post }) => {
+  return (
+    <div className="border-[1px] border-brandprimary rounded-[10px] mt-5">
+      <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px]">
+        <Link className="flex items-center" href={`/profile/${post?.creator?.user_name || ''}`} target="_blank">
+          <ProfilePicture image={post?.creator?.profile_picture} />
+          <Username username={post?.creator?.user_name} />
+        </Link>
+        <div className="flex items-center gap-4">
+          <p className="font-sans text-sidebarlabel tex-[12px]">
+            {formatTimeAgo(post?.createdAt)}
+          </p>
+          <img src="/images/home/more_horiz.png" alt="more_option_image" />
         </div>
-    );
+      </div>
+      {post?.content && <ContentBlock content={post.content} />}
+      {post?.filetype === 'image' && <ImageBlock image={post.media} />}
+      {post?.filetype === 'video' && <VideoBlock video={post.media} />}
+      <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
+        <PostActions post={post} />
+        <RecentComments comments={post.comments} />
+      </div>
+    </div>
+  )
 }
 
-export default Post;
+export default Post

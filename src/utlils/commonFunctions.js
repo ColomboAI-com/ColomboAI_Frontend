@@ -53,3 +53,29 @@ export const isContainRestrictedKeywords = (value) => {
   ) return true
   else return false
 }
+
+export const formatTimeAgo = (time) => {
+  if (!time) return ''
+
+  const currentDate = new Date()
+  const inputDate = new Date(time)
+  const timeDifference = currentDate.getTime() - inputDate.getTime()
+
+  const minute = 60 * 1000
+  const hour = minute * 60
+  const day = hour * 24
+
+  if (timeDifference < minute) {
+    return "Just now"
+  } else if (timeDifference < hour) {
+    const minutes = Math.floor(timeDifference / minute)
+    return `${minutes} m ago`
+  } else if (timeDifference < day) {
+    const hours = Math.floor(timeDifference / hour)
+    return `${hours} h ago`
+  } else {
+    const formattedDate = `${inputDate.getDate().toString().padStart(2, '0')}-${(inputDate.getMonth() + 1).toString().padStart(2, '0')}-${inputDate.getFullYear()}`
+    return formattedDate
+  }
+}
+
