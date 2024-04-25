@@ -45,14 +45,14 @@ const SignUp = () => {
   }
 
   return (
-    <div className="h-screen overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
+    <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
       <div className=''>
         <div className="max-w-[380px] w-full my-[40px] mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[100px] md:mt-[30px] sm2:px-[50px]">
           <div className=''>
             <img src="/images/auth/Star.svg" className="lg:mb-[12px] lg:mx-auto lg:block sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center">Create an account for <span className="text-[#1E71F2]">Free</span></h5>
           </div>
-        
+
           <div className="">
             <input
               type="text"
@@ -114,7 +114,7 @@ const SignUp = () => {
           <AgreeTermAndConditions />
         </div>
       </div>
-      
+
     </div>
   )
 }
