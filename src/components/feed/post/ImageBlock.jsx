@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function ImageBlock({ image = '/images/home/feed-banner-img.png' }) {
   return (
     <div>

@@ -3,7 +3,7 @@ import Post from "@/components/elements/cards/Post"
 import Loader from "@/components/Loader"
 import { feed } from "@/context/FeedContext"
 
-const Thoughts = () => {
+const Videos = () => {
 
   const { loadings, posts } = feed()
 
@@ -19,4 +19,4 @@ const Thoughts = () => {
   )
 }
 
-export default Thoughts
+export default Videos

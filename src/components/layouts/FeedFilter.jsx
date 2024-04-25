@@ -1,32 +1,39 @@
 'use client'
-
 import { feed } from "@/context/FeedContext"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 const navigation = [
   { name: "Feed", link: "/feed" },
-  { name: "Video", link: "/video" },
+  { name: "Videos", link: "/videos" },
   { name: "Vibes", link: "/vibes" },
   { name: "Thoughts", link: "/thoughts" },
   { name: "Images", link: "/images" },
   { name: "Explore", link: "/explore" },
-  { name: "Profile", link: "/profile" },
+  { name: "Profile", link: "/profile" }
 ]
 
 const FeedFilter = (props) => {
 
-  const { getPosts, posts } = feed()
+  const [filter, setFilter] = useState(null)
+  const { getPosts } = feed()
   const pathname = usePathname()
 
   useEffect(() => {
-    const filter = pathname.split('/')?.at(-1)
-    if (filter !== 'explore' || filter !== 'profile')
-      getPosts(filter)
+    const name = pathname.split('/')?.at(-1)
+    if (name === 'feed') setFilter(undefined)
+    if (name === 'images') setFilter('image')
+    if (name === 'videos') setFilter('video')
+    if (name === 'thoughts') setFilter('thought')
+    if (name === 'vibes') setFilter('vibe')
+    if (name === 'explore' || name === 'profile') setFilter(null)
   }, [pathname])
 
-  console.log(posts)
+  useEffect(() => {
+    if (typeof filter !== 'object')
+      getPosts(filter)
+  }, [filter])
 
   return (
     <div {...props}>

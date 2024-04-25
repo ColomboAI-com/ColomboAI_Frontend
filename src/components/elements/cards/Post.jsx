@@ -6,15 +6,16 @@ import Username from "../Username"
 import { formatTimeAgo } from "@/utlils/commonFunctions"
 import ContentBlock from "@/components/feed/post/ContentBlock"
 import VideoBlock from "@/components/feed/post/VideoBlock"
+import Link from "next/link"
 
 const Post = ({ post }) => {
   return (
-    <div className="border-[1px] border-brandprimary rounded-[10px]">
+    <div className="border-[1px] border-brandprimary rounded-[10px] mt-5">
       <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px]">
-        <div className="flex items-center">
+        <Link className="flex items-center" href={`/profile/${post?.creator?.user_name || ''}`} target="_blank">
           <ProfilePicture image={post?.creator?.profile_picture} />
           <Username username={post?.creator?.user_name} />
-        </div>
+        </Link>
         <div className="flex items-center gap-4">
           <p className="font-sans text-sidebarlabel tex-[12px]">
             {formatTimeAgo(post?.createdAt)}
@@ -22,12 +23,12 @@ const Post = ({ post }) => {
           <img src="/images/home/more_horiz.png" alt="more_option_image" />
         </div>
       </div>
-      {post?.content && <ContentBlock />}
-      {post?.filetype === 'image' && <ImageBlock />}
-      {post?.filetype === 'video' && <VideoBlock />}
+      {post?.content && <ContentBlock content={post.content} />}
+      {post?.filetype === 'image' && <ImageBlock image={post.media} />}
+      {post?.filetype === 'video' && <VideoBlock video={post.media} />}
       <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
-        <PostActions />
-        <RecentComments />
+        <PostActions post={post} />
+        <RecentComments comments={post.comments} />
       </div>
     </div>
   )

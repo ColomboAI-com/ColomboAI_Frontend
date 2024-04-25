@@ -21,17 +21,18 @@ export default function FeedContextProvider({ children }) {
     GetUserPost: false
   })
 
-  const getPosts = async () => {
+  const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
       const res = await axios.get(`${ROOT_URL_FEED}/post/feed`,
         {
+          // params: { type, page, limit },
           headers: {
             Authorization: getCookie('token')
           }
         }
       )
-      return res.data
+      setPosts(res.data?.posts || [])
     } catch (err) {
       handleError(err)
     } finally {
