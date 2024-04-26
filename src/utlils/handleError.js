@@ -15,7 +15,7 @@ export const handleError = (err) => {
       MessageBox('error', err.response.data?.error)
       setTimeout(() => {
         clearCookie()
-        window.location.pathname = '/signup'
+        window.location.pathname = '/sign-up'
       }, 1500)
       return
     }

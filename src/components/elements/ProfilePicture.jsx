@@ -5,7 +5,9 @@ export default function ProfilePicture({ image = '/images/home/avtar-img.png', s
     <img
       src={image}
       alt="avatar"
-      className={`w-[${size}px] rounded-full${className ? ` ${className}` : ''}`}
+      className={`rounded-full${className ? ` ${className}` : ''}`}
+      height={size}
+      width={size}
     />
   )
 }

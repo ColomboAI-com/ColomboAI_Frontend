@@ -69,7 +69,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col">
             <Header />
             <div className="flex flex-1 border- border-purple-400">
-              <div className="w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] overflow-y-scroll">
+              <div className="w-[100%] lg:w-[70%]">
                 {children}
               </div>
               <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-scroll lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
