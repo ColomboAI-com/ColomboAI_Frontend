@@ -56,6 +56,9 @@ const DefaultLayout = ({ children }) => {
   
   return (
     <FeedContextProvider>
+
+      
+
       <div className="min-w-screen border- border-yellow-400">
         <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
           <div className="border-2 border-purple-50">
