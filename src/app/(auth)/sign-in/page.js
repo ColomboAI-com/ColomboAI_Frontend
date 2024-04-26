@@ -34,7 +34,7 @@ const SignIn = () => {
   return (
     <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
       <div className='min-h-screen flex justify-center lg:items-center sm:px-[20px]'>
-        <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:max-w-full md:w-full">
+        <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:w-full">
           <div className='xl:block sm:hidden md:hidden lg:block'>
             <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center font-[450]">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>

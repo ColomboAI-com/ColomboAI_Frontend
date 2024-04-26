@@ -41,10 +41,10 @@ const OTPVerification = () => {
   return (
     <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
       <div className='min-h-screen flex justify-center lg:items-center sm:px-[20px]'>
-        <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:max-w-full md:w-full">
-          <div className="lg:h-[calc(20vh+50px)]">
+        <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:w-full">
+          <div>
             <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:block" alt="welcome_to_colomboai" />
-            <h5 className="text-[24px] font-sans text-center">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
+            <h5 className="text-[24px] font-sans text-center mb-[75px]">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
             <p className="text-[#737373] text-[16px] font-sans text-center lg:mt-[10px] lg:block sm:grid sm:mt-[35px]">
               Enter the OTP you received on <span className="text-[#1E71F2]"> {getShortEmail(inputs.email)}</span>
             </p>
