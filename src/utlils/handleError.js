@@ -21,3 +21,7 @@ export const handleError = (err) => {
     }
   }
 }
+
+export const handleSsoError = (err) => {
+  MessageBox('error', 'Somethig went wrong, Please try again.')
+}
