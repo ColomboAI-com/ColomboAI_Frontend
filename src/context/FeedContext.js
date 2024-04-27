@@ -218,33 +218,18 @@ export default function FeedContextProvider({ children }) {
 
   return (
 
-//     <FeedContext.Provider value={{
-//       posts, setPosts,
-//       loadings, getPosts,
-//       createPost, deletePost,
-//       likePost, rePost,
-//       addComment, deleteComment,
-//       generatePost, generateComment,
-//       getPostsOfUser, page,
-//       resetFeedValues
-//     }}>
-    <FeedContext.Provider
-      value={{
-        posts,
-        setPosts,
-        loadings,
-        getPosts,
-        createPost,
-        deletePost,
-        likePost,
-        rePost,
-        addComment,
-        deleteComment,
-        generatePost,
-        generateComment,
-        getPostsOfUser,
-      }}
-    >
+
+    <FeedContext.Provider value={{
+      posts, setPosts,
+      loadings, getPosts,
+      createPost, deletePost,
+      likePost, rePost,
+      addComment, deleteComment,
+      generatePost, generateComment,
+      getPostsOfUser, page,
+      resetFeedValues
+    }}>
+
       {children}
     </FeedContext.Provider>
   );

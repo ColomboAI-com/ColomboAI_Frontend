@@ -3,9 +3,7 @@ import Header from "@/components/layouts/Header"
 import InputBar from "@/components/layouts/InputBar";
 import RightSidebar from "@/components/layouts/RightSidebar"
 import Sidebar from "@/components/layouts/Sidebar"
-// PankajNew
-// import FeedContextProvider from "@/context/FeedContext"
-import CommentSec from "@/components/comment/CommentSec"
+
 import FeedContextProvider, { FeedContext } from "@/context/FeedContext"
 
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
@@ -18,6 +16,8 @@ import Post from "@/components/elements/cards/Post";
 import CreatePost from "@/components/elements/CreatePost";
 import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
+import Share from "@/components/Share";
+import CommentSection from "@/components/comment/CommentSection";
 
 
 const DefaultLayout = ({ children }) => {
@@ -26,7 +26,7 @@ const DefaultLayout = ({ children }) => {
 
   const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
 
-    const { isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
+    const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
   
   return (
     <FeedContextProvider>
@@ -43,11 +43,16 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col relative">
             <Header />
             <div className="flex flex-1 border- border-purple-400">
-//               <div className="w-[100%] lg:w-[70%]">
               {
                 isCreatePostOpen &&
                 <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <CreatePost/>
+                </Modal>
+              }
+              {
+                isShareOpen &&
+                <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
+                    <Share/>
                 </Modal>
               }
               <div className="w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] overflow-y-scroll">
@@ -58,7 +63,7 @@ const DefaultLayout = ({ children }) => {
               </div>
             </div>
             
-              <CommentSec />
+              {/* <CommentSection /> */}
             
           </div>
         </div>
@@ -116,7 +121,7 @@ const DefaultLayout = ({ children }) => {
         </div>
 
 
-      </div>
+      </div>;
     </FeedContextProvider>
   )
 }

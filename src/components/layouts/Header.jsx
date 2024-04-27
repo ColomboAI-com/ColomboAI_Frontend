@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Link from "next/link";
@@ -10,6 +11,7 @@ import Modal from "../elements/Modal";
 import Post from "../elements/cards/Post";
 import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
+import Share from "../Share";
 
 
 const Header = () => {
@@ -51,16 +53,6 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-
-            {/*Sshare Modal Test */}
-
-            {/* <button onClick={() => setIsShareOpen(true)}>Share button</button>
-            {
-                isShareOpen &&
-                <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <Post/>
-                </Modal>
-            } */}
 
             {/* mobile view */}
 

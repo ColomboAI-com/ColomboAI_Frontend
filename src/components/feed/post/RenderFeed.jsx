@@ -1,13 +1,14 @@
 'use client'
+import CommentSection from "@/components/comment/CommentSection"
 import Post from "@/components/elements/cards/Post"
 import Loader from "@/components/Loader"
 import NoDataFound from "@/components/NoDataFound"
-import { feed } from "@/context/FeedContext"
-import { useEffect } from "react"
+import { feed, FeedContext } from "@/context/FeedContext"
+import { useContext, useEffect } from "react"
 
 export default function RenderFeed({ filter }) {
 
-  const { posts, getPosts, loadings, page, resetFeedValues } = feed()
+  const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext)
 
   useEffect(() => {
     getPosts(filter)
@@ -35,9 +36,18 @@ export default function RenderFeed({ filter }) {
     <div>
       {
         posts.length ?
-          posts.map((i, index) =>
+        <>
+          {/* <>
+          {
+              posts.length && <CommentSection/>
+          }
+          </> */}
+          {
+            posts.map((i, index) => 
             <Post post={i} key={index} />
-          )
+            )
+          }
+        </>
           : <NoDataFound className={'mt-5'} />
       }
     </div>

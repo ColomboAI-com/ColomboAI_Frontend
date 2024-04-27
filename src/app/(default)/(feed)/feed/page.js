@@ -6,21 +6,23 @@ import Sugeested from "@/components/elements/sliders/Sugeested"
 import LikeThis from "@/components/elements/sliders/LikeThis"
 import SectionHeading from "@/components/elements/SectionHeading"
 import RenderFeed from "@/components/feed/post/RenderFeed"
+import CommentSection from "@/components/comment/CommentSection"
 
 
 const Feed = () => {
 
   return (
-    <><div>
+    <>
+    <div>
       <Stories />
 
-//       {loadings.getPost ? <Loader /> :
-//         posts?.map((i, index) => <Post post={i} key={index} />
-//         )}
-//       <SectionHeading title="Suggested Vibes For You" />
-//       <Sugeested />
-//       <SectionHeading title="You might like these" />
-//       <LikeThis />
+       {/* {loadings.getPost ? <Loader /> :
+         posts?.map((i, index) => <Post post={i} key={index} />
+         )}
+       <SectionHeading title="Suggested Vibes For You" />
+       <Sugeested />
+       <SectionHeading title="You might like these" />
+       <LikeThis /> */}
 
       <RenderFeed />
       {/* <SectionHeading title="Suggested Vibes For You" /> */}
@@ -29,8 +31,7 @@ const Feed = () => {
       {/* <LikeThis /> */}
 
     </div>
-    
-      </>
+    </>
   )
 }
 

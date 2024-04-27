@@ -13,7 +13,7 @@ import { useEffect } from "react"
 const Share = () => {
 
   return (
-    <div className="absolute bg-[#1E71F2] border-[1px] border-[#fff] w-[430px] z-[99] top-[20%] left-[40%] rounded-[20px] px-[14px]">
+    <div className="w-full flex flex-col items-center bg-[#1E71F2] border-[1px] border-[#fff] sm2:w-[430px] md:w-[430px] z-50 rounded-t-[20px] sm2:rounded-[20px] md:rounded-[20px] px-[14px]">
         <div className="before:content-[''] before:bg-white before:block before:w-[40px] before:h-[3px] before:mx-auto before:rounded-[20px] before:mt-[8.98px]">
           <h5 className="text-[18.51px] font-sans text-white text-center">Share Thought</h5>
         </div>
