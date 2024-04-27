@@ -1,12 +1,12 @@
 import React from 'react'
-import { socialAuth } from '@/context/SocialAuthContext'
+import { useSocialAuth } from '@/context/SocialAuthContext'
 import Loader from '../Loader'
-import { auth } from '@/context/AuthContext'
+import { useAuth } from '@/context/AuthContext'
 
 export default function SocialAuthentication() {
 
-  const { continueWithGoogle, continueWithMeta, continueWithMicrosoft, setSelectedProvider } = socialAuth()
-  const { loadings } = auth()
+  const { continueWithGoogle, continueWithMeta, continueWithMicrosoft, setSelectedProvider } = useSocialAuth()
+  const { loadings } = useAuth()
 
   const handleSocialAuthentication = (provider) => {
     setSelectedProvider(provider)

@@ -2,7 +2,7 @@
 import RedirectLink from "@/components/auth/RedirectLink"
 import SocialAuthentication from "@/components/auth/SocialAuthentication"
 import { EmailValidation } from "@/components/Validations"
-import { auth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
 import { isValidEmail } from "@/utlils/validate"
@@ -11,7 +11,7 @@ import { useEffect } from "react"
 
 const SignIn = () => {
 
-  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = auth()
+  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = useAuth()
   const router = useRouter()
 
   useEffect(() => {

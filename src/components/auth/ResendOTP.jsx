@@ -1,4 +1,4 @@
-import { auth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 import { RESEND_TIME } from "@/utlils/constant"
 import { getSessionStorage } from "@/utlils/utils"
 import { useEffect, useState } from "react"
@@ -7,7 +7,7 @@ export default function ResendOTP() {
 
   const [count, setCount] = useState(RESEND_TIME)
   const [isStart, setIsStart] = useState(true)
-  const { getOTP } = auth()
+  const { getOTP } = useAuth()
 
   useEffect(() => {
     let interval = null

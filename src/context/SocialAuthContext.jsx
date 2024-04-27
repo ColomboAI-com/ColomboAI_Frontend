@@ -2,7 +2,7 @@
 import { useContext, createContext, useState, useEffect } from "react"
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider } from "firebase/auth"
 import { firebaseAuth } from "@/utlils/firebaseConfig"
-import { auth } from "./AuthContext"
+import { useAuth } from "./AuthContext"
 import { useRouter } from "next/navigation"
 import { setUserCookies } from "@/utlils/commonFunctions"
 import { handleSsoError } from "@/utlils/handleError"
@@ -13,7 +13,7 @@ export const SocialAuthContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
   const [selectedProvider, setSelectedProvider] = useState('')
-  const { ssoAuthentication } = auth()
+  const { ssoAuthentication } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
@@ -84,6 +84,6 @@ export const SocialAuthContextProvider = ({ children }) => {
   )
 }
 
-export const socialAuth = () => {
+export const useSocialAuth = () => {
   return useContext(SocialAuth)
 }
