@@ -1,12 +1,18 @@
 /* eslint-disable jsx-a11y/alt-text */
+
+import { GlobalContext } from "@/context/GlobalContext";
+import { useContext } from "react";
+
 /* eslint-disable @next/next/no-img-element */
 const CommentSection = () => {
+
+  const { setIsCommentOpen } = useContext(GlobalContext);
 
   return (
     <div className="flex h-[calc(100vh-222px)] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] ">
         <div className="w-[70%]">
             <div className="bg-[#333333] h-full py-[153px] relative">
-              <button className="bg-white w-[36px] h-[36px] rounded-full absolute top-[0] mt-[25px] ml-[14px]">
+              <button onClick={() => setIsCommentOpen(false)} className="bg-white w-[36px] h-[36px] rounded-full absolute top-[0] mt-[25px] ml-[14px]">
                 <img src="/images/icons/cross-icon.svg" className="p-[12px]"/>
               </button>
               <img src="/images/comment/commenimg.png" className="w-full h-[450px]"/>

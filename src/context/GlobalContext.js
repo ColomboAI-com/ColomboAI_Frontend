@@ -11,6 +11,7 @@ export default function GlobalContextProvider({ children }) {
 
     let [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
     let [isShareOpen, setIsShareOpen] = useState(false);
+    let [isCommentOpen, setIsCommentOpen] = useState(false);
 
     return (
         <GlobalContext.Provider
@@ -19,6 +20,8 @@ export default function GlobalContextProvider({ children }) {
             setIsCreatePostOpen,
             isShareOpen, 
             setIsShareOpen,
+            isCommentOpen, 
+            setIsCommentOpen,
           }}
         >
           {children}

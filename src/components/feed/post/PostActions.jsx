@@ -3,7 +3,7 @@ import { useContext } from "react";
 
 export default function PostActions({ post }) {
 
-  const { setIsShareOpen } = useContext(GlobalContext);
+  const { setIsShareOpen, setIsCommentOpen } = useContext(GlobalContext);
 
   return (
     <div className="flex items-center justify-between">
@@ -13,7 +13,7 @@ export default function PostActions({ post }) {
           <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.likes || 0}</p>
         </div>
         <div className="flex items-center gap-4">
-          <button >
+          <button onClick={() => setIsCommentOpen(true)}>
             <img src="/images/home/Chat.png" alt="comment_image" />
           </button>
           <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
