@@ -5,23 +5,19 @@ import { usePathname } from "next/navigation";
 import InputBar from "./InputBar";
 import { ChatBubbleIcon, CreateIcon, NotificationIcon, SearchIcon } from "../Icons";
 import FeedFilter from "./FeedFilter";
+import CreateDropdown from "../elements/CreateDropdown";
+import Modal from "../elements/Modal";
+import Post from "../elements/cards/Post";
+import { useContext } from "react";
+import { GlobalContext } from "@/context/GlobalContext";
 
-const navigation = [
-    { name: "Feed", link: "/feed" },
-    { name: "Video", link: "/video" },
-    { name: "Vibes", link: "/vibes" },
-    { name: "Thoughts", link: "/thoughts" },
-    { name: "Images", link: "/images" },
-    { name: "Explore", link: "/explore" },
-    { name: "Profile", link: "/profile" },
-];
 
 const Header = () => {
 
-    const pathname = usePathname();
+    const { isShareOpen, setIsShareOpen } = useContext(GlobalContext);
 
     return (
-        <div className=" bg-white sticky top-14 z-50">
+        <div className=" bg-white sticky top-14 z-40">
             {/* Desktop view */}
 
             {/* <div className=" hidden lg:flex items-center justify-between shadow-[0px_2px_4px_0px_#0000001A] lg:py-9">
@@ -49,13 +45,22 @@ const Header = () => {
                     </div>
                     <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
                         <SearchIcon w={35} h={35} fill={'#646464'} />
-                        <CreateIcon w={35} h={35} fill={'#646464'} />
+                        <CreateDropdown/>
                         <NotificationIcon w={35} h={35} fill={'#646464'} />
                         <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
                     </div>
                 </div>
             </div>
 
+            {/*Sshare Modal Test */}
+
+            {/* <button onClick={() => setIsShareOpen(true)}>Share button</button>
+            {
+                isShareOpen &&
+                <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
+                    <Post/>
+                </Modal>
+            } */}
 
             {/* mobile view */}
 
@@ -67,7 +72,7 @@ const Header = () => {
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
                         <div className="flex items-center gap-4 lg:gap-8 mx-9 ">
-                            <CreateIcon w={35} h={35} fill={'#646464'} />
+                            <CreateDropdown/>
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
                             <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
                         </div>
