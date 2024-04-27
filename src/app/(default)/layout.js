@@ -27,6 +27,9 @@ const DefaultLayout = ({ children }) => {
   
   return (
     <FeedContextProvider>
+
+      
+
       <div className="min-w-screen border- border-yellow-400">
         <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
           <div className="border-2 border-purple-50">
@@ -40,6 +43,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col">
             <Header />
             <div className="flex flex-1 border- border-purple-400">
+//               <div className="w-[100%] lg:w-[70%]">
               {
                 isCreatePostOpen &&
                 <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">

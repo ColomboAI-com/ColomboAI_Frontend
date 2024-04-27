@@ -8,7 +8,7 @@ const AuthLayout = ({ children }) => {
         <div className="grid grid-cols-2 h-screen font-sans sm:hidden md:hidden lg:grid">
           <div className="bg-brandprimary flex justify-center h-screen">
             <div className="max-w-[350px] w-full mt-[144px] mb-[100px] mx-auto flex items-center">
-              <img src="/images/auth/auth_mockup.png" className="w-full" alt="mockup_image" />
+              <img src="/images/auth/auth-mobile-phone.svg" className="w-full" alt="mockup_image" />
             </div>
           </div>
           <div>

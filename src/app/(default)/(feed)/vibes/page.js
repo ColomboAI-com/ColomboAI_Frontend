@@ -1,9 +1,5 @@
-const Feed = () => {
-    return (
-        <div>
-            Vibes Page Content
-        </div>
-    );
-}
+import RenderFeed from '@/components/feed/post/RenderFeed'
 
-export default Feed;
+export default function Vibes() {
+  return <RenderFeed filter={'vibe'} />
+}

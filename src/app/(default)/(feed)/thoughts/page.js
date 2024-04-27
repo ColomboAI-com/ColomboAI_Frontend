@@ -1,9 +1,5 @@
-const Feed = () => {
-    return (
-        <div>
-            Thoughts Page Content
-        </div>
-    );
-}
+import RenderFeed from "@/components/feed/post/RenderFeed"
 
-export default Feed;
+export default function Thoughts() {
+  return <RenderFeed filter={'thought'} />
+}

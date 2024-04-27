@@ -1,8 +1,6 @@
 'use client'
-import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
 import RedirectLink from "@/components/auth/RedirectLink"
 import SocialAuthentication from "@/components/auth/SocialAuthentication"
-import { MessageBox } from "@/components/MessageBox"
 import { EmailValidation } from "@/components/Validations"
 import { auth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
@@ -34,29 +32,27 @@ const SignIn = () => {
   }
 
   return (
-    <div className='h-screen overflow-auto sm:h-auto sm:overflow-hidden md:h-auto md:overflow-hidden'>
-      <div className=''>
-        <div className="max-w-[380px] w-full my-[40px] mx-auto sm:max-w-full sm:w-full sm:px-[25px] sm:mt-[30px] sm:mb-[0] sm:pb-[20px] md:max-w-full md:w-full md:px-[150px] md:mt-[30px] sm2:px-[50px]">
+    <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
+      <div className='min-h-screen flex justify-center lg:items-center sm:px-[20px]'>
+        <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:w-full">
           <div className='xl:block sm:hidden md:hidden lg:block'>
-            <img src="/images/auth/Star.svg" className="object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
-            <h5 className="text-[24px] font-sans text-center">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>
+            <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:hidden" alt="welcome_to_colomboai" />
+            <h5 className="text-[24px] font-sans text-center font-[450]">Hello, <span className="text-[#1E71F2]">Welcome back</span></h5>
           </div>
-        
-          <div className="">
-          <input
+          <div>
+            <input
               type="email"
-              className="mt-4 w-full rounded-[40px] border-2 border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              className="mt-[24px] w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
               autoComplete="off"
               name={"email"}
               value={inputs.email}
               onChange={handleInputs}
             />
-            
             {validations.email && <EmailValidation value={inputs.email} />}
             <Button
-              title={'Sign in'}
-              className={'mt-6 block w-full rounded-[40px] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              title={'GET OTP'}
+              className={'mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
               loading={loadings.otp}
               onClick={onSignIn}
             />
@@ -66,14 +62,11 @@ const SignIn = () => {
           <RedirectLink
             title={'Don’t have an account?'}
             href={'/sign-up'}
-            linkName={'Sign up'}
+            linkName={'Sign Up'}
           />
         </div>
       </div>
-      {/* <AgreeTermAndConditions /> */}
     </div>
-
-    
   )
 }
 

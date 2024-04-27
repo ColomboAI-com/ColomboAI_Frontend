@@ -34,15 +34,15 @@ export default function ResendOTP() {
   }
 
   return (
-    <div className='my-7 text-center sm: mt-[33px] mb-[24px]'>
+    <div className='mt-[25px] text-center sm: mt-[33px] mb-[24px]'>
       {
         count > 0 ?
-          <p className='text-lg'>
-            Resend OTP in <span className='text-brandprimary'>{count > 9 ? count : '0' + count} sec.</span>
+          <p className='text-[16px] text-[#333333] font-sans tracking-[3px] text-center cursor-pointer'>
+            RE-SEND THE OTP IN <span className='text-brandprimary'>{count > 9 ? count : '0' + count}s</span>
           </p>
           :
-          <p className="text-[16px] text-[#333333] font-sans tracking-[3px] text-center" onClick={onResendOTP}>
-            RE-SEND THE CODE
+          <p className="text-[16px] text-[#333333] font-sans tracking-[3px] text-center cursor-pointer" onClick={onResendOTP}>
+            RE-SEND THE OTP
           </p>
       }
     </div>

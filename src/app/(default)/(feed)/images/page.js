@@ -1,9 +1,5 @@
-const Feed = () => {
-    return (
-        <div>
-            Images Page Content
-        </div>
-    );
-}
+import RenderFeed from "@/components/feed/post/RenderFeed"
 
-export default Feed;
+export default function Images() {
+  return <RenderFeed filter={'image'} />
+}

@@ -3,28 +3,37 @@ import { useContext, createContext, useState, useEffect } from "react"
 import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider, FacebookAuthProvider, OAuthProvider } from "firebase/auth"
 import { firebaseAuth } from "@/utlils/firebaseConfig"
 import { auth } from "./AuthContext"
+import { useRouter } from "next/navigation"
+import { setUserCookies } from "@/utlils/commonFunctions"
+import { handleSsoError } from "@/utlils/handleError"
 
 const SocialAuth = createContext()
 
 export const SocialAuthContextProvider = ({ children }) => {
 
   const [user, setUser] = useState(null)
+  const [selectedProvider, setSelectedProvider] = useState('')
   const { ssoAuthentication } = auth()
+  const router = useRouter()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, (authUser) => {
-      // console.log(authUser)
       setUser(authUser)
     })
     return () => unsubscribe()
   }, [])
 
   useEffect(() => {
-    signOutSocialAuth()
-    if (user) {
-      if (user.providerData?.[0]?.providerId === 'google.com')
-        ssoAuthentication({ provider: 'google', token: user.accessToken })
-    }
+    (async () => {
+      if (user) {
+        const res = await ssoAuthentication({ provider: selectedProvider, token: user.accessToken })
+        if (res) {
+          setUserCookies(res.data)
+          router.replace('/')
+        }
+      }
+    })()
+    return () => signOutSocialAuth()
   }, [user])
 
   const continueWithGoogle = async () => {
@@ -32,7 +41,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       const googleProvider = new GoogleAuthProvider()
       await signInWithPopup(firebaseAuth, googleProvider)
     } catch (err) {
-      console.error(err)
+      handleSsoError(err)
     }
   }
 
@@ -41,7 +50,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       const metaProvider = new FacebookAuthProvider()
       await signInWithPopup(firebaseAuth, metaProvider)
     } catch (err) {
-      console.error(err)
+      handleSsoError(err)
     }
   }
 
@@ -50,7 +59,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       const microsoftProvider = new OAuthProvider('microsoft.com')
       await signInWithPopup(firebaseAuth, microsoftProvider)
     } catch (err) {
-      console.error(err)
+      handleSsoError(err)
     }
   }
 
@@ -68,6 +77,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       continueWithMeta,
       continueWithMicrosoft,
       signOutSocialAuth,
+      setSelectedProvider
     }}>
       {children}
     </SocialAuth.Provider>

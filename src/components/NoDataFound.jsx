@@ -1,5 +1,5 @@
-export default function NoDataFound({ message = 'No Data Found' }) {
+export default function NoDataFound({ message = 'No Data Found', className }) {
   return (
-    <div>{message}</div>
+    <div className={`flex justify-center items-center${className ? ` ${className}` : ''}`}>{message}</div>
   )
 }

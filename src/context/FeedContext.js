@@ -10,6 +10,7 @@ const FeedContext = createContext()
 export default function FeedContextProvider({ children }) {
 
   const [posts, setPosts] = useState([])
+  const [page, setPage] = useState(1)
   const [loadings, setLoadings] = useState({
     getPost: false,
     createPost: false,
@@ -21,17 +22,19 @@ export default function FeedContextProvider({ children }) {
     GetUserPost: false
   })
 
-  const getPosts = async () => {
+  const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
       const res = await axios.get(`${ROOT_URL_FEED}/post/feed`,
         {
+          params: { type, page, limit },
           headers: {
             Authorization: getCookie('token')
           }
         }
       )
-      return res.data
+      setPosts(prev => ([...prev, ...res.data?.posts || []]))
+      if (res.data?.posts?.length) setPage(prev => (prev + 1))
     } catch (err) {
       handleError(err)
     } finally {
@@ -208,7 +211,23 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
+  const resetFeedValues = () => {
+    setPosts([])
+    setPage(1)
+  }
+
   return (
+
+//     <FeedContext.Provider value={{
+//       posts, setPosts,
+//       loadings, getPosts,
+//       createPost, deletePost,
+//       likePost, rePost,
+//       addComment, deleteComment,
+//       generatePost, generateComment,
+//       getPostsOfUser, page,
+//       resetFeedValues
+//     }}>
     <FeedContext.Provider
       value={{
         posts,
