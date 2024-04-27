@@ -3,6 +3,9 @@ import Header from "@/components/layouts/Header"
 import InputBar from "@/components/layouts/InputBar";
 import RightSidebar from "@/components/layouts/RightSidebar"
 import Sidebar from "@/components/layouts/Sidebar"
+// PankajNew
+// import FeedContextProvider from "@/context/FeedContext"
+import CommentSec from "@/components/comment/CommentSec"
 import FeedContextProvider, { FeedContext } from "@/context/FeedContext"
 
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
@@ -27,10 +30,7 @@ const DefaultLayout = ({ children }) => {
   
   return (
     <FeedContextProvider>
-
-      
-
-      <div className="min-w-screen border- border-yellow-400">
+      <div className="min-w-screen border- border-yellow-400 relative">
         <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
           <div className="border-2 border-purple-50">
             <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
@@ -40,7 +40,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100vh-56.28px)] sticky top-14 z-50 hidden md:block border-r-2 border-brandprimary">
             <Sidebar />
           </div>
-          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col">
+          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col relative">
             <Header />
             <div className="flex flex-1 border- border-purple-400">
 //               <div className="w-[100%] lg:w-[70%]">
@@ -57,6 +57,9 @@ const DefaultLayout = ({ children }) => {
                 <RightSidebar/>
               </div>
             </div>
+            
+              <CommentSec />
+            
           </div>
         </div>
 
