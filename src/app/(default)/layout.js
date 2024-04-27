@@ -36,7 +36,7 @@ const DefaultLayout = ({ children }) => {
             <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
           </div>
         </header>
-        <div className="flex max-h-[100vh] border- border-green-400">
+        <div className="flex max-h-[100vh] border- border-green-400 xl:h-screen">
           <div className="min-w-[10%] xl:min-w-[5%] max-h-[calc(100vh-56.28px)] sticky top-14 z-50 hidden md:block border-r-2 border-brandprimary">
             <Sidebar />
           </div>

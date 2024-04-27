@@ -9,22 +9,22 @@ const CommentSection = () => {
   const { setIsCommentOpen } = useContext(GlobalContext);
 
   return (
-    <div className="flex w-full max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-193px)] ">
-        <div className="w-[70%]">
+    <div className="xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] lg:flex-row lg:h-full md:max-h-[calc(100vh-193px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
+        <div className="xl:block w-[70%] xl:w-[70%] md:w-full sm:w-full sm:hidden">
             <div className="bg-[#333333] h-full  flex items-center relative">
               <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
                 <img src="/images/icons/cross-icon.svg" className="p-[12px]"/>
               </button>
-              <img src="/images/comment/commenimg.png" className=" w-full aspect-video object-contain "/>
+              <img src="/images/comment/commenimg.png" className=" w-full aspect-video object-contain h-[-webkit-fill-available]"/>
             </div>
         </div>
-        <div className="w-[30%] bg-white px-4">
+        <div className="w-[30%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative md:w-full sm:w-full sm:absolute sm:z-[99] sm:h-[70vh]">
           <div className="flex h-[10%] items-center justify-between">
             <img src="/images/icons/back-arrow.svg" className="w-[20px] h-[20px]"/>
             <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
             <div></div>
           </div>
-          <div className="h-[82%] no-scrollbar overflow-y-auto py-1">
+          <div className="h-[82%] no-scrollbar overflow-y-auto py-1 xl:h-[59vh] lg:h-[61vh] md:h-[44vh]">
 
             <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
