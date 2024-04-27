@@ -156,7 +156,7 @@ export default function FeedContextProvider({ children }) {
     try {
       setLoadings(prev => ({ ...prev, generatePost: true }))
       const res = await axios.post(`${ROOT_URL_LLM}/vertex-generate-text_from_promt`,
-        { prompt: prompt.trim() },
+        { promt: prompt.trim() },
         {
           headers: {
             Authorization: getCookie('token')
@@ -217,21 +217,41 @@ export default function FeedContextProvider({ children }) {
   }
 
   return (
-    <FeedContext.Provider value={{
-      posts, setPosts,
-      loadings, getPosts,
-      createPost, deletePost,
-      likePost, rePost,
-      addComment, deleteComment,
-      generatePost, generateComment,
-      getPostsOfUser, page,
-      resetFeedValues
-    }}>
+
+//     <FeedContext.Provider value={{
+//       posts, setPosts,
+//       loadings, getPosts,
+//       createPost, deletePost,
+//       likePost, rePost,
+//       addComment, deleteComment,
+//       generatePost, generateComment,
+//       getPostsOfUser, page,
+//       resetFeedValues
+//     }}>
+    <FeedContext.Provider
+      value={{
+        posts,
+        setPosts,
+        loadings,
+        getPosts,
+        createPost,
+        deletePost,
+        likePost,
+        rePost,
+        addComment,
+        deleteComment,
+        generatePost,
+        generateComment,
+        getPostsOfUser,
+      }}
+    >
       {children}
     </FeedContext.Provider>
-  )
+  );
 }
 
-export const feed = () => {
-  return useContext(FeedContext)
-}
+// export const feed = () => {
+//   return useContext(FeedContext)
+// }
+
+export { FeedContextProvider, FeedContext };

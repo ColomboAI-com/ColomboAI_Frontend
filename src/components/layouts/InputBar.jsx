@@ -1,3 +1,5 @@
+import { SendIcon } from "../Icons";
+
 /* eslint-disable @next/next/no-img-element */
 const InputBar = () => {
     return (
@@ -7,11 +9,9 @@ const InputBar = () => {
             placeholder="Ask or create anything..."
             className="w-full h-[80px] border-[1px] border-brandprimary rounded-[50px] py-[28px] px-[35px] text-[#ACACAC] text-[20px] tracking-[4px] font-sans"
             ></input>
-            <img
-            src="/images/home/search-icon.png"
-            className="absolute top-[55px] right-[35px]"
-            alt="serch_icon"
-            />
+            <button className="absolute top-[52px] right-[34px]">
+                <SendIcon w={31} h={31} fill={'#1E71F2'} />
+            </button>
       </div>
     );
 }
