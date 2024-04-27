@@ -26,7 +26,7 @@ const CommentSection = () => {
           </div>
           <div className="h-[82%] no-scrollbar overflow-y-auto py-1">
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -46,7 +46,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -66,7 +66,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -86,7 +86,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -106,7 +106,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -126,7 +126,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -146,7 +146,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -166,7 +166,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -186,7 +186,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
@@ -206,7 +206,7 @@ const CommentSection = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-2 my-4">
+            <div className="flex items-start justify-center gap-2 my-4">
               <div className="w-[36px] h-[36px]">
                 <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]"/>
               </div>
