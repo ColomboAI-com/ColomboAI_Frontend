@@ -7,6 +7,7 @@ import { formatTimeAgo } from "@/utlils/commonFunctions"
 import ContentBlock from "@/components/feed/post/ContentBlock"
 import VideoBlock from "@/components/feed/post/VideoBlock"
 import Link from "next/link"
+import { PostMoreOptionsIcon } from "@/components/Icons"
 
 const Post = ({ post }) => {
   return (
@@ -20,7 +21,9 @@ const Post = ({ post }) => {
           <p className="font-sans text-sidebarlabel tex-[12px]">
             {formatTimeAgo(post?.createdAt)}
           </p>
-          <img src="/images/home/more_horiz.png" alt="more_option_image" />
+          <button>
+            <PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"}/>
+          </button>
         </div>
       </div>
       {post?.content && <ContentBlock content={post.content} />}
