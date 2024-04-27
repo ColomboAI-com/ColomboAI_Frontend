@@ -24,8 +24,8 @@ const Post = ({ post }) => {
         </div>
       </div>
       {post?.content && <ContentBlock content={post.content} />}
-      {post?.filetype === 'image' && <ImageBlock image={post.media} />}
-      {post?.filetype === 'video' && <VideoBlock video={post.media} />}
+      {post?.type === 'image' && <ImageBlock image={post.media} />}
+      {post?.type === 'video' && <VideoBlock video={post.media} />}
       <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
         <PostActions post={post} />
         <RecentComments comments={post.comments} />

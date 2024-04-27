@@ -1,52 +1,23 @@
-/* eslint-disable @next/next/no-img-element */
-// import Header from "@/components/layouts/Header"
-// import RightSidebar from "@/components/layouts/RightSidebar"
-// import Sidebar from "@/components/layouts/Sidebar"
-// import FeedContextProvider from "@/context/FeedContext"
-
-// const DefaultLayout = ({ children }) => {
-//   return (
-//     <FeedContextProvider>
-//       <div className=" min-w-screen border-2 border-yellow-400">
-//         <header className="shadow-[0px_2px_4px_0px_#0000001A]">
-//           <div className=" border-2 border-purple-50">
-//             <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
-//           </div>
-//         </header>
-//         <div className="flex border-2 border-green-40 ">
-//           <div className=" w-[10%] max-h-[93.5vh] hidden md:block border-2 border-brandprimary">
-//             <Sidebar />
-//           </div>
-//           <div className=" max-w-[100%] md:max-w-[90%]">
-//             <Header />
-//             <div className="flex">
-//               <div className="overflow-x-hidden lg:w-[70%] px-6 md:px-10 lg:px-20">
-//                 {children}
-//               </div>
-//               <div className=" hidden lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
-//                 <RightSidebar/>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </FeedContextProvider>
-//   )
-// }
-
-// export default DefaultLayout
 'use client'
 import Header from "@/components/layouts/Header"
 import InputBar from "@/components/layouts/InputBar";
 import RightSidebar from "@/components/layouts/RightSidebar"
 import Sidebar from "@/components/layouts/Sidebar"
-import FeedContextProvider from "@/context/FeedContext"
+// PankajNew
+// import FeedContextProvider from "@/context/FeedContext"
 import CommentSec from "@/components/comment/CommentSec"
+import FeedContextProvider, { FeedContext } from "@/context/FeedContext"
 
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import Modal from "@/components/elements/Modal";
+import Post from "@/components/elements/cards/Post";
+import CreatePost from "@/components/elements/CreatePost";
+import { useContext } from "react";
+import { GlobalContext } from "@/context/GlobalContext";
 
 
 const DefaultLayout = ({ children }) => {
@@ -54,6 +25,8 @@ const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
 
   const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
+
+    const { isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
   
   return (
     <FeedContextProvider>
@@ -70,6 +43,13 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col relative">
             <Header />
             <div className="flex flex-1 border- border-purple-400">
+//               <div className="w-[100%] lg:w-[70%]">
+              {
+                isCreatePostOpen &&
+                <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <CreatePost/>
+                </Modal>
+              }
               <div className="w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] overflow-y-scroll">
                 {children}
               </div>

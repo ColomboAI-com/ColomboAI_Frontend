@@ -219,3 +219,58 @@ export const CreateMagicPenIcon = ({ w, h, fill1, fill2, fill3, fill4, fill5 }) 
 
     );
 };
+
+export const CrossIcon = ({ w, h, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.13477 14.3246L7.75972 7.69966L14.3847 14.3246M14.3847 1.07471L7.75846 7.69966L1.13477 1.07471" stroke={fill} strokeWidth="1.89537" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+};
+
+export const SendIcon = ({ w, h, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 13.3222V0.677803C0 0.432578 0.128453 0.244828 0.385359 0.114553C0.642265 -0.0157229 0.913444 -0.0348811 1.19889 0.0570781L19.8103 6.35629C20.1529 6.4789 20.3241 6.69347 20.3241 7C20.3241 7.30653 20.1529 7.5211 19.8103 7.64371L1.19889 13.9429C0.913444 14.0349 0.642265 14.0157 0.385359 13.8854C0.128453 13.7552 0 13.5674 0 13.3222ZM1.71271 12.2187L17.2413 7L1.71271 1.71234V5.57463L8.62063 7L1.71271 8.37939V12.2187ZM1.71271 7V1.71234V12.2187V7Z" fill={fill}/>
+        </svg>
+    );
+};
+
+export const BackButtonIcon = ({ w, h, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.6718 8.71582H1.81641" stroke={fill} strokeWidth="1.89623" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M10.2441 16.0897L1.81641 8.71552L10.2441 1.34131" stroke={fill} strokeWidth="1.89623" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    );
+};
+
+export const CloseDocumentIcon = () => {
+    return (
+      <svg
+        width={32}
+        height={32}
+        viewBox="0 0 32 32"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width={32} height={32} rx={16} fill="#2A2A2A" />
+        <g clipPath="url(#clip0_706_1907)">
+          <path
+            d="M17.0994 16.0097L21.7719 11.337C22.076 11.0331 22.076 10.5417 21.7719 10.2377C21.468 9.93378 20.9766 9.93378 20.6726 10.2377L15.9999 14.9104L11.3274 10.2377C11.0233 9.93378 10.532 9.93378 10.2281 10.2377C9.92398 10.5417 9.92398 11.0331 10.2281 11.337L14.9006 16.0097L10.2281 20.6824C9.92398 20.9864 9.92398 21.4778 10.2281 21.7817C10.3795 21.9334 10.5787 22.0095 10.7777 22.0095C10.9767 22.0095 11.1758 21.9334 11.3274 21.7817L15.9999 17.109L20.6726 21.7817C20.8242 21.9334 21.0233 22.0095 21.2223 22.0095C21.4213 22.0095 21.6203 21.9334 21.7719 21.7817C22.076 21.4778 22.076 20.9864 21.7719 20.6824L17.0994 16.0097Z"
+            fill="white"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_706_1907">
+            <rect
+              width={12}
+              height={12}
+              fill="white"
+              transform="translate(10 10)"
+            />
+          </clipPath>
+        </defs>
+      </svg>
+    );
+  };

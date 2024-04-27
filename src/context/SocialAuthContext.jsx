@@ -5,6 +5,7 @@ import { firebaseAuth } from "@/utlils/firebaseConfig"
 import { auth } from "./AuthContext"
 import { useRouter } from "next/navigation"
 import { setUserCookies } from "@/utlils/commonFunctions"
+import { handleSsoError } from "@/utlils/handleError"
 
 const SocialAuth = createContext()
 
@@ -40,7 +41,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       const googleProvider = new GoogleAuthProvider()
       await signInWithPopup(firebaseAuth, googleProvider)
     } catch (err) {
-      console.error(err)
+      handleSsoError(err)
     }
   }
 
@@ -49,7 +50,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       const metaProvider = new FacebookAuthProvider()
       await signInWithPopup(firebaseAuth, metaProvider)
     } catch (err) {
-      console.error(err)
+      handleSsoError(err)
     }
   }
 
@@ -58,7 +59,7 @@ export const SocialAuthContextProvider = ({ children }) => {
       const microsoftProvider = new OAuthProvider('microsoft.com')
       await signInWithPopup(firebaseAuth, microsoftProvider)
     } catch (err) {
-      console.error(err)
+      handleSsoError(err)
     }
   }
 

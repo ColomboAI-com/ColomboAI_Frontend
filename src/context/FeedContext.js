@@ -10,6 +10,7 @@ const FeedContext = createContext()
 export default function FeedContextProvider({ children }) {
 
   const [posts, setPosts] = useState([])
+  const [page, setPage] = useState(1)
   const [loadings, setLoadings] = useState({
     getPost: false,
     createPost: false,
@@ -26,13 +27,14 @@ export default function FeedContextProvider({ children }) {
       setLoadings(prev => ({ ...prev, getPost: true }))
       const res = await axios.get(`${ROOT_URL_FEED}/post/feed`,
         {
-          // params: { type, page, limit },
+          params: { type, page, limit },
           headers: {
             Authorization: getCookie('token')
           }
         }
       )
-      setPosts(res.data?.posts || [])
+      setPosts(prev => ([...prev, ...res.data?.posts || []]))
+      if (res.data?.posts?.length) setPage(prev => (prev + 1))
     } catch (err) {
       handleError(err)
     } finally {
@@ -154,7 +156,7 @@ export default function FeedContextProvider({ children }) {
     try {
       setLoadings(prev => ({ ...prev, generatePost: true }))
       const res = await axios.post(`${ROOT_URL_LLM}/vertex-generate-text_from_promt`,
-        { prompt: prompt.trim() },
+        { promt: prompt.trim() },
         {
           headers: {
             Authorization: getCookie('token')
@@ -209,21 +211,47 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
+  const resetFeedValues = () => {
+    setPosts([])
+    setPage(1)
+  }
+
   return (
-    <FeedContext.Provider value={{
-      posts, setPosts,
-      loadings, getPosts,
-      createPost, deletePost,
-      likePost, rePost,
-      addComment, deleteComment,
-      generatePost, generateComment,
-      getPostsOfUser
-    }}>
+
+//     <FeedContext.Provider value={{
+//       posts, setPosts,
+//       loadings, getPosts,
+//       createPost, deletePost,
+//       likePost, rePost,
+//       addComment, deleteComment,
+//       generatePost, generateComment,
+//       getPostsOfUser, page,
+//       resetFeedValues
+//     }}>
+    <FeedContext.Provider
+      value={{
+        posts,
+        setPosts,
+        loadings,
+        getPosts,
+        createPost,
+        deletePost,
+        likePost,
+        rePost,
+        addComment,
+        deleteComment,
+        generatePost,
+        generateComment,
+        getPostsOfUser,
+      }}
+    >
       {children}
     </FeedContext.Provider>
-  )
+  );
 }
 
-export const feed = () => {
-  return useContext(FeedContext)
-}
+// export const feed = () => {
+//   return useContext(FeedContext)
+// }
+
+export { FeedContextProvider, FeedContext };
