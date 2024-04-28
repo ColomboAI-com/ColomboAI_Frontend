@@ -1,9 +1,13 @@
-const Feed = () => {
+import SearchProfile from "@/components/explorer/SearchProfile";
+import Suggetions from "@/components/explorer/Suggetions"
+
+const Explore = () => {
     return (
         <div>
-            Explore Page Content
+            <SearchProfile/>
+            <Suggetions/>
         </div>
     );
 }
 
-export default Feed;
+export default Explore;
