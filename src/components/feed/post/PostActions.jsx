@@ -1,5 +1,6 @@
 import { GlobalContext } from "@/context/GlobalContext";
 import { useContext } from "react";
+import LikeUnlikePost from "./LikeUnlikePost";
 
 export default function PostActions({ post }) {
 
@@ -8,10 +9,7 @@ export default function PostActions({ post }) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[19px]">
-        <div className="flex items-center gap-4">
-          <img src="/images/home/wishlist.png" alt="like_button_image" />
-          <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.likes || 0}</p>
-        </div>
+        <LikeUnlikePost post={post} />
         <div className="flex items-center gap-4">
           <button onClick={() => setIsCommentOpen(true)}>
             <img src="/images/home/Chat.png" alt="comment_image" />
