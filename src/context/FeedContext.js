@@ -138,7 +138,23 @@ export default function FeedContextProvider({ children }) {
 
   const rePost = async (postId = '') => {
     try {
-      const res = await axios.patch(`${ROOT_URL_FEED}/post/re-post/${postId}`,
+      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`,
+        null,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      return res.data
+    } catch (err) {
+      handleError(err)
+    }
+  }
+
+  const savePost = async (postId = '') => {
+    try {
+      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/save`,
         null,
         {
           headers: {
@@ -223,7 +239,7 @@ export default function FeedContextProvider({ children }) {
       posts, setPosts,
       loadings, getPosts,
       createPost, deletePost,
-      likePost, rePost,
+      likePost, rePost, savePost,
       addComment, deleteComment,
       generatePost, generateComment,
       getPostsOfUser, page,
