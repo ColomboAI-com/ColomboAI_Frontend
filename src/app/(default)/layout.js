@@ -18,6 +18,7 @@ import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
 import CommentSection from "@/components/comment/CommentSection";
+import RepostModal from "@/components/RepostModal";
 
 
 const DefaultLayout = ({ children }) => {
@@ -26,7 +27,7 @@ const DefaultLayout = ({ children }) => {
 
   const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
 
-    const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
+    const { isShareOpen, setIsShareOpen, isRepostOpen, setIsRepostOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
   
   return (
     <FeedContextProvider>
@@ -53,6 +54,12 @@ const DefaultLayout = ({ children }) => {
                 isShareOpen &&
                 <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
                     <Share/>
+                </Modal>
+              }
+              {
+                isRepostOpen &&
+                <Modal isOpen={isRepostOpen} setIsOpen={setIsRepostOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
+                    <RepostModal/>
                 </Modal>
               }
               {
