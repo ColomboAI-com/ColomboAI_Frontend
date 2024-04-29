@@ -4,16 +4,16 @@ import { BackButtonIcon, CloseDocumentIcon, CreateMagicPenIcon, CrossIcon, SendI
 import { FeedContext } from "@/context/FeedContext";
 import { GlobalContext } from "@/context/GlobalContext";
 import { ThreeDots } from "react-loader-spinner";
+import Button from "@/elements/Button";
 
 const CreatePost = () => {
     let [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
     let [promptInput, setPromptInput] = useState('');
     let [postInput, setPostInput] = useState('');
 
-    const [file, setFile] = useState([]);
-    const [fileType, setFileType] = useState();
-    const [fileName, setFileName] = useState("");
-    
+    const [file, setFile] = useState(null);
+    const [mediaUrl, setMediaUrl] = useState("");
+    const [mediaType, setMediaType] = useState("");
     const [nextStep, setNextStep] = useState(false);
 
     function toogleMagicPen() {
@@ -28,23 +28,29 @@ const CreatePost = () => {
         document.querySelector('input[type="file"][accept="media_type"]').click();
     };
 
-    const closeFileHandler = () => {
-        setFile([]);
+    const clearFileHandler = () => {
+        setFile(null);
+        setMediaUrl("");
+        setMediaType("");
     };
 
     const handleGeneratePost = async () => {
         const result = await generatePost(promptInput);
+      if (result?.response_type !== "text") {
+        setMediaUrl(result?.text);
+        setMediaType(result?.response_type);
+      } else if(result?.response_type === "text") {
         setPostInput(result?.text)
-        console.log(result,"result from generatePost")
+      }
     };
-
-      console.log(file,loadings?.generatePost)
 
       const handleFileChange = (event) => {
         const selectedFiles = event.target.files;
         if (selectedFiles && selectedFiles.length > 0) {
           const newFiles = Array.from(selectedFiles);
           setFile(newFiles);
+          setMediaUrl(URL.createObjectURL(newFiles[0]))
+          setMediaType(newFiles[0]?.type);
         }
       };
       const handleDrop = (event) => {
@@ -53,57 +59,14 @@ const CreatePost = () => {
         if (droppedFiles.length > 0) {
           const newFiles = Array.from(droppedFiles);
           setFile(newFiles);
+          setMediaUrl(URL.createObjectURL(newFiles[0]))
+          setMediaType(newFiles[0]?.type);
         }
-      };
-
-      const renderFilePreview = () => {
-        if (file.length > 0) {
-          if (file[0].type.startsWith("image/")) {
-            return (
-              <div className="relative my-8"
-              >
-                <img
-                  src={URL.createObjectURL(file[0])}
-                  alt="File Preview"
-                  className="w-full h-full object-contain"
-                />
-                <div className=" absolute top-3 right-2">
-                  <div className="flex flex-row items-center justify-center">
-                    <span onClick={closeFileHandler} className="px-2 pointer">
-                      <CloseDocumentIcon />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          } else if (file[0].type.startsWith("video/")) {
-            return (
-              <div className="relative my-8"
-              >
-                <video
-                  autoPlay
-                  loop
-                  className="w-full aspect-video"
-                >
-                  <source src={URL.createObjectURL(file[0])} type={file.type} />
-                </video>
-                <div className="absolute top-3 right-7">
-                  <div className="flex flex-row items-center justify-center">
-                    <span onClick={closeFileHandler} className="px-2 pointer">
-                      <CloseDocumentIcon />
-                    </span>
-                  </div>
-                </div>
-              </div>
-            );
-          } 
-        }
-        return null;
       };
 
     return (
       <>
-        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[80vh] overflow-y-auto font-sans">
+        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
               {
@@ -191,15 +154,52 @@ const CreatePost = () => {
                         }
                     </div>
                 </div>
-                {file.length > 0 && 
-                <div className="w-full flex justify-center">
-                    {renderFilePreview()}
-                </div>
+                {
+                  mediaUrl !== "" && mediaType.includes("image")
+                  ?
+                  <div className="relative my-8">
+                    <img
+                      key={mediaUrl}
+                      src={mediaUrl}
+                      alt="File Preview"
+                      className="w-full h-full object-contain"
+                    />
+                    <div className=" absolute top-3 right-2">
+                      <div className="flex flex-row items-center justify-center">
+                        <span onClick={clearFileHandler} className="px-2 pointer">
+                          <CloseDocumentIcon />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  :
+                  mediaUrl !== "" && mediaType.includes("video")
+                  ?
+                  <div className="relative my-8">
+                    <video
+                      key={mediaUrl}
+                      autoPlay
+                      loop
+                      controls
+                      className="w-full aspect-video"
+                    >
+                      <source src={mediaUrl}/>
+                    </video>
+                    <div className="absolute top-3 right-7">
+                      <div className="flex flex-row items-center justify-center">
+                        <span onClick={clearFileHandler} className="px-2 pointer">
+                          <CloseDocumentIcon />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  :
+                  ""
                 }
                 {nextStep === false  &&
                 <>
                   {
-                    file.length === 0 &&
+                    (mediaUrl === "" && mediaType === "") &&
                     <div 
                     className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl "
                     onDrop={handleDrop}
@@ -215,9 +215,10 @@ const CreatePost = () => {
                                 accept="media_type"
                                 onChange={(e) => handleFileChange(e, "file")} 
                             />
-                            <button className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14 ">
-                            Select from computer
-                            </button>
+                            <Button
+                              title={'Select from computer'}
+                              className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
+                            />
                         </span>
                     </div>
                   }
@@ -226,9 +227,10 @@ const CreatePost = () => {
                 {
                 nextStep &&
                 <div className="flex justify-center">
-                    <button className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 ">
-                    SHARE POST
-                    </button>
+                    <Button
+                      title={'SHARE POST'}
+                      className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
+                    />
                 </div>
                 }
             </div>

@@ -61,10 +61,10 @@ const DefaultLayout = ({ children }) => {
                   <CommentSection/>
                 :
                 <>
-                  <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] overflow-y-scroll"}>
+                  <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"}>
                     {children}
                   </div>
-                  <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-scroll lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
+                  <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
                     <RightSidebar/>
                   </div>
                 </>
