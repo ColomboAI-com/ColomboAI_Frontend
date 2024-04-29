@@ -17,6 +17,7 @@ export default function FeedContextProvider({ children }) {
     deletePost: false,
     addComment: false,
     deleteComment: false,
+    rePost: false,
     generatePost: false,
     generateComment: false,
     GetUserPost: false
@@ -138,6 +139,7 @@ export default function FeedContextProvider({ children }) {
 
   const rePost = async (postId = '') => {
     try {
+      setLoadings(prev => ({ ...prev, rePost: true }))
       const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`,
         null,
         {
@@ -149,6 +151,8 @@ export default function FeedContextProvider({ children }) {
       return res.data
     } catch (err) {
       handleError(err)
+    } finally {
+      setLoadings(prev => ({ ...prev, rePost: false }))
     }
   }
 
