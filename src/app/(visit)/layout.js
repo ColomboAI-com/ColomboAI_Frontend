@@ -1,13 +1,15 @@
 "use client"
 import Sidebar from "@/components/layouts/Sidebar"
+import Navigation from "@/components/profile/Navigation";
 
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import NotificationBar from "@/components/notifications/NotificationBar";
 
 
-const DefaultLayout = ({ children }) => {
+const VisitLayout = ({ children }) => {
   
   const pathname = usePathname();
 
@@ -27,6 +29,7 @@ const DefaultLayout = ({ children }) => {
             <div className="flex justify-center flex-1 border- border-purple-400">
               <div className="w-[100%] lg:w-[70%]">
                 {children}
+                <Navigation/>
               </div>
           </div>
         </div>
@@ -89,4 +92,4 @@ const DefaultLayout = ({ children }) => {
   )
 }
 
-export default DefaultLayout
+export default VisitLayout
