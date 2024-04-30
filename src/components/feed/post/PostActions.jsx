@@ -1,27 +1,24 @@
-import { GlobalContext } from "@/context/GlobalContext";
-import { useContext } from "react";
+import { GlobalContext } from "@/context/GlobalContext"
+import { useContext } from "react"
+import LikePost from "./LikePost"
+import RePost from "./RePost"
+import SavePost from "./SavePost"
 
 export default function PostActions({ post }) {
 
-  const { setIsShareOpen, setIsCommentOpen } = useContext(GlobalContext);
+  const { setIsShareOpen, setIsCommentOpen } = useContext(GlobalContext)
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[19px]">
-        <div className="flex items-center gap-4">
-          <img src="/images/home/wishlist.png" alt="like_button_image" />
-          <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.likes || 0}</p>
-        </div>
+        <LikePost post={post} />
         <div className="flex items-center gap-4">
           <button onClick={() => setIsCommentOpen(true)}>
             <img src="/images/home/Chat.png" alt="comment_image" />
           </button>
           <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
         </div>
-        <div className="flex items-center gap-4">
-          <img src="/images/home/refresh.png" alt="repost_button_image" />
-          <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.reposts || 0}</p>
-        </div>
+        <RePost post={post} />
         <div className="flex items-center">
           <img src="/images/home/Magic-pen.png" alt="magic_pen_button_image" />
         </div>
@@ -30,10 +27,7 @@ export default function PostActions({ post }) {
         <button onClick={() => setIsShareOpen(true)} className="flex items-center gap-4">
           <img src="/images/home/Arrow.png" alt="share_button_image" />
         </button>
-        <div className="flex items-center gap-4">
-          <img src="/images/home/bookmark.png" alt="save_button_image" />
-          <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.saved || 0}</p>
-        </div>
+        <SavePost post={post} />
       </div>
     </div>
   )

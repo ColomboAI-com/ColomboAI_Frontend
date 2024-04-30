@@ -1,7 +1,7 @@
 'use client'
 import ResendOTP from "@/components/auth/ResendOTP"
 import { OTPValidation } from "@/components/Validations"
-import { auth } from "@/context/AuthContext"
+import { useAuth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { getShortEmail, setUserCookies } from "@/utlils/commonFunctions"
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
@@ -11,7 +11,7 @@ import { useEffect } from "react"
 
 const OTPVerification = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = auth()
+  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = useAuth()
   const router = useRouter()
 
   useEffect(() => {

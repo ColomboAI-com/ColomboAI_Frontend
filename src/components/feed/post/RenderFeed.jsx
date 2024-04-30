@@ -1,5 +1,4 @@
 'use client'
-import CommentSection from "@/components/comment/CommentSection"
 import Post from "@/components/elements/cards/Post"
 import Loader from "@/components/Loader"
 import NoDataFound from "@/components/NoDataFound"
@@ -20,7 +19,7 @@ export default function RenderFeed({ filter }) {
     if (
       feedSection && !loadings.getPost &&
       feedSection.scrollTop + feedSection.clientHeight === feedSection.scrollHeight
-    ) { getPosts(filter, page) }
+    ) getPosts(filter, page)
   }
 
   useEffect(() => {
@@ -36,18 +35,9 @@ export default function RenderFeed({ filter }) {
     <div>
       {
         posts.length ?
-        <>
-          {/* <>
-          {
-              posts.length && <CommentSection/>
-          }
-          </> */}
-          {
-            posts.map((i, index) => 
+          posts.map((i, index) =>
             <Post post={i} key={index} />
-            )
-          }
-        </>
+          )
           : <NoDataFound className={'mt-5'} />
       }
     </div>

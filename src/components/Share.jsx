@@ -103,7 +103,7 @@ const Share = () => {
           <div className="w-[314.22px] bg-white rounded-[50px] px-[11.1px] flex items-center py-[5.33px] h-[30px]">
               <p className="text-[#1E71F2] text-[12.3px] font-sans font-[400]">https://post.colomboai.com/660ad7b3053e33a40c....</p>
           </div>
-          <button className="w-[80px] text-[#1E71F2] text-[12.3px] font-sans font-[400] bg-white rounded-[50px] px-[15.69px] py-[8.33px] h-[30px]">Copy</button>
+          <button className="w-[80px] text-[#1E71F2] text-[12.3px] font-sans font-[400] bg-white rounded-[50px] px-[15.69px] py-[5.33px] h-[30px]">Copy</button>
         </div>
       </div>
   )
