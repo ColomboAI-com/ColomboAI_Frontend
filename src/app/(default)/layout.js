@@ -18,16 +18,17 @@ import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
 import CommentSection from "@/components/comment/CommentSection";
+import RepostModal from "@/components/RepostModal";
 
 
 const DefaultLayout = ({ children }) => {
-  
+
   const pathname = usePathname();
 
-  const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
+  const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
 
-    const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
-  
+  const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
+
   return (
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
@@ -46,13 +47,13 @@ const DefaultLayout = ({ children }) => {
               {
                 isCreatePostOpen &&
                 <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <CreatePost/>
+                  <CreatePost />
                 </Modal>
               }
               {
                 isShareOpen &&
                 <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
-                    <Share/>
+                  <Share />
                 </Modal>
               }
               {
@@ -61,71 +62,71 @@ const DefaultLayout = ({ children }) => {
                   <CommentSection/>
                 :
                 <>
-                  <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] overflow-y-scroll"}>
+                  <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"}>
                     {children}
                   </div>
-                  <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-scroll lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
+                  <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
                     <RightSidebar/>
                   </div>
                 </>
               }
             </div>
-            
-              {/* <CommentSection /> */}
-            
+
+            {/* <CommentSection /> */}
+
           </div>
         </div>
 
         {/* Bottombar Mobile View */}
         <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-                <div className="py-4 flex flex-wrap items-center justify-evenly">
-                <Link href="/gen-ai">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <GenAiIcon w="30" h="30" fill={pathname === '/gen-ai' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/gen-ai' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Gen AI</p>
-                    </div>
-                </Link>
-
-                <Link href="/task-bot">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <TaskBotIcon w="30" h="30" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Task bot</p>
-                    </div>
-                </Link>
-
-                <Link href="/feed">
-                    <div className="mx-4 ">
-                        <div className="w-[29px] mx-auto">
-                            <FeedIcon w="30" h="30" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Feed</p>
-                    </div>
-                </Link>
-
-                <Link href="/shop">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <ShopIcon w="30" h="30" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Shop</p>
-                    </div>
-                </Link>
-
-                <Link href="/news">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <NewsIcon w="30" h="30" fill={pathname === '/news' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>News</p>
-                    </div>
-                </Link>
+          <div className="shadow-[0px_2px_4px_0px_#0000001A]">
+            <div className="py-4 flex flex-wrap items-center justify-evenly">
+              <Link href="/gen-ai">
+                <div className="mx-4">
+                  <div className="w-[29px] mx-auto">
+                    <GenAiIcon w="30" h="30" fill={pathname === '/gen-ai' ? "#1E71F2" : "#8E8E93"} />
+                  </div>
+                  <p className={`${pathname === '/gen-ai' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Gen AI</p>
                 </div>
+              </Link>
+
+              <Link href="/task-bot">
+                <div className="mx-4">
+                  <div className="w-[29px] mx-auto">
+                    <TaskBotIcon w="30" h="30" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
+                  </div>
+                  <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Task bot</p>
+                </div>
+              </Link>
+
+              <Link href="/feed">
+                <div className="mx-4 ">
+                  <div className="w-[29px] mx-auto">
+                    <FeedIcon w="30" h="30" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
+                  </div>
+                  <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Feed</p>
+                </div>
+              </Link>
+
+              <Link href="/shop">
+                <div className="mx-4">
+                  <div className="w-[29px] mx-auto">
+                    <ShopIcon w="30" h="30" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
+                  </div>
+                  <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Shop</p>
+                </div>
+              </Link>
+
+              <Link href="/news">
+                <div className="mx-4">
+                  <div className="w-[29px] mx-auto">
+                    <NewsIcon w="30" h="30" fill={pathname === '/news' ? "#1E71F2" : "#8E8E93"} />
+                  </div>
+                  <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>News</p>
+                </div>
+              </Link>
             </div>
+          </div>
         </div>
 
 
