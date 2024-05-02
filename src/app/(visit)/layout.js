@@ -1,7 +1,11 @@
 "use client"
 import Sidebar from "@/components/layouts/Sidebar"
-import Bottombar from "@/components/layouts/Bottombar"
-import Navigation from "@/components/profile/Navigation"
+import Navigation from "@/components/profile/Navigation";
+import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import NotificationBar from "@/components/notifications/NotificationBar";
+import Bottombar from "@/components/layouts/Bottombar";
 
 const VisitLayout = ({ children }) => {
   return (

@@ -14,7 +14,6 @@ import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
 
 const CreatePost = () => {
-
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState('');
   const [postInput, setPostInput] = useState('');
@@ -81,7 +80,6 @@ const CreatePost = () => {
       setPosts(postData)
     }
   }
-
   return (
     <>
       <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
