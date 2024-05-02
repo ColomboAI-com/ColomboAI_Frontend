@@ -1,4 +1,4 @@
-import React from 'react';
+import { Verified } from "../Icons";
 
 const Profile = () => {
   const userData = {
@@ -31,13 +31,13 @@ const Profile = () => {
         <img
           src={userData.profilePicture}
           alt="Profile"
-          className="rounded-full h-30 w-30 border-4 border-white"
+          className="rounded-full h-30 w-30 "
         />
 
         <h1 className="mt-4 text-3xl font-bold text-gray-900 flex items-center">
           {userData.name}
           <span className="text-brandprimary text-xl ml-2">
-            {/* SVG omitted for brevity */}
+            <Verified/>
           </span>
         </h1>
 
