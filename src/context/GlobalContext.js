@@ -9,6 +9,10 @@ export default function GlobalContextProvider({ children }) {
   let [isShareOpen, setIsShareOpen] = useState(false);
   let [isCommentOpen, setIsCommentOpen] = useState(false);
 
+  let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
+  let [isSelectPictureMessageOpen, setIsSelectPictureMessageOpen] = useState(false);
+  let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -18,6 +22,12 @@ export default function GlobalContextProvider({ children }) {
         setIsShareOpen,
         isCommentOpen,
         setIsCommentOpen,
+        isNewMessageOpen, 
+        setIsNewMessageOpen,
+        isSelectPictureMessageOpen, 
+        setIsSelectPictureMessageOpen,
+        isUserProfileOpen, 
+        setIsUserProfileOpen
       }}
     >
       {children}

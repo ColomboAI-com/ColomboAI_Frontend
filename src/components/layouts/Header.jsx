@@ -4,19 +4,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import InputBar from "./InputBar";
-import { ChatBubbleIcon, CreateIcon, NotificationIcon, SearchIcon } from "../Icons";
-import FeedFilter from "./FeedFilter";
+import { ChatBubbleIcon, NotificationIcon, SearchIcon } from "../Icons";
 import CreateDropdown from "../elements/CreateDropdown";
-import Modal from "../elements/Modal";
-import Post from "../elements/cards/Post";
-import { useContext } from "react";
-import { GlobalContext } from "@/context/GlobalContext";
-import Share from "../Share";
 
 
 const Header = () => {
 
-    const { isShareOpen, setIsShareOpen } = useContext(GlobalContext);
+    const pathname = usePathname();
 
     return (
         <div className=" bg-white sticky top-14 z-40">
@@ -45,11 +39,21 @@ const Header = () => {
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         <InputBar/>
                     </div>
-                    <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
-                        <SearchIcon w={35} h={35} fill={'#646464'} />
-                        <CreateDropdown/>
-                        <NotificationIcon w={35} h={35} fill={'#646464'} />
-                        <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
+                    <div className="flex gap-4 mr-9 justify-evenly items-baseline w-[20%] ">
+                        <button className="text-[#646464] hover:text-brandprimary">
+                            <SearchIcon w={45} h={45} fill={'currentcolor'} />
+                        </button>
+                        <div className="text-[#646464] hover:text-brandprimary">
+                            <CreateDropdown w={45} h={45} fill={'currentcolor'}/>
+                        </div>
+                        <button className="text-[#646464] hover:text-brandprimary">
+                        <   NotificationIcon w={45} h={45} fill={'currentcolor'} />
+                        </button>
+                        <button className={`text-[#646464] hover:text-brandprimary ${pathname.includes('/messages')}`}>
+                            <Link href="/messages">
+                                <ChatBubbleIcon w={45} h={45} fill={'currentcolor'} />
+                            </Link>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -64,9 +68,11 @@ const Header = () => {
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
                         <div className="flex items-center gap-4 lg:gap-8 mx-9 ">
-                            <CreateDropdown/>
+                            <CreateDropdown w={35} h={35} fill={'#646464'}/>
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
-                            <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
+                            <Link href="/messages">
+                                <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
+                            </Link>
                         </div>
                     </div>
                     <div className="w-full">

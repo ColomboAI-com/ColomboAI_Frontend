@@ -1,18 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 import Sidebar from "@/components/layouts/Sidebar"
-
-import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
+import Bottombar from "@/components/layouts/Bottombar";
+import Modal from "@/components/elements/Modal";
+import { GlobalContext } from "@/context/GlobalContext";
+import { useContext } from "react";
+import NewMessage from "@/components/messages/NewMessage";
+import MessageHeader from "@/components/messages/MessageHeader";
+import SelectPicture from "@/components/messages/SelectPicture";
+import CreatePost from "@/components/elements/CreatePost";
 
 const DefaultLayout = ({ children }) => {
-  
-  const pathname = usePathname();
 
-  const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
-  
+  const { isNewMessageOpen, setIsNewMessageOpen, isSelectPictureMessageOpen, setIsSelectPictureMessageOpen, isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
+
   return (
       <div className="min-w-screen border- border-yellow-400">
         <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
@@ -24,68 +25,36 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100vh-56.28px)] sticky top-14 z-50 hidden md:block border-r-2 border-brandprimary">
             <Sidebar />
           </div>
-            <div className="flex justify-center flex-1 border- border-purple-400">
-              <div className="w-[100%] lg:w-[70%]">
+          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col relative ">
+            <MessageHeader/>
+            <div className="flex flex-1 justify-center border- border-purple-400">
+              <div className="w-[100%] min-h-screena lg:w-[70%">
+              {
+                isNewMessageOpen &&
+                <Modal isOpen={isNewMessageOpen} setIsOpen={setIsNewMessageOpen} className="w-full font-sans max-w-md md:max-w-lg lg:max-w-xl transform overflow-hidden rounded-[26px] bg-white text-left align-middle shadow-xl transition-all">
+                  <NewMessage/>
+                </Modal>
+              }
+              {
+                isSelectPictureMessageOpen &&
+                <Modal isOpen={isSelectPictureMessageOpen} setIsOpen={setIsSelectPictureMessageOpen} className="w-full font-sans max-w-xl md:max-w-2xl lg:max-w-3xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <SelectPicture/>
+                </Modal>
+              }
+              {
+                isCreatePostOpen &&
+                <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <CreatePost />
+                </Modal>
+              }
                 {children}
               </div>
+            </div>
           </div>
         </div>
-
         {/* Bottombar Mobile View */}
-        <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-                <div className="py-4 flex flex-wrap items-center justify-evenly">
-                <Link href="/gen-ai">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <GenAiIcon w="30" h="30" fill={pathname === '/gen-ai' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/gen-ai' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Gen AI</p>
-                    </div>
-                </Link>
-
-                <Link href="/task-bot">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <TaskBotIcon w="30" h="30" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Task bot</p>
-                    </div>
-                </Link>
-
-                <Link href="/feed">
-                    <div className="mx-4 ">
-                        <div className="w-[29px] mx-auto">
-                            <FeedIcon w="30" h="30" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Feed</p>
-                    </div>
-                </Link>
-
-                <Link href="/shop">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <ShopIcon w="30" h="30" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Shop</p>
-                    </div>
-                </Link>
-
-                <Link href="/news">
-                    <div className="mx-4">
-                        <div className="w-[29px] mx-auto">
-                            <NewsIcon w="30" h="30" fill={pathname === '/news' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
-                        <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>News</p>
-                    </div>
-                </Link>
-                </div>
-            </div>
-        </div>
-
-
+        <Bottombar/>
       </div>
-
   )
 }
 
