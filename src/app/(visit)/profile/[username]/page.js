@@ -1,11 +1,11 @@
-import Profile  from "@/components/profile/Profile"
+import Profile from "@/components/profile/Profile"
 
-const profile = () => {
+const VisitProfile = () => {
   return (
     <div>
-      <Profile/>
+      <Profile />
     </div>
   )
 }
 
-export default profile
+export default VisitProfile

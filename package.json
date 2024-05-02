@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.19",
+    "@popperjs/core": "^2.11.8",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.6.8",
     "cookies-next": "^4.1.1",

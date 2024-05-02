@@ -1,7 +1,6 @@
 import ProviderComponent from "@/components/provider-component"
 import "./globals.css"
 import GlobalContextProvider from "@/context/GlobalContext"
-import NotificationBar from "@/components/notifications/NotificationBar"
 import FeedContextProvider from "@/context/FeedContext"
 
 export const metadata = {
