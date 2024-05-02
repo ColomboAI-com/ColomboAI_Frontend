@@ -12,13 +12,13 @@ import { PostMoreOptionsIcon } from "@/components/Icons"
 const Post = ({ post }) => {
   return (
     <div className="border-[1px] border-brandprimary rounded-[10px] mt-5">
-      <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px]">
+      <div className="flex items-center justify-between px-[16px] py-[12px]">
         <Link className="flex items-center" href={`/profile/${post?.creator?.user_name || ''}`} target="_blank">
           <ProfilePicture image={post?.creator?.profile_picture} />
           <Username username={post?.creator?.user_name} />
         </Link>
         <div className="flex items-center gap-4">
-          <p className="font-sans text-sidebarlabel tex-[12px]">
+          <p className="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">
             {formatTimeAgo(post?.createdAt)}
           </p>
           <button>
@@ -26,10 +26,11 @@ const Post = ({ post }) => {
           </button>
         </div>
       </div>
-      {post?.content && <ContentBlock content={post.content} />}
+      
       {post?.type === 'image' && <ImageBlock image={post.media} />}
       {post?.type === 'video' && <VideoBlock video={post.media} />}
-      <div className="pl-[37px] pt-[10px] pr-[41px] pb-[17px]">
+      {post?.content && <ContentBlock content={post.content} />}
+      <div className="px-[16px] py-[12px]">
         <PostActions post={post} />
         <RecentComments comments={post.comments} />
       </div>

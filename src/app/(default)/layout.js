@@ -27,22 +27,23 @@ const DefaultLayout = ({ children }) => {
 
   const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
 
-  const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
+  const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen, setIsCommentOpen } = useContext(GlobalContext);
 
   return (
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
-        <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
-          <div className="border-2 border-purple-50">
-            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
-          </div>
-        </header>
-        <div className="flex max-h-[100vh] border- border-green-400 xl:h-screen">
-          <div className="min-w-[10%] xl:min-w-[5%] max-h-[calc(100vh-56.28px)] sticky top-14 z-50 hidden md:block border-r-2 border-brandprimary">
+        <div className="flex max-h-[87vh] border- border-green-400 xl:h-screen">
+          <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed overflow-auto h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary">
             <Sidebar />
           </div>
-          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col relative ">
+          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[93%] ml-[7%] flex flex-col relative ">
+          <header className="sticky top-0 z-50 border-b-[1px] border-[#E3E3E3] bg-white">
+          <div className="py-[14px]">
+            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px]" />
+          </div>
+        </header>
             <Header />
+            
             <div className="flex flex-1 border- border-purple-400">
               {
                 isCreatePostOpen &&
@@ -55,21 +56,28 @@ const DefaultLayout = ({ children }) => {
                 <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
                   <Share />
                 </Modal>
+              }{isCommentOpen &&
+                <Modal isOpen={isCommentOpen} setIsOpen={setIsCommentOpen}
+                    className="mx-[150px]"
+                  >
+                    <CommentSection
+                      setIsCommentOpen={setIsCommentOpen} />
+                  </Modal>
               }
-              {
-                isCommentOpen
-                ?
-                  <CommentSection/>
-                :
-                <>
-                  <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-192.28px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"}>
+              
+                {/* // isCommentOpen
+                // ?
+                //   <CommentSection/>
+                // :
+                // <> */}
+                  <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-175px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"}>
                     {children}
                   </div>
-                  <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-10 px-2 shadow-[0px_2px_4px_0px_#0000001A]">
+                  <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative">
                     <RightSidebar/>
                   </div>
-                </>
-              }
+                {/* // </> */}
+              
             </div>
 
             {/* <CommentSection /> */}
@@ -84,7 +92,7 @@ const DefaultLayout = ({ children }) => {
               <Link href="/gen-ai">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <GenAiIcon w="30" h="30" fill={pathname === '/gen-ai' ? "#1E71F2" : "#8E8E93"} />
+                    <GenAiIcon w="30" h="30" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
                   </div>
                   <p className={`${pathname === '/gen-ai' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Gen AI</p>
                 </div>

@@ -40,16 +40,16 @@ const Header = () => {
 
             {/* Tablet view */}
 
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
+            <div className="border-b-[1px] border-[#E3E3E3]">
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         <InputBar/>
                     </div>
                     <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
-                        <SearchIcon w={35} h={35} fill={'#646464'} />
-                        <CreateDropdown/>
-                        <NotificationIcon w={35} h={35} fill={'#646464'} />
-                        <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
+                        <SearchIcon w={30} h={30} fill={'#646464'} />
+                        <CreateDropdown w={30} h={30} />
+                        <NotificationIcon w={30} h={30} fill={'#646464'} />
+                        <ChatBubbleIcon w={30} h={30} fill={'#646464'} />
                     </div>
                 </div>
             </div>

@@ -20,7 +20,7 @@ export default function CreateDropdown() {
                 className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
                 aria-hidden="true"
               /> */}
-              <CreateIcon w={35} h={35} fill={open ? '#1E71F2' :'#646464'} />
+              <CreateIcon w={30} h={30} fill={open ? '#1E71F2' :'#646464'} />
             </Menu.Button>
           </div>
           <Transition
