@@ -1,8 +1,18 @@
 "use client"
 import Sidebar from "@/components/layouts/Sidebar"
+import Navigation from "@/components/profile/Navigation";
+import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "../../components/Icons";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import NotificationBar from "@/components/notifications/NotificationBar";
 import Bottombar from "@/components/layouts/Bottombar";
 
-const DefaultLayout = ({ children }) => {
+const VisitLayout = ({ children }) => {
+  
+  const pathname = usePathname();
+
+  const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
+  
   return (
       <div className="min-w-screen border- border-yellow-400">
         <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
@@ -17,6 +27,7 @@ const DefaultLayout = ({ children }) => {
             <div className="flex justify-center flex-1 border- border-purple-400">
               <div className="w-[100%] lg:w-[70%]">
                 {children}
+                <Navigation/>
               </div>
           </div>
         </div>
@@ -26,4 +37,4 @@ const DefaultLayout = ({ children }) => {
   )
 }
 
-export default DefaultLayout
+export default VisitLayout

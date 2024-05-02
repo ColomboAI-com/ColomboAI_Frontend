@@ -1,9 +1,9 @@
-// import Profile  from "@/components/profile/Profile"
+import Profile  from "@/components/profile/Profile"
 
 const profile = () => {
   return (
     <div>
-      {/* <Profile/> */}
+      <Profile/>
     </div>
   )
 }
