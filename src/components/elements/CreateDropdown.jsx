@@ -1,10 +1,9 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { CreateIcon, CreateMagicPenIcon, CreatePostIcon, CreateStoryIcon, CreateThoughtIcon, CreateVibeIcon } from '../Icons';
-import MyModal from './Modal';
 import { GlobalContext } from '@/context/GlobalContext';
 
-export default function CreateDropdown() {
+export default function CreateDropdown({w, h, fill}) {
 
   const { setIsCreatePostOpen } = useContext(GlobalContext);
 
@@ -15,12 +14,7 @@ export default function CreateDropdown() {
         <>
           <div>
             <Menu.Button >
-              {/* Options
-              <ChevronDownIcon
-                className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
-                aria-hidden="true"
-              /> */}
-              <CreateIcon w={35} h={35} fill={open ? '#1E71F2' :'#646464'} />
+              <CreateIcon w={w} h={w} fill={fill} />
             </Menu.Button>
           </div>
           <Transition
