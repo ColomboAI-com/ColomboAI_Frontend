@@ -5,7 +5,7 @@ import { useContext, useState } from "react"
 export default function LikePost({ post }) {
 
   const [likeCounts, setLikeCounts] = useState(post?.counts?.likes || 0)
-  const [isLiked, setIsLiked] = useState(post?.actions?.isLiked || false)
+  const [isLiked, setIsLiked] = useState(post?.interactions?.isLiked || false)
   const { likePost } = useContext(FeedContext)
 
   const onLikePost = async () => {

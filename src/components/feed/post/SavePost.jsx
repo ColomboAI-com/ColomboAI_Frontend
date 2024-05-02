@@ -5,7 +5,7 @@ import { useContext, useState } from "react"
 export default function SavePost({ post }) {
 
   const [savedCounts, setSavedCounts] = useState(post?.counts?.saved || 0)
-  const [isSaved, setIsSaved] = useState(post?.actions?.isSaved || false)
+  const [isSaved, setIsSaved] = useState(post?.interactions?.isSaved || false)
   const { savePost } = useContext(FeedContext)
 
   const onSavePost = async () => {

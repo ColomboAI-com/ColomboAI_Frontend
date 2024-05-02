@@ -9,7 +9,7 @@ import { MessageBox } from "@/components/MessageBox"
 export default function RePost({ post }) {
 
   const [repostCounts, setRepostCounts] = useState(post?.counts?.reposts || 0)
-  const [isReposted, setIsReposted] = useState(post?.actions?.isReposted || false)
+  const [isReposted, setIsReposted] = useState(post?.interactions?.isReposted || false)
   const { rePost } = useContext(FeedContext)
   const [isRepostOpen, setIsRepostOpen] = useState(false)
 
