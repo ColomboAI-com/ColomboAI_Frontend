@@ -14,7 +14,7 @@ export default function CreateDropdown({w, h, fill}) {
         <>
           <div>
             <Menu.Button >
-              <CreateIcon w={w} h={w} fill={fill} />
+              <CreateIcon w={w} h={h} fill={fill} />
             </Menu.Button>
           </div>
           <Transition

@@ -25,7 +25,7 @@ const MessageHeader = () => {
                     <SearchIcon w={44} h={44} fill={'currentcolor'} />
                 </button>
                 <div className="text-[#646464] hover:text-brandprimary">
-                    <CreateDropdown/>
+                    <CreateDropdown w={44} h={44} fill={'currentcolor'}/>
                 </div>
                 <button className="text-[#646464] hover:text-brandprimary">
                 <   NotificationIcon w={44} h={44} fill={'currentcolor'} />
