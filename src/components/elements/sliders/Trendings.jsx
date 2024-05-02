@@ -36,7 +36,7 @@ var settings = {
 
 const Trendings = () => {
     return (
-        <div className="mt-4 mb-4">
+        <div className="mt-4 mb-4 pl-[17px]">
         <Slider {...settings}>
             <Trending/>
             <Trending/>

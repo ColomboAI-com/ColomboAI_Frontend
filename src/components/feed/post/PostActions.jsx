@@ -3,13 +3,18 @@ import { useContext } from "react"
 import LikePost from "./LikePost"
 import RePost from "./RePost"
 import SavePost from "./SavePost"
+import Modal from "@/components/elements/Modal"
+import { useState } from "react"
+
+import CommentSection from "@/components/comment/CommentSection"
 
 export default function PostActions({ post }) {
 
   const { setIsShareOpen, setIsCommentOpen } = useContext(GlobalContext)
+  // sconst [isCommentOpen] = useState(false)
 
   return (
-    <div className="flex items-center justify-between">
+    <><div className="flex items-center justify-between">
       <div className="flex items-center gap-[19px]">
         <LikePost post={post} />
         <div className="flex items-center gap-4">
@@ -29,6 +34,6 @@ export default function PostActions({ post }) {
         </button>
         <SavePost post={post} />
       </div>
-    </div>
+    </div></>
   )
 }
