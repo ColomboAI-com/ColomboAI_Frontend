@@ -10,6 +10,9 @@ import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
 import CommentSection from "@/components/comment/CommentSection";
 import Bottombar from "@/components/layouts/Bottombar";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "@/components/Icons";
 
 const DefaultLayout = ({ children }) => {
 
