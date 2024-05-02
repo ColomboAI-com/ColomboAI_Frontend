@@ -1,6 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { useContext, useState } from "react";
-import { BackButtonIcon, CloseDocumentIcon, CreateMagicPenIcon, CrossIcon, SendIcon } from "../Icons";
+import {
+  BackButtonIcon,
+  CloseDocumentIcon,
+  CreateMagicPenIcon,
+  CrossIcon,
+  SendIcon,
+} from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
 import { GlobalContext } from "@/context/GlobalContext";
 import { ThreeDots } from "react-loader-spinner";
