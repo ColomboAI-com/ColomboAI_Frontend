@@ -39,7 +39,7 @@ const Header = () => {
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         <InputBar/>
                     </div>
-                    <div className="flex gap-4 mr-9 justify-evenly items-baseline w-[20%] ">
+                    <div className="flex lg:gap-2 xl:gap-4 mr-9 justify-evenly items-baseline w-[20%] ">
                         <button className="text-[#646464] hover:text-brandprimary">
                             <SearchIcon w={45} h={45} fill={'currentcolor'} />
                         </button>

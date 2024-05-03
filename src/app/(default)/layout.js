@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Header from "@/components/layouts/Header";
 import RightSidebar from "@/components/layouts/RightSidebar";
@@ -51,7 +52,7 @@ const DefaultLayout = ({ children }) => {
               <Modal
                 isOpen={isShareOpen}
                 setIsOpen={setIsShareOpen}
-                className="w-full absolute bottom-0 md:w-auto md:w-auto md:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all"
+                className="w-full absolute bottom-0 md:w-auto md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all"
               >
                 <Share />
               </Modal>
