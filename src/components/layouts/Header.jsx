@@ -34,26 +34,16 @@ const Header = () => {
 
             {/* Tablet view */}
 
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
+            <div className="border-b-[1px] border-[#E3E3E3]">
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
-                        <InputBar/>
+                        <InputBar />
                     </div>
-                    <div className="flex lg:gap-2 xl:gap-4 mr-9 justify-evenly items-baseline w-[20%] ">
-                        <button className="text-[#646464] hover:text-brandprimary">
-                            <SearchIcon w={45} h={45} fill={'currentcolor'} />
-                        </button>
-                        <div className="text-[#646464] hover:text-brandprimary">
-                            <CreateDropdown w={45} h={45} fill={'currentcolor'}/>
-                        </div>
-                        <button className="text-[#646464] hover:text-brandprimary">
-                        <   NotificationIcon w={45} h={45} fill={'currentcolor'} />
-                        </button>
-                        <button className={`text-[#646464] hover:text-brandprimary ${pathname.includes('/messages')}`}>
-                            <Link href="/messages">
-                                <ChatBubbleIcon w={45} h={45} fill={'currentcolor'} />
-                            </Link>
-                        </button>
+                    <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
+                        <SearchIcon w={30} h={30} fill={'#646464'} />
+                        <CreateDropdown w={30} h={30} />
+                        <NotificationIcon w={30} h={30} fill={'#646464'} />
+                        <ChatBubbleIcon w={30} h={30} fill={'#646464'} />
                     </div>
                 </div>
             </div>
@@ -68,7 +58,7 @@ const Header = () => {
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
                         <div className="flex items-center gap-4 lg:gap-8 mx-9 ">
-                            <CreateDropdown w={35} h={35} fill={'#646464'}/>
+                            <CreateDropdown w={35} h={35} fill={'#646464'} />
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
                             <Link href="/messages">
                                 <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
@@ -76,7 +66,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="w-full">
-                        <InputBar/>
+                        <InputBar />
                     </div>
                 </div>
             </div>

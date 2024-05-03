@@ -23,6 +23,8 @@ export default function FeedContextProvider({ children }) {
     GetUserPost: false
   })
 
+  console.log(posts)
+
   const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
@@ -48,7 +50,7 @@ export default function FeedContextProvider({ children }) {
       setLoadings(prev => ({ ...prev, createPost: true }))
       const formData = new FormData()
       formData.append('type', type)
-      formData.append('file', file)
+      formData.append('file', file || '')
       formData.append('content', content)
       formData.append('hideLikes', isHideLikes)
       formData.append('isCommentOff', isHideComments)

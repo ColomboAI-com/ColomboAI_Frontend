@@ -7,9 +7,9 @@ export default function ContentBlock({ content }) {
   const words = content.split(/(\s+)/)
 
   return (
-    <div className="py-[27px] pl-[37px] pr-[41px]">
+    <div className="py-[12px] px-[16px]">
       <p className="text-[#515151] tex-[24px] font-sans font-[450]">
-        <Linkify options={{ target: '_blank', className: 'text-brandprimary' }}>
+        <Linkify options={{ target: '_blank', className: '' }}>
           {
             words.map((i, index) => {
               if (HASHTAG_REGEX.test(i)) {

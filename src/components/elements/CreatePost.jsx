@@ -1,85 +1,78 @@
 /* eslint-disable @next/next/no-img-element */
-import { useContext, useState } from "react";
+import { useContext, useState } from "react"
 import {
   BackButtonIcon,
   CloseDocumentIcon,
   CreateMagicPenIcon,
   CrossIcon,
   SendIcon,
-} from "../Icons";
-import { FeedContext } from "@/context/FeedContext";
-import { GlobalContext } from "@/context/GlobalContext";
-import { ThreeDots } from "react-loader-spinner";
-import Button from "@/elements/Button";
-import { MessageBox } from "../MessageBox";
+} from "../Icons"
+import { FeedContext } from "@/context/FeedContext"
+import { GlobalContext } from "@/context/GlobalContext"
+import { ThreeDots } from "react-loader-spinner"
+import Button from "@/elements/Button"
+import { MessageBox } from "../MessageBox"
 
 const CreatePost = () => {
-  const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
-  const [promptInput, setPromptInput] = useState('');
-  const [postInput, setPostInput] = useState('');
-  const [file, setFile] = useState(null);
-  const [mediaUrl, setMediaUrl] = useState("");
+  const [isMagicPenOpen, setIsMagicPenOpen] = useState(false)
+  const [promptInput, setPromptInput] = useState('')
+  const [postInput, setPostInput] = useState('')
+  const [file, setFile] = useState(null)
+  const [mediaUrl, setMediaUrl] = useState("")
   const defaultPostType = 'thought'
-  const [postType, setPostType] = useState(defaultPostType);
-  const [nextStep, setNextStep] = useState(false);
-  const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
-  const { setIsCreatePostOpen } = useContext(GlobalContext);
+  const [postType, setPostType] = useState(defaultPostType)
+  const [nextStep, setNextStep] = useState(false)
+  const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext)
+  const { setIsCreatePostOpen } = useContext(GlobalContext)
 
   function toogleMagicPen() {
     setIsMagicPenOpen(!isMagicPenOpen)
   }
 
   const handleFileInputClick = () => {
-    document.querySelector('input[type="file"][accept="media_type"]').click();
-  };
+    document.querySelector('input[type="file"][accept="media_type"]').click()
+  }
 
   const clearFileHandler = () => {
-    setFile(null);
-    setMediaUrl("");
-    setPostType(defaultPostType);
-  };
+    setFile(null)
+    setMediaUrl("")
+    setPostType(defaultPostType)
+  }
 
   const handleGeneratePost = async () => {
-    const result = await generatePost(promptInput);
+    const result = await generatePost(promptInput)
     if (result?.response_type !== "text") {
-      setMediaUrl(result?.text);
-      setPostType(result?.response_type);
+      setMediaUrl(result?.text)
+      setPostType(result?.response_type)
     } else if (result?.response_type === "text") {
       setPostInput(result?.text)
     }
-  };
+  }
 
   const handleFileChange = (event) => {
-    const selectedFiles = event.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = Array.from(selectedFiles);
-      setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]))
-      setPostType(newFiles[0]?.type?.split('/')?.[0]);
-    }
-  };
+    const selectedFiles = event.target.files
+    setFile(selectedFiles[0])
+    setPostType(selectedFiles[0]?.type?.split('/')?.[0])
+  }
 
   const handleDrop = (event) => {
-    event.preventDefault();
-    const droppedFiles = event.dataTransfer.files;
-    if (droppedFiles.length > 0) {
-      const newFiles = Array.from(droppedFiles);
-      setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]))
-      setPostType(newFiles[0]?.type?.split('/')?.[0]);
-    }
-  };
+    event.preventDefault()
+    const droppedFiles = event.dataTransfer.files
+    setFile(droppedFiles[0])
+    setPostType(droppedFiles[0]?.type?.split('/')?.[0])
+  }
 
   const handleCreatePost = async () => {
     const res = await createPost({ type: postType, file, content: postInput })
-    console.log("create post", res)
     if (res) {
       MessageBox('success', res.message)
       let postData = [...posts]
-      postData.unshift(res.post)
+      postData.unshift(res.data?.post)
       setPosts(postData)
+      setIsCreatePostOpen(false)
     }
   }
+
   return (
     <>
       <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
@@ -250,7 +243,7 @@ const CreatePost = () => {
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default CreatePost;
+export default CreatePost
