@@ -34,7 +34,7 @@ const Header = () => {
 
             {/* Tablet view */}
 
-            <div className="border-b-[1px] border-[#E3E3E3]">
+            <div className="border-b-[1px] border-[#E3E3E3] sm:border-b-[0]">
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         <InputBar />
@@ -50,14 +50,14 @@ const Header = () => {
 
             {/* mobile view */}
 
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
+            <div className="shadow-[0px_2px_4px_0px_#0000001A] px-[20px]">
                 <div className=" block md:hidden">
                     <div className="flex justify-between">
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-[12px]">
                             <img src="/images/home/profile-img.png" alt="profile-image" className="w-[58px] mx-auto" />
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
-                        <div className="flex items-center gap-4 lg:gap-8 mx-9 ">
+                        <div className="flex items-center gap-4 lg:gap-8 ">
                             <CreateDropdown w={35} h={35} fill={'#646464'} />
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
                             <Link href="/messages">

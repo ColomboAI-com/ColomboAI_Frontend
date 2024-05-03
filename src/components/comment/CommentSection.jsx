@@ -10,7 +10,7 @@ const CommentSection = () => {
 
   return (
     <div className="xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
-      <div className="xl:block w-[60%] xl:w-[70%] h-[550px] md:w-full sm:w-full sm:hidden">
+      <div className="xl:block w-[60%] xl:w-[70%] lg:h-[84vh] md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative">
           <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
@@ -18,7 +18,7 @@ const CommentSection = () => {
           <img src="/images/comment/commenimg.png" className=" w-full h-full aspect-video h-[-webkit-fill-available]" />
         </div>
       </div>
-      <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-[86vh] md:w-full sm:w-full sm:absolute sm:z-[99] sm:h-[70vh]">
+      <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-auto md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a class="flex items-center" target="_blank" href="/profile/prince02">
             <img src="https://ui-avatars.com/api/?name=prince patel" alt="avatar" class="rounded-full" height="42" width="42" />
@@ -40,13 +40,13 @@ const CommentSection = () => {
           <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
-        <div className="h-[82%] no-scrollbar overflow-y-auto py-1 xl:h-[37vh] lg:h-[61vh] md:h-[44vh]">
+        <div className="no-scrollbar overflow-y-auto py-1 2xl:h-[46vh] lg:h-[37vh] md:h-[44vh]">
 
           <div className="flex items-start justify-start gap-2 my-4">
             <div className="w-[36px] h-[36px]">
               <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
             </div>
-            <div className="w-[85%] text-center">
+            <div className="w-[85%] text-left">
               <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
               <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
               <div className="flex items-center justify-between">
@@ -66,7 +66,7 @@ const CommentSection = () => {
             <div className="w-[36px] h-[36px]">
               <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
             </div>
-            <div className="w-[85%] text-center">
+            <div className="w-[85%] text-left">
               <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
               <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
               <div className="flex items-center justify-between">

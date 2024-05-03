@@ -11,22 +11,30 @@ var settings = {
     slidesToScroll: 1,
     responsive: [
         {
-        breakpoint: 1200,
-        setting: {
-            slidesToShow: 5,
-        },
-        },
-        {
-        breakpoint: 1000,
-        setting: {
-            slidesToShow: 2,
-        },
+            breakpoint: 1200,
+            setting: {
+                slidesToShow: 5,
+            },
         },
         {
-        breakpoint: 650,
-        setting: {
-            slidesToShow: 2,
+            breakpoint: 1000,
+            setting: {
+                slidesToShow: 5,
+            },
         },
+        {
+            breakpoint: 600,
+            setting: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+            },
+        },
+        {
+            breakpoint: 480,
+            setting: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+            },
         },
     ],
 };

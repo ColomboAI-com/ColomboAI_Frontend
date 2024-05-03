@@ -37,7 +37,7 @@ export default function RePost({ post }) {
       <Modal
         isOpen={isRepostOpen}
         setIsOpen={setIsRepostOpen}
-        className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all"
+        className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all md:shadow-none"
       >
         <RepostModal
           post={post}

@@ -19,13 +19,13 @@ export default function PostActions({ post }) {
         <LikePost post={post} />
         <div className="flex items-center gap-4">
           <button onClick={() => setIsCommentOpen(true)}>
-            <img src="/images/home/Chat.png" alt="comment_image" />
+            <img src="/images/icons/ChatCircleDots.svg" alt="comment_image" />
           </button>
           <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
         </div>
         <RePost post={post} />
         <div className="flex items-center">
-          <img src="/images/home/Magic-pen.png" alt="magic_pen_button_image" />
+          <img src="/images/icons/sidebar/gen-ai-icon.svg" alt="magic_pen_button_image" />
         </div>
       </div>
       <div className="flex items-center gap-[19px]">
@@ -37,3 +37,4 @@ export default function PostActions({ post }) {
     </div></>
   )
 }
+
