@@ -9,7 +9,7 @@ const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
   const { loadings } = useContext(FeedContext)
 
   return (
-    <div className="w-full flex flex-col items-center bg-white border-[#E3E3E3] sm2:w-[430px] md:w-[430px] z-50 rounded-t-[20px] sm2:rounded-[20px] md:rounded-[20px] px-[14px] pt-[40px] pb-[29px]">
+    <div className="w-full flex flex-col items-center bg-white border-[#E3E3E3] sm2:w-[430px] md:w-[430px] z-50 rounded-t-[20px] md:mx-auto sm2:rounded-[20px] md:rounded-[20px] px-[14px] pt-[40px] pb-[29px]">
       <div className="">
         <div className="w-[110px] mx-auto rounded-[50%]">
           <ProfilePicture size={110} image={post?.creator?.profile_picture} />

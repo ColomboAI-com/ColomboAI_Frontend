@@ -38,7 +38,7 @@ export default function CreateDropdown({ w, h, fill }) {
                       <button
                         onClick={() => setIsCreatePostOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between rounded-t-md p-3 text-lg`}
+                          } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Post
                         <CreatePostIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -51,7 +51,7 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg`}
+                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Story
                         <CreateStoryIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -64,7 +64,7 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg`}
+                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Vibe
                         <CreateVibeIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -77,7 +77,7 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg`}
+                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Thought
                         <CreateThoughtIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -90,7 +90,7 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between rounded-b-md p-3 text-lg`}
+                          } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         <p>Magic Pen <span className='text-xs'>(Generative AI)</span></p>
                         <CreateMagicPenIcon w={25} h={25}
