@@ -1,26 +1,4 @@
-"use client"
-import { useState } from 'react';
-import ProfilePicture from "../elements/ProfilePicture";
-import Username from "../elements/Username";
-
-const SearchProfile = () => {
-    const [inputValue, setInputValue] = useState('');
-    const [suggestions, setSuggestions] = useState([]);
-
-    const handleInputChange = (event) => {
-        const value = event.target.value;
-        setInputValue(value);
-
-        if (value.length > 0) {
-            const filteredUsers = users.filter(user =>
-                user.username.toLowerCase().includes(value.toLowerCase())
-            );
-            setSuggestions(filteredUsers);
-        } else {
-            setSuggestions([]);
-        }
-    };
-
+const SearchProfile = () => {   
     return (
         <div className="relative py-7">
             <div className="relative flex items-center w-full">
@@ -32,16 +10,8 @@ const SearchProfile = () => {
                     placeholder="Search Profile"
                     aria-label="Search Profile"
                     className="pl-12 pr-4 py-2 w-full border-[1px] border-brandprimary rounded-[50px] text-[#ACACAC] text-[20px] tracking-[4px] font-sans focus:outline-none"
-                    value={inputValue}
-                    onChange={handleInputChange}
                 />
             </div>
-            {suggestions.map(user => (
-                <div key={user.id} className="flex items-center my-2">
-                    <ProfilePicture  />
-                    <Username/>
-                </div>
-            ))}
         </div>
     );
 }
