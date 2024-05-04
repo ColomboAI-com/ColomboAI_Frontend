@@ -1,6 +1,20 @@
+import ProfileRenderFeed from "./ProfileRenderFeed";
+import PostCard from "./cards/PostCard";
 
-export const Post = () => {
+const Post = () => {
   return (
-    <div>Posts</div>
-  )
-}
+    <>
+      <ProfileRenderFeed filter={'image'} />
+      {/* <div className="grid grid-cols-3 overflow-auto max-h-screen border-brandprimary border-2">
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+        <PostCard />
+      </div> */}
+    </>
+  );
+};
+
+export default Post;

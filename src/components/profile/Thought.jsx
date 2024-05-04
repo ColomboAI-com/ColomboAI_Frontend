@@ -1,7 +1,12 @@
+import RenderFeed from "../feed/post/RenderFeed"
+import ProfileRenderFeed from "./ProfileRenderFeed";
 
-
-export const Thought = () => {
+const Thought = () => {
   return (
-    <div>Thoughts</div>
+    <>
+      <ProfileRenderFeed filter={'thought'} />
+    </>
   )
 }
+
+export default Thought;

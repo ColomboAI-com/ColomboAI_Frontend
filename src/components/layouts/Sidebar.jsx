@@ -17,7 +17,7 @@ const Sidebar = () => {
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
                 <div className="mb-[46px] mt-[20px]">
-                    <img src="/images/home/profile-img.png" alt="profile-image" className="w-[42px] mx-auto" />
+                    <img src="/images/home/profile-img.png" alt="profile-image" className="w-[42px] mx-auto rounded-full" />
                 </div>
 
                 <Link href="/gen-ai">

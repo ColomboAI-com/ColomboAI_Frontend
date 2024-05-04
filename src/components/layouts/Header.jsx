@@ -43,7 +43,9 @@ const Header = () => {
                         <SearchIcon w={30} h={30} fill={'#646464'} />
                         <CreateDropdown w={30} h={30} />
                         <NotificationIcon w={30} h={30} fill={'#646464'} />
-                        <ChatBubbleIcon w={30} h={30} fill={'#646464'} />
+                        <Link href='/messages'>
+                            <ChatBubbleIcon w={30} h={30} fill={'#646464'} />
+                        </Link>
                     </div>
                 </div>
             </div>
