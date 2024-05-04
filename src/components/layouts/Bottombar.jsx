@@ -28,21 +28,20 @@ const Bottombar = () => {
     <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
       <div className="shadow-[0px_2px_4px_0px_#0000001A]">
         <div className="py-4 flex flex-wrap items-center justify-evenly">
-          <Link href="/gen-ai">
+          <Link href="/gen-search">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
                 <GenAiIcon
                   w="30"
                   h="30"
-                  fill={pathname === "/gen-ai" ? "#1E71F2" : "#8E8E93"}
+                  fill={pathname === "/gen-search" ? "#1E71F2" : "#8E8E93"}
                 />
               </div>
               <p
-                className={`${
-                  pathname === "/gen-ai"
+                className={`${pathname === "/gen-search"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-3 font-sans`}
               >
                 Gen AI
               </p>
@@ -59,11 +58,10 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${
-                  pathname === "/task-bot"
+                className={`${pathname === "/task-bot"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-3 font-sans`}
               >
                 Task bot
               </p>
@@ -82,11 +80,10 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${
-                  feedSections.includes(`${pathname}`)
+                className={`${feedSections.includes(`${pathname}`)
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-3 font-sans`}
               >
                 Feed
               </p>
@@ -103,11 +100,10 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${
-                  pathname === "/shop"
+                className={`${pathname === "/shop"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-3 font-sans`}
               >
                 Shop
               </p>
@@ -124,11 +120,10 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${
-                  pathname === "/news"
+                className={`${pathname === "/news"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-3 font-sans`}
               >
                 News
               </p>

@@ -47,14 +47,14 @@ const DefaultLayout = ({ children }) => {
               {
                 isShareOpen &&
                 <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
-                  <Share specificPostId={specificPostId} posts={posts}/>
+                  <Share specificPostId={specificPostId} posts={posts} />
                 </Modal>
               }{isCommentOpen &&
                 <Modal isOpen={isCommentOpen} setIsOpen={setIsCommentOpen}
                   className="mx-[150px]"
                 >
                   <CommentSection
-                    setIsCommentOpen={setIsCommentOpen} specificPostId={specificPostId} posts={posts}/>
+                    setIsCommentOpen={setIsCommentOpen} specificPostId={specificPostId} posts={posts} />
                 </Modal>
               }
 
@@ -82,12 +82,12 @@ const DefaultLayout = ({ children }) => {
         <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-4 flex flex-wrap items-center justify-evenly">
-              <Link href="/gen-ai">
+              <Link href="/gen-search">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
                     <GenAiIcon w="30" h="30" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
                   </div>
-                  <p className={`${pathname === '/gen-ai' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Gen AI</p>
+                  <p className={`${pathname === '/gen-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-3 font-sans`}>Gen AI</p>
                 </div>
               </Link>
 
