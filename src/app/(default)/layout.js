@@ -31,7 +31,7 @@ const DefaultLayout = ({ children }) => {
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[93%] ml-[7%] lg:ml-[7%] md:ml-[9%] flex flex-col relative sm:ml-[0]">
-            <header className="sticky top-0 z-50 border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+            <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
               <div className="py-[14px]">
                 <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px]" />
               </div>
@@ -67,7 +67,7 @@ const DefaultLayout = ({ children }) => {
               <div className={"w-[100%] lg:w-[70%] max-h-[calc((100vh-175px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"}>
                 {children}
               </div>
-              <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative">
+              <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative ml-[1px]">
                 <RightSidebar />
               </div>
               {/* // </> */}

@@ -34,7 +34,7 @@ const Header = () => {
 
             {/* Tablet view */}
 
-            <div className="border-b-[1px] border-[#E3E3E3] sm:border-b-[0]">
+            <div className="xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] sm:border-b-[0]">
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         <InputBar />
