@@ -1,3 +1,4 @@
+'use client'
 import { FeedContext } from '@/context/FeedContext'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'

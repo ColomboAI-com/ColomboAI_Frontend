@@ -19,10 +19,21 @@ export default function UserProfileContextProvider({ children }) {
     getFollowers: false,
   })
 
-  const getUserDetails = async () => {
+  const [postsCount, setPostsCount] = useState(0)
+
+  const [followersData, setFollowersData] = useState(null)
+  const [followingsData, setFollowingsData] = useState(null)
+
+  let [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false)
+  let [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false)
+  let [isShareProfileModalOpen, setIsShareProfileModalOpen] = useState(false)
+  let [isUnFollowModalOpen, setIsUnFollowModalOpen] = useState(false)
+  let [unFollowModalData, setUnFollowModalData] = useState()
+
+  const getUserDetails = async (userName) => {
     try {
       setLoadings(prev => ({ ...prev, userDetails: true }))
-      const res = await axios.get(`${ROOT_URL_AUTH}/user`,
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/${userName}`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -40,7 +51,7 @@ export default function UserProfileContextProvider({ children }) {
   const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
-      const res = await axios.get(`${ROOT_URL_FEED}/post/${getCookie('username')}`,
+      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${getCookie('username')}`,
         {
           params: { type, page, limit },
           headers: {
@@ -49,6 +60,7 @@ export default function UserProfileContextProvider({ children }) {
         }
       )
       setPosts(prev => ([...prev, ...res.data?.posts || []]))
+      setPostsCount(res.data?.pagination?.totalCount || 0)
       if (res.data?.posts?.length) setPage(prev => (prev + 1))
     } catch (err) {
       handleError(err)
@@ -115,13 +127,19 @@ export default function UserProfileContextProvider({ children }) {
   const getFollowers = async (type = 'followers') => {
     try {
       setLoadings(prev => ({ ...prev, getFollowers: true }))
-      const res = await axios.get(`${ROOT_URL_AUTH}/user/followers/${getCookie('username')}`,
+      const res = await axios.post(`${ROOT_URL_AUTH}/user/followers/${getCookie('username')}`,
+      {type},
         {
           headers: {
             Authorization: getCookie('token')
           }
         }
       )
+      if (type === 'followers') {
+        setFollowersData(res.data.results)
+      } else if(type === 'followings') {
+        setFollowingsData(res.data.results)
+      }
       return res.data
     } catch (err) {
       handleError(err)
@@ -165,6 +183,16 @@ export default function UserProfileContextProvider({ children }) {
   const resetFeedValues = () => {
     setPosts([])
     setPage(1)
+    setPostsCount(0)
+  }
+
+  const handleFollower = (user) => {
+    const data = [...followersData]
+    const find = data.find(e => e._id === user._id)
+    const index = data.indexOf(find)
+    data[index] = { ...find, is_following: !find.is_following }
+    setFollowersData(data)
+    followUnfollowUser(user._id)
   }
 
   return (
@@ -174,17 +202,28 @@ export default function UserProfileContextProvider({ children }) {
       loadings, getUserDetails,
       getPosts, getSavedPosts,
       page, editProfile,
+      postsCount, setPostsCount,
       reportPost,
       resetFeedValues,
       getFollowers,
       followUnfollowUser,
-      blockUser
+      blockUser,
+      isFollowerModalOpen, setIsFollowerModalOpen,
+      isFollowingModalOpen, setIsFollowingModalOpen,
+      isShareProfileModalOpen, setIsShareProfileModalOpen,
+      isUnFollowModalOpen, setIsUnFollowModalOpen,
+      unFollowModalData, setUnFollowModalData,
+      followersData, setFollowersData,
+      followingsData, setFollowingsData,
+      handleFollower
     }}>
       {children}
     </UserProfileContext.Provider>
   );
 }
 
-export const useUserProfile = () => {
-  return useContext(UserProfileContext)
-}
+// export const useUserProfile = () => {
+//   return useContext(UserProfileContext)
+// }
+
+export { UserProfileContextProvider, UserProfileContext };

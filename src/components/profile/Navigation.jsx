@@ -1,20 +1,20 @@
 "use client";
 import { useState } from 'react';
 import { PostsIcon, ThoughtIcon, VideoIcon, BookmarkIcon, TagIcon } from "../Icons";
-import { Post } from './Post';
-import { Thought } from './Thought';
-import { Video } from './Video';
-import { Bookmark } from './Bookmark';
-import { Tag } from './Tag';
+import Post from './Post';
+import Thought from './Thought';
+import Video from './Video';
+import Bookmark from './Bookmark';
+import Tag from './Tag';
 
-const IconButton = ({ icon: IconComponent, label, onClick }) => (
+const IconButton = ({ label, onClick, children }) => (
   <div className="mx-4" onClick={onClick} role="button" tabIndex="0" aria-label={label} onKeyDown={(e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       onClick();
     }
   }}>
     <div className="w-[29px] mx-auto">
-      <IconComponent />
+      {children}
     </div>
   </div>
 );
@@ -38,15 +38,32 @@ const Navigation = () => {
     };
 
     return (
-        <div className="bg-white mt-3">
-            <div className="py-4 flex flex-wrap items-center justify-evenly">
-                <IconButton icon={PostsIcon} label="Posts" onClick={() => setActiveTab('post')} />
-                <IconButton icon={ThoughtIcon} label="Thoughts" onClick={() => setActiveTab('thought')} />
-                <IconButton icon={VideoIcon} label="Videos" onClick={() => setActiveTab('video')} />
-                <IconButton icon={BookmarkIcon} label="Bookmarks" onClick={() => setActiveTab('bookmark')} />
-                <IconButton icon={TagIcon} label="Tags" onClick={() => setActiveTab('tags')} />
+        <div className="bg-white border-x-2 ">
+            <div className="pt-4 flex flex-wrap items-center justify-evenly">
+              
+                <IconButton label="Posts" onClick={() => setActiveTab('post')} >
+                  <PostsIcon w={30} h={30} fill={activeTab === 'post' ? "#1E71F2" : "#ACACAC"} />
+                </IconButton>
+
+                <IconButton label="Thoughts" onClick={() => setActiveTab('thought')} >
+                  <ThoughtIcon w={35} h={35} fill={activeTab === 'thought' ? "#1E71F2" : "#ACACAC"} />
+                </IconButton>
+
+                <IconButton label="Videos" onClick={() => setActiveTab('video')} >
+                  <VideoIcon w={30} h={30} fill={activeTab === 'video' ? "#1E71F2" : "#ACACAC"} />
+                </IconButton>
+
+                <IconButton label="Bookmarks" onClick={() => setActiveTab('bookmark')} >
+                  <BookmarkIcon w={25} h={25} fill={activeTab === 'bookmark' ? "#1E71F2" : "#ACACAC"} />
+                </IconButton>
+
+                <IconButton label="Tags" onClick={() => setActiveTab('tags')} >
+                  <TagIcon w={30} h={30} fill={activeTab === 'tags' ? "#1E71F2" : "#ACACAC"} />
+                </IconButton>
             </div>
-            {renderComponent()}
+            <div className='border- border-green-400'>
+              {renderComponent()}
+            </div>
         </div>
     );
 }

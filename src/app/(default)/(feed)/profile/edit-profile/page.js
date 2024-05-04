@@ -1,0 +1,95 @@
+'use client'
+import ProfilePicture from "@/components/elements/ProfilePicture";
+import { UserProfileContext } from "@/context/UserProfileContext";
+import Button from "@/elements/Button";
+import { redirect } from "next/navigation";
+import { useContext, useState } from "react";
+
+const EditProfile = () => {
+    const [username, setUsername] = useState("");
+    const [displayName, setDisplayName] = useState("");
+    const [bio, setBio] = useState("");
+    const [file, setFile] = useState(null);
+    const [mediaUrl, setMediaUrl] = useState("");
+
+    const { loadings, editProfile } = useContext(UserProfileContext);
+
+    const handleFileInputClick = () => {
+        document.querySelector('input[type="file"][accept="image/*"]').click();
+    };
+
+    const handleFileChange = (event) => {
+        const selectedFiles = event.target.files;
+        if (selectedFiles && selectedFiles.length > 0) {
+            const newFiles = Array.from(selectedFiles);
+            setFile(newFiles);
+            setMediaUrl(URL.createObjectURL(newFiles[0]));
+        }
+    };
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const formData = new FormData();
+      formData.append("profile_picture", file);
+      console.log(formData,"formdata",username, displayName, bio,file)
+      editProfile(username, displayName, bio, formData);
+      redirect('/profile')
+    };
+    
+
+    return (
+        <div className=" font-sans flex flex-col items-center max-w-lg my-12 mx-auto">
+            <ProfilePicture size={110} image={mediaUrl !== "" && file !== null ? mediaUrl :`/images/home/profile-img.png`} />
+            <span onClick={handleFileInputClick}>
+                <input
+                  className="hidden"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(e, "file")}
+                />
+                <button className=" text-brandprimary">
+                    Change Picture
+                </button>
+            </span>
+            <div>
+            <input
+              type="text"
+              className="mt-4 w-full rounded-[40px] border-[1px] border-[#ACACAC] bg-[#EEEEEE] px-[30px] py-[22px] text-black placeholder:text-brandplaceholder focus:border-[#ACACAC] focus:bg-[#EEEEEE] focus:outline-none"
+              placeholder="Edit Username"
+              autoComplete="off"
+              maxLength={30}
+              name={"username"}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="text"
+              className="mt-4 w-full rounded-[40px] border-[1px] border-[#ACACAC] bg-[#EEEEEE] px-[30px] py-[22px] text-black placeholder:text-brandplaceholder focus:border-[#ACACAC] focus:bg-[#EEEEEE] focus:outline-none"
+              placeholder="Edit Display name"
+              autoComplete="off"
+              maxLength={50}
+              name={"name"}
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
+            <textarea
+              type="text"
+              className="mt-4 w-full h-[20vh] resize-none rounded-[40px] border-[1px] border-[#ACACAC] bg-[#EEEEEE] px-[30px] py-[22px] text-black placeholder:text-brandplaceholder focus:border-[#ACACAC] focus:bg-[#EEEEEE] focus:outline-none"
+              placeholder="Edit Bio"
+              autoComplete="off"
+              name={"email"}
+              value={bio}
+              onChange={(e) => setBio(e.target.value)}
+            />
+            <Button
+              title={'UPDATE'}
+              className={'mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[30px] py-[22px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
+              loading={loadings.editProfile}
+              onClick={(e) => handleSubmit(e)}
+            />
+          </div>
+        </div>
+    );
+}
+
+export default EditProfile;

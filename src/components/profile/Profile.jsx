@@ -1,66 +1,57 @@
-import { Verified } from "../Icons";
+'use client'
+import { UserProfileContext } from "@/context/UserProfileContext";
+import { VerifiedIcon } from "../Icons";
+import ProfilePicture from "../elements/ProfilePicture";
+import { useContext } from "react";
+import Link from "next/link";
 
-const Profile = () => {
-  const userData = {
-    name: "Kai Kawaii",
-    username: "@kai_kawaii01",
-    bio: "Brooding Beyblade master with a fiery phoenix Bit-Beast, Dranzer, transforms from lone wolf to a valued teammate.",
-    profilePicture: "/images/profile/Ellipse246.png",
-    coverImage: "/images/profile/Rectangle40138.png",
-    posts: 488,
-    followers: "30.6m",
-    following: 108
-  };
+const UserProfile = ({userData}) => {
 
+  const { setIsFollowerModalOpen, setIsFollowingModalOpen, setIsShareProfileModalOpen, postsCount } = useContext(UserProfileContext);
   return (
-    <div className="max-w-4xl mx-auto relative">
+    <div className="relative ">
       <img
-        src={userData.coverImage}
+        src="/images/profile/Rectangle40138.png"
         alt="Cover"
         className="w-full h-55 object-cover"
       />
 
-      <button className="absolute top-1/2 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
-        Follow
-      </button>
-      <button className="absolute top-1/2 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
-        Message
+      <Link href={'/profile/edit-profile'} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
+        Edit
+      </Link>
+      <button onClick={() => setIsShareProfileModalOpen(true)} className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
+        Share profile
       </button>
 
-      <div className="flex flex-col items-center -mt-16">
-        <img
-          src={userData.profilePicture}
-          alt="Profile"
-          className="rounded-full h-30 w-30 "
-        />
-
+      <div className="flex flex-col items-center border-2 -mt-16">
+        <ProfilePicture size={104} image={userData?.profile_picture} />
         <h1 className="mt-4 text-3xl font-bold text-gray-900 flex items-center">
-          {userData.name}
+          {userData?.name}
           <span className="text-brandprimary text-xl ml-2">
-            <Verified/>
+            <VerifiedIcon w={20} h={20} fill={"#1E71F2"}/>
           </span>
         </h1>
 
         <div className="text-center text-brandplaceholder mb-4">
-          {userData.username}
+          @{userData?.user_name}
         </div>
 
         <p className="text-brandprimary text-center mt-2 px-6 text-2xl">
-          {userData.bio}
+          {userData?.bio}
         </p>
 
-        <div className="flex justify-around w-full mt-6">
+        <div className="flex justify-around w-full my-6">
           <div className="text-center">
-            <div className="text-4xl font-bold">{userData.posts}</div>
+            <div className="text-4xl font-bold">{postsCount}</div>
             <div className="font-bold text-brandprimary">Posts</div>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold">{userData.followers}</div>
-            <div className="font-bold text-brandprimary">Followers</div>
+            <div className="text-4xl font-bold">{userData?.counts?.followers.toLocaleString() ? userData?.counts?.followers.toLocaleString() : 0}</div>
+            <button onClick={() => setIsFollowerModalOpen(true)} className="font-bold text-brandprimary">Followers</button>
           </div>
           <div className="text-center">
-            <div className="text-4xl font-bold">{userData.following.toLocaleString()}</div>
-            <div className="font-bold text-brandprimary">Following</div>
+            <div className="text-4xl font-bold">{userData?.counts?.followings.toLocaleString() ? userData?.counts?.followings.toLocaleString() : 0}</div>
+            <button onClick={() => setIsFollowingModalOpen(true)} className="font-bold text-brandprimary">Following</button>
           </div>
         </div>
       </div>
@@ -68,4 +59,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UserProfile;
