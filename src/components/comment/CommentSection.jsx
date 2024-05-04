@@ -1,12 +1,105 @@
 /* eslint-disable jsx-a11y/alt-text */
 'use client'
-import { GlobalContext } from "@/context/GlobalContext";
-import { useContext } from "react";
+import { FeedContext } from "@/context/FeedContext";
+import { formatTimeAgo } from "@/utlils/commonFunctions";
+import { useContext, useState, useRef, useEffect } from "react";
 
 /* eslint-disable @next/next/no-img-element */
-const CommentSection = () => {
+const CommentSection = ({specificPostId, posts}) => {
+  const magicBoxInputRef = useRef();
+  const commentBoxInputRef = useRef();
+  const { setIsCommentOpen, addComment: addCommentContext, deleteComment: deleteCommentContext, generateComment: generateCommentContext, getComments } = useContext(FeedContext);
+  const [commentData, setCommentData] = useState("");
+  const [generateCommentData, setGenerateCommentData] = useState();
+  const [isClick, setIsClick] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [generatedComment, setGeneratedComment] = useState("");
+  const [isAILoading, setIsAILoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [page, setPage] = useState(1); 
+  const containerRef = useRef(null);
 
-  const { setIsCommentOpen } = useContext(GlobalContext);
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await getComments(specificPostId, page);
+        setComments((prevComments) => [...prevComments, ...res.comments]);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+    fetchComments();
+  }, [specificPostId, page]);
+
+
+    const postComment = async (id) => {
+      if(commentData || generatedComment){
+      setLoading(true);
+      try {
+        await addCommentContext({ postId: id, content: (commentData || generatedComment) });
+        const updatedComments = await getComments(specificPostId, 1);
+        setComments(updatedComments.comments);
+        setCommentData("");
+        setGeneratedComment("");
+        setGenerateCommentData("");
+        commentBoxInputRef.current.focus();
+        setLoading(false);
+        setIsClick(false);
+      } catch (error) {
+        console.error("Error posting comment:", error);
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleDeleteComment = async (postId, commentId) => {
+    try {
+      await deleteCommentContext({postId, commentId});
+      setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  }
+
+  useEffect(() => {
+    if (isClick) {
+      magicBoxInputRef.current.focus();
+    }
+    else{
+      commentBoxInputRef.current.focus();
+    }
+  }, [isClick]);           
+
+  const handleInputGenerateComment = (e) => {
+    if (e.target.value.trim() === '') {
+      setIsInputFocused(false);
+    } else {
+      setIsInputFocused(true);
+    }
+    setGenerateCommentData(e.target.value)
+  }
+
+  const handleMegicPen = () => {
+    setIsClick(!isClick);
+  }
+  
+  const handleGenerateComment = async (e) => {
+    setIsAILoading(true);
+    try {
+        const postContent = encodeURIComponent(posts?.content);
+        const { generatedComment } = await generateCommentContext({ prompt: generateCommentData, post: postContent });
+        setTimeout(() => {
+            setGeneratedComment(generatedComment);
+            setIsAILoading(false);
+            commentBoxInputRef.current.focus();
+            setGenerateCommentData("");
+        }, 500);
+    } catch (error) {
+        console.error("Error generating comment:", error);
+        setIsAILoading(false);
+    }
+  }
 
   return (
     <div className="xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
@@ -40,224 +133,116 @@ const CommentSection = () => {
           <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
-        <div className="no-scrollbar overflow-y-auto py-1 2xl:h-[46vh] lg:h-[37vh] md:h-[44vh]">
-
+        <div ref={containerRef} className="h-[82%] no-scrollbar content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]">
+        
+        {comments.map((comment) => (
+        <div key={comment._id}>
           <div className="flex items-start justify-start gap-2 my-4">
             <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
+              <img src={comment.creator.profile_picture} className="w-[36px] h-[36px] rounded-[50%]" />
             </div>
             <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
+              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">{comment.creator.user_name}</h5>
+              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">{comment.content}</h3>
+                <div className="flex items-center justify-between">
+                  <div className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">
+                    {formatTimeAgo(comment?.createdAt)}
+                  </div>
+                  <div className="flex items-center gap-[20px] right-0">
+                    <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
+                    <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
+                    <img src="/images/icons/wishlist-icon.svg" />
+                    <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[21px] cursor-pointer" onClick={()=>handleDeleteComment(specificPostId, comment._id)}>
+                      Delete
+                    </span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
             </div>
           </div>
+          <hr className="mt-2 mb-2"/>
+        </div>
+        ))}
 
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[20px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-start justify-start text-center gap-2 my-4">
-            <div className="w-[36px] h-[36px]">
-              <img src="/images/comment/user-profile-pic.png" className="w-[36px] h-[36px] rounded-[50%]" />
-            </div>
-            <div className="w-[85%] text-left">
-              <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">Bruno Pham</h5>
-              <h3 className="text-[#212121] text-[20px] font-sans font-[400] leading-[30px] my-[4px]">Great shot! I love it</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[20px]">
-                  <span className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">2 mins ago</span>
-                  <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
-                </div>
-                <div className="flex items-center gap-[6px]">
-                  <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
-                  <img src="/images/icons/wishlist-icon.svg" />
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div className="py-[5px]">
-          <div className="relative ">
-            <div className="absolute top-[11px] left-[15px]">
-              <img src="/images/icons/smile-icon.svg" />
-            </div>
-            <input
-              type="text"
-              className="w-full border-[1px] border-[#1E71F2] h-[50px] roun-[50px] rounded-[50px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0"
-              placeholder="Type something"
-              autoComplete="off"
-            />
-            <button className="w-[53px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] absolute right-0 top-[0px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px]">
-              <img src="/images/icons/Magic-pen.svg" />
-            </button>
-
+        <div className="relative ">
+          <div className="absolute w-[40px] top-[11px] left-[15px]">
+            <img src="/images/icons/smile-icon.svg" />
           </div>
+          
+          <textarea
+          ref={commentBoxInputRef}
+            type="text"
+            className="w-full border-[1px] border-[#1E71F2] h-[70px] round-[50px] rounded-[20px] pl-[55px] pr-[110px] pt-[15px] outline-none focus:ring-offset-0 focus:ring-0 resize-none overflow-y-auto"
+            placeholder="Write comments..."
+            autoComplete="off"
+            value={commentData || generatedComment}
+            onChange={(e) => {
+              setCommentData(e.target.value);
+              setGeneratedComment('');
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                postComment(specificPostId); 
+              }
+            }}
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitScrollbar: 'none',
+            }}
+          />    
+            <div onClick={handleMegicPen} className="w-[53px] absolute right-10 top-[10px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px] cursor-pointer">
+              <svg width="16" height="25" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 14.0049V8.60624C1 7.58854 1 7.07972 1.13945 6.59989C1.2789 6.12004 1.54983 5.69666 2.09168 4.84991L3.81834 2.15161C4.30753 1.38712 4.55212 1.00488 4.9 1.00488C5.24788 1.00488 5.49247 1.38712 5.98166 2.15161L7.70832 4.84991C8.25016 5.69666 8.52108 6.12004 8.66057 6.59989C8.8 7.07972 8.8 7.58854 8.8 8.60624V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M1.65039 6.85498C2.06088 7.065 2.61805 7.48756 3.13245 7.5044C3.79461 7.52604 4.24181 6.94416 4.90039 6.94416C5.55897 6.94416 6.00617 7.52604 6.66833 7.5044C7.18274 7.48756 7.73992 7.065 8.15039 6.85498" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.90039 7.50488V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.59961 2.95508H6.19961" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </div>
+          <div className="absolute top-[11px] right-0">
+            <button type="button" class="text-white w-[53px] bg-blue-500 hover:bg-blue-400 absolute right-3 top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
+             onClick={() => {
+              postComment(specificPostId);
+            }}>
+              {isLoading ? (
+            <div className="w-4 h-4 mt-1 mb-1 ml-3 rounded-full border-t-2 border-b-2 border-white-500 animate-spin"></div>
+          ) : (
+             <> Post </>
+            )}
+            </button>
+          </div>
+        </div>
+        {isClick && ( 
+        <div className="relative mt-2">
+          <div className="absolute w-[30px] top-[11px] left-[15px]">
+            <img src="/images/comment/aicommenticon.svg" />
+          </div>
+          
+          <input
+            ref={magicBoxInputRef}
+            type="text"
+            className="w-full border-[1px] border-[#1E71F2] h-[50px] round-[50px] rounded-[20px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0"
+            placeholder="Ask or create anything..."
+            autoComplete="off"
+            value={generateCommentData}
+            onChange={handleInputGenerateComment}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if (isClick) {
+                  handleGenerateComment();
+                } else {
+                  postComment(specificPostId);
+                }
+              }
+            }}
+          />
+            <div className="w-[53px] blue-400 absolute right-0 top-[10px] h-[50px p-[3px] object-scale-down cursor-pointer" onClick={handleGenerateComment}>
+            {isAILoading ? (
+            <div className="w-5 h-5 rounded-full border-t-2 border-b-2 border-blue-500 animate-spin"></div>
+        ) : (
+            <svg width="20" height="20" fill="#8E8E93" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg"><path d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z" fill={isInputFocused === true ? '#1E71F2' : '#8E8E93'}></path></svg>
+          )}
+            </div>
+        </div>
+        )}
         </div>
       </div>
     </div>
