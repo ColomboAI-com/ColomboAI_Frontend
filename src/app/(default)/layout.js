@@ -21,8 +21,7 @@ const DefaultLayout = ({ children }) => {
 
   const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
 
-  const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen, setIsCommentOpen } = useContext(GlobalContext);
-
+  const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen, setIsCommentOpen, specificPostId, setSpecificPostId, posts, setPosts } = useContext(GlobalContext);
   return (
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
@@ -48,14 +47,14 @@ const DefaultLayout = ({ children }) => {
               {
                 isShareOpen &&
                 <Modal isOpen={isShareOpen} setIsOpen={setIsShareOpen} className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all">
-                  <Share />
+                  <Share specificPostId={specificPostId} posts={posts}/>
                 </Modal>
               }{isCommentOpen &&
                 <Modal isOpen={isCommentOpen} setIsOpen={setIsCommentOpen}
                   className="mx-[150px]"
                 >
                   <CommentSection
-                    setIsCommentOpen={setIsCommentOpen} />
+                    setIsCommentOpen={setIsCommentOpen} specificPostId={specificPostId} posts={posts}/>
                 </Modal>
               }
 

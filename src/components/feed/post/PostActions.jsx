@@ -10,15 +10,26 @@ import CommentSection from "@/components/comment/CommentSection"
 
 export default function PostActions({ post }) {
 
-  const { setIsShareOpen, setIsCommentOpen } = useContext(GlobalContext)
-  // sconst [isCommentOpen] = useState(false)
+  const { setIsShareOpen, setIsCommentOpen, setSpecificPostId, setPosts } = useContext(GlobalContext)
+
+  const handleShare = (postId) =>{
+    setIsShareOpen(true)
+    setSpecificPostId(postId)
+    setPosts(post)
+  }
+
+  const handleComments = (postId) =>{
+    setIsCommentOpen(true)
+    setSpecificPostId(postId)
+    setPosts(post)
+  }
 
   return (
     <><div className="flex items-center justify-between">
       <div className="flex items-center gap-[19px]">
         <LikePost post={post} />
         <div className="flex items-center gap-4">
-          <button onClick={() => setIsCommentOpen(true)}>
+          <button onClick={() => handleComments(post._id)}>
             <img src="/images/icons/ChatCircleDots.svg" alt="comment_image" />
           </button>
           <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
@@ -29,7 +40,7 @@ export default function PostActions({ post }) {
         </div>
       </div>
       <div className="flex items-center gap-[19px]">
-        <button onClick={() => setIsShareOpen(true)} className="flex items-center gap-4">
+        <button onClick={() => handleShare(post._id)} className="flex items-center gap-4">
           <img src="/images/home/Arrow.png" alt="share_button_image" />
         </button>
         <SavePost post={post} />
