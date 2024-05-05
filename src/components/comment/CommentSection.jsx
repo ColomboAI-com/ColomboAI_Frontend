@@ -103,7 +103,7 @@ const CommentSection = ({specificPostId, posts}) => {
 
   return (
     <div className="xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
-      <div className="xl:block w-[60%] xl:w-[70%] lg:h-[84vh] md:w-full sm:w-full sm:hidden">
+      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative">
           <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
@@ -111,7 +111,7 @@ const CommentSection = ({specificPostId, posts}) => {
           <img src="/images/comment/commenimg.png" className=" w-full h-full aspect-video h-[-webkit-fill-available]" />
         </div>
       </div>
-      <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-auto md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
+      <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a class="flex items-center" target="_blank" href="/profile/prince02">
             <img src="https://ui-avatars.com/api/?name=prince patel" alt="avatar" class="rounded-full" height="42" width="42" />
@@ -133,7 +133,7 @@ const CommentSection = ({specificPostId, posts}) => {
           <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
-        <div ref={containerRef} className="h-[82%] no-scrollbar content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]">
+        <div ref={containerRef} className="no-scrollbar content-start overflow-y-auto py-1 h-[40vh]">
         
         {comments.map((comment) => (
         <div key={comment._id}>
@@ -164,85 +164,132 @@ const CommentSection = ({specificPostId, posts}) => {
         ))}
 
         </div>
-        <div className="py-[5px]">
-        <div className="relative ">
-          <div className="absolute w-[40px] top-[11px] left-[15px]">
-            <img src="/images/icons/smile-icon.svg" />
-          </div>
-          
-          <textarea
-          ref={commentBoxInputRef}
-            type="text"
-            className="w-full border-[1px] border-[#1E71F2] h-[70px] round-[50px] rounded-[20px] pl-[55px] pr-[110px] pt-[15px] outline-none focus:ring-offset-0 focus:ring-0 resize-none overflow-y-auto"
-            placeholder="Write comments..."
-            autoComplete="off"
-            value={commentData || generatedComment}
-            onChange={(e) => {
-              setCommentData(e.target.value);
-              setGeneratedComment('');
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                postComment(specificPostId); 
-              }
-            }}
-            style={{
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              WebkitScrollbar: 'none',
-            }}
-          />    
-            <div onClick={handleMegicPen} className="w-[53px] absolute right-10 top-[10px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px] cursor-pointer">
-              <svg width="16" height="25" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 14.0049V8.60624C1 7.58854 1 7.07972 1.13945 6.59989C1.2789 6.12004 1.54983 5.69666 2.09168 4.84991L3.81834 2.15161C4.30753 1.38712 4.55212 1.00488 4.9 1.00488C5.24788 1.00488 5.49247 1.38712 5.98166 2.15161L7.70832 4.84991C8.25016 5.69666 8.52108 6.12004 8.66057 6.59989C8.8 7.07972 8.8 7.58854 8.8 8.60624V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M1.65039 6.85498C2.06088 7.065 2.61805 7.48756 3.13245 7.5044C3.79461 7.52604 4.24181 6.94416 4.90039 6.94416C5.55897 6.94416 6.00617 7.52604 6.66833 7.5044C7.18274 7.48756 7.73992 7.065 8.15039 6.85498" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.90039 7.50488V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.59961 2.95508H6.19961" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <div className="py-[5px] flex flex-col">
+          <div className="relative right-0 left-0 bottom-0 top-auto mb-[20px]">
+            <div className="absolute top-[11px] left-[15px]">
+              <img src="/images/icons/smile-icon.svg" />
             </div>
-          <div className="absolute top-[11px] right-0">
-            <button type="button" class="text-white w-[53px] bg-blue-500 hover:bg-blue-400 absolute right-3 top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
-             onClick={() => {
-              postComment(specificPostId);
-            }}>
-              {isLoading ? (
-            <div className="w-4 h-4 mt-1 mb-1 ml-3 rounded-full border-t-2 border-b-2 border-white-500 animate-spin"></div>
-          ) : (
-             <> Post </>
-            )}
-            </button>
-          </div>
-        </div>
-        {isClick && ( 
-        <div className="relative mt-2">
-          <div className="absolute w-[30px] top-[11px] left-[15px]">
-            <img src="/images/comment/aicommenticon.svg" />
-          </div>
-          
-          <input
-            ref={magicBoxInputRef}
-            type="text"
-            className="w-full border-[1px] border-[#1E71F2] h-[50px] round-[50px] rounded-[20px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0"
-            placeholder="Ask or create anything..."
-            autoComplete="off"
-            value={generateCommentData}
-            onChange={handleInputGenerateComment}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                if (isClick) {
-                  handleGenerateComment();
-                } else {
-                  postComment(specificPostId);
+            <input ref={commentBoxInputRef}
+              type="text"
+              className="w-full border-[1px] border-[#1E71F2] h-[50px] rounded-[50px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0 font-sans"
+              placeholder="Write comments..."
+              autoComplete="off"
+              value={commentData || generatedComment}
+              onChange={(e) => {
+                setCommentData(e.target.value);
+                setGeneratedComment('');
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  postComment(specificPostId); 
                 }
-              }
-            }}
-          />
-            <div className="w-[53px] blue-400 absolute right-0 top-[10px] h-[50px p-[3px] object-scale-down cursor-pointer" onClick={handleGenerateComment}>
-            {isAILoading ? (
-            <div className="w-5 h-5 rounded-full border-t-2 border-b-2 border-blue-500 animate-spin"></div>
-        ) : (
-            <svg width="20" height="20" fill="#8E8E93" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg"><path d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z" fill={isInputFocused === true ? '#1E71F2' : '#8E8E93'}></path></svg>
-          )}
+              }}
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitScrollbar: 'none',
+              }}
+              
+            />
+            <div className="absolute top-[16px] right-[60px]">
+              <button type="button" classNa="text-white absolute w-auto right-[0] top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
+              onClick={() => {
+                postComment(specificPostId);
+              }}>
+                {isLoading ? (
+              <div className="w-4 h-4 mt-1 mb-1 ml-3 rounded-full border-t-2 border-b-2 border-white-500 animate-spin"></div>
+            ) : (
+              <> <svg width="20" height="20" fill="#8E8E93" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg"><path d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z" fill={isInputFocused === true ? '#1E71F2' : '#8E8E93'}></path></svg> </>
+              )}
+              </button>
             </div>
-        </div>
-        )}
+            <button onClick={handleMegicPen} className="w-[53px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] absolute right-0 top-[0px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px]">
+              <img src="/images/icons/Magic-pen.svg" />
+            </button>
+
+          </div>
+
+
+          {/* <div className="relative ">
+            <div className="absolute w-[40px] top-[11px] left-[15px]">
+              <img src="/images/icons/smile-icon.svg" />
+            </div>
+            
+            <textarea
+            ref={commentBoxInputRef}
+              type="text"
+              className="w-full border-[1px] border-[#1E71F2] h-[70px] round-[50px] rounded-[20px] pl-[55px] pr-[110px] pt-[15px] outline-none focus:ring-offset-0 focus:ring-0 resize-none overflow-y-auto"
+              placeholder="Write comments..."
+              autoComplete="off"
+              value={commentData || generatedComment}
+              onChange={(e) => {
+                setCommentData(e.target.value);
+                setGeneratedComment('');
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  postComment(specificPostId); 
+                }
+              }}
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitScrollbar: 'none',
+              }}
+            />   
+
+              <div onClick={handleMegicPen} className="w-[53px] absolute right-10 top-[10px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px] cursor-pointer">
+                <svg width="16" height="25" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 14.0049V8.60624C1 7.58854 1 7.07972 1.13945 6.59989C1.2789 6.12004 1.54983 5.69666 2.09168 4.84991L3.81834 2.15161C4.30753 1.38712 4.55212 1.00488 4.9 1.00488C5.24788 1.00488 5.49247 1.38712 5.98166 2.15161L7.70832 4.84991C8.25016 5.69666 8.52108 6.12004 8.66057 6.59989C8.8 7.07972 8.8 7.58854 8.8 8.60624V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M1.65039 6.85498C2.06088 7.065 2.61805 7.48756 3.13245 7.5044C3.79461 7.52604 4.24181 6.94416 4.90039 6.94416C5.55897 6.94416 6.00617 7.52604 6.66833 7.5044C7.18274 7.48756 7.73992 7.065 8.15039 6.85498" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.90039 7.50488V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.59961 2.95508H6.19961" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+            <div className="absolute top-[11px] right-0">
+              <button type="button" class="text-white w-[53px] bg-blue-500 hover:bg-blue-400 absolute right-3 top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
+              onClick={() => {
+                postComment(specificPostId);
+              }}>
+                {isLoading ? (
+              <div className="w-4 h-4 mt-1 mb-1 ml-3 rounded-full border-t-2 border-b-2 border-white-500 animate-spin"></div>
+            ) : (
+              <> Post </>
+              )}
+              </button>
+            </div>
+          </div> */}
+          {isClick && ( 
+          <div className="relative right-0 left-0 bottom-0 top-auto mb-[10px]">
+            <div className="absolute w-[30px] top-[11px] left-[15px]">
+              <img src="/images/comment/aicommenticon.svg" />
+            </div>
+            
+            <input
+              ref={magicBoxInputRef}
+              type="text"
+              className="w-full border-[1px] border-[#1E71F2] h-[50px] rounded-[50px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0"
+              placeholder="Ask or create anything..."
+              autoComplete="off"
+              value={generateCommentData}
+              onChange={handleInputGenerateComment}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  if (isClick) {
+                    handleGenerateComment();
+                  } else {
+                    postComment(specificPostId);
+                  }
+                }
+              }}
+            />
+              <div className="w-[53px] blue-400 absolute right-0 top-[10px] h-[50px p-[3px] object-scale-down cursor-pointer" onClick={handleGenerateComment}>
+              {isAILoading ? (
+              <div className="w-5 h-5 rounded-full border-t-2 border-b-2 border-blue-500 animate-spin"></div>
+          ) : (
+              <svg width="20" height="20" fill="#8E8E93" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg"><path d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z" fill={isInputFocused === true ? '#1E71F2' : '#8E8E93'}></path></svg>
+            )}
+              </div>
+          </div>
+          )}
         </div>
       </div>
     </div>
