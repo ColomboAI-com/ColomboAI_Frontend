@@ -1,5 +1,4 @@
 const ViewStory = (data) => {
-    console.log(data);
     return (
         <div
             className="relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]"

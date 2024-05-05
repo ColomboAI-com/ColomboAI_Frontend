@@ -1,11 +1,11 @@
 "use client"
 import { BackButtonIcon, CloseDocumentIcon, CrossIcon } from "../Icons";
 import Button from "@/elements/Button";
-import { useState,useEffect,useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { StoryContext } from "@/context/StoryContext"
 import { MessageBox } from "../MessageBox";
 
-const UploadStoryModal = ({setIsCreateStoryOpen}) => {
+const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
   const [file, setFile] = useState(null);
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaType, setMediaType] = useState("");
@@ -52,29 +52,15 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
     }
   };
 
-  console.log(file,mediaUrl,mediaType,"upload")
-
-
-  // const createPostSubmitButton = (event) => {
-  // alert('Create Submit Button')
-  // }
-
   const { createStory } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
-    console.log({ fileType:"image", file:file, content:"image"  })
-  
-      const res = await createStory({ fileType:"image", file:file, content:"image"  })
-      if (res) {
-        MessageBox('success', res.message)
-
-        console.log(res.data)
-        // let postData = [...posts]
-        // postData.unshift(res.data?.post)
-        // setPosts(postData)
-        setIsCreateStoryOpen(false)
-      }
+    const res = await createStory({ fileType: "image", file: file, content: "image" })
+    if (res) {
+      MessageBox('success', res.message)
+      setIsCreateStoryOpen(false)
     }
+  }
 
 
   return (
@@ -183,7 +169,7 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
           <div className="flex justify-center mb-2">
             <Button
               type="button"
-              onClick={(e)=>createPostSubmitButton(e)}
+              onClick={(e) => createPostSubmitButton(e)}
               title={'SHARE STORY'}
               className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
             />

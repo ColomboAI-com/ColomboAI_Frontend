@@ -43,7 +43,6 @@ export default function StoryContextProvider({ children }) {
     }
 
     const getStoriesOfUser = async (userid) => {
-        console.log('getStoriesOfUser', userid)
         try {
             setLoadings(prev => ({ ...prev, getUserStory: true }))
             const res = await axios.get(`${ROOT_URL_FEED}/stories/user/${userid?.userid}`,
@@ -83,13 +82,13 @@ export default function StoryContextProvider({ children }) {
 
 
         <StoryContext.Provider value={{
-          stories, setStories,
-          loadings, createStory,
-          getRecentStories,
-          getStoriesOfUser, 
+            stories, setStories,
+            loadings, createStory,
+            getRecentStories,
+            getStoriesOfUser,
         }}>
-    
-          {children}
+
+            {children}
         </StoryContext.Provider>
     )
 

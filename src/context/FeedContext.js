@@ -24,8 +24,6 @@ export default function FeedContextProvider({ children }) {
     getComments: false
   })
 
-  console.log(posts)
-
   const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
@@ -213,14 +211,14 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
-  const generateComment = async ({prompt = '', post}) => {
+  const generateComment = async ({ prompt = '', post }) => {
     try {
       setLoadings(prev => ({ ...prev, generateComment: true }))
       const formData = new FormData()
       formData.append('prompt', prompt)
       formData.append('text', post)
       const res = await axios.post(`${ROOT_URL_LLM}/vertex-generate-comment`,
-      formData,
+        formData,
         {
           headers: {
             Authorization: getCookie('token')

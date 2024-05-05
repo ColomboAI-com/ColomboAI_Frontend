@@ -16,7 +16,6 @@ export default function RenderFeed({ filter }) {
 
   const handleFeedScroll = () => {
     const feedSection = document.getElementById('feed_section')
-    console.log(feedSection.scrollTop + feedSection.clientHeight, feedSection.scrollHeight)
     if (
       feedSection && !loadings.getPost &&
       Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight

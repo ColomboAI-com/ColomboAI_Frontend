@@ -33,9 +33,6 @@ const CommentSection = ({ specificPostId, posts }) => {
     fetchComments();
   }, [specificPostId, page]);
 
-  console.log(posts)
-
-
   const postComment = async (id) => {
     if (commentData || generatedComment) {
       setLoading(true);
