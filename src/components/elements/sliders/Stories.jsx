@@ -56,8 +56,6 @@ const Stories = () => {
     gerRecentStory()
   }, [])
 
-  console.log(loadings)
-
   if (loadings.reactStory && !allStories?.length) {
     return null
   }
