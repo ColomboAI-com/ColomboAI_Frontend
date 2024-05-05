@@ -1,71 +1,71 @@
 import Slider from "react-slick";
 import CreateStory from "../cards/CreateStory";
 import ViewStory from "../cards/ViewStory";
-import { useContext,useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
 import { getCookie } from "@/utlils/cookies"
 
 var settings = {
-    dots: false,
-    arrow: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            // infinite: true,
-            // dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            initialSlide: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 4,
-            slidesToScroll: 1
-          }
-        }
-    ]
+  dots: false,
+  arrow: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        // infinite: true,
+        // dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1
+      }
+    }
+  ]
 };
 
 const Stories = () => {
 
-  const { getStoriesOfUser,getRecentStories } = useContext(StoryContext);
-  const [allStories,SetAllStories] = useState([]);
+  const { getStoriesOfUser, getRecentStories } = useContext(StoryContext);
+  const [allStories, SetAllStories] = useState([]);
 
   useEffect(async () => {
     let userid = getCookie('userid') || "";
     // const res = await getStoriesOfUser({ userid : userid })
     const res = await getRecentStories()
-    
+
     if (res) {
       SetAllStories(res?.data?.recentStories)
     }
-  },[])
+  }, [])
 
-    return (
-        <div className="my-8">
-            <Slider {...settings}>
-                <CreateStory/>
+  return (
+    <div className="my-8">
+      <Slider {...settings}>
+        <CreateStory />
 
-                {
-                  allStories.map((story) =>{
-                   return  <ViewStory data={story}/>
-                  })
-                }
-                {/* <ViewStory/>
+        {
+          allStories.map((story) => {
+            return <ViewStory data={story} />
+          })
+        }
+        {/* <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
@@ -73,9 +73,9 @@ const Stories = () => {
                 <ViewStory/>
                 <ViewStory/>
                 <ViewStory/> */}
-            </Slider>
-        </div>
-    );
+      </Slider>
+    </div>
+  );
 }
 
 export default Stories;

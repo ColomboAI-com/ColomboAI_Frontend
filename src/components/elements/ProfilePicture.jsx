@@ -6,8 +6,7 @@ export default function ProfilePicture({ image = '/images/profile/defalut_user.s
       src={image}
       alt="avatar"
       className={`rounded-full${className ? ` ${className}` : ''}`}
-      height={size}
-      width={size}
+      style={{ height: size, width: size }}
     />
   )
 }

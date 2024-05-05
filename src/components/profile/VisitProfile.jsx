@@ -8,10 +8,9 @@ import Link from "next/link";
 import { useContext } from "react";
 import { UserProfileContext } from "@/context/UserProfileContext";
 
-const VisitProfile = ({userData}) => {
+const VisitProfile = ({ userData }) => {
 
-const { postsCount, blockUser, followUnfollowUser } = useContext(UserProfileContext);
-
+  const { postsCount, blockUser, followUnfollowUser } = useContext(UserProfileContext);
 
   return (
     <div className="relative">
@@ -32,14 +31,14 @@ const { postsCount, blockUser, followUnfollowUser } = useContext(UserProfileCont
         <ProfilePicture size={101} image={userData?.profile_picture} />
 
         <h1 className="mt-4 text-3xl font-bold text-gray-900 flex items-center">
-          {userData?.name}
+          {userData?.name || 'User'}
           <span className="text-brandprimary text-xl ml-2">
-            <VerifiedIcon w={20} h={20} fill={"#1E71F2"}/>
+            <VerifiedIcon w={20} h={20} fill={"#1E71F2"} />
           </span>
         </h1>
 
         <div className="text-center text-brandplaceholder mb-4">
-          {userData?.user_name}
+          @{userData?.user_name || 'username'}
         </div>
 
         <p className="text-brandprimary text-center mt-2 px-6 text-2xl">
@@ -63,40 +62,40 @@ const { postsCount, blockUser, followUnfollowUser } = useContext(UserProfileCont
             </div>
           </div>
           <div className="flex flex-col w-ful items-center px-4 py-2 gap-5 text-gray-600 hover:text-brandprimary">
-              <Dropdown
-                offset={[35, -30]}
-                placement={"right"}
-                btnClassName=" flex flex-col text-gray-600 my-1  rounded-full !flex justify-center items-center hover:text-brandprimary"
-                button={
-                    <BsThreeDotsVertical className=" flex mt-1 mb-3 w-[32px] h-[32px] opacity-70 hover:text-brandprimar" />
-                }
-              >
-                <ul className="my-1 min-w-[200px] px-2 rounded-lg bg-white p-0 py-2 text-red-500 shadow-[6px_6px_6px_6px_#0000001A] ">
-                  <li>
-                    <button className="flex w-full items-center border-b-2 px-4 py-2 gap-5 hover:text-red-600">
-                      <RestrictUserIcon
-                        w={25}
-                        h={25}
-                        fill={"currentcolor"}
-                      />
-                      Restrict
-                    </button>
-                  </li>
-                  <li>
-                    <button className="flex w-full items-center border-b-2 px-4 py-2 gap-5 hover:text-red-600">
-                      <ReportIcon w={25} h={25} fill={"currentcolor"} />
-                      Report
-                    </button>
-                  </li>
-                  <li>
-                    <button onClick={() => blockUser(userData?._id)} className="flex w-full items-center px-4 py-2 gap-5 hover:text-red-600">
-                      <BlockIcon w={25} h={25} fill={"currentcolor"} />
-                      Block
-                    </button>
-                  </li>
-                </ul>
-              </Dropdown>
-            </div>
+            <Dropdown
+              offset={[35, -30]}
+              placement={"right"}
+              btnClassName=" flex flex-col text-gray-600 my-1  rounded-full !flex justify-center items-center hover:text-brandprimary"
+              button={
+                <BsThreeDotsVertical className=" flex mt-1 mb-3 w-[32px] h-[32px] opacity-70 hover:text-brandprimar" />
+              }
+            >
+              <ul className="my-1 min-w-[200px] px-2 rounded-lg bg-white p-0 py-2 text-red-500 shadow-[6px_6px_6px_6px_#0000001A] ">
+                <li>
+                  <button className="flex w-full items-center border-b-2 px-4 py-2 gap-5 hover:text-red-600">
+                    <RestrictUserIcon
+                      w={25}
+                      h={25}
+                      fill={"currentcolor"}
+                    />
+                    Restrict
+                  </button>
+                </li>
+                <li>
+                  <button className="flex w-full items-center border-b-2 px-4 py-2 gap-5 hover:text-red-600">
+                    <ReportIcon w={25} h={25} fill={"currentcolor"} />
+                    Report
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => blockUser(userData?._id)} className="flex w-full items-center px-4 py-2 gap-5 hover:text-red-600">
+                    <BlockIcon w={25} h={25} fill={"currentcolor"} />
+                    Block
+                  </button>
+                </li>
+              </ul>
+            </Dropdown>
+          </div>
         </div>
       </div>
     </div>

@@ -3,25 +3,22 @@ import { useContext } from "react"
 import LikePost from "./LikePost"
 import RePost from "./RePost"
 import SavePost from "./SavePost"
-import Modal from "@/components/elements/Modal"
-import { useState } from "react"
-
-import CommentSection from "@/components/comment/CommentSection"
+import { MagicPenIcon } from "@/components/Icons"
 
 export default function PostActions({ post }) {
 
   const { setIsShareOpen, setIsCommentOpen, setSpecificPostId, setPosts } = useContext(GlobalContext)
 
-  const handleShare = (postId) =>{
+  const handleShare = (postId) => {
     setIsShareOpen(true)
     setSpecificPostId(postId)
     setPosts(post)
   }
 
-  const handleComments = (postId) =>{
-    setIsCommentOpen(true)
+  const handleComments = (postId) => {
     setSpecificPostId(postId)
     setPosts(post)
+    setIsCommentOpen(true)
   }
 
   return (
@@ -35,9 +32,7 @@ export default function PostActions({ post }) {
           <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
         </div>
         <RePost post={post} />
-        <div className="flex items-center">
-          <img src="/images/icons/sidebar/gen-ai-icon.svg" alt="magic_pen_button_image" />
-        </div>
+        <div onClick={() => handleComments(post._id)}><MagicPenIcon /></div>
       </div>
       <div className="flex items-center gap-[19px]">
         <button onClick={() => handleShare(post._id)} className="flex items-center gap-4">
