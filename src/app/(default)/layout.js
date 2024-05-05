@@ -6,7 +6,7 @@ import Sidebar from "@/components/layouts/Sidebar";
 import FeedContextProvider from "@/context/FeedContext";
 import Modal from "@/components/elements/Modal";
 import CreatePost from "@/components/elements/CreatePost";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
 import CommentSection from "@/components/comment/CommentSection";
@@ -32,7 +32,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[93%] ml-[7%] lg:ml-[7%] md:ml-[9%] flex flex-col relative sm:ml-[0]">
             <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
               <div className="py-[14px]">
-                <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px]" />
+                <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" />
               </div>
             </header>
             <Header />

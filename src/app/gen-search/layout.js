@@ -16,22 +16,22 @@ const GenSearch = ({ children }) => {
   const feedSections = ['/gen-search'];
   return (
     <div className="min-w-screen border- border-yellow-400">
-      <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
-        <div className="border-2 border-purple-50">
-          <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
+      <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+        <div className="py-[14px]">
+          <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" />
         </div>
       </header>
-      
+
       <div className="flex border- border-green-400">
         <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed overflow-auto h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
-              <Sidebar />
+          <Sidebar />
         </div>
         <div className="ml-[7%] w-full mx-auto">
           <div className="w-full mx-auto">
             <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 mx-auto">
               <InputBar />
             </div>
-          </div> 
+          </div>
           <div className="flex">
             <div className="border-t-[1px] border-r-[1px] border-[#E3E3E3] w-full">
               <div className="w-[812px] mx-auto mt-[50px]">
@@ -42,7 +42,7 @@ const GenSearch = ({ children }) => {
                   <div className="text-center mt-[50px]">
                     <Link href="#" className="text-[20px] font-sans text-[#1E71F2] font-[500]">http://withhanab2b.com%3Fgad_source%3D5</Link>
                     <p className="text-[18px] text-[#ACACAC] font-sans font-[500] leading-[22.77px] mt-[17px]">Only wholesalers can order. WITHHANA B2B is 100% Official K-pop wholesaler. We are Korea's No. 1 Hanteo Chart 100% Certified K-pop Wholesaler. 100% Certification. Lowest Price. 24/7 Response. Quick ...</p>
-                  </div>  
+                  </div>
                   <div className="mt-[61px] bg-gradient-to-b from-[#6237FF] via-[#6237FF] to-[#258EFF] px-[12px] py-[22px] rounded-[17px]">
                     <div className="flex items-center justify-between">
                       <h5 className="text-[16px] text-[#F7F7F7] font-sans font-[700]">What is a Video</h5>
@@ -70,22 +70,22 @@ const GenSearch = ({ children }) => {
                       </div>
                     </div>
                     <div className="w-[330px] mx-auto bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px] mt-[24px]">
-                        <div>
-                          <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
-                          <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a​ Video? - Ultimate Marketing Dictionary</p>
-                        </div>
+                      <div>
+                        <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
+                        <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a​ Video? - Ultimate Marketing Dictionary</p>
                       </div>
+                    </div>
                   </div>
-                </div>  
+                </div>
               </div>
-            </div> 
+            </div>
             <div className="w-[365px] py-[28px] px-[51px]">
               <div className="">
                 <img src="/images/gen-search/three-line.svg" />
               </div>
               <div className="flex items-center w-[145px] mt-[34px] py-[14px] px-[22px] rounded-[35px] gap-[10px] border-[1px] border-[#1E71F2]">
-                  <img src="/images/gen-search/add-item.svg" />
-                  <p className="text-[16px] font-sans font-[500] bg-gradient-to-r from-[#6237FF] to-[#258EFF] bg-clip-text text-transparent">New Chat</p>
+                <img src="/images/gen-search/add-item.svg" />
+                <p className="text-[16px] font-sans font-[500] bg-gradient-to-r from-[#6237FF] to-[#258EFF] bg-clip-text text-transparent">New Chat</p>
               </div>
               <div>
                 <p className="text-[18px] text-[#1E71F2] font-sans my-[26px]">Recent</p>
@@ -108,7 +108,7 @@ const GenSearch = ({ children }) => {
                     <img src="/images/gen-search/down-arrow.svg" />
                     <p className="text-[18px] text-[#1E71F2] font-sans font-[500]">Show more</p>
                   </div>
-                </div>  
+                </div>
                 <div>
                   <div className="flex items-center gap-[18px] mb-[20px]">
                     <img src="/images/gen-search/history.svg" />
@@ -121,12 +121,12 @@ const GenSearch = ({ children }) => {
                 </div>
               </div>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
       <Bottombar />
     </div>
-    
+
   )
 }
 
