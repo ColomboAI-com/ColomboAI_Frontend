@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ProfilePicture({ image = '/images/home/avtar-img.png', size = 42, className }) {
+export default function ProfilePicture({ image = '/images/profile/defalut_user.svg', size = 42, className }) {
   return (
     <img
       src={image}
