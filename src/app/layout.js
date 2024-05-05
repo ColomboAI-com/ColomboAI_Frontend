@@ -2,6 +2,7 @@ import ProviderComponent from "@/components/provider-component"
 import "./globals.css"
 import GlobalContextProvider from "@/context/GlobalContext"
 import FeedContextProvider from "@/context/FeedContext"
+import StoryContextProvider from "@/context/StoryContext"
 
 export const metadata = {
   title: "ColomboAI",
@@ -15,7 +16,9 @@ export default function RootLayout({ children }) {
         <ProviderComponent>
           <GlobalContextProvider>
             <FeedContextProvider>
+              <StoryContextProvider>
               {children}
+              </StoryContextProvider>
             </FeedContextProvider>
           </GlobalContextProvider>
         </ProviderComponent>

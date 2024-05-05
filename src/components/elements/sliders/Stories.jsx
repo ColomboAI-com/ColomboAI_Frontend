@@ -1,6 +1,9 @@
 import Slider from "react-slick";
 import CreateStory from "../cards/CreateStory";
 import ViewStory from "../cards/ViewStory";
+import { useContext,useState,useEffect } from "react";
+import { StoryContext } from "@/context/StoryContext";
+import { getCookie } from "@/utlils/cookies"
 
 var settings = {
     dots: false,
@@ -38,18 +41,38 @@ var settings = {
 };
 
 const Stories = () => {
+
+  const { getStoriesOfUser,getRecentStories } = useContext(StoryContext);
+  const [allStories,SetAllStories] = useState([]);
+
+  useEffect(async () => {
+    let userid = getCookie('userid') || "";
+    // const res = await getStoriesOfUser({ userid : userid })
+    const res = await getRecentStories()
+    
+    if (res) {
+      SetAllStories(res?.data?.recentStories)
+    }
+  },[])
+
     return (
         <div className="my-8">
             <Slider {...settings}>
                 <CreateStory/>
+
+                {
+                  allStories.map((story) =>{
+                   return  <ViewStory data={story}/>
+                  })
+                }
+                {/* <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
                 <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
+                <ViewStory/> */}
             </Slider>
         </div>
     );
