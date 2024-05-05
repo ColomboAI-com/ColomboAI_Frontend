@@ -133,7 +133,7 @@ const CommentSection = ({specificPostId, posts}) => {
           <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
-        <div ref={containerRef} className="no-scrollbar content-start overflow-y-auto py-1 h-[40vh]">
+        <div ref={containerRef} className="no-scrollbar content-start overflow-y-auto py-1 h-[calc(100vh_-_480px)]">
         
         {comments.map((comment) => (
         <div key={comment._id}>
