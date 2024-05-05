@@ -25,7 +25,7 @@ export default function RenderFeed({ filter }) {
   useEffect(() => {
     const feedSection = document.getElementById('feed_section')
     feedSection?.addEventListener('scroll', handleFeedScroll)
-    return () => feedSection?.removeEventListener('scroll', handleFeedScroll)
+    return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
   }, [page, loadings.getPost])
 
   if (loadings.getPost && !posts.length)
