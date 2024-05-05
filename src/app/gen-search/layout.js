@@ -16,17 +16,16 @@ const GenSearch = ({ children }) => {
   const feedSections = ['/gen-search'];
   return (
     <div className="min-w-screen border- border-yellow-400">
-      <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
-        <div className="py-[14px]">
-          <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" />
-        </div>
-      </header>
-
       <div className="flex border- border-green-400">
         <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed overflow-auto h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
           <Sidebar />
         </div>
-        <div className="ml-[7%] w-full mx-auto">
+        <div className="xl:ml-[7%] lg:ml-[7%] w-full mx-auto sm:ml-0">
+          <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
+            <div className="border-2 border-purple-50">
+              <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
+            </div>
+          </header>
           <div className="w-full mx-auto">
             <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 mx-auto">
               <InputBar />
@@ -34,15 +33,15 @@ const GenSearch = ({ children }) => {
           </div>
           <div className="flex">
             <div className="border-t-[1px] border-r-[1px] border-[#E3E3E3] w-full">
-              <div className="w-[812px] mx-auto mt-[50px]">
+              <div className="xl:w-[812px] lg:w-[812px] mx-auto mt-[50px] sm:w-full sm:px-[15px]">
                 <div>
                   <p className="text-[16px] font-sans text-[#ACACAC] text-center">Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you are seeking quick information or diving deeper into a topic, GenAI Search has you covered.</p>
                 </div>
-                <div className="w-[642px] mx-auto">
+                <div className="xl:w-[642px] lg:w-[642px] mx-auto sm:w-full">
                   <div className="text-center mt-[50px]">
                     <Link href="#" className="text-[20px] font-sans text-[#1E71F2] font-[500]">http://withhanab2b.com%3Fgad_source%3D5</Link>
                     <p className="text-[18px] text-[#ACACAC] font-sans font-[500] leading-[22.77px] mt-[17px]">Only wholesalers can order. WITHHANA B2B is 100% Official K-pop wholesaler. We are Koreas No. 1 Hanteo Chart 100% Certified K-pop Wholesaler. 100% Certification. Lowest Price. 24/7 Response. Quick ...</p>
-                  </div>
+                  </div >
                   <div className="mt-[61px] bg-gradient-to-b from-[#6237FF] via-[#6237FF] to-[#258EFF] px-[12px] py-[22px] rounded-[17px]">
                     <div className="flex items-center justify-between">
                       <h5 className="text-[16px] text-[#F7F7F7] font-sans font-[700]">What is a Video</h5>
@@ -55,30 +54,30 @@ const GenSearch = ({ children }) => {
                   </div>
                   <div className="pb-[50px]">
                     <p className="text-[14px] text-[#8B8B8B] font-sans font-[500] text-center my-[20px]">Related links:</p>
-                    <div className="flex items-center gap-[12px]">
-                      <div className="bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px]">
+                    <div className="flex items-center gap-[12px] xl:flex-row lg;flex-row sm:flex-col">
+                      <div className="bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px] sm:w-full">
                         <div>
                           <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
                           <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What is a Video? - Ultimate Marketing Dictionary</p>
-                        </div>
-                      </div>
-                      <div className="bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px]">
+                        </div >
+                      </div >
+                      <div className="bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px] sm:w-full">
                         <div>
                           <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
                           <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What is Video? - Ultimate Marketing Dictionary</p>
-                        </div>
-                      </div>
-                    </div>
+                        </div >
+                      </div >
+                    </div >
                     <div className="w-[330px] mx-auto bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px] mt-[24px]">
                       <div>
                         <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
                         <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a Video? - Ultimate Marketing Dictionary</p>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                    </div >
+                  </div >
+                </div >
+              </div >
+            </div >
             <div className="w-[365px] py-[28px] px-[51px]">
               <div className="">
                 <img src="/images/gen-search/three-line.svg" />
@@ -121,11 +120,11 @@ const GenSearch = ({ children }) => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </div >
+        </div >
+      </div >
       <Bottombar />
-    </div>
+    </div >
 
   )
 }
