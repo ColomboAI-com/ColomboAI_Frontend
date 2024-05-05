@@ -12,12 +12,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/favicon.svg" />
+      </head>
       <body suppressHydrationWarning={true}>
         <ProviderComponent>
           <GlobalContextProvider>
             <FeedContextProvider>
               <StoryContextProvider>
-              {children}
+                {children}
               </StoryContextProvider>
             </FeedContextProvider>
           </GlobalContextProvider>
