@@ -14,7 +14,7 @@ export default function StoryContextProvider({ children }) {
     const [loadings, setLoadings] = useState({
         getUserStory: false,
         createStory: false,
-        reactStory: false,
+        reactStory: true,
 
     })
 

@@ -1,6 +1,8 @@
 const Post = () => {
   return (
-    <div>page</div>
+    <p className="text-center mt-5">
+      Coming Soon
+    </p>
   )
 }
 

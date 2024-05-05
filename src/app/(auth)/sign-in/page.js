@@ -60,7 +60,7 @@ const SignIn = () => {
           <div className="text-center text-[16px] text-[#1E6DE9] font-sans py-[34px]">OR</div>
           <SocialAuthentication />
           <RedirectLink
-            title={'Don’t have an account?'}
+            title={"Don't have an account?"}
             href={'/sign-up'}
             linkName={'Sign Up'}
           />

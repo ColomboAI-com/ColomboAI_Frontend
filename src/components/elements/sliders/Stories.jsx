@@ -1,3 +1,4 @@
+'use client'
 import Slider from "react-slick";
 import CreateStory from "../cards/CreateStory";
 import ViewStory from "../cards/ViewStory";
@@ -41,7 +42,7 @@ var settings = {
 
 const Stories = () => {
 
-  const { getRecentStories } = useContext(StoryContext);
+  const { getRecentStories, loadings } = useContext(StoryContext);
   const [allStories, SetAllStories] = useState([]);
 
   const gerRecentStory = async () => {
@@ -55,14 +56,20 @@ const Stories = () => {
     gerRecentStory()
   }, [])
 
+  console.log(loadings)
+
+  if (loadings.reactStory && !allStories?.length) {
+    return null
+  }
+
   return (
     <div className="my-8">
       <Slider {...settings}>
         <CreateStory />
 
         {
-          allStories.map((story) => {
-            return <ViewStory data={story} />
+          allStories.map((story, index) => {
+            return <ViewStory data={story} key={index} />
           })
         }
         {/* <ViewStory/>

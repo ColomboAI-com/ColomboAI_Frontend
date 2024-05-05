@@ -12,7 +12,7 @@ export default function FeedContextProvider({ children }) {
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(1)
   const [loadings, setLoadings] = useState({
-    getPost: false,
+    getPost: true,
     createPost: false,
     deletePost: false,
     addComment: false,

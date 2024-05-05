@@ -36,12 +36,12 @@ const GenSearch = ({ children }) => {
             <div className="border-t-[1px] border-r-[1px] border-[#E3E3E3] w-full">
               <div className="w-[812px] mx-auto mt-[50px]">
                 <div>
-                  <p className="text-[16px] font-sans text-[#ACACAC] text-center">Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you're seeking quick information or diving deeper into a topic, GenAI Search has you covered.</p>
+                  <p className="text-[16px] font-sans text-[#ACACAC] text-center">Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you are seeking quick information or diving deeper into a topic, GenAI Search has you covered.</p>
                 </div>
                 <div className="w-[642px] mx-auto">
                   <div className="text-center mt-[50px]">
                     <Link href="#" className="text-[20px] font-sans text-[#1E71F2] font-[500]">http://withhanab2b.com%3Fgad_source%3D5</Link>
-                    <p className="text-[18px] text-[#ACACAC] font-sans font-[500] leading-[22.77px] mt-[17px]">Only wholesalers can order. WITHHANA B2B is 100% Official K-pop wholesaler. We are Korea's No. 1 Hanteo Chart 100% Certified K-pop Wholesaler. 100% Certification. Lowest Price. 24/7 Response. Quick ...</p>
+                    <p className="text-[18px] text-[#ACACAC] font-sans font-[500] leading-[22.77px] mt-[17px]">Only wholesalers can order. WITHHANA B2B is 100% Official K-pop wholesaler. We are Koreas No. 1 Hanteo Chart 100% Certified K-pop Wholesaler. 100% Certification. Lowest Price. 24/7 Response. Quick ...</p>
                   </div>
                   <div className="mt-[61px] bg-gradient-to-b from-[#6237FF] via-[#6237FF] to-[#258EFF] px-[12px] py-[22px] rounded-[17px]">
                     <div className="flex items-center justify-between">
@@ -59,20 +59,20 @@ const GenSearch = ({ children }) => {
                       <div className="bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px]">
                         <div>
                           <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
-                          <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a​ Video? - Ultimate Marketing Dictionary</p>
+                          <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What is a Video? - Ultimate Marketing Dictionary</p>
                         </div>
                       </div>
                       <div className="bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px]">
                         <div>
                           <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
-                          <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a​ Video? - Ultimate Marketing Dictionary</p>
+                          <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What is Video? - Ultimate Marketing Dictionary</p>
                         </div>
                       </div>
                     </div>
                     <div className="w-[330px] mx-auto bg-[#F7F7F7] border-[1px] border-[#ACACAC] px-[24px] py-[12px] rounded-[17px] mt-[24px]">
                       <div>
                         <Link href="#" className="text-[13px] font-sans text-[#1E71F2] font-[500] text-center">http://withhanab2b.com%3Fgad_source%3D5</Link>
-                        <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a​ Video? - Ultimate Marketing Dictionary</p>
+                        <p className="text-[14px] text-[#ACACAC] font-sans font-[400] text-center mt-[10px]">What Is a Video? - Ultimate Marketing Dictionary</p>
                       </div>
                     </div>
                   </div>

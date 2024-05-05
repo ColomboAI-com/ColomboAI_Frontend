@@ -1,8 +1,8 @@
 const News = () => {
     return (
-        <div>
-            News Page Content
-        </div>
+        <p className="text-center mt-5">
+            Coming Soon
+        </p>
     );
 }
 

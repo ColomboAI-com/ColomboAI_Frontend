@@ -16,7 +16,7 @@ const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
         </div>
         <div className="mt-[29px]">
           <p className="font-sans text-[#515151] text-[22.29px] font-[450] leading-[25.57px] text-center">Are you sure you want to repost <br />
-            <span className="font-[700]">@{post?.creator?.user_name}</span>’s post ?</p>
+            <span className="font-[700]">@{post?.creator?.user_name}</span>{"'s"} post ?</p>
         </div>
         <div>
           <Button
