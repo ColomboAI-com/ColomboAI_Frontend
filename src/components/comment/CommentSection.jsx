@@ -177,7 +177,7 @@ const CommentSection = ({specificPostId, posts}) => {
           <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
-        <div ref={containerRef} className="comment-section h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]">
+        <div ref={containerRef} className="comment-section no-scrollbar h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]">
         {comments.length === 0 && <div className="flex items-center justify-center h-full">
           <p className="text-[#515151] text-[16px] font-sans text-center">No Comments Found</p>
         </div>}
