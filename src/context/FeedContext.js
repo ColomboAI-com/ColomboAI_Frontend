@@ -12,7 +12,7 @@ export default function FeedContextProvider({ children }) {
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(1)
   const [loadings, setLoadings] = useState({
-    getPost: false,
+    getPost: true,
     createPost: false,
     deletePost: false,
     addComment: false,
@@ -20,10 +20,9 @@ export default function FeedContextProvider({ children }) {
     rePost: false,
     generatePost: false,
     generateComment: false,
-    GetUserPost: false
+    GetUserPost: false,
+    getComments: false
   })
-
-  console.log(posts)
 
   const getPosts = async (type, page = 1, limit = 10) => {
     try {
@@ -103,6 +102,23 @@ export default function FeedContextProvider({ children }) {
       handleError(err)
     }
   }
+
+  const getComments = async (postId, page = 1, count = 10) => {
+    try {
+      setLoadings((prev) => ({ ...prev, getComments: true }));
+      const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/comments`, {
+        params: { page, count },
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, getComments: false }));
+    }
+  };
 
   const addComment = async ({ postId = '', content }) => {
     try {
@@ -195,12 +211,12 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
-  const generateComment = async (prompt = '', post) => {
+  const generateComment = async ({ prompt = '', post }) => {
     try {
       setLoadings(prev => ({ ...prev, generateComment: true }))
       const formData = new FormData()
       formData.append('prompt', prompt)
-      formData.append('text', post.content || post.media)
+      formData.append('text', post)
       const res = await axios.post(`${ROOT_URL_LLM}/vertex-generate-comment`,
         formData,
         {
@@ -209,7 +225,7 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      return res.data
+      return { responseData: res.data, generatedComment: res.data.text };
     } catch (err) {
       handleError(err)
     } finally {
@@ -251,7 +267,8 @@ export default function FeedContextProvider({ children }) {
       addComment, deleteComment,
       generatePost, generateComment,
       getPostsOfUser, page,
-      resetFeedValues
+      resetFeedValues,
+      getComments,
     }}>
 
       {children}

@@ -1,9 +1,15 @@
-
+import Image from "next/image"
 
 const SuggestionCard = () => {
   return (
     <div>
-       <img src="/images/home/add-image.png" alt="suggested_image" className="w-full" /> 
+       <Image 
+         src="/images/home/add-image.png"  
+         alt="suggested_image" 
+         width={300} 
+         height={300} 
+         className="w-full" 
+       /> 
     </div>
   )
 }

@@ -13,10 +13,10 @@ const Feed = () => {
 
   return (
     <>
-    <div>
-      <Stories />
+      <div>
+        <Stories />
 
-       {/* {loadings.getPost ? <Loader /> :
+        {/* {loadings.getPost ? <Loader /> :
          posts?.map((i, index) => <Post post={i} key={index} />
          )}
        <SectionHeading title="Suggested Vibes For You" />
@@ -24,13 +24,13 @@ const Feed = () => {
        <SectionHeading title="You might like these" />
        <LikeThis /> */}
 
-      <RenderFeed />
-      {/* <SectionHeading title="Suggested Vibes For You" /> */}
-      {/* <Sugeested /> */}
-      {/* <SectionHeading title="You might like these" /> */}
-      {/* <LikeThis /> */}
+        <RenderFeed />
+        {/* <SectionHeading title="Suggested Vibes For You" /> */}
+        {/* <Sugeested /> */}
+        {/* <SectionHeading title="You might like these" /> */}
+        {/* <LikeThis /> */}
 
-    </div>
+      </div>
     </>
   )
 }

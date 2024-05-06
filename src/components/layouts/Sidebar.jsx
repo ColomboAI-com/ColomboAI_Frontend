@@ -10,7 +10,7 @@ const Sidebar = () => {
 
     const pathname = usePathname();
 
-    const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
+    const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
 
     return (
         <>
@@ -20,12 +20,12 @@ const Sidebar = () => {
                     <img src="/images/home/profile-img.png" alt="profile-image" className="w-[42px] mx-auto rounded-full" />
                 </div>
 
-                <Link href="/gen-ai">
+                <Link href="/gen-search">
                     <div className="mb-[34px]">
                         <div className="w-[29px] mx-auto">
                             <GenAiIcon w="30" h="30" className="mx-auto" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
                         </div>
-                        <p className={`${pathname === '/gen-ai' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Gen AI</p>
+                        <p className={`${pathname === '/gen-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Gen AI</p>
                     </div>
                 </Link>
 
@@ -65,11 +65,11 @@ const Sidebar = () => {
                     </div>
                 </Link>
                 {/* <Link> */}
-                    <div className="mb-[34px]">
-                        <div className="w-[29px] mx-auto">
-                            <StarIcon w="30" h="30" fill={pathname === '/star' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
+                <div className="mb-[34px]">
+                    <div className="w-[29px] mx-auto">
+                        <StarIcon w="30" h="30" fill={pathname === '/star' ? "#1E71F2" : "#8E8E93"} />
                     </div>
+                </div>
                 {/* </Link> */}
             </div>
         </>
