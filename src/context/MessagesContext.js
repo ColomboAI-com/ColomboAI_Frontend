@@ -9,13 +9,15 @@ const MessagesContext = createContext()
 export const MessagesContextProvider = ({ children }) => {
 
   const [conversations, setConversations] = useState([])
+  const [chatHistory, setChatHistory] = useState([])
   const [selectedChat, setSelectedChat] = useState(null)
   const [onlineUsers, setOnlineUsers] = useState([])
   const [disconnectedUser, setDisconnectedUser] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
-  const [isShowChatMenu, setIsShowChatMenu] = useState(false);
+  const [isShowChatMenu, setIsShowChatMenu] = useState(false)
   const [loadings, setLoadings] = useState({
-    conversations: false
+    conversations: false,
+    history: false
   })
 
   useEffect(() => {
@@ -45,16 +47,34 @@ export const MessagesContextProvider = ({ children }) => {
   const getConversations = async (postId, page = 1, count = 10) => {
     try {
       setLoadings((prev) => ({ ...prev, conversations: true }))
-      const res = await axios.get(`${ROOT_URL_MESSAGES}/messages/conversations`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      })
+      const res = await axios.get(`${ROOT_URL_MESSAGES}/messages/conversations`,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        })
       setConversations(res.data)
     } catch (err) {
       handleError(err)
     } finally {
       setLoadings((prev) => ({ ...prev, conversations: false }))
+    }
+  }
+
+  const getChatHistory = async (postId, page = 1, count = 10) => {
+    try {
+      setLoadings((prev) => ({ ...prev, history: true }))
+      const res = await axios.get(`${ROOT_URL_MESSAGES}/messages/${selectedChat?._id}`,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        })
+      setChatHistory(res.data)
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadings((prev) => ({ ...prev, history: false }))
     }
   }
 
@@ -66,7 +86,8 @@ export const MessagesContextProvider = ({ children }) => {
       newMessage, setNewMessage,
       setDisconnectedUser, setLastMessage,
       getConversations, loadings,
-      isShowChatMenu, setIsShowChatMenu
+      isShowChatMenu, setIsShowChatMenu,
+      getChatHistory, chatHistory, setChatHistory
     }}>
       {children}
     </MessagesContext.Provider>

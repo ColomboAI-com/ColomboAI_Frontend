@@ -3,10 +3,11 @@ import ChatUserActionsDropdown from './ChatUserActionsDropdown'
 import { GlobalContext } from '@/context/GlobalContext'
 import ProfilePicture from '../elements/ProfilePicture'
 import { BsThreeDotsVertical } from 'react-icons/bs'
+import { useMessages } from '@/context/MessagesContext'
 
 export default function ChatWindowHeader() {
 
-  const { selectedChat, onlineUsers } = useContext(GlobalContext)
+  const { selectedChat, onlineUsers } = useMessages()
 
   return (
     <div>
@@ -29,7 +30,7 @@ export default function ChatWindowHeader() {
           </div>
           <div className="mx-3">
             <p className="font-semibold">{selectedChat?.name || 'User'}</p>
-            <p className="text-xs text-gray-500">{selectedChat?.user_name || 'username'}</p>
+            <p className="text-xs text-gray-500">@{selectedChat?.user_name || 'username'}</p>
           </div>
         </div>
         <ChatUserActionsDropdown />
