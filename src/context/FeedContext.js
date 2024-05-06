@@ -24,8 +24,6 @@ export default function FeedContextProvider({ children }) {
     getComments: false
   })
 
-  console.log(posts)
-
   const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
