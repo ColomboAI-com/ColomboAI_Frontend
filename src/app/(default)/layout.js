@@ -49,7 +49,6 @@ const DefaultLayout = ({ children }) => {
     setPosts,
   } = useContext(GlobalContext);
   const [isShowChatMenu, setIsShowChatMenu] = useState(false);
-  console.log(isShowChatMenu, "#");
   return (
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
@@ -66,7 +65,7 @@ const DefaultLayout = ({ children }) => {
                   alt="logo-image"
                   className="mx-auto w-[174px]"
                 />
-   
+
                 {/* <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" /> */}
               </div>
             </header>
@@ -114,23 +113,8 @@ const DefaultLayout = ({ children }) => {
                 // :
                 // <> */}
               {isShowChatMenu && (
-                <div
-                  className={`relative flex h-[calc(100vh_-_155px)] md:h-[calc(100vh_-_140px)] sm:min-h-0 max-h-[calc(100vh_-_240px)] md:max-h-[calc(100vh_-_140px)] ${
-                    isShowChatMenu ? "min-h-[999px]" : ""
-                  }`}
-                >
-                  <div
-                    className={`bg-white shadow absolute z-10 border-r-[1px] border-brandprimary hidden h-full w-full max-w-xs flex-none space-y-4 overflow-hidden p-1 lg:relative lg:block ${
-                      isShowChatMenu ? "!block" : ""
-                    }`}
-                  >
-                    {/* Chat list */}
-                    <div className="Chat-list">
-                      <div className="chat-users border- border-purple-400 overflow-y-auto no-scrollbar relative h-full min-h-[100px] mx-2 max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
-                        <NotificationBar />
-                      </div>
-                    </div>
-                  </div>
+                <div className="border overflow-y-auto no-scrollbar relative h-full min-h-[100px] mx-2 max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
+                  <NotificationBar />
                 </div>
               )}
 
@@ -165,11 +149,10 @@ const DefaultLayout = ({ children }) => {
                     />
                   </div>
                   <p
-                    className={`${
-                      pathname === "/gen-search"
-                        ? "text-brandprimary"
-                        : "text-sidebaricon"
-                    } text-center text-[14px] mt-3 font-sans`}
+                    className={`${pathname === "/gen-search"
+                      ? "text-brandprimary"
+                      : "text-sidebaricon"
+                      } text-center text-[14px] mt-3 font-sans`}
                   >
                     Gen AI
                   </p>
@@ -186,11 +169,10 @@ const DefaultLayout = ({ children }) => {
                     />
                   </div>
                   <p
-                    className={`${
-                      pathname === "/task-bot"
-                        ? "text-brandprimary"
-                        : "text-sidebaricon"
-                    } text-center text-[14px] mt-3 font-sans`}
+                    className={`${pathname === "/task-bot"
+                      ? "text-brandprimary"
+                      : "text-sidebaricon"
+                      } text-center text-[14px] mt-3 font-sans`}
                   >
                     Task bot
                   </p>
@@ -211,11 +193,10 @@ const DefaultLayout = ({ children }) => {
                     />
                   </div>
                   <p
-                    className={`${
-                      feedSections.includes(`${pathname}`)
-                        ? "text-brandprimary"
-                        : "text-sidebaricon"
-                    } text-center text-[14px] mt-3 font-sans`}
+                    className={`${feedSections.includes(`${pathname}`)
+                      ? "text-brandprimary"
+                      : "text-sidebaricon"
+                      } text-center text-[14px] mt-3 font-sans`}
                   >
                     Feed
                   </p>
@@ -232,11 +213,10 @@ const DefaultLayout = ({ children }) => {
                     />
                   </div>
                   <p
-                    className={`${
-                      pathname === "/shop"
-                        ? "text-brandprimary"
-                        : "text-sidebaricon"
-                    } text-center text-[14px] mt-3 font-sans`}
+                    className={`${pathname === "/shop"
+                      ? "text-brandprimary"
+                      : "text-sidebaricon"
+                      } text-center text-[14px] mt-3 font-sans`}
                   >
                     Shop
                   </p>
@@ -253,11 +233,10 @@ const DefaultLayout = ({ children }) => {
                     />
                   </div>
                   <p
-                    className={`${
-                      pathname === "/news"
-                        ? "text-brandprimary"
-                        : "text-sidebaricon"
-                    } text-center text-[14px] mt-3 font-sans`}
+                    className={`${pathname === "/news"
+                      ? "text-brandprimary"
+                      : "text-sidebaricon"
+                      } text-center text-[14px] mt-3 font-sans`}
                   >
                     News
                   </p>

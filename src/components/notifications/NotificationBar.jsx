@@ -18,7 +18,7 @@ export default function NotificationBar() {
     };
 
     return (
-        <div className="bg-white shadow-lg rounded-lg p-4 w-95 relative">
+        <div className="rounded-lg p-4 w-95 fixed z-50 w-[350px] h-[100px] bg-white">
             <div className="flex justify-between items-center mb-4">
                 <p className="text-3xl">Notifications</p>
                 <IoSettingsOutline className="text-xl cursor-pointer text-sidebaricon" />
