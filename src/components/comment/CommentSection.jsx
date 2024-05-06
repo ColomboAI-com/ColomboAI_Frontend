@@ -218,11 +218,11 @@ const CommentSection = ({ specificPostId, posts }) => {
                     <div className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">
                       {formatTimeAgo(comment?.createdAt)}
                     </div>
-                    <div className="flex items-center gap-[20px]">
+                    {/* <div className="flex items-center gap-[20px]">
                       <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
                       <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
                       <img src="/images/icons/wishlist-icon.svg" />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
