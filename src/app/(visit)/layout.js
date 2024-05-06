@@ -7,9 +7,9 @@ const VisitLayout = ({ children }) => {
   return (
     <UserProfileContextProvider>
       <div className="min-w-screen border- border-yellow-400">
-        <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
-          <div className="border-2 border-purple-50">
-            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[183px]" />
+        <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+          <div className="py-[14px]">
+            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" />
           </div>
         </header>
         <div className="flex border- border-green-400">

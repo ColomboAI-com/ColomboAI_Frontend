@@ -14,6 +14,8 @@ export default function StoryContextProvider({ children }) {
     const [loadings, setLoadings] = useState({
         getUserStory: false,
         createStory: false,
+        reactStory: true,
+
     })
 
 
@@ -22,9 +24,9 @@ export default function StoryContextProvider({ children }) {
             setLoadings(prev => ({ ...prev, createStory: true }))
             const formData = new FormData()
             formData.append('filetype', fileType)
-            formData.append('file', file)
+            formData.append('file', file[0])
             formData.append('content', content)
-            const res = await axios.get(`${ROOT_URL_FEED}/stories/create`,
+            const res = await axios.post(`${ROOT_URL_FEED}/stories/create`,
                 formData,
                 {
                     headers: {
@@ -34,16 +36,16 @@ export default function StoryContextProvider({ children }) {
             )
             return res.data
         } catch (err) {
-            handleError(err)
+            //handleError(err)
         } finally {
             setLoadings(prev => ({ ...prev, createStory: false }))
         }
     }
 
-    const getStoriesOfUser = async (userid = '') => {
+    const getStoriesOfUser = async (userid) => {
         try {
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.get(`${ROOT_URL_FEED}/stories/user/${userid}`,
+            const res = await axios.get(`${ROOT_URL_FEED}/stories/user/${userid?.userid}`,
                 {
                     headers: {
                         Authorization: getCookie('token')
@@ -58,16 +60,35 @@ export default function StoryContextProvider({ children }) {
         }
     }
 
+    const getRecentStories = async () => {
+        try {
+            setLoadings(prev => ({ ...prev, reactStory: true }))
+            const res = await axios.get(`${ROOT_URL_FEED}/stories/recent`,
+                {
+                    headers: {
+                        Authorization: getCookie('token')
+                    }
+                }
+            )
+            return res.data
+        } catch (err) {
+            handleError(err)
+        } finally {
+            setLoadings(prev => ({ ...prev, reactStory: false }))
+        }
+    }
+
     return (
 
 
         <StoryContext.Provider value={{
-          stories, setStories,
-          loadings, 
-          getStoriesOfUser, 
+            stories, setStories,
+            loadings, createStory,
+            getRecentStories,
+            getStoriesOfUser,
         }}>
-    
-          {children}
+
+            {children}
         </StoryContext.Provider>
     )
 

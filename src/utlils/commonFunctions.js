@@ -7,6 +7,7 @@ export const setUserCookies = (user) => {
   setCookie('name', user.name)
   setCookie('profilePic', user.profile_picture)
   setCookie("userid", user._id)
+  setCookie("username", user.user_name)
 }
 
 export const getShortEmail = (email) => {

@@ -1,8 +1,8 @@
 const TaskBot = () => {
     return (
-        <div>
-            Task Bot Page Content
-        </div>
+        <p className="text-center mt-5">
+            Coming Soon
+        </p>
     );
 }
 

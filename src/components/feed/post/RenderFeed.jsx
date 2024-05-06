@@ -18,14 +18,14 @@ export default function RenderFeed({ filter }) {
     const feedSection = document.getElementById('feed_section')
     if (
       feedSection && !loadings.getPost &&
-      feedSection.scrollTop + feedSection.clientHeight === feedSection.scrollHeight
+      Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight
     ) getPosts(filter, page)
   }
 
   useEffect(() => {
     const feedSection = document.getElementById('feed_section')
     feedSection?.addEventListener('scroll', handleFeedScroll)
-    return () => feedSection?.removeEventListener('scroll', handleFeedScroll)
+    return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
   }, [page, loadings.getPost])
 
   if (loadings.getPost && !posts.length)

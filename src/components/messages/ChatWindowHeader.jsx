@@ -1,0 +1,40 @@
+import React, { useContext } from 'react'
+import ChatUserActionsDropdown from './ChatUserActionsDropdown'
+import { GlobalContext } from '@/context/GlobalContext'
+import ProfilePicture from '../elements/ProfilePicture'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+
+export default function ChatWindowHeader() {
+
+  const { selectedChat, onlineUsers } = useContext(GlobalContext)
+
+  return (
+    <div>
+      <div className="flex items-center justify-between p-4">
+        <div className="flex items-center space-x-2">
+          <button
+            className="hover:text-brandprimary xl:hidden"
+            onClick={() => setIsShowChatMenu(!isShowChatMenu)}
+          >
+            <BsThreeDotsVertical />
+          </button>
+          <div className="relative flex-none">
+            <ProfilePicture size={46} image={selectedChat?.profile_picture} />
+            {
+              onlineUsers?.includes(selectedChat?._id) &&
+              <div className="absolute bottom-0 right-0">
+                <div className="h-3 w-3 rounded-full bg-green-400"></div>
+              </div>
+            }
+          </div>
+          <div className="mx-3">
+            <p className="font-semibold">{selectedChat?.name || 'User'}</p>
+            <p className="text-xs text-gray-500">{selectedChat?.user_name || 'username'}</p>
+          </div>
+        </div>
+        <ChatUserActionsDropdown />
+      </div>
+      <div className="h-px w-full border-b border-white-light"></div>
+    </div>
+  )
+}

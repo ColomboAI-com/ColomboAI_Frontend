@@ -1,9 +1,11 @@
 "use client"
-import { useContext, useState } from "react";
 import { BackButtonIcon, CloseDocumentIcon, CrossIcon } from "../Icons";
 import Button from "@/elements/Button";
+import { useState, useEffect, useContext } from "react";
+import { StoryContext } from "@/context/StoryContext"
+import { MessageBox } from "../MessageBox";
 
-const UploadStoryModal = () => {
+const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
   const [file, setFile] = useState(null);
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaType, setMediaType] = useState("");
@@ -50,6 +52,17 @@ const UploadStoryModal = () => {
     }
   };
 
+  const { createStory } = useContext(StoryContext);
+
+  const createPostSubmitButton = async () => {
+    const res = await createStory({ fileType: "image", file: file, content: "image" })
+    if (res) {
+      MessageBox('success', res.message)
+      setIsCreateStoryOpen(false)
+    }
+  }
+
+
   return (
     <>
       <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] overflow-y-auto font-sans">
@@ -69,12 +82,12 @@ const UploadStoryModal = () => {
             </p>
           </div>
           <div className="flex items-center gap-6">
-            <button onClick={() => setIsCreatePostOpen(false)}>
+            <button onClick={() => setIsCreateStoryOpen(false)}>
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
             </button>
           </div>
         </div>
-        <div className="px-10 py-5 flex flex-col justify-between h-[70vh]">
+        <div className="px-10 py-5 flex flex-col justify-between h-[0vh]">
           {!nextStep && (
             <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
               Next
@@ -155,6 +168,8 @@ const UploadStoryModal = () => {
           nextStep &&
           <div className="flex justify-center mb-2">
             <Button
+              type="button"
+              onClick={(e) => createPostSubmitButton(e)}
               title={'SHARE STORY'}
               className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
             />

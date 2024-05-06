@@ -6,6 +6,7 @@ import Sidebar from "@/components/layouts/Sidebar";
 import FeedContextProvider from "@/context/FeedContext";
 import Modal from "@/components/elements/Modal";
 import CreatePost from "@/components/elements/CreatePost";
+
 import { useContext, useState } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
@@ -65,6 +66,8 @@ const DefaultLayout = ({ children }) => {
                   alt="logo-image"
                   className="mx-auto w-[174px]"
                 />
+   
+                {/* <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" /> */}
               </div>
             </header>
             <Header

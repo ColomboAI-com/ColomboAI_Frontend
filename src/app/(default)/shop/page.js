@@ -1,8 +1,8 @@
 const Shop = () => {
     return (
-        <div>
-            Shop Page Content
-        </div>
+        <p className="text-center mt-5">
+            Coming Soon
+        </p>
     );
 }
 
