@@ -5,6 +5,8 @@ import { formatTimeAgo } from "@/utlils/commonFunctions";
 import { getCookie } from "@/utlils/cookies";
 import { useContext, useState, useRef, useEffect } from "react";
 import ProfilePicture from "../elements/ProfilePicture";
+import ImageBlock from "../feed/post/ImageBlock";
+import VideoBlock from "../feed/post/VideoBlock";
 
 const CommentSection = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
@@ -149,13 +151,22 @@ const CommentSection = ({ specificPostId, posts }) => {
   }
 
   return (
-    <div className="xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
+    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
       <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative">
           <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
           </button>
-          <img src="/images/comment/commenimg.png" className=" w-full h-full aspect-video h-[-webkit-fill-available]" />
+          {
+            posts?.type === 'image' &&
+            <img src={posts?.media} className="w-full h-full aspect-video h-[-webkit-fill-available]" />
+          }
+          {
+            posts?.type === 'video' &&
+            <video className='inset-0 w-full h-full aspect-video h-[-webkit-fill-available]' src={posts?.media} controls>
+              Your browser does not support the video tag.
+            </video>
+          }
         </div>
       </div>
       <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
