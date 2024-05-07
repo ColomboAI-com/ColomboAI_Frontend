@@ -15,7 +15,7 @@ const CreateStory = () => {
 
     return (
         <>
-        <div className="bg-[url('/images/home/create-story.svg')] bg-[length:100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D]" onClick={(e) => handleOpen(e)}>
+        <div className="bg-[url('/images/home/create-story.svg')] bg-[length:100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}>
             <div className="h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
             <div className="absolute bottom-14 w-full">
                 <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">

@@ -26,7 +26,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
     <div className="bg-[#1a1a1af0] p-4 grid grid-cols-3">
       {/* Left Section */}
       <div className="flex justify-end p-4 text-3xl">
-        <MdOutlineArrowBack onClick={() => setIsCreateStorySignleOpen(false)} style={{ color: '#fff' }}/>
+        <MdOutlineArrowBack onClick={() => setIsCreateStorySignleOpen(false)} style={{ color: '#fff',cursor:"pointer"}}/>
       </div>
 
       {/* Middle Section */}
@@ -34,7 +34,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
         <div className="h-3/4 w-full rounded-[5px]">
           <Stories
             stories={data.map((story) => story.media)}
-            defaultInterval={1000}
+            defaultInterval={5000}
             width={432}
             height={768}
             ref={storiesRef}
@@ -42,7 +42,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
             storyStyles={storyStyles}
           />
         </div>
-        <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
+        {/* <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
           <div className="relative">
             <input
               type="search"
@@ -58,11 +58,11 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
               <IoIosSend />
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Right Section */}
-      <div className="flex pt-8 pr-4">
+      {/* <div className="flex pt-8 pr-4">
         <button
           id="dropdownMenuIconButton"
           data-dropdown-toggle="dropdownDots"
@@ -110,7 +110,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
