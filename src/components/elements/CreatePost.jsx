@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useContext, useState } from "react"
+import { useContext, useState , useEffect } from "react"
 import {
   BackButtonIcon,
   CloseDocumentIcon,
@@ -50,17 +50,30 @@ const CreatePost = () => {
   }
 
   const handleFileChange = (event) => {
-    const selectedFiles = event.target.files
-    setFile(selectedFiles[0])
-    setPostType(selectedFiles[0]?.type?.split('/')?.[0])
+    const selectedFiles = event.target.files;
+    if (selectedFiles.length > 0) {
+      const selectedFile = selectedFiles[0];
+      setFile(selectedFile);
+      const fileType = selectedFile.type.split('/')[0];
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setMediaUrl(fileUrl);
+    }
   }
 
   const handleDrop = (event) => {
-    event.preventDefault()
-    const droppedFiles = event.dataTransfer.files
-    setFile(droppedFiles[0])
-    setPostType(droppedFiles[0]?.type?.split('/')?.[0])
+    event.preventDefault();
+    const droppedFiles = event.dataTransfer.files;
+    if (droppedFiles && droppedFiles.length > 0) {
+      const file = droppedFiles[0];
+      const fileType = file.type.split('/')[0];
+      setFile(file);
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(file);
+      setMediaUrl(fileUrl);
+    }
   }
+  
 
   const handleCreatePost = async () => {
     const res = await createPost({ type: postType, file, content: postInput })
@@ -72,6 +85,14 @@ const CreatePost = () => {
       setIsCreatePostOpen(false)
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (mediaUrl) {
+        URL.revokeObjectURL(mediaUrl);
+      }
+    };
+  }, [mediaUrl]);
 
   return (
     <>
