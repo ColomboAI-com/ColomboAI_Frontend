@@ -13,7 +13,7 @@ import { MessagesContextProvider } from "@/context/MessagesContext";
 
 const DefaultLayout = ({ children }) => {
 
-  const { isNewMessageOpen, setIsNewMessageOpen, isSelectPictureMessageOpen, setIsSelectPictureMessageOpen, isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
+  const { isNewMessageOpen, setIsNewMessageOpen, isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
 
   return (
     <MessagesContextProvider>
@@ -35,12 +35,6 @@ const DefaultLayout = ({ children }) => {
                   isNewMessageOpen &&
                   <Modal isOpen={isNewMessageOpen} setIsOpen={setIsNewMessageOpen} className="w-full font-sans max-w-md md:max-w-lg lg:max-w-xl transform overflow-hidden rounded-[26px] bg-white text-left align-middle shadow-xl transition-all">
                     <NewMessage />
-                  </Modal>
-                }
-                {
-                  isSelectPictureMessageOpen &&
-                  <Modal isOpen={isSelectPictureMessageOpen} setIsOpen={setIsSelectPictureMessageOpen} className="w-full font-sans max-w-xl md:max-w-2xl lg:max-w-3xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <SelectPicture />
                   </Modal>
                 }
                 {

@@ -8,9 +8,8 @@ export default function GlobalContextProvider({ children }) {
   let [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   let [isShareOpen, setIsShareOpen] = useState(false);
   let [isCommentOpen, setIsCommentOpen] = useState(false);
-  
+
   let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
-  let [isSelectPictureMessageOpen, setIsSelectPictureMessageOpen] = useState(false);
   let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
   let [specificPostId, setSpecificPostId] = useState()
   let [posts, setPosts] = useState()
@@ -24,11 +23,9 @@ export default function GlobalContextProvider({ children }) {
         setIsShareOpen,
         isCommentOpen,
         setIsCommentOpen,
-        isNewMessageOpen, 
+        isNewMessageOpen,
         setIsNewMessageOpen,
-        isSelectPictureMessageOpen, 
-        setIsSelectPictureMessageOpen,
-        isUserProfileOpen, 
+        isUserProfileOpen,
         setIsUserProfileOpen,
         specificPostId,
         setSpecificPostId,

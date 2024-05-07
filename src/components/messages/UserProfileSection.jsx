@@ -18,11 +18,10 @@ const UserProfileSection = ({ data }) => {
   const {
     isUserProfileOpen,
     setIsUserProfileOpen,
-    setIsSelectPictureMessageOpen,
   } = useContext(GlobalContext);
 
   return (
-    <div className={`${isUserProfileOpen ? "block" : "hidden" } max-h-[calc(100vh_-_240px)] md:max-h-[calc(100vh_-_140px)] overflow-y-auto no-scrollbar mx-4 border- `}>
+    <div className={`${isUserProfileOpen ? "block" : "hidden"} max-h-[calc(100vh_-_240px)] md:max-h-[calc(100vh_-_140px)] overflow-y-auto no-scrollbar mx-4 border- `}>
       <div className=" flex justify-between px-8 py-6">
         <div></div>
         <div className="  w-[70%] overflow-y-auto no-scrollbar py- px- ">

@@ -15,9 +15,13 @@ export const MessagesContextProvider = ({ children }) => {
   const [disconnectedUser, setDisconnectedUser] = useState(null)
   const [newMessage, setNewMessage] = useState(null)
   const [isShowChatMenu, setIsShowChatMenu] = useState(false)
+  const [isFileMessageModalOpen, setIsFileMessageModalOpen] = useState(false)
+  const [messageInput, setMessageInput] = useState('')
+  const [messageFile, setMessageFile] = useState(null)
   const [loadings, setLoadings] = useState({
     conversations: false,
-    history: false
+    history: false,
+    sendMsg: false
   })
 
   useEffect(() => {
@@ -78,6 +82,32 @@ export const MessagesContextProvider = ({ children }) => {
     }
   }
 
+  const sendMessage = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, sendMsg: true }))
+      const formData = new FormData()
+      formData.append('recipientId', selectedChat?._id)
+      if (messageInput) formData.append('message', messageInput)
+      if (messageFile) formData.append('file', messageFile)
+      const res = await axios.post(`${ROOT_URL_MESSAGES}/messages`,
+        formData,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        })
+      setChatHistory(prev => ([...prev, res.data]))
+      setMessageInput('')
+      setMessageFile(null)
+      setIsFileMessageModalOpen(false)
+      setLastMessage(selectedChat?._id, messageInput || (messageFile && 'Sent a photo'))
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadings((prev) => ({ ...prev, sendMsg: false }))
+    }
+  }
+
   return (
     <MessagesContext.Provider value={{
       conversations, setConversations,
@@ -87,7 +117,11 @@ export const MessagesContextProvider = ({ children }) => {
       setDisconnectedUser, setLastMessage,
       getConversations, loadings,
       isShowChatMenu, setIsShowChatMenu,
-      getChatHistory, chatHistory, setChatHistory
+      isFileMessageModalOpen, setIsFileMessageModalOpen,
+      getChatHistory, chatHistory, setChatHistory,
+      messageInput, setMessageInput,
+      messageFile, setMessageFile,
+      sendMessage
     }}>
       {children}
     </MessagesContext.Provider>
