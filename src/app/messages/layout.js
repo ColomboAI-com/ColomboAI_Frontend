@@ -39,7 +39,7 @@ const DefaultLayout = ({ children }) => {
                 }
                 {
                   isCreatePostOpen &&
-                  <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Modal isOpen={isCreatePostOpen} setIsOpen={setIsCreatePostOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all">
                     <CreatePost />
                   </Modal>
                 }
