@@ -59,7 +59,7 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
   // alert('Create Submit Button')
   // }
 
-  const { createStory } = useContext(StoryContext);
+  const { createStory,loadings } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
     console.log({ fileType:"image", file:file, content:"image"  })
@@ -111,7 +111,7 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
         {
           mediaUrl !== "" && mediaType.includes("image")
             ?
-            <div className="relative my-8">
+            <div className="relative my-8 h-[0vh]">
               <img
                 key={mediaUrl}
                 src={mediaUrl}
@@ -173,6 +173,7 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
                     title={'Select from computer'}
                     className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
                   />
+                  
                 </span>
               </div>
             }
@@ -185,6 +186,7 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
               type="button"
               onClick={(e)=>createPostSubmitButton(e)}
               title={'SHARE STORY'}
+              loading={loadings?.createStory}
               className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
             />
           </div>

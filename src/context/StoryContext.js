@@ -24,9 +24,9 @@ export default function StoryContextProvider({ children }) {
         try {
             setLoadings(prev => ({ ...prev, createStory: true }))
             const formData = new FormData()
-            formData.append('filetype', fileType)
+            formData.append('type', fileType)
             formData.append('file', file[0])
-            formData.append('content', content)
+            formData.append('text', content)
             const res = await axios.post(`${ROOT_URL_FEED}/stories/create`,
                 formData,
                 {
@@ -82,11 +82,12 @@ export default function StoryContextProvider({ children }) {
 
     const viewStoryoFUser = async (userid) => {
         try {
+            const token = getCookie('token');
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.post(`${ROOT_URL_FEED}/stories/${userid}/view`,
+            const res = await axios.post(`${ROOT_URL_FEED}/stories/${userid}/view`,{},
                 {
                     headers: {
-                        Authorization: getCookie('token')
+                        Authorization: token
                     }
                 }
             )
