@@ -34,7 +34,7 @@ const SelectPicture = () => {
           </p>
         </div>
         <div className="flex items-center gap-6">
-          <button onClick={() => setIsFileMessageModalOpen(false)}>
+          <button onClick={() => setIsFileMessageModalOpen(false)} className="cursor-pointer">
             <CrossIcon w={20} h={20} fill={"#1E71F2"} />
           </button>
         </div>
@@ -42,7 +42,7 @@ const SelectPicture = () => {
       <div className=" px-10 font-sans border- border-purple-400 flex flex-col justify-between h-[60vh] ">
         {
           messageFile ?
-            <div className="relative my-8">
+            <div className="relative my-8 w-[350px] mx-auto">
               <img
                 src={URL.createObjectURL(messageFile)}
                 alt="File Preview"
