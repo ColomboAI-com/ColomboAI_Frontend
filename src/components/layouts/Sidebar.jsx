@@ -1,23 +1,44 @@
 'use client'
-import { usePathname } from "next/navigation";
+import { usePathname ,useRouter } from "next/navigation";
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon } from "../Icons";
+import { clearCookie, getCookie } from "@/utlils/cookies";
+import Dropdown from '../messages/Dropdown';
+
 import InputBar from "./InputBar";
 import Link from "next/link";
 
 /* eslint-disable @next/next/no-img-element */
 const Sidebar = () => {
     const a = false
+    const name = getCookie('name')
+    const profilePic = getCookie('profilePic')
 
     const pathname = usePathname();
+    const router = useRouter(); 
 
     const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
+
+    const handleSignOut = () => {
+        clearCookie();
+        router.push("/sign-up")
+    };
 
     return (
         <>
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
                 <div className="mb-[46px] mt-[20px]">
-                    <img src="/images/home/profile-img.png" alt="profile-image" className="w-[42px] mx-auto rounded-full" />
+                <Dropdown
+                      offset={[0, 10]}  
+                      placement="bottom-start"  
+                      btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
+                      button={<img src={profilePic} alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full"/>}
+                    >
+                      <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
+                      <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-brandprimary">{name}</li></Link>
+                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
+                      </ul>
+                    </Dropdown>
                 </div>
 
                 <Link href="/gen-search">
