@@ -29,7 +29,7 @@ const CreateStory = () => {
         </div>
                 {
                 isCreateStoryOpen &&
-                <Modal isOpen={isCreateStoryOpen} setIsOpen={setIsCreateStoryOpen} className="w-full max-w-4xl transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Modal isOpen={isCreateStoryOpen} setIsOpen={setIsCreateStoryOpen} className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all">
                   <UploadStoryModal setIsCreateStoryOpen={setIsCreateStoryOpen} />
                 </Modal>
               }

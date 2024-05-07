@@ -65,7 +65,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
 
   return (
     <>
-      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] overflow-y-auto font-sans">
+      <div className="relative border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] overflow-y-auto font-sans">
         <div className="flex items-center justify-between p-[22px] border-b-2 border-gray-300">
           <div>
             {nextStep ? (
@@ -90,7 +90,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
         <div className="px-10 py-5 flex flex-col justify-between h-[0vh]">
           {!nextStep && (
             <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
-              Next
+              Add Text
             </button>
           )}
         </div>
@@ -141,7 +141,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
             {
               (mediaUrl === "" && mediaType === "") &&
               <div
-                className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl "
+                className="flex flex-col items-center py-2 rounded-xl absolute w-full top-auto bottom-[31px]"
                 onDrop={handleDrop}
                 onDragOver={(event) => event.preventDefault()}
               >

@@ -113,8 +113,8 @@ const CreatePost = () => {
             </button>
           </div>
         </div>
-        <div className=" px-10 font-sans flex flex-col justify-between h-[70vh] ">
-          <div className={`flex flex-col  ${isMagicPenOpen ? "mt-10 gap-5" : ""}`}>
+        <div className=" px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh] ">
+          <div className={`flex flex-col  ${isMagicPenOpen ? " gap-5" : ""}`}>
             <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
               <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
                 <textarea
@@ -143,7 +143,7 @@ const CreatePost = () => {
                 }
               </button>
             </div>
-            <div className={` flex flex-col items-end ${isMagicPenOpen ? "" : "my-10"}`}>
+            <div className={` flex flex-col items-end ${isMagicPenOpen ? "" : ""}`}>
               <div className="flex items-start w-full">
                 <textarea
                   value={postInput}
@@ -206,7 +206,7 @@ const CreatePost = () => {
               {
                 (mediaUrl === "" && postType === defaultPostType) &&
                 <div
-                  className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl "
+                  className="flex flex-col items-center py-2 rounded-xl "
                   onDrop={handleDrop}
                   onDragOver={(event) => event.preventDefault()}
                 >
