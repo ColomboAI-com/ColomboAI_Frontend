@@ -1,5 +1,5 @@
 'use client'
-import { usePathname ,useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon } from "../Icons";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 import Dropdown from '../messages/Dropdown';
@@ -14,7 +14,7 @@ const Sidebar = () => {
     const profilePic = getCookie('profilePic')
 
     const pathname = usePathname();
-    const router = useRouter(); 
+    const router = useRouter();
 
     const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
 
@@ -27,7 +27,7 @@ const Sidebar = () => {
         <>
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
-                <div className="mb-[46px] mt-[20px]">
+                {/* <div className="mb-[46px] mt-[20px]">
                 <Dropdown
                       offset={[0, 10]}  
                       placement="bottom-start"  
@@ -39,6 +39,9 @@ const Sidebar = () => {
                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
                       </ul>
                     </Dropdown>
+                </div> */}
+                <div className="mb-[46px] mt-[20px]">
+                    <img src={getCookie('profilePic')} alt="profile-image" className="w-[42px] mx-auto rounded-full" />
                 </div>
 
                 <Link href="/gen-search">
