@@ -5,6 +5,7 @@ import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
 import axios from "axios"
 import { createContext, useContext, useState } from "react"
 
+
 const StoryContext = createContext()
 
 export default function StoryContextProvider({ children }) {
@@ -46,7 +47,7 @@ export default function StoryContextProvider({ children }) {
         console.log('getStoriesOfUser', userid)
         try {
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.get(`${ROOT_URL_FEED}/stories/user/${userid?.userid}`,
+            const res = await axios.get(`${ROOT_URL_FEED}/stories/user/${userid}`,
                 {
                     headers: {
                         Authorization: getCookie('token')
@@ -79,6 +80,24 @@ export default function StoryContextProvider({ children }) {
         }
     }
 
+    const viewStoryoFUser = async (userid) => {
+        try {
+            setLoadings(prev => ({ ...prev, getUserStory: true }))
+            const res = await axios.post(`${ROOT_URL_FEED}/stories/${userid}/view`,
+                {
+                    headers: {
+                        Authorization: getCookie('token')
+                    }
+                }
+            )
+            return res.data
+        } catch (err) {
+            //handleError(err)
+        } finally {
+            //setLoadings(prev => ({ ...prev, getUserStory: false }))
+        }
+    }
+
     return (
 
 
@@ -87,6 +106,7 @@ export default function StoryContextProvider({ children }) {
           loadings, createStory,
           getRecentStories,
           getStoriesOfUser, 
+          viewStoryoFUser
         }}>
     
           {children}
