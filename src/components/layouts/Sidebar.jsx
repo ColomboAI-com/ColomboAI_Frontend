@@ -28,18 +28,18 @@ const Sidebar = () => {
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
                 <div className="mb-[46px] mt-[20px] relative">
-                <Dropdown
-                      offset={[0, 10]}  
-                      placement="bottom-start"  
-                      btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-                      
-                      button={<img src="https://lh3.googleusercontent.com/a/ACg8ocIsnayWflq1brv2tcAcByRoAaDTB52UkFAW8_q48kVXIUcbYpir=s96-c" alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full"/>}
+                    <Dropdown
+                        offset={[0, 10]}
+                        placement="bottom-start"
+                        btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
+
+                        button={<img src="https://lh3.googleusercontent.com/a/ACg8ocIsnayWflq1brv2tcAcByRoAaDTB52UkFAW8_q48kVXIUcbYpir=s96-c" alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full" />}
                     //   button={<img src={profilePic} alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full"/>}
                     >
-                      <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
-                      <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans text-brandprimary">{name}</li></Link>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
-                      </ul>
+                        <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
+                            <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans text-brandprimary">{name}</li></Link>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
+                        </ul>
                     </Dropdown>
                 </div>
                 {/* <div className="mb-[46px] mt-[20px]">
@@ -97,7 +97,7 @@ const Sidebar = () => {
                         </div>
                     </div>
                     {/* </Link> */}
-                </div>    
+                </div>
             </div>
         </>
     );

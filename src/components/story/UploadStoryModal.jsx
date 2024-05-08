@@ -13,51 +13,51 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const [nextStep, setNextStep] = useState(false);
 
   const handleFileInputClick = () => {
-    document.querySelector('input[type="file"][accept="media_type"]').click();
-  };
+    document.querySelector('input[type="file"][accept="media_type"]').click()
+  }
 
   const clearFileHandler = () => {
-    setFile(null);
-    setMediaUrl("");
-    setMediaType("");
-  };
+    setFile(null)
+    setMediaUrl("")
+    setPostType(defaultPostType)
+  }
 
   const handleGeneratePost = async () => {
-    const result = await generatePost(promptInput);
+    const result = await generatePost(promptInput)
     if (result?.response_type !== "text") {
-      setMediaUrl(result?.text);
-      setMediaType(result?.response_type);
+      setMediaUrl(result?.text)
+      setPostType(result?.response_type)
     } else if (result?.response_type === "text") {
       setPostInput(result?.text)
     }
-  };
+  }
 
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = Array.from(selectedFiles);
-      setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]))
-      setMediaType(newFiles[0]?.type);
+    if (selectedFiles.length > 0) {
+      const selectedFile = selectedFiles[0];
+      setFile(selectedFile);
+      const fileType = selectedFile.type.split('/')[0];
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setMediaUrl(fileUrl);
     }
-  };
+  }
 
   const handleDrop = (event) => {
     event.preventDefault();
     const droppedFiles = event.dataTransfer.files;
-    if (droppedFiles.length > 0) {
-      const newFiles = Array.from(droppedFiles);
-      setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]))
-      setMediaType(newFiles[0]?.type);
+    if (droppedFiles && droppedFiles.length > 0) {
+      const file = droppedFiles[0];
+      const fileType = file.type.split('/')[0];
+      setFile(file);
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(file);
+      setMediaUrl(fileUrl);
     }
-  };
+  }
 
-  // const createPostSubmitButton = (event) => {
-  // alert('Create Submit Button')
-  // }
-
-  const { createStory, loadings } = useContext(StoryContext);
+  const { createStory } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
     const res = await createStory({ fileType: "image", file: file, content: inputText })
@@ -95,7 +95,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
         <div className="px-10 pt-[15px] pb-[35px] flex flex-col justify-between h-[0vh]">
           {!nextStep && mediaUrl !== "" && mediaType.includes("image") && (
             <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
-              Next 
+              Next
             </button>
           )}
         </div>
@@ -113,8 +113,8 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
               <div className=" absolute top-3 right-2">
                 <div className="flex flex-row items-center justify-center">
                   <span onClick={clearFileHandler} className="px-2 pointer">
-                    <CloseDocumentIcon onClick={()=>{
-                      setInputText(''); 
+                    <CloseDocumentIcon onClick={() => {
+                      setInputText('');
                       setNextStep(false);
                     }} />
                   </span>
@@ -151,7 +151,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
               (mediaUrl === "" && mediaType === "") &&
               <div>
                 <div class="items-start w-full px-[20px]">
-                  <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e)=>setInputText(e.target.value)} name="text" />
+                  <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e) => setInputText(e.target.value)} name="text" />
                 </div>
 
                 <div

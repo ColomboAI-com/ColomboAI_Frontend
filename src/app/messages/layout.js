@@ -14,7 +14,6 @@ import { MessagesContextProvider } from "@/context/MessagesContext";
 const DefaultLayout = ({ children }) => {
 
   const { isNewMessageOpen, setIsNewMessageOpen, isCreatePostOpen, setIsCreatePostOpen } = useContext(GlobalContext);
-
   return (
     <MessagesContextProvider>
       <div className="min-w-screen border- border-yellow-400">
