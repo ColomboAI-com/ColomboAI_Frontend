@@ -1,5 +1,5 @@
 'use client'
-import { usePathname ,useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon } from "../Icons";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 import Dropdown from '../messages/Dropdown';
@@ -14,7 +14,7 @@ const Sidebar = () => {
     const profilePic = getCookie('profilePic')
 
     const pathname = usePathname();
-    const router = useRouter(); 
+    const router = useRouter();
 
     const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
 
@@ -27,17 +27,16 @@ const Sidebar = () => {
         <>
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
-                <div className="mb-[46px] mt-[20px]">
-                <Dropdown
-                      offset={[0, 10]}  
-                      placement="bottom-start"  
-                      btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
-                      button={<img src={profilePic} alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full"/>}
+                <div className="mb-[34px]">
+                    <Dropdown
+                        offset={[0, 10]}
+                        placement="bottom-start"
+                        button={<img src={profilePic} alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full" />}
                     >
-                      <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
-                      <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-brandprimary">{name}</li></Link>
-                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
-                      </ul>
+                        <ul className="rounded-lg bg-white shadow-md">
+                            <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-brandprimary">{name}</li></Link>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
+                        </ul>
                     </Dropdown>
                 </div>
 
