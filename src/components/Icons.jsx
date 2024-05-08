@@ -433,8 +433,8 @@ export const CloseDocumentIcon = () => {
 export const LikeIcon = ({ w = 36, h = 37, fill }) => {
     return (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
-            <g clip-path="url(#clip0_4774_37412)">
-                <path d="M16 28C16 28 3 21 3 12.75C3 10.9598 3.71116 9.2429 4.97703 7.97703C6.2429 6.71116 7.95979 6 9.75 6C12.5738 6 14.9925 7.53875 16 10C17.0075 7.53875 19.4262 6 22.25 6C24.0402 6 25.7571 6.71116 27.023 7.97703C28.2888 9.2429 29 10.9598 29 12.75C29 21 16 28 16 28Z" stroke="#ACACAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <g clipPath="url(#clip0_4774_37412)">
+                <path d="M16 28C16 28 3 21 3 12.75C3 10.9598 3.71116 9.2429 4.97703 7.97703C6.2429 6.71116 7.95979 6 9.75 6C12.5738 6 14.9925 7.53875 16 10C17.0075 7.53875 19.4262 6 22.25 6C24.0402 6 25.7571 6.71116 27.023 7.97703C28.2888 9.2429 29 10.9598 29 12.75C29 21 16 28 16 28Z" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>
                 <clipPath id="clip0_4774_37412">
@@ -448,11 +448,11 @@ export const LikeIcon = ({ w = 36, h = 37, fill }) => {
 export const RePostIcon = ({ w = 32, h = 33, fill }) => {
     return (
         <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
-            <g clip-path="url(#clip0_4774_37418)">
-                <path d="M25 11L28 8L25 5" stroke="#ACACAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M4 16C4 13.8783 4.84285 11.8434 6.34315 10.3431C7.84344 8.84285 9.87827 8 12 8H28" stroke="#ACACAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M7 21L4 24L7 27" stroke="#ACACAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M28 16C28 18.1217 27.1571 20.1566 25.6569 21.6569C24.1566 23.1571 22.1217 24 20 24H4" stroke="#ACACAC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <g clipPath="url(#clip0_4774_37418)">
+                <path d="M25 11L28 8L25 5" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4 16C4 13.8783 4.84285 11.8434 6.34315 10.3431C7.84344 8.84285 9.87827 8 12 8H28" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M7 21L4 24L7 27" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M28 16C28 18.1217 27.1571 20.1566 25.6569 21.6569C24.1566 23.1571 22.1217 24 20 24H4" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>
                 <clipPath id="clip0_4774_37418">
@@ -583,7 +583,7 @@ export const CopyLinkIcon = ({ w, h, fill }) => {
 export const VibesViewIcon = ({ w, h, fill }) => {
     return (
         <svg width={w} height={h} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_4774_37947)">
+            <g clipPath="url(#clip0_4774_37947)">
                 <path d="M8.0813 4.65025V23.9265C8.08416 24.0803 8.12752 24.2307 8.20702 24.3624C8.28652 24.4941 8.39934 24.6025 8.53411 24.6767C8.66887 24.7509 8.82083 24.7883 8.97464 24.7851C9.12846 24.7818 9.27869 24.7381 9.41021 24.6582L25.169 15.0201C25.2948 14.9439 25.3989 14.8365 25.4712 14.7084C25.5434 14.5802 25.5814 14.4355 25.5814 14.2884C25.5814 14.1412 25.5434 13.9966 25.4712 13.8684C25.3989 13.7402 25.2948 13.6328 25.169 13.5567L9.41021 3.91854C9.27869 3.8387 9.12846 3.79495 8.97464 3.7917C8.82083 3.78845 8.66887 3.82581 8.53411 3.90002C8.39934 3.97422 8.28652 4.08265 8.20702 4.21437C8.12752 4.34608 8.08416 4.49643 8.0813 4.65025Z" fill={fill} stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>
@@ -598,7 +598,7 @@ export const VibesViewIcon = ({ w, h, fill }) => {
 export const VibesLikesIcon = ({ w, h, fill }) => {
     return (
         <svg width={w} height={h} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_4774_37952)">
+            <g clipPath="url(#clip0_4774_37952)">
                 <path d="M14.2063 24.7886C14.2063 24.7886 2.8313 18.6636 2.8313 11.4448C2.8313 9.87839 3.45356 8.37611 4.5612 7.26847C5.66884 6.16084 7.17111 5.53857 8.73755 5.53857C11.2083 5.53857 13.3247 6.88498 14.2063 9.03857C15.0879 6.88498 17.2043 5.53857 19.675 5.53857C21.2415 5.53857 22.7438 6.16084 23.8514 7.26847C24.959 8.37611 25.5813 9.87839 25.5813 11.4448C25.5813 18.6636 14.2063 24.7886 14.2063 24.7886Z" stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>
@@ -613,7 +613,7 @@ export const VibesLikesIcon = ({ w, h, fill }) => {
 export const VibesCommentIcon = ({ w, h, fill }) => {
     return (
         <svg width={w} height={h} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_4774_37955)">
+            <g clipPath="url(#clip0_4774_37955)">
                 <path d="M14.2063 15.6011C14.9312 15.6011 15.5188 15.0134 15.5188 14.2886C15.5188 13.5637 14.9312 12.9761 14.2063 12.9761C13.4814 12.9761 12.8938 13.5637 12.8938 14.2886C12.8938 15.0134 13.4814 15.6011 14.2063 15.6011Z" fill={fill} />
                 <path d="M9.3938 15.6011C10.1187 15.6011 10.7063 15.0134 10.7063 14.2886C10.7063 13.5637 10.1187 12.9761 9.3938 12.9761C8.66893 12.9761 8.0813 13.5637 8.0813 14.2886C8.0813 15.0134 8.66893 15.6011 9.3938 15.6011Z" fill={fill} />
                 <path d="M19.0188 15.6011C19.7437 15.6011 20.3313 15.0134 20.3313 14.2886C20.3313 13.5637 19.7437 12.9761 19.0188 12.9761C18.2939 12.9761 17.7063 13.5637 17.7063 14.2886C17.7063 15.0134 18.2939 15.6011 19.0188 15.6011Z" fill={fill} />
@@ -631,7 +631,7 @@ export const VibesCommentIcon = ({ w, h, fill }) => {
 export const VibesRepostIcon = ({ w, h, fill }) => {
     return (
         <svg width={w} height={h} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_4774_37958)">
+            <g clipPath="url(#clip0_4774_37958)">
                 <path d="M22.0813 9.91357L24.7063 7.28857L22.0813 4.66357" stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M3.7063 14.2886C3.7063 12.4321 4.4438 10.6516 5.75655 9.33883C7.06931 8.02607 8.84978 7.28857 10.7063 7.28857H24.7063" stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M6.3313 18.6636L3.7063 21.2886L6.3313 23.9136" stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -664,7 +664,7 @@ export const VibesShareIcon = ({ w, h, fill }) => {
 export const VibesSaveIcon = ({ w, h, fill }) => {
     return (
         <svg width={w} height={h} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_4774_37964)">
+            <g clipPath="url(#clip0_4774_37964)">
                 <path d="M21.2063 22.1507C21.2063 22.9273 20.3597 23.4075 19.6932 23.009L14.7194 20.0355C14.4034 19.8466 14.0092 19.8466 13.6932 20.0355L8.71942 23.009C8.05287 23.4075 7.2063 22.9273 7.2063 22.1507V5.50053C7.2063 5.27856 7.29849 5.06567 7.46258 4.90871C7.62667 4.75175 7.84923 4.66357 8.0813 4.66357H20.3313C20.5634 4.66357 20.7859 4.75175 20.95 4.90871C21.1141 5.06567 21.2063 5.27856 21.2063 5.50053V22.1507Z" stroke={fill} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>

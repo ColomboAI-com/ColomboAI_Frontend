@@ -15,6 +15,38 @@ const Suggestions = () => {
                 <SuggestionCard/>
                 <SuggestionCard/>
             </div>
+            <div className="grid grid-cols-3 overflow-auto max-h-screen border-brandprimary border-2">
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+            </div>
+            <div className="grid grid-cols-3 overflow-auto max-h-screen border-brandprimary border-2">
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+            </div>
+            <div className="grid grid-cols-3 overflow-auto max-h-screen border-brandprimary border-2">
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+            </div>
+            <div className="grid grid-cols-3 overflow-auto max-h-screen border-brandprimary border-2">
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+                <SuggestionCard/>
+            </div>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useContext, useState , useEffect } from "react"
+import { useContext, useState, useEffect } from "react"
 import {
   BackButtonIcon,
   CloseDocumentIcon,
@@ -73,7 +73,7 @@ const CreatePost = () => {
       setMediaUrl(fileUrl);
     }
   }
-  
+
 
   const handleCreatePost = async () => {
     const res = await createPost({ type: postType, file, content: postInput })
@@ -169,7 +169,7 @@ const CreatePost = () => {
                 <textarea
                   value={postInput}
                   onChange={e => setPostInput(e.target.value)}
-                  placeholder="Create using Magic Pen"
+                  placeholder="Create Your Post"
                   className=" w-full p-3 pr-12 rounded-2xl m-[2px] w-[calc(100%-4px) min-h-[30vh] border-2 border-brandprimary text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
                 />
               </div>
