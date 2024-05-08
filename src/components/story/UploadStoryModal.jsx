@@ -12,46 +12,50 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
   const [nextStep, setNextStep] = useState(false);
 
   const handleFileInputClick = () => {
-    document.querySelector('input[type="file"][accept="media_type"]').click();
-  };
+    document.querySelector('input[type="file"][accept="media_type"]').click()
+  }
 
   const clearFileHandler = () => {
-    setFile(null);
-    setMediaUrl("");
-    setMediaType("");
-  };
+    setFile(null)
+    setMediaUrl("")
+    setPostType(defaultPostType)
+  }
 
   const handleGeneratePost = async () => {
-    const result = await generatePost(promptInput);
+    const result = await generatePost(promptInput)
     if (result?.response_type !== "text") {
-      setMediaUrl(result?.text);
-      setMediaType(result?.response_type);
+      setMediaUrl(result?.text)
+      setPostType(result?.response_type)
     } else if (result?.response_type === "text") {
       setPostInput(result?.text)
     }
-  };
+  }
 
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = Array.from(selectedFiles);
-      setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]))
-      setMediaType(newFiles[0]?.type);
+    if (selectedFiles.length > 0) {
+      const selectedFile = selectedFiles[0];
+      setFile(selectedFile);
+      const fileType = selectedFile.type.split('/')[0];
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setMediaUrl(fileUrl);
     }
-  };
+  }
 
   const handleDrop = (event) => {
     event.preventDefault();
     const droppedFiles = event.dataTransfer.files;
-    if (droppedFiles.length > 0) {
-      const newFiles = Array.from(droppedFiles);
-      setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]))
-      setMediaType(newFiles[0]?.type);
+    if (droppedFiles && droppedFiles.length > 0) {
+      const file = droppedFiles[0];
+      const fileType = file.type.split('/')[0];
+      setFile(file);
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(file);
+      setMediaUrl(fileUrl);
     }
-  };
-
+  }
+  
   const { createStory } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
