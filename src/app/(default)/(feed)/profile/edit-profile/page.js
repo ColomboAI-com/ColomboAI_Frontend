@@ -20,7 +20,6 @@ const EditProfile = () => {
   useEffect(() => {
     const userData = JSON.parse(getSessionStorage('user-details'))
     if (userData && userData) {
-      console.log('sssssssssssssssss', userData)
       setUsername(userData?.user_name)
       setDisplayName(userData?.name)
       setBio(userData?.bio)
@@ -43,7 +42,6 @@ const EditProfile = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(file, mediaUrl)
     const res = await editProfile({
       user_name: username,
       name: displayName,

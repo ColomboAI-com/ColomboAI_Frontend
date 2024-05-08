@@ -18,7 +18,6 @@ const Post = ({ post }) => {
   const handleDeletePost = async () => {
     try {
       const response = await deletePost(post._id);
-      console.log("Post deleted successfully:", response);
     } catch (error) {
       console.error("Failed to delete post:", error);
     }

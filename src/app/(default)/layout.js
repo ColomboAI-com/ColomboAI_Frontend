@@ -29,6 +29,7 @@ import { ROOT_URL_NOTIFICATION } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError";
 import axios from "axios";
 import { getCookie } from "@/utlils/cookies";
+import { MessageBox } from "@/components/MessageBox";
 
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
@@ -73,7 +74,7 @@ const DefaultLayout = ({ children }) => {
       throw err; // Re-throw error after handling
     }
   };
-  
+
   async function requestPermission() {
     if (isShowChatMenu) {
       const permission = await Notification.requestPermission();
@@ -86,18 +87,17 @@ const DefaultLayout = ({ children }) => {
         console.log("Token Gen", token);
         try {
           const res = await StoreFcmToken(token); // Await StoreFcmToken function call
-          console.log(res);
           // Send this token  to server ( db)
         } catch (error) {
           // Handle error if any
           console.error("Error while storing FCM token:", error);
         }
       } else if (permission === "denied") {
-        alert("You denied for the notification");
+        MessageBox('error', "You denied for the notification");
       }
-    } 
+    }
   }
-  
+
   useEffect(() => {
     // Request user for notification permission
     requestPermission();
