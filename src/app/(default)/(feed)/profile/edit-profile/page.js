@@ -3,9 +3,10 @@ import { MessageBox } from "@/components/MessageBox";
 import ProfilePicture from "@/components/elements/ProfilePicture";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import Button from "@/elements/Button";
+import { getSessionStorage } from "@/utlils/utils";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const EditProfile = () => {
   const [username, setUsername] = useState("");
@@ -16,6 +17,18 @@ const EditProfile = () => {
   const { loadings, editProfile } = useContext(UserProfileContext);
   const router = useRouter()
 
+  useEffect(() => {
+    const userData = JSON.parse(getSessionStorage('user-details'))
+    if (userData && userData) {
+      console.log('sssssssssssssssss', userData)
+      setUsername(userData?.user_name)
+      setDisplayName(userData?.name)
+      setBio(userData?.bio)
+      setMediaUrl(userData?.profile_picture)
+      setFile(userData?.profile_picture)
+    }
+  }, [])
+
   const handleFileInputClick = () => {
     document.querySelector('input[type="file"][accept="image/*"]').click();
   };
@@ -23,18 +36,19 @@ const EditProfile = () => {
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = Array.from(selectedFiles);
+      const newFiles = selectedFiles[0]
       setFile(newFiles);
-      setMediaUrl(URL.createObjectURL(newFiles[0]));
+      setMediaUrl(URL.createObjectURL(newFiles));
     }
   };
 
   const handleSubmit = async () => {
+    console.log(file, mediaUrl)
     const res = await editProfile({
       user_name: username,
       name: displayName,
       profile_picture: file,
-      bio
+      bio: bio || ''
     });
     if (res) {
       MessageBox('success', res.message)
