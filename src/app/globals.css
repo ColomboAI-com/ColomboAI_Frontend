@@ -75,3 +75,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+#create_story_slider_id .slick-track{
+  margin-left: 0;
+}

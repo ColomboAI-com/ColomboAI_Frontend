@@ -18,8 +18,6 @@ var settings = {
       settings: {
         slidesToShow: 5,
         slidesToScroll: 1,
-        // infinite: true,
-        // dots: true
       }
     },
     {
@@ -61,7 +59,7 @@ const Stories = () => {
   }
 
   return (
-    <div className="my-8">
+    <div className="my-8" id="create_story_slider_id">
       <Slider {...settings}>
         <CreateStory />
 

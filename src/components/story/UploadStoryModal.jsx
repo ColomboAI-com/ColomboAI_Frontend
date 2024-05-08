@@ -94,7 +94,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
             </button>
           </div>
         </div>
-        <div className="px-10 py-5 flex flex-col justify-between h-[0vh]">
+        <div className="px-10 pt-[15px] pb-[35px] flex flex-col justify-between h-[0vh]">
           {!nextStep && (
             <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
               Add Text
@@ -148,14 +148,13 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
             {
               (mediaUrl === "" && mediaType === "") &&
               <div>
-                <input
-                  className="w-full text-sm font-semibold text-black !outline-none border-[1px] border-brandprimary focus:ring-transparent rounded-full px-12 py-2 focus:outline-none flex mx-auto my-4 w-[90%]"
-                  placeholder="Type a message"
-                  value=""
-                />
+                <div class="items-start w-full px-[20px]">
+                    
+                  <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value="" />
+                </div>
 
                 <div
-                  className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl h-[65vh] justify-end "
+                  className="flex flex-col items-center py-2 h-[47svh] justify-end "
                   onDrop={handleDrop}
                   onDragOver={(event) => event.preventDefault()}
                 >
