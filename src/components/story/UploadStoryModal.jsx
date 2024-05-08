@@ -147,27 +147,35 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
           <>
             {
               (mediaUrl === "" && mediaType === "") &&
-              <div
-                className="flex flex-col items-center py-2 rounded-xl absolute w-full top-auto bottom-[31px]"
-                onDrop={handleDrop}
-                onDragOver={(event) => event.preventDefault()}
-              >
-                <p className="text-xl my-4">
-                  Drag photos and videos here
-                </p>
-                <span onClick={handleFileInputClick}>
-                  <input
-                    className="hidden"
-                    type="file"
-                    accept="media_type"
-                    onChange={(e) => handleFileChange(e, "file")}
-                  />
-                  <Button
-                    title={'Select from computer'}
-                    className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
-                  />
+              <div>
+                <input
+                  className="w-full text-sm font-semibold text-black !outline-none border-[1px] border-brandprimary focus:ring-transparent rounded-full px-12 py-2 focus:outline-none flex mx-auto my-4 w-[90%]"
+                  placeholder="Type a message"
+                  value=""
+                />
 
-                </span>
+                <div
+                  className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl h-[65vh] justify-end "
+                  onDrop={handleDrop}
+                  onDragOver={(event) => event.preventDefault()}
+                >
+                  <p className="text-xl my-4">
+                    Drag photos and videos here
+                  </p>
+                  <span onClick={handleFileInputClick}>
+                    <input
+                      className="hidden"
+                      type="file"
+                      accept="media_type"
+                      onChange={(e) => handleFileChange(e, "file")}
+                    />
+                    <Button
+                      title={'Select from computer'}
+                      className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
+                    />
+
+                  </span>
+                </div>
               </div>
             }
           </>
