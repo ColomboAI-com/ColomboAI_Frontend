@@ -42,7 +42,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
             storyStyles={storyStyles}
           />
         </div>
-        {/* <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
+        <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
           <div className="relative">
             <input
               type="search"
@@ -58,7 +58,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
               <IoIosSend />
             </button>
           </div>
-        </div> */}
+        </div>
       </div>
 
       {/* Right Section */}

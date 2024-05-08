@@ -154,8 +154,15 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
           <>
             {
               (mediaUrl === "" && mediaType === "") &&
+              <div>
+                <input
+                      className="w-full text-sm font-semibold text-black !outline-none border-[1px] border-brandprimary focus:ring-transparent rounded-full px-12 py-2 focus:outline-none flex mx-auto my-4 w-[90%]"
+                      placeholder="Type a message"
+                      value=""
+                    />
+              
               <div
-                className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl "
+                className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl h-[65vh] justify-end "
                 onDrop={handleDrop}
                 onDragOver={(event) => event.preventDefault()}
               >
@@ -175,6 +182,7 @@ const UploadStoryModal = ({setIsCreateStoryOpen}) => {
                   />
                   
                 </span>
+              </div>
               </div>
             }
           </>
