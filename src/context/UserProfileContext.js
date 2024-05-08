@@ -1,4 +1,5 @@
 'use client'
+import { MessageBox } from "@/components/MessageBox"
 import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_AUTH, ROOT_URL_FEED } from "@/utlils/rootURL"
@@ -48,10 +49,10 @@ export default function UserProfileContextProvider({ children }) {
     }
   }
 
-  const getPosts = async (type, page = 1, limit = 10) => {
+  const getPosts = async (username, type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
-      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${getCookie('username')}`,
+      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${username}`,
         {
           params: { type, page, limit },
           headers: {
@@ -148,7 +149,7 @@ export default function UserProfileContextProvider({ children }) {
     }
   }
 
-  const followUnfollowUser = async (userId = '') => {
+  const followUnfollowUser = async (userId = '', isUnfollow = false) => {
     try {
       const res = await axios.patch(`${ROOT_URL_AUTH}/user/follow/${userId}`,
         null,
@@ -158,6 +159,9 @@ export default function UserProfileContextProvider({ children }) {
           }
         }
       )
+      if(isUnfollow){
+        getUserDetails(getCookie('username'));
+      }
       return res.data
     } catch (err) {
       handleError(err)
@@ -174,6 +178,10 @@ export default function UserProfileContextProvider({ children }) {
           }
         }
       )
+      if (res.data.success) {
+        MessageBox('success', res.data.message)
+      }
+      
       return res.data
     } catch (err) {
       handleError(err)

@@ -26,13 +26,13 @@ const Profile = () => {
     return (
       <>
       {
-        loadings?.userDetails
+        loadings?.userDetails && !userDetails?.user_name
         ?
         <Loader/>
         :
         <div className=" max-w-5xl mx-auto font-sans">
             <UserProfile userData={userDetails}/>
-            <Navigation/>
+            <Navigation username={userName}  />
             {
                 isFollowerModalOpen &&
                 <Modal isOpen={isFollowerModalOpen} setIsOpen={setIsFollowerModalOpen} className="w-full font-sans max-w-md md:max-w-lg lg:max-w-xl transform overflow-hidden rounded-[26px] bg-white text-left align-middle shadow-xl transition-all">

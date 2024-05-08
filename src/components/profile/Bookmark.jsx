@@ -1,7 +1,7 @@
 import NoDataFound from "../NoDataFound";
 import BookmarkCard from "./cards/BookmarkCard";
 
-const Bookmark = () => {
+const Bookmark = ({username}) => {
   return (
     <>
     <div className="border-y-2 py-4 border-gray-300">

@@ -19,21 +19,21 @@ const IconButton = ({ label, onClick, children }) => (
   </div>
 );
 
-const Navigation = () => {
+const Navigation = ({username}) => {
     const [activeTab, setActiveTab] = useState('post');
 
     const renderComponent = () => {
         switch (activeTab) {
             case 'post':
-                return <Post/>;
+                return <Post username={username}/>;
             case 'thought':
-                return <Thought/>;
+                return <Thought username={username}/>;
             case 'video':
-                return <Video/>;
+                return <Video username={username}/>;
             case 'bookmark':
-                return <Bookmark/>;
+                return <Bookmark username={username}/>;
             case 'tags':
-                return <Tag/>;
+                return <Tag username={username}/>;
         }
     };
 
