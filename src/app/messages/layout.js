@@ -30,7 +30,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] flex flex-col relative ">
             <MessageHeader />
             <div className="flex flex-1 justify-center border- border-purple-400">
-              <div className="w-[100%] min-h-screena lg:w-[70%">
+              <div className="w-[100%] min-h-screena lg:w-[70%]">
                 {
                   isNewMessageOpen &&
                   <Modal isOpen={isNewMessageOpen} setIsOpen={setIsNewMessageOpen} className="w-full font-sans max-w-md md:max-w-lg lg:max-w-xl transform overflow-hidden rounded-[26px] bg-white text-left align-middle shadow-xl transition-all">
