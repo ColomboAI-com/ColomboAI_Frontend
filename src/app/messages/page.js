@@ -59,7 +59,7 @@ const ComponentsAppsChat = () => {
                 <ChatHistory />
                 <MessageInput />
               </div>
-              : setIsUserProfileOpen ?
+              : isUserProfileOpen ?
                 <UserProfileSection data={selectedChat} />
                 : <BlankChatWindow />
           }

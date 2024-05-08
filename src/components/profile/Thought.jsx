@@ -1,10 +1,10 @@
 import RenderFeed from "../feed/post/RenderFeed"
 import ProfileRenderFeed from "./ProfileRenderFeed";
 
-const Thought = () => {
+const Thought = ({username}) => {
   return (
     <>
-      <ProfileRenderFeed filter={'thought'} />
+      <ProfileRenderFeed username={username} filter={'thought'} />
     </>
   )
 }

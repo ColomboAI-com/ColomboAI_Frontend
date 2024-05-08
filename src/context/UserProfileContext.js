@@ -1,4 +1,5 @@
 'use client'
+import { MessageBox } from "@/components/MessageBox"
 import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_AUTH, ROOT_URL_FEED } from "@/utlils/rootURL"
@@ -48,10 +49,10 @@ export default function UserProfileContextProvider({ children }) {
     }
   }
 
-  const getPosts = async (type, page = 1, limit = 10) => {
+  const getPosts = async (username, type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
-      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${getCookie('username')}`,
+      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${username}`,
         {
           params: { type, page, limit },
           headers: {
@@ -92,8 +93,13 @@ export default function UserProfileContextProvider({ children }) {
   const editProfile = async ({ user_name, name, bio, profile_picture }) => {
     try {
       setLoadings(prev => ({ ...prev, editProfile: true }))
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('user_name', user_name)
+      formData.append('bio', bio)
+      formData.append('file', profile_picture)
       const res = await axios.put(`${ROOT_URL_AUTH}/user`,
-        { user_name, name, bio, profile_picture },
+        formData,
         {
           headers: {
             Authorization: getCookie('token')
@@ -128,7 +134,7 @@ export default function UserProfileContextProvider({ children }) {
     try {
       setLoadings(prev => ({ ...prev, getFollowers: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/user/followers/${getCookie('username')}`,
-      {type},
+        { type },
         {
           headers: {
             Authorization: getCookie('token')
@@ -137,7 +143,7 @@ export default function UserProfileContextProvider({ children }) {
       )
       if (type === 'followers') {
         setFollowersData(res.data.results)
-      } else if(type === 'followings') {
+      } else if (type === 'followings') {
         setFollowingsData(res.data.results)
       }
       return res.data
@@ -148,7 +154,7 @@ export default function UserProfileContextProvider({ children }) {
     }
   }
 
-  const followUnfollowUser = async (userId = '') => {
+  const followUnfollowUser = async (userId = '', isUnfollow = false) => {
     try {
       const res = await axios.patch(`${ROOT_URL_AUTH}/user/follow/${userId}`,
         null,
@@ -158,6 +164,9 @@ export default function UserProfileContextProvider({ children }) {
           }
         }
       )
+      if(isUnfollow){
+        getUserDetails(getCookie('username'));
+      }
       return res.data
     } catch (err) {
       handleError(err)
@@ -174,6 +183,10 @@ export default function UserProfileContextProvider({ children }) {
           }
         }
       )
+      if (res.data.success) {
+        MessageBox('success', res.data.message)
+      }
+      
       return res.data
     } catch (err) {
       handleError(err)

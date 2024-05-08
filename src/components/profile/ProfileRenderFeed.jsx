@@ -6,14 +6,14 @@ import { FeedContext } from "@/context/FeedContext"
 import { UserProfileContext } from "@/context/UserProfileContext"
 import { useContext, useEffect } from "react"
 
-export default function ProfileRenderFeed({ filter }) {
+export default function ProfileRenderFeed({ username, filter }) {
 
   const { posts, getPosts, loadings, page, resetFeedValues } = useContext(UserProfileContext)
 
   useEffect(() => {
-    getPosts(filter)
+    getPosts(username, filter)
     return () => resetFeedValues()
-  }, [filter])
+  }, [username, filter])
 
   const handleFeedScroll = () => {
     const feedSection = document.getElementById('feed_section')

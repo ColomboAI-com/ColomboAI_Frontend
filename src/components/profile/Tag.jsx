@@ -1,7 +1,7 @@
 import NoDataFound from "../NoDataFound";
 import TagCard from "./cards/TagCard";
 
-const Tag = () => {
+const Tag = ({username}) => {
   return (
     <>
     <div className="border-y-2 py-4 border-gray-300">

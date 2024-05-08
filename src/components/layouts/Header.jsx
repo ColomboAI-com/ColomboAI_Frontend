@@ -40,7 +40,8 @@ const Header = ({ setIsShowChatMenu, isShowChatMenu }) => {
           <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
             <SearchIcon w={30} h={30} fill={"#646464"} />
             <CreateDropdown w={30} h={30} />
-            <button onClick={() => setIsShowChatMenu(!isShowChatMenu)}>
+            {/* <button onClick={() => setIsShowChatMenu(!isShowChatMenu)}> */}
+            <button>
               <NotificationIcon w={30} h={30} fill={"#646464"} />
             </button>
             <Link href="/messages">

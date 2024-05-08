@@ -1,6 +1,6 @@
 "use client";
 
-export const MentionsList = () => {
+export const MentionsList = ({notifications}) => {
   const mentions = [
     { id: 1, user: "John Doe", message: "mentioned you in a comment.", profilePic: "https://via.placeholder.com/50", postImage: "https://via.placeholder.com/50x50" },
     { id: 2, user: "Jane Smith", message: "tagged you in a post.", profilePic: "https://via.placeholder.com/50", postImage: "https://via.placeholder.com/50x50" },
@@ -8,7 +8,7 @@ export const MentionsList = () => {
   ];
 
   return (
-    <div className="text-sm text-navbaraction">
+    <div className="text-sm text-navbaraction bg-white">
       {mentions.map(mention => (
         <div key={mention.id} className="flex items-center p-2 border rounded space-x-4">
           <img src={mention.profilePic} alt="Profile" className="w-[46px] h-[46px] rounded-full" /> 

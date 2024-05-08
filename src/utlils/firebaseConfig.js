@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
+import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5t2XnnCMsCg7SE-odHhX1o5gHIxX2kBQ",
@@ -15,3 +16,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 export const firebaseAuth = getAuth(app)
+
+// export const messaging = getMessaging(app)
+
+let messaging;
+
+if (typeof window !== 'undefined') {
+  // Initialize Firebase app only in the client-side environment
+  messaging = getMessaging(app);
+}
+
+export { messaging };
