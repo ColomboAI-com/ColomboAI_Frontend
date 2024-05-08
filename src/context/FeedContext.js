@@ -1,7 +1,7 @@
 'use client'
 import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
-import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
+import { ROOT_URL_FEED, ROOT_URL_LLM, ROOT_URL_AUTH } from "@/utlils/rootURL"
 import axios from "axios"
 import { createContext, useContext, useState } from "react"
 
@@ -11,6 +11,8 @@ export default function FeedContextProvider({ children }) {
 
   const [posts, setPosts] = useState([])
   const [page, setPage] = useState(1)
+  const [topUsersDetails, setTopUsersDetails] = useState([])
+  const [searchUsersDetails, setSearchUsersDetails] = useState([])
   const [loadings, setLoadings] = useState({
     getPost: true,
     createPost: false,
@@ -21,7 +23,9 @@ export default function FeedContextProvider({ children }) {
     generatePost: false,
     generateComment: false,
     GetUserPost: false,
-    getComments: false
+    getComments: false,
+    searchUser: false,
+    topUser: false
   })
 
   const getPosts = async (type, page = 1, limit = 10) => {
@@ -251,6 +255,42 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
+  const searchUsers = async (query = '') => {
+    try {
+      
+      setLoadings((prev) => ({ ...prev, searchUser: true }));
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?q=${query}`,
+      {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      setSearchUsersDetails(res?.data?.results)
+      return res;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, searchUser: false }));
+    }
+  };
+
+  const topUsers = async () => {
+    try {
+      
+      setLoadings((prev) => ({ ...prev, topUser: true }));
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/top`,
+      {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      setTopUsersDetails(res?.data?.results)
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, topUser: false }));
+    }
+  };
   const resetFeedValues = () => {
     setPosts([])
     setPage(1)
@@ -260,6 +300,8 @@ export default function FeedContextProvider({ children }) {
 
 
     <FeedContext.Provider value={{
+      topUsersDetails, setTopUsersDetails,
+      searchUsersDetails, setSearchUsersDetails,
       posts, setPosts,
       loadings, getPosts,
       createPost, deletePost,
@@ -269,6 +311,8 @@ export default function FeedContextProvider({ children }) {
       getPostsOfUser, page,
       resetFeedValues,
       getComments,
+      searchUsers,
+      topUsers
     }}>
 
       {children}
