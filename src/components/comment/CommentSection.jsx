@@ -2,8 +2,11 @@
 import { FeedContext } from "@/context/FeedContext";
 import { GlobalContext } from "@/context/GlobalContext";
 import { formatTimeAgo } from "@/utlils/commonFunctions";
+import { getCookie } from "@/utlils/cookies";
 import { useContext, useState, useRef, useEffect } from "react";
 import ProfilePicture from "../elements/ProfilePicture";
+import ImageBlock from "../feed/post/ImageBlock";
+import VideoBlock from "../feed/post/VideoBlock";
 
 const CommentSection = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
@@ -21,6 +24,11 @@ const CommentSection = ({ specificPostId, posts }) => {
   const [page, setPage] = useState(1);
   const containerRef = useRef(null);
 
+  const [hasMore, setHasMore] = useState(true);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+
+  const userid = getCookie('userid');
+
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -32,6 +40,47 @@ const CommentSection = ({ specificPostId, posts }) => {
     };
     fetchComments();
   }, [specificPostId, page]);
+
+  const myCommentLength = comments.length;
+
+  useEffect(() => {
+    const handleScroll = () => {
+
+      if (containerRef.current) {
+        const scrollPosition =
+          containerRef.current.scrollHeight -
+          containerRef.current.scrollTop -
+          containerRef.current.clientHeight;
+
+        if (scrollPosition < 300 && hasMore && !isIntersecting) {
+          setPage((prevPage) => prevPage + 1);
+          setIsIntersecting(true);
+        }
+        if (scrollPosition > 300 && hasMore && isIntersecting) {
+          if (myCommentLength > 0) {
+            const reminder = myCommentLength % 10
+            if (reminder == 0) {
+              setIsIntersecting(false);
+            }
+            else {
+              setIsIntersecting(true);
+            }
+          }
+        }
+      }
+    };
+
+    if (containerRef.current) {
+      containerRef.current.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [hasMore, isIntersecting]);
+
 
   const postComment = async (id) => {
     if (commentData || generatedComment) {
@@ -102,13 +151,22 @@ const CommentSection = ({ specificPostId, posts }) => {
   }
 
   return (
-    <div className="xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
+    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
       <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative">
           <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
           </button>
-          <img src="/images/comment/commenimg.png" className=" w-full h-full aspect-video h-[-webkit-fill-available]" />
+          {
+            posts?.type === 'image' &&
+            <img src={posts?.media} className="w-full h-full aspect-video h-[-webkit-fill-available]" />
+          }
+          {
+            posts?.type === 'video' &&
+            <video className='inset-0 w-full h-full aspect-video h-[-webkit-fill-available]' src={posts?.media} controls>
+              Your browser does not support the video tag.
+            </video>
+          }
         </div>
       </div>
       <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
@@ -132,8 +190,10 @@ const CommentSection = ({ specificPostId, posts }) => {
           <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
-        <div ref={containerRef} className="no-scrollbar content-start overflow-y-auto py-1 h-[calc(100vh_-_480px)] lg:h-[calc(100vh_-_540px)] md:h-[calc(100vh_-_694px)]">
-
+        <div ref={containerRef} className="comment-section no-scrollbar h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]">
+          {comments.length === 0 && <div className="flex items-center justify-center h-full">
+            <p className="text-[#515151] text-[16px] font-sans text-center">No Comments Found</p>
+          </div>}
           {comments.map((comment) => (
             <div key={comment._id}>
               <div className="flex items-start justify-start gap-2 my-4">
@@ -141,27 +201,34 @@ const CommentSection = ({ specificPostId, posts }) => {
                   <img src={comment.creator.profile_picture} className="w-[36px] h-[36px] rounded-[50%]" />
                 </div>
                 <div className="w-[85%] text-left">
-                  <h5 className="text-[#212121] text-[16px] font-sans font-[400] leading-[19.2px]">{comment.creator.user_name}</h5>
+                  <div className="flex items-center justify-between">
+                    <div className="text-[#212121] font-sans font-[400] leading-[21px]">
+                      {comment.creator.user_name}
+                    </div>
+                    {comment.creator._id === userid && (
+                      <div className="flex items-center gap-[20px] right-0">
+                        <div className="text-[#212121] text-[14px] font-sans font-[450] leading-[21px] cursor-pointer right-0" onClick={() => handleDeleteComment(specificPostId, comment._id)}>
+                          Delete
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">{comment.content}</h3>
                   <div className="flex items-center justify-between">
                     <div className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">
                       {formatTimeAgo(comment?.createdAt)}
                     </div>
-                    <div className="flex items-center gap-[20px] right-0">
+                    {/* <div className="flex items-center gap-[20px]">
                       <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
                       <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
                       <img src="/images/icons/wishlist-icon.svg" />
-                      <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[21px] cursor-pointer" onClick={() => handleDeleteComment(specificPostId, comment._id)}>
-                        Delete
-                      </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
               <hr className="mt-2 mb-2" />
             </div>
           ))}
-
         </div>
         <div className="py-[5px] flex flex-col">
           <div className="relative right-0 left-0 bottom-0 top-auto mb-[20px]">

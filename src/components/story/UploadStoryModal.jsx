@@ -52,7 +52,14 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
     }
   };
 
-  const { createStory } = useContext(StoryContext);
+  console.log(file, mediaUrl, mediaType, "upload")
+
+
+  // const createPostSubmitButton = (event) => {
+  // alert('Create Submit Button')
+  // }
+
+  const { createStory, loadings } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
     const res = await createStory({ fileType: "image", file: file, content: "image" })
@@ -65,7 +72,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
 
   return (
     <>
-      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] overflow-y-auto font-sans">
+      <div className="relative border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] overflow-y-auto font-sans">
         <div className="flex items-center justify-between p-[22px] border-b-2 border-gray-300">
           <div>
             {nextStep ? (
@@ -90,14 +97,14 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
         <div className="px-10 py-5 flex flex-col justify-between h-[0vh]">
           {!nextStep && (
             <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
-              Next
+              Add Text
             </button>
           )}
         </div>
         {
           mediaUrl !== "" && mediaType.includes("image")
             ?
-            <div className="relative my-8">
+            <div className="relative my-8 h-[0vh]">
               <img
                 key={mediaUrl}
                 src={mediaUrl}
@@ -140,26 +147,35 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
           <>
             {
               (mediaUrl === "" && mediaType === "") &&
-              <div
-                className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl "
-                onDrop={handleDrop}
-                onDragOver={(event) => event.preventDefault()}
-              >
-                <p className="text-xl my-4">
-                  Drag photos and videos here
-                </p>
-                <span onClick={handleFileInputClick}>
-                  <input
-                    className="hidden"
-                    type="file"
-                    accept="media_type"
-                    onChange={(e) => handleFileChange(e, "file")}
-                  />
-                  <Button
-                    title={'Select from computer'}
-                    className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
-                  />
-                </span>
+              <div>
+                <input
+                  className="w-full text-sm font-semibold text-black !outline-none border-[1px] border-brandprimary focus:ring-transparent rounded-full px-12 py-2 focus:outline-none flex mx-auto my-4 w-[90%]"
+                  placeholder="Type a message"
+                  value=""
+                />
+
+                <div
+                  className="flex flex-col items-center py-2 border-2 border-dashed rounded-xl h-[65vh] justify-end "
+                  onDrop={handleDrop}
+                  onDragOver={(event) => event.preventDefault()}
+                >
+                  <p className="text-xl my-4">
+                    Drag photos and videos here
+                  </p>
+                  <span onClick={handleFileInputClick}>
+                    <input
+                      className="hidden"
+                      type="file"
+                      accept="media_type"
+                      onChange={(e) => handleFileChange(e, "file")}
+                    />
+                    <Button
+                      title={'Select from computer'}
+                      className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
+                    />
+
+                  </span>
+                </div>
               </div>
             }
           </>
@@ -171,6 +187,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
               type="button"
               onClick={(e) => createPostSubmitButton(e)}
               title={'SHARE STORY'}
+              loading={loadings?.createStory}
               className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
             />
           </div>
