@@ -167,9 +167,13 @@ const CommentSection = ({ specificPostId, posts }) => {
               Your browser does not support the video tag.
             </video>
           }
+          {
+            posts?.type === '' &&
+            <img src="/images/home/feed-banner-img.png" className="w-full h-full aspect-video h-[-webkit-fill-available]" />
+          }
         </div>
       </div>
-      <div className="w-[40%] bg-white px-4 xl:w-[30%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
+      <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a class="flex items-center" target="_blank" href={`/profile/${posts?.creator?.user_name}`}>
             <ProfilePicture image={posts?.creator?.profile_picture} />
