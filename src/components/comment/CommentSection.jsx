@@ -159,7 +159,7 @@ const CommentSection = ({ specificPostId, posts }) => {
           </button>
           {
             posts?.type === 'image' &&
-            <img src={posts?.media} className="w-full h-full aspect-video h-[-webkit-fill-available]" />
+            <img src={posts?.media} className="w-full h-full aspect-video h-[-webkit-fill-available] object-contain" />
           }
           {
             posts?.type === 'video' &&
