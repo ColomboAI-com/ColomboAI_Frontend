@@ -153,7 +153,7 @@ const CommentSection = ({ specificPostId, posts }) => {
   return (
     <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
       <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
-        <div className="h-full  flex items-center relative">
+        <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
           <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
           </button>
