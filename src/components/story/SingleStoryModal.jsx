@@ -12,6 +12,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
   const storyStyles = {
     objectFit: "cover",
     borderRadius: "10px",
+    justifyContent: "center",
     filter: "grayscale(30%)",
   };
   const handleAllStoriesEnd = async() => {
@@ -31,12 +32,13 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
 
       {/* Middle Section */}
       <div className="relative  m-auto">
-        <div className="h-3/4 w-full rounded-[5px]">
+        <div className="h-3/4 w-full rounded-[5px] justify-center">
           <Stories
             stories={data.map((story) => story.media)}
             defaultInterval={5000}
             width={432}
             height={768}
+            justifyContent={"center"}
             ref={storiesRef}
             onAllStoriesEnd={handleAllStoriesEnd}
             storyStyles={storyStyles}

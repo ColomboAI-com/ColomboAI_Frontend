@@ -5,8 +5,9 @@ import { useState, useEffect, useContext } from "react";
 import { StoryContext } from "@/context/StoryContext"
 import { MessageBox } from "../MessageBox";
 
-const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
+const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const [file, setFile] = useState(null);
+  const [inputText, setInputText] = useState('');
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaType, setMediaType] = useState("");
   const [nextStep, setNextStep] = useState(false);
@@ -52,9 +53,6 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
     }
   };
 
-  console.log(file, mediaUrl, mediaType, "upload")
-
-
   // const createPostSubmitButton = (event) => {
   // alert('Create Submit Button')
   // }
@@ -62,13 +60,13 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
   const { createStory, loadings } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
-    const res = await createStory({ fileType: "image", file: file, content: "image" })
+    const res = await createStory({ fileType: "image", file: file, content: inputText })
     if (res) {
       MessageBox('success', res.message)
       setIsCreateStoryOpen(false)
+      getStory()
     }
   }
-
 
   return (
     <>
@@ -95,16 +93,17 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
           </div>
         </div>
         <div className="px-10 pt-[15px] pb-[35px] flex flex-col justify-between h-[0vh]">
-          {!nextStep && (
+          {!nextStep && mediaUrl !== "" && mediaType.includes("image") && (
             <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
-              Add Text
+              Next 
             </button>
           )}
         </div>
+        {mediaUrl !== "" && mediaType.includes("image") && <p className="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">{inputText}</p>}
         {
           mediaUrl !== "" && mediaType.includes("image")
             ?
-            <div className="relative my-8 h-[0vh]">
+            <div className="relative my-8">
               <img
                 key={mediaUrl}
                 src={mediaUrl}
@@ -114,7 +113,10 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
               <div className=" absolute top-3 right-2">
                 <div className="flex flex-row items-center justify-center">
                   <span onClick={clearFileHandler} className="px-2 pointer">
-                    <CloseDocumentIcon />
+                    <CloseDocumentIcon onClick={()=>{
+                      setInputText(''); 
+                      setNextStep(false);
+                    }} />
                   </span>
                 </div>
               </div>
@@ -149,8 +151,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen }) => {
               (mediaUrl === "" && mediaType === "") &&
               <div>
                 <div class="items-start w-full px-[20px]">
-                    
-                  <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value="" />
+                  <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e)=>setInputText(e.target.value)} name="text" />
                 </div>
 
                 <div

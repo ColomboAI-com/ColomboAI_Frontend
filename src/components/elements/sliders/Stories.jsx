@@ -54,6 +54,10 @@ const Stories = () => {
     gerRecentStory()
   }, [])
 
+  const reFetchingStory = () => {
+    gerRecentStory()
+  }
+
   if (loadings.reactStory && !allStories?.length) {
     return null
   }
@@ -61,7 +65,7 @@ const Stories = () => {
   return (
     <div className="my-8" id="create_story_slider_id">
       <Slider {...settings}>
-        <CreateStory />
+        <CreateStory reFetchingStory={reFetchingStory}/>
 
         {
           allStories.map((story, index) => {
