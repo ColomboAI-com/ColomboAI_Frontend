@@ -107,7 +107,7 @@ const DefaultLayout = ({ children }) => {
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
         <div className="flex max-h-[87vh] border- border-green-400 xl:h-screen">
-          <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed overflow-auto h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
 
