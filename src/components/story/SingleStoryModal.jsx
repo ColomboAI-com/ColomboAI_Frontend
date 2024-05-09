@@ -3,40 +3,41 @@ import { useRef } from "react";
 import { MdOutlineArrowBack } from "react-icons/md";
 import { IoIosSend } from "react-icons/io";
 import Stories from "react-insta-stories";
-import { useContext,useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
 
-export default function SingleStoryModal({ setIsCreateStorySignleOpen, data}) {
+export default function SingleStoryModal({ setIsCreateStorySignleOpen, data }) {
   const storiesRef = useRef(null);
   const { viewStoryoFUser } = useContext(StoryContext);
   const storyStyles = {
     objectFit: "cover",
     borderRadius: "10px",
+    justifyContent: "center",
     filter: "grayscale(30%)",
   };
-  const handleAllStoriesEnd = async() => {
+  const handleAllStoriesEnd = async () => {
     const res = await viewStoryoFUser(data[0]._id);
-    console.log(res)
-      if (res) {
-        await setIsCreateStorySignleOpen(false)
-      }
+    if (res) {
+      await setIsCreateStorySignleOpen(false)
+    }
   };
 
   return (
     <div className="bg-[#1a1a1af0] p-4 grid grid-cols-3">
       {/* Left Section */}
       <div className="flex justify-end p-4 text-3xl">
-        <MdOutlineArrowBack onClick={() => setIsCreateStorySignleOpen(false)} style={{ color: '#fff',cursor:"pointer"}}/>
+        <MdOutlineArrowBack onClick={() => setIsCreateStorySignleOpen(false)} style={{ color: '#fff', cursor: "pointer" }} />
       </div>
 
       {/* Middle Section */}
       <div className="relative  m-auto">
-        <div className="h-3/4 w-full rounded-[5px]">
+        <div className="h-3/4 w-full rounded-[5px] justify-center">
           <Stories
             stories={data.map((story) => story.media)}
             defaultInterval={5000}
             width={432}
             height={768}
+            justifyContent={"center"}
             ref={storiesRef}
             onAllStoriesEnd={handleAllStoriesEnd}
             storyStyles={storyStyles}

@@ -18,8 +18,6 @@ var settings = {
       settings: {
         slidesToShow: 5,
         slidesToScroll: 1,
-        // infinite: true,
-        // dots: true
       }
     },
     {
@@ -56,14 +54,18 @@ const Stories = () => {
     gerRecentStory()
   }, [])
 
+  const reFetchingStory = () => {
+    gerRecentStory()
+  }
+
   if (loadings.reactStory && !allStories?.length) {
     return null
   }
 
   return (
-    <div className="my-8">
+    <div className="my-8" id="create_story_slider_id">
       <Slider {...settings}>
-        <CreateStory />
+        <CreateStory reFetchingStory={reFetchingStory}/>
 
         {
           allStories.map((story, index) => {

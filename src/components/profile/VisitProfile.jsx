@@ -14,8 +14,6 @@ const VisitProfile = ({ userData }) => {
   const { postsCount, blockUser, followUnfollowUser, handleFollower, followingsData, setIsShareProfileModalOpen } = useContext(UserProfileContext);
 
   const user = getCookie('username')
-  console.log(userData,followingsData,user)
-
 
   return (
     <div className="relative">
@@ -27,24 +25,24 @@ const VisitProfile = ({ userData }) => {
 
       {
         userData?.user_name === user
-        ?
-        <>
-          <Link href={'/profile/edit-profile'} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
-            Edit
-          </Link>
-          <button onClick={() => setIsShareProfileModalOpen(true)} className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
-            Share profile
-          </button>
-        </>
-        :
-        <>
-          <button onClick={() => {followUnfollowUser(userData?._id)}} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
-            Follow
-          </button>
-          <Link href='/messages' className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
-            Message
-          </Link>
-        </>
+          ?
+          <>
+            <Link href={'/profile/edit-profile'} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
+              Edit
+            </Link>
+            <button onClick={() => setIsShareProfileModalOpen(true)} className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
+              Share profile
+            </button>
+          </>
+          :
+          <>
+            <button onClick={() => { followUnfollowUser(userData?._id) }} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
+              Follow
+            </button>
+            <Link href='/messages' className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
+              Message
+            </Link>
+          </>
       }
 
       <div className="flex flex-col items-center border-2 -mt-16">

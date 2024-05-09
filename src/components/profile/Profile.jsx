@@ -4,8 +4,9 @@ import { VerifiedIcon } from "../Icons";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useContext } from "react";
 import Link from "next/link";
+import { setSessionStorage } from "@/utlils/utils";
 
-const UserProfile = ({userData}) => {
+const UserProfile = ({ userData }) => {
 
   const { setIsFollowerModalOpen, setIsFollowingModalOpen, setIsShareProfileModalOpen, postsCount } = useContext(UserProfileContext);
   return (
@@ -15,8 +16,11 @@ const UserProfile = ({userData}) => {
         alt="Cover"
         className="w-full h-55 object-cover"
       />
-
-      <Link href={'/profile/edit-profile'} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
+      <Link
+        href={'/profile/edit-profile'}
+        className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary"
+        onClick={() => setSessionStorage('user-details', JSON.stringify(userData))}
+      >
         Edit
       </Link>
       <button onClick={() => setIsShareProfileModalOpen(true)} className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
@@ -28,7 +32,7 @@ const UserProfile = ({userData}) => {
         <h1 className="mt-4 text-3xl font-bold text-gray-900 flex items-center">
           {userData?.name}
           <span className="text-brandprimary text-xl ml-2">
-            <VerifiedIcon w={20} h={20} fill={"#1E71F2"}/>
+            <VerifiedIcon w={20} h={20} fill={"#1E71F2"} />
           </span>
         </h1>
 

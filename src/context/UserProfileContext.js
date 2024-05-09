@@ -93,8 +93,13 @@ export default function UserProfileContextProvider({ children }) {
   const editProfile = async ({ user_name, name, bio, profile_picture }) => {
     try {
       setLoadings(prev => ({ ...prev, editProfile: true }))
+      const formData = new FormData()
+      formData.append('name', name)
+      formData.append('user_name', user_name)
+      formData.append('bio', bio)
+      formData.append('file', profile_picture)
       const res = await axios.put(`${ROOT_URL_AUTH}/user`,
-        { user_name, name, bio, profile_picture },
+        formData,
         {
           headers: {
             Authorization: getCookie('token')
@@ -129,7 +134,7 @@ export default function UserProfileContextProvider({ children }) {
     try {
       setLoadings(prev => ({ ...prev, getFollowers: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/user/followers/${getCookie('username')}`,
-      {type},
+        { type },
         {
           headers: {
             Authorization: getCookie('token')
@@ -138,7 +143,7 @@ export default function UserProfileContextProvider({ children }) {
       )
       if (type === 'followers') {
         setFollowersData(res.data.results)
-      } else if(type === 'followings') {
+      } else if (type === 'followings') {
         setFollowingsData(res.data.results)
       }
       return res.data

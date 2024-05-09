@@ -2,10 +2,18 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useContext, useEffect, useRef, useState } from 'react'
 import { CreateIcon, CreateMagicPenIcon, CreatePostIcon, CreateStoryIcon, CreateThoughtIcon, CreateVibeIcon } from '../Icons';
 import { GlobalContext } from '@/context/GlobalContext';
+import Modal from "./Modal";
+import UploadStoryModal from '../story/UploadStoryModal';
 
 export default function CreateDropdown({ w, h, fill }) {
 
   const { setIsCreatePostOpen } = useContext(GlobalContext);
+
+  const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
+
+  const handleOpen = (e) => {
+    setIsCreateStoryOpen(!isCreateStoryOpen)
+  }
 
   return (
     <div>
@@ -14,7 +22,7 @@ export default function CreateDropdown({ w, h, fill }) {
           <>
             <div>
               <Menu.Button >
-                {/* Options
+                {/* Optiouns
               <ChevronDownIcon
                 className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
                 aria-hidden="true"
@@ -50,6 +58,7 @@ export default function CreateDropdown({ w, h, fill }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        onClick={() => setIsCreateStoryOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
                           } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
@@ -76,6 +85,7 @@ export default function CreateDropdown({ w, h, fill }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        onClick={() => setIsCreatePostOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
                           } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
@@ -89,6 +99,7 @@ export default function CreateDropdown({ w, h, fill }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        onClick={() => setIsCreatePostOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
                           } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
@@ -106,6 +117,13 @@ export default function CreateDropdown({ w, h, fill }) {
                 </div>
               </Menu.Items>
             </Transition>
+
+            {
+              isCreateStoryOpen &&
+              <Modal isOpen={isCreateStoryOpen} setIsOpen={setIsCreateStoryOpen} className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all">
+                <UploadStoryModal setIsCreateStoryOpen={setIsCreateStoryOpen} />
+              </Modal>
+            }
           </>
         )}
 
