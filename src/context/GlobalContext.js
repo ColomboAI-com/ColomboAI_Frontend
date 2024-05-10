@@ -8,7 +8,6 @@ export default function GlobalContextProvider({ children }) {
   let [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   let [isShareOpen, setIsShareOpen] = useState(false);
   let [isCommentOpen, setIsCommentOpen] = useState(false);
-
   let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
   let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
   let [specificPostId, setSpecificPostId] = useState()
@@ -17,8 +16,8 @@ export default function GlobalContextProvider({ children }) {
   return (
     <GlobalContext.Provider
       value={{
-        isCreatePostOpen,
         setIsCreatePostOpen,
+        isCreatePostOpen,
         isShareOpen,
         setIsShareOpen,
         isCommentOpen,

@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { CrossIcon, VerifiedIcon } from "@/components/Icons";
+import Link from "next/link";
 
 const FollowingModal = ({followingsData}) => {
 
@@ -47,7 +48,7 @@ const FollowingModal = ({followingsData}) => {
                     <div key={person._id}>
                         <div className={`flex w-full items-center border-b- justify-between p-2 hover:bg-gray-100 hover:text-brandprimary`}>
                             <div className="flex-1">
-                                <div className="flex items-center">
+                                <Link className="flex items-center w-fit" href={`/profile/${person?.user_name || ''}`}>
                                     <div className="relative flex-shrink-0">
                                         <img src={`${person.profile_picture}`} className="h-12 w-12 rounded-full object-cover" alt="profile_image" />
                                     </div>
@@ -63,7 +64,7 @@ const FollowingModal = ({followingsData}) => {
                                         </p>
                                         <p className="max-w-[160px] truncate text-xs text-gray-500">{person.name}</p>
                                     </div>
-                                </div>
+                                </Link>
                             </div>
                             <button onClick={() => {
                                 setIsUnFollowModalOpen(true)

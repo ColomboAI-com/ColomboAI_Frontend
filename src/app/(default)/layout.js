@@ -7,7 +7,7 @@ import FeedContextProvider from "@/context/FeedContext";
 import Modal from "@/components/elements/Modal";
 import CreatePost from "@/components/elements/CreatePost";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
 import CommentSection from "@/components/comment/CommentSection";
@@ -22,6 +22,14 @@ import {
   TaskBotIcon,
 } from "@/components/Icons";
 import NotificationBar from "@/components/notifications/NotificationBar";
+import { messaging } from "@/utlils/firebaseConfig";
+import { getToken } from "firebase/messaging";
+
+import { ROOT_URL_NOTIFICATION } from "@/utlils/rootURL"
+import { handleError } from "@/utlils/handleError";
+import axios from "axios";
+import { getCookie } from "@/utlils/cookies";
+import { MessageBox } from "@/components/MessageBox";
 
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
@@ -49,11 +57,57 @@ const DefaultLayout = ({ children }) => {
     setPosts,
   } = useContext(GlobalContext);
   const [isShowChatMenu, setIsShowChatMenu] = useState(false);
+  const StoreFcmToken = async (token) => {
+    try {
+      const res = await axios.post(
+        `${ROOT_URL_NOTIFICATION}/store_fcm_token`,
+        { fcm_token: token },
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      );
+      return res.data;
+    } catch (err) {
+      handleError(err);
+      throw err; // Re-throw error after handling
+    }
+  };
+
+  async function requestPermission() {
+    if (isShowChatMenu) {
+      const permission = await Notification.requestPermission();
+      if (permission === "granted") {
+        // Generate Token
+        const token = await getToken(messaging, {
+          vapidKey:
+            "BEOQAvPUbuQu2BqlLZWaURQL0T1KqitVlTyUXJ-fRfxkVPkuYKgxnz7927ycs2L2-O1az1MyA1Tv6ZEkD2Nimlo",
+        });
+        console.log("Token Gen", token);
+        try {
+          const res = await StoreFcmToken(token); // Await StoreFcmToken function call
+          // Send this token  to server ( db)
+        } catch (error) {
+          // Handle error if any
+          console.error("Error while storing FCM token:", error);
+        }
+      } else if (permission === "denied") {
+        MessageBox('error', "You denied for the notification");
+      }
+    }
+  }
+
+  useEffect(() => {
+    // Request user for notification permission
+    requestPermission();
+  }, [isShowChatMenu]);
+
   return (
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
         <div className="flex max-h-[87vh] border- border-green-400 xl:h-screen">
-          <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed overflow-auto h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
 
