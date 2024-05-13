@@ -6,6 +6,7 @@ import Dropdown from '../messages/Dropdown';
 
 import InputBar from "./InputBar";
 import Link from "next/link";
+import ProfilePicture from "../elements/ProfilePicture";
 
 /* eslint-disable @next/next/no-img-element */
 const Sidebar = () => {
@@ -32,9 +33,7 @@ const Sidebar = () => {
                         offset={[0, 10]}
                         placement="bottom-start"
                         btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-
-                        button={<img src="https://lh3.googleusercontent.com/a/ACg8ocIsnayWflq1brv2tcAcByRoAaDTB52UkFAW8_q48kVXIUcbYpir=s96-c" alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full" />}
-                    //   button={<img src={profilePic} alt="profile-image" className="w-[42px] h-[42px] mx-auto rounded-full"/>}
+                        button={<ProfilePicture image={getCookie('profilePic')} />}
                     >
                         <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                             <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans text-brandprimary">{name}</li></Link>
