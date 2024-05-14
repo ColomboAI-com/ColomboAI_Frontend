@@ -11,6 +11,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const [mediaUrl, setMediaUrl] = useState("");
   const [mediaType, setMediaType] = useState("");
   const [nextStep, setNextStep] = useState(false);
+  const { loadings } = useContext(StoryContext)
 
   const handleFileInputClick = () => {
     document.querySelector('input[type="file"][accept="image/*, video/*"]').click();
@@ -145,9 +146,10 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           <div className="flex justify-center mt-2 mb-2">
             <Button
               type="button"
-              onClick={createPostSubmitButton}
               title={'SHARE STORY'}
               className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
+              loading={loadings.createStory}
+              onClick={createPostSubmitButton}
             />
           </div>
         )}
