@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { FeedContext } from "@/context/FeedContext";
 import { GlobalContext } from "@/context/GlobalContext";
 import { formatTimeAgo } from "@/utlils/commonFunctions";
@@ -7,12 +7,17 @@ import { useContext, useState, useRef, useEffect } from "react";
 import ProfilePicture from "../elements/ProfilePicture";
 import ImageBlock from "../feed/post/ImageBlock";
 import VideoBlock from "../feed/post/VideoBlock";
-
+import Picker from "emoji-picker-react";
 const CommentSection = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
-  const { addComment: addCommentContext, deleteComment: deleteCommentContext, generateComment: generateCommentContext, getComments } = useContext(FeedContext);
-  const { setIsCommentOpen } = useContext(GlobalContext)
+  const {
+    addComment: addCommentContext,
+    deleteComment: deleteCommentContext,
+    generateComment: generateCommentContext,
+    getComments,
+  } = useContext(FeedContext);
+  const { setIsCommentOpen } = useContext(GlobalContext);
   const [commentData, setCommentData] = useState("");
   const [generateCommentData, setGenerateCommentData] = useState();
   const [isClick, setIsClick] = useState(false);
@@ -26,14 +31,15 @@ const CommentSection = ({ specificPostId, posts }) => {
 
   const [hasMore, setHasMore] = useState(true);
   const [isIntersecting, setIsIntersecting] = useState(false);
+  const [showPicker, setShowPicker] = useState(false);
 
-  const userid = getCookie('userid');
+  const userid = getCookie("userid");
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const res = await getComments(specificPostId, page);
-        setComments((prevComments) => [...prevComments, ...res.comments]);
+        // setComments((prevComments) => [...prevComments, ...res.comments]);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -45,7 +51,6 @@ const CommentSection = ({ specificPostId, posts }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-
       if (containerRef.current) {
         const scrollPosition =
           containerRef.current.scrollHeight -
@@ -58,11 +63,10 @@ const CommentSection = ({ specificPostId, posts }) => {
         }
         if (scrollPosition > 300 && hasMore && isIntersecting) {
           if (myCommentLength > 0) {
-            const reminder = myCommentLength % 10
+            const reminder = myCommentLength % 10;
             if (reminder == 0) {
               setIsIntersecting(false);
-            }
-            else {
+            } else {
               setIsIntersecting(true);
             }
           }
@@ -81,12 +85,14 @@ const CommentSection = ({ specificPostId, posts }) => {
     };
   }, [hasMore, isIntersecting]);
 
-
   const postComment = async (id) => {
     if (commentData || generatedComment) {
       setLoading(true);
       try {
-        await addCommentContext({ postId: id, content: (commentData || generatedComment) });
+        await addCommentContext({
+          postId: id,
+          content: commentData || generatedComment,
+        });
         const updatedComments = await getComments(specificPostId, 1);
         setComments(updatedComments.comments);
         setCommentData("");
@@ -105,39 +111,43 @@ const CommentSection = ({ specificPostId, posts }) => {
   const handleDeleteComment = async (postId, commentId) => {
     try {
       await deleteCommentContext({ postId, commentId });
-      setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
-  }
+  };
 
   useEffect(() => {
     if (isClick) {
       magicBoxInputRef.current.focus();
-    }
-    else {
+    } else {
       commentBoxInputRef.current.focus();
     }
   }, [isClick]);
 
   const handleInputGenerateComment = (e) => {
-    if (e.target.value.trim() === '') {
+    if (e.target.value.trim() === "") {
       setIsInputFocused(false);
     } else {
       setIsInputFocused(true);
     }
-    setGenerateCommentData(e.target.value)
-  }
+    setGenerateCommentData(e.target.value);
+  };
 
   const handleMegicPen = () => {
     setIsClick(!isClick);
-  }
+  };
 
   const handleGenerateComment = async (e) => {
     setIsAILoading(true);
     try {
       const postContent = encodeURIComponent(posts?.content);
-      const { generatedComment } = await generateCommentContext({ prompt: generateCommentData, post: postContent });
+      const { generatedComment } = await generateCommentContext({
+        prompt: generateCommentData,
+        post: postContent,
+      });
       setTimeout(() => {
         setGeneratedComment(generatedComment);
         setIsAILoading(false);
@@ -148,57 +158,94 @@ const CommentSection = ({ specificPostId, posts }) => {
       console.error("Error generating comment:", error);
       setIsAILoading(false);
     }
-  }
+  };
+
+  const onEmojiClick = (event) => {
+    setCommentData((prev) => prev + event.emoji);
+    setShowPicker(false);
+  };
 
   return (
     <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
       <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
-          <button onClick={() => setIsCommentOpen(false)} className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]">
+          <button
+            onClick={() => setIsCommentOpen(false)}
+            className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]"
+          >
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
           </button>
-          {
-            posts?.type === 'image' &&
-            <img src={posts?.media} className="w-full h-full aspect-video h-[-webkit-fill-available] object-contain" />
-          }
-          {
-            posts?.type === 'video' &&
-            <video className='inset-0 w-full h-full aspect-video h-[-webkit-fill-available]' src={posts?.media} controls>
+          {posts?.type === "image" && (
+            <img
+              src={posts?.media}
+              className="w-full h-full aspect-video h-[-webkit-fill-available] object-contain"
+            />
+          )}
+          {posts?.type === "video" && (
+            <video
+              className="inset-0 w-full h-full aspect-video h-[-webkit-fill-available]"
+              src={posts?.media}
+              controls
+            >
               Your browser does not support the video tag.
             </video>
-          }
-          {
-            posts?.type === '' &&
-            <img src="/images/home/feed-banner-img.png" className="w-full h-full aspect-video h-[-webkit-fill-available]" />
-          }
+          )}
+          {posts?.type === "" && (
+            <img
+              src="/images/home/feed-banner-img.png"
+              className="w-full h-full aspect-video h-[-webkit-fill-available]"
+            />
+          )}
         </div>
       </div>
       <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
-          <a class="flex items-center" target="_blank" href={`/profile/${posts?.creator?.user_name}`}>
+          <a
+            class="flex items-center"
+            target="_blank"
+            href={`/profile/${posts?.creator?.user_name}`}
+          >
             <ProfilePicture image={posts?.creator?.profile_picture} />
-            <p class="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">{posts?.creator?.user_name}</p>
+            <p class="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">
+              {posts?.creator?.user_name}
+            </p>
           </a>
           <div class="flex items-center gap-4">
-            <p class="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">{formatTimeAgo(posts?.createdAt)}</p>
+            <p class="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">
+              {formatTimeAgo(posts?.createdAt)}
+            </p>
           </div>
         </div>
         <div className="border-b-[1px] border-[#E3E3E3]">
-          <p className="text-[#515151] text-[16px] font-sans text-left">{posts?.content}</p>
+          <p className="text-[#515151] text-[16px] font-sans text-left">
+            {posts?.content}
+          </p>
         </div>
         <div className="flex h-[10%] items-center justify-center">
-          <h4 className="text-[21px] color-[#333333] font-sans font-[700]">Comments</h4>
+          <h4 className="text-[21px] color-[#333333] font-sans font-[700]">
+            Comments
+          </h4>
           <div></div>
         </div>
-        <div ref={containerRef} className="comment-section no-scrollbar h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]">
-          {comments.length === 0 && <div className="flex items-center justify-center h-full">
-            <p className="text-[#515151] text-[16px] font-sans text-center">No Comments Found</p>
-          </div>}
+        <div
+          ref={containerRef}
+          className="comment-section no-scrollbar h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]"
+        >
+          {comments.length === 0 && (
+            <div className="flex items-center justify-center h-full">
+              <p className="text-[#515151] text-[16px] font-sans text-center">
+                No Comments Found
+              </p>
+            </div>
+          )}
           {comments.map((comment) => (
             <div key={comment._id}>
               <div className="flex items-start justify-start gap-2 my-4">
                 <div className="w-[36px] h-[36px]">
-                  <img src={comment.creator.profile_picture} className="w-[36px] h-[36px] rounded-[50%]" />
+                  <img
+                    src={comment.creator.profile_picture}
+                    className="w-[36px] h-[36px] rounded-[50%]"
+                  />
                 </div>
                 <div className="w-[85%] text-left">
                   <div className="flex items-center justify-between">
@@ -207,13 +254,20 @@ const CommentSection = ({ specificPostId, posts }) => {
                     </div>
                     {comment.creator._id === userid && (
                       <div className="flex items-center gap-[20px] right-0">
-                        <div className="text-[#212121] text-[14px] font-sans font-[450] leading-[21px] cursor-pointer right-0" onClick={() => handleDeleteComment(specificPostId, comment._id)}>
+                        <div
+                          className="text-[#212121] text-[14px] font-sans font-[450] leading-[21px] cursor-pointer right-0"
+                          onClick={() =>
+                            handleDeleteComment(specificPostId, comment._id)
+                          }
+                        >
                           Delete
                         </div>
                       </div>
                     )}
                   </div>
-                  <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">{comment.content}</h3>
+                  <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">
+                    {comment.content}
+                  </h3>
                   <div className="flex items-center justify-between">
                     <div className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">
                       {formatTimeAgo(comment?.createdAt)}
@@ -232,10 +286,14 @@ const CommentSection = ({ specificPostId, posts }) => {
         </div>
         <div className="py-[5px] flex flex-col">
           <div className="relative right-0 left-0 bottom-0 top-auto mb-[20px]">
-            <div className="absolute top-[11px] left-[15px]">
+            <div
+              className="absolute top-[11px] left-[15px]"
+              onClick={() => setShowPicker((val) => !val)}
+            >
               <img src="/images/icons/smile-icon.svg" />
             </div>
-            <input ref={commentBoxInputRef}
+            <input
+              ref={commentBoxInputRef}
               type="text"
               className="w-full border-[1px] border-[#1E71F2] h-[50px] rounded-[50px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0 font-sans"
               placeholder="Write comments..."
@@ -243,39 +301,62 @@ const CommentSection = ({ specificPostId, posts }) => {
               value={commentData || generatedComment}
               onChange={(e) => {
                 setCommentData(e.target.value);
-                setGeneratedComment('');
+                setGeneratedComment("");
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
                   postComment(specificPostId);
                 }
               }}
               style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitScrollbar: 'none',
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                WebkitScrollbar: "none",
               }}
-
             />
+            {showPicker && (
+              <Picker
+                pickerStyle={{ width: "100%" }}
+                onEmojiClick={onEmojiClick}
+              />
+            )}
             <div className="absolute top-[16px] right-[60px]">
-              <button type="button" classNa="text-white absolute w-auto right-[0] top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
+              <button
+                type="button"
+                classNa="text-white absolute w-auto right-[0] top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
                 onClick={() => {
                   postComment(specificPostId);
-                }}>
+                }}
+              >
                 {isLoading ? (
                   <div className="w-4 h-4 mt-1 mb-1 ml-3 rounded-full border-t-2 border-b-2 border-white-500 animate-spin"></div>
                 ) : (
-                  <> <svg width="20" height="20" fill="#8E8E93" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg"><path d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z" fill={isInputFocused === true ? '#1E71F2' : '#8E8E93'}></path></svg> </>
+                  <>
+                    {" "}
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="#8E8E93"
+                      viewBox="0 0 17 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z"
+                        fill={isInputFocused === true ? "#1E71F2" : "#8E8E93"}
+                      ></path>
+                    </svg>{" "}
+                  </>
                 )}
               </button>
             </div>
-            <button onClick={handleMegicPen} className="w-[53px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] absolute right-0 top-[0px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px]">
+            <button
+              onClick={handleMegicPen}
+              className="w-[53px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] absolute right-0 top-[0px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px]"
+            >
               <img src="/images/icons/Magic-pen.svg" />
             </button>
-
           </div>
-
 
           {/* <div className="relative ">
             <div className="absolute w-[40px] top-[11px] left-[15px]">
@@ -337,7 +418,7 @@ const CommentSection = ({ specificPostId, posts }) => {
                 value={generateCommentData}
                 onChange={handleInputGenerateComment}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
+                  if (e.key === "Enter") {
                     e.preventDefault();
                     if (isClick) {
                       handleGenerateComment();
@@ -347,11 +428,25 @@ const CommentSection = ({ specificPostId, posts }) => {
                   }
                 }}
               />
-              <div className="w-[53px] blue-400 absolute right-0 top-[10px] h-[50px p-[3px] object-scale-down cursor-pointer" onClick={handleGenerateComment}>
+              <div
+                className="w-[53px] blue-400 absolute right-0 top-[10px] h-[50px p-[3px] object-scale-down cursor-pointer"
+                onClick={handleGenerateComment}
+              >
                 {isAILoading ? (
                   <div className="w-5 h-5 rounded-full border-t-2 border-b-2 border-blue-500 animate-spin"></div>
                 ) : (
-                  <svg width="20" height="20" fill="#8E8E93" viewBox="0 0 17 14" xmlns="http://www.w3.org/2000/svg"><path d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z" fill={isInputFocused === true ? '#1E71F2' : '#8E8E93'}></path></svg>
+                  <svg
+                    width="20"
+                    height="20"
+                    fill="#8E8E93"
+                    viewBox="0 0 17 14"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z"
+                      fill={isInputFocused === true ? "#1E71F2" : "#8E8E93"}
+                    ></path>
+                  </svg>
                 )}
               </div>
             </div>
@@ -359,7 +454,7 @@ const CommentSection = ({ specificPostId, posts }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CommentSection
+export default CommentSection;
