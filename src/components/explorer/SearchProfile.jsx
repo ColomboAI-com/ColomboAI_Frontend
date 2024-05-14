@@ -84,10 +84,10 @@ const SearchProfile = () => {
                                         <img 
                                             src={val.profile_picture}
                                             alt="suggested_image" 
-                                            className="rounded-full h-10 w-10 mr-3" 
+                                            className="rounded-full w-[30px] h-[30px] mr-3" 
                                         />
                                         <div>
-                                            <a>@{val.user_name}</a>
+                                            <a className='text-[14px] font-sans font-[600]'>@{val.user_name}</a>
                                             <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">{val.name}</p>
                                         </div>
                                     </div>
