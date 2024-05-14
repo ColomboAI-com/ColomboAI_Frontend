@@ -90,7 +90,9 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
             </button>
           )}
         </div>
-        {mediaUrl !== "" && mediaType.includes("image") && <p className="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">{inputText}</p>}
+        <div className="flex items-start w-full px-[20px]">
+          <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e) => setInputText(e.target.value)} name="text" />
+        </div>
         {mediaUrl !== "" && (mediaType.includes("image") || mediaType.includes("video")) && (
           <div className="relative my-8">
             {mediaType.includes("image") ? (
@@ -121,39 +123,26 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           </div>
         )}
         {!nextStep && (
-          <>
-            {(mediaUrl === "" && mediaType === "") && (
-              <div>
-                <div class="items-start w-full px-[20px]">
-                  <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e) => setInputText(e.target.value)} name="text" />
-                </div>
-                <div
-                  className="flex flex-col items-center py-2 h-[47svh] justify-end "
-                  onDrop={handleDrop}
-                  onDragOver={(event) => event.preventDefault()}
-                >
-                  <p className="text-xl my-4">
-                    Drag photos and videos here
-                  </p>
-                  <span onClick={handleFileInputClick}>
-                    <input
-                      className="hidden"
-                      type="file"
-                      accept="image/*, video/*"
-                      onChange={handleFileChange}
-                    />
-                    <Button
-                      title={'Select from computer'}
-                      className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
-                    />
-                  </span>
-                </div>
-              </div>
-            )}
-          </>
+          <div className="flex flex-col items-center py-2 h-[47svh] justify-end ">
+            <p className="text-xl my-4">
+              Drag photos and videos here or click below to select.
+            </p>
+            <span onClick={handleFileInputClick}>
+              <input
+                className="hidden"
+                type="file"
+                accept="image/*, video/*"
+                onChange={handleFileChange}
+              />
+              <Button
+                title={'Select from computer'}
+                className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14'}
+              />
+            </span>
+          </div>
         )}
         {nextStep && (
-          <div className="flex justify-center mb-2">
+          <div className="flex justify-center mt-2 mb-2">
             <Button
               type="button"
               onClick={createPostSubmitButton}
