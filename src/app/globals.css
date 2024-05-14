@@ -89,3 +89,7 @@ body {
 #create_story_slider_id .slick-track {
   margin-left: 0;
 }
+
+.story-detail-box div > div {
+  justify-content: center !important;
+}
