@@ -29,15 +29,16 @@ const Sidebar = () => {
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
                 <div className="mb-[46px] mt-[20px] relative">
+
                     <Dropdown
                         offset={[0, 10]}
                         placement="bottom-start"
                         btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-                        button={<ProfilePicture image={getCookie('profilePic')} />}
+                        button={<ProfilePicture image={profilePic} />}
                     >
                         <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                             <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans text-brandprimary">{name}</li></Link>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>Sign out</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans" onClick={handleSignOut}>Log out</li>
                         </ul>
                     </Dropdown>
                 </div>
