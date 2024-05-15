@@ -16,6 +16,7 @@
     "cookies-next": "^4.1.1",
     "copy-to-clipboard": "^3.3.3",
     "date-fns": "^3.6.0",
+    "emoji-picker-react": "^4.9.2",
     "firebase": "^10.10.0",
     "jwt-decode": "^4.0.0",
     "linkify-react": "^4.1.3",

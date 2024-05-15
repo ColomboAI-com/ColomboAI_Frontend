@@ -14,6 +14,7 @@ const ViewStory = (data) => {
         SetuserId(id)
         const res = await getStoriesOfUser(id)
         if (res) {
+            console.log(res?.data,"res?.data")
             SetdetailStory(res?.data?.userStories)
             await setIsCreateStorySignleOpen(!isCreateStorySignleOpen)
         }
@@ -37,7 +38,7 @@ const ViewStory = (data) => {
             {
                 isCreateStorySignleOpen &&
                 <Modal isOpen={isCreateStorySignleOpen} setIsOpen={setIsCreateStorySignleOpen} className="w-full  transform overflow-hidden text-left align-middle shadow-xl transition-all">
-                    <SingleStoryModal setIsCreateStorySignleOpen={setIsCreateStorySignleOpen} data={detailStory} />
+                    <SingleStoryModal setIsCreateStorySignleOpen={setIsCreateStorySignleOpen} data={detailStory} userData={data?.data?.creator} />
                 </Modal>
             }
         </div>

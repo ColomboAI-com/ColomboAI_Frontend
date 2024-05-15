@@ -25,7 +25,7 @@ import NotificationBar from "@/components/notifications/NotificationBar";
 import { messaging } from "@/utlils/firebaseConfig";
 import { getToken } from "firebase/messaging";
 
-import { ROOT_URL_NOTIFICATION } from "@/utlils/rootURL"
+// import { ROOT_URL_NOTIFICATION } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError";
 import axios from "axios";
 import { getCookie } from "@/utlils/cookies";
