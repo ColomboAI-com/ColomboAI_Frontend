@@ -252,7 +252,7 @@ const CreatePost = () => {
           }
           {
             nextStep &&
-            <div className="flex justify-center">
+            <div className="flex justify-center pb-[20px]">
               <Button
                 title={'SHARE POST'}
                 className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
