@@ -179,9 +179,9 @@ const CommentSection = ({ specificPostId, posts }) => {
   }, [pickerRef]);
 
   return (
-    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
-      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
-        <div>
+    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] xl:overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
+      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
+        <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
           <button
             onClick={() => setIsCommentOpen(false)}
             className="bg-white w-9 h-9 rounded-full relative top-[0] mt-[25px] ml-[14px] flex items-center"
@@ -214,7 +214,7 @@ const CommentSection = ({ specificPostId, posts }) => {
           )}
         </div>
       </div>
-      <div className=" lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-full md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
+      <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[85vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a
             class="flex items-center"
@@ -245,7 +245,7 @@ const CommentSection = ({ specificPostId, posts }) => {
         </div>
         <div
           ref={containerRef}
-          className="comment-section no-scrollbar h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]"
+          className="comment-section no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">
