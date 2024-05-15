@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
 import { useContext, useEffect, useState } from "react";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { CrossIcon, VerifiedIcon } from "@/components/Icons";

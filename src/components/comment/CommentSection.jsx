@@ -32,14 +32,14 @@ const CommentSection = ({ specificPostId, posts }) => {
   const [hasMore, setHasMore] = useState(true);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [showPicker, setShowPicker] = useState(false);
-
+  const pickerRef = useRef(null);
   const userid = getCookie("userid");
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const res = await getComments(specificPostId, page);
-        // setComments((prevComments) => [...prevComments, ...res.comments]);
+        setComments((prevComments) => [...prevComments, ...res.comments]);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -162,19 +162,35 @@ const CommentSection = ({ specificPostId, posts }) => {
 
   const onEmojiClick = (event) => {
     setCommentData((prev) => prev + event.emoji);
-    setShowPicker(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+        setShowPicker(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [pickerRef]);
+
   return (
-    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
-      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[88vh] lg:h-screen md:w-full sm:w-full sm:hidden">
+    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] xl:overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
+      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
           <button
             onClick={() => setIsCommentOpen(false)}
-            className="bg-white w-9 h-9 rounded-full absolute top-[0] mt-[25px] ml-[14px]"
+            className="bg-white w-9 h-9 rounded-full relative top-[0] mt-[25px] ml-[14px] flex items-center"
           >
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
           </button>
+        </div>
+        <div className="h-[90%]  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
+
           {posts?.type === "image" && (
             <img
               src={posts?.media}
@@ -198,7 +214,7 @@ const CommentSection = ({ specificPostId, posts }) => {
           )}
         </div>
       </div>
-      <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[88vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
+      <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[85vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a
             class="flex items-center"
@@ -229,7 +245,7 @@ const CommentSection = ({ specificPostId, posts }) => {
         </div>
         <div
           ref={containerRef}
-          className="comment-section no-scrollbar h-[82%] content-start overflow-y-auto py-1 xl:h-[45vh] lg:h-[61vh] md:h-[44vh]"
+          className="comment-section no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">
@@ -284,10 +300,10 @@ const CommentSection = ({ specificPostId, posts }) => {
             </div>
           ))}
         </div>
-        <div className="py-[5px] flex flex-col">
+        <div ref={pickerRef} className="py-[5px] flex flex-col">
           <div className="relative right-0 left-0 bottom-0 top-auto mb-[20px]">
             <div
-              className="absolute top-[11px] left-[15px]"
+              className="absolute top-[11px] left-[15px] cursor-pointer"
               onClick={() => setShowPicker((val) => !val)}
             >
               <img src="/images/icons/smile-icon.svg" />
@@ -315,12 +331,7 @@ const CommentSection = ({ specificPostId, posts }) => {
                 WebkitScrollbar: "none",
               }}
             />
-            {showPicker && (
-              <Picker
-                pickerStyle={{ width: "100%" }}
-                onEmojiClick={onEmojiClick}
-              />
-            )}
+            {showPicker && <Picker width="100%" onEmojiClick={onEmojiClick} />}
             <div className="absolute top-[16px] right-[60px]">
               <button
                 type="button"

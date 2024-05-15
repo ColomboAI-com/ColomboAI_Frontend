@@ -14,9 +14,8 @@ const ViewStory = (data) => {
         SetuserId(id)
         const res = await getStoriesOfUser(id)
         if (res) {
-            console.log(res?.data,"res?.data")
             SetdetailStory(res?.data?.userStories)
-            await setIsCreateStorySignleOpen(!isCreateStorySignleOpen)
+            setIsCreateStorySignleOpen(!isCreateStorySignleOpen)
         }
     }
 
