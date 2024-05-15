@@ -11,6 +11,7 @@ const SearchProfile = () => {
     const [showSearchResults, setShowSearchResults] = useState(false);
     const searchRef = useRef(null);
 
+    const baseURL = new URL(window.location.href).origin;
     const handleSearch = async () => {
         try {
             await searchUsers(searchQuery);
@@ -55,7 +56,6 @@ const SearchProfile = () => {
     }, []);
 
     const displayData = showSearchResults ? searchUsersDetails : topUsersDetails;
-
     return (
         <div ref={searchRef} className="relative py-7">
             <div className="relative flex items-center w-full">
@@ -78,7 +78,7 @@ const SearchProfile = () => {
                     displayData.map((val) => (
                         <React.Fragment key={val.user_name}>
                             <hr />
-                            <Link href={`${window.location.href}/profile/${val.user_name}`} target="_blank">
+                            <Link href={`${baseURL}/profile/${val.user_name}`} target="_blank">
                                 <div className="flex items-center justify-between px-[16px] py-[3px]">
                                     <div className="flex items-center">
                                         <img 
