@@ -49,14 +49,14 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
     }
   };
 
-  const { createStory } = useContext(StoryContext);
+  const { createStory, getRecentStories } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
     const res = await createStory({ fileType: mediaType, file: file, content: inputText });
     if (res) {
       MessageBox('success', res.message);
       setIsCreateStoryOpen(false);
-      getStory();
+      getRecentStories();
     }
   };
 

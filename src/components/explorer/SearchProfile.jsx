@@ -4,14 +4,20 @@ import React, { useEffect, useState, useContext, useRef } from 'react';
 import { FeedContext } from '../../context/FeedContext';
 import Link from 'next/link';
 
-const SearchProfile = () => {   
+const SearchProfile = () => {
     const { searchUsers, topUsers, topUsersDetails, searchUsersDetails } = useContext(FeedContext);
     const [searchQuery, setSearchQuery] = useState('');
     const [searchListOpen, setSearchListOpen] = useState(false);
     const [showSearchResults, setShowSearchResults] = useState(false);
+    const [baseURL, setBaseURL] = useState('')
     const searchRef = useRef(null);
 
-    const baseURL = new URL(window.location.href).origin;
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setBaseURL(new URL(window.location.href).origin)
+        }
+    }, [])
+
     const handleSearch = async () => {
         try {
             await searchUsers(searchQuery);
@@ -29,7 +35,7 @@ const SearchProfile = () => {
                 setShowSearchResults(false);
             }
         }, 500);
-    
+
         return () => clearTimeout(delaySearch);
     }, [searchQuery]);
 
@@ -73,32 +79,32 @@ const SearchProfile = () => {
                 />
             </div>
             {searchListOpen && (
-            <div className="absolute border-[1px] ml-8 mr-8 bg-white right-0 shadow left-0 rounded-t-[0px] rounded-b-[20px]">
-                {displayData.length > 0 ? (
-                    displayData.map((val) => (
-                        <React.Fragment key={val.user_name}>
-                            <hr />
-                            <Link href={`${baseURL}/profile/${val.user_name}`} target="_blank">
-                                <div className="flex items-center justify-between px-[16px] py-[3px]">
-                                    <div className="flex items-center">
-                                        <img 
-                                            src={val.profile_picture}
-                                            alt="suggested_image" 
-                                            className="rounded-full w-[30px] h-[30px] mr-3" 
-                                        />
-                                        <div>
-                                            <a className='text-[14px] font-sans font-[600]'>@{val.user_name}</a>
-                                            <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">{val.name}</p>
+                <div className="absolute border-[1px] ml-8 mr-8 bg-white right-0 shadow left-0 rounded-t-[0px] rounded-b-[20px]">
+                    {displayData.length > 0 ? (
+                        displayData.map((val) => (
+                            <React.Fragment key={val.user_name}>
+                                <hr />
+                                <Link href={`${baseURL}/profile/${val.user_name}`} target="_blank">
+                                    <div className="flex items-center justify-between px-[16px] py-[3px]">
+                                        <div className="flex items-center">
+                                            <img
+                                                src={val.profile_picture}
+                                                alt="suggested_image"
+                                                className="rounded-full w-[30px] h-[30px] mr-3"
+                                            />
+                                            <div>
+                                                <a className='text-[14px] font-sans font-[600]'>@{val.user_name}</a>
+                                                <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">{val.name}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Link>
-                        </React.Fragment>
-                    ))
-                ) : (
-                    <p className="px-[16px] py-[15px] text-center text-[#8B8B8B]">No Data Found</p>
-                )}
-            </div>
+                                </Link>
+                            </React.Fragment>
+                        ))
+                    ) : (
+                        <p className="px-[16px] py-[15px] text-center text-[#8B8B8B]">No Data Found</p>
+                    )}
+                </div>
             )}
 
         </div>
