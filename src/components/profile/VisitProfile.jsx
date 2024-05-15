@@ -5,7 +5,7 @@ import { BlockIcon, ReportIcon, RestrictUserIcon, VerifiedIcon } from "../Icons"
 import ProfilePicture from "../elements/ProfilePicture";
 import Dropdown from "../messages/Dropdown";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { getCookie } from "@/utlils/cookies";
 
@@ -14,6 +14,26 @@ const VisitProfile = ({ userData }) => {
   const { postsCount, blockUser, followUnfollowUser, handleFollower, followingsData, setIsShareProfileModalOpen } = useContext(UserProfileContext);
 
   const user = getCookie('username')
+
+  let [isFollowing, setIsFollowing] = useState(false)
+  let [isBlocked, setIsBlocked] = useState(false)
+
+  useEffect(() => {
+    if (userData?.is_following) {
+      setIsFollowing(true);
+    }
+    if (userData?.blocked) {
+      setIsBlocked(true);
+    }
+  }, [userData])
+
+  const toogleFollowing = () => {
+    setIsFollowing(!isFollowing);
+  }
+  const toogleBlock = () => {
+    setIsBlocked(!isBlocked);
+  }
+  
 
   return (
     <div className="relative">
@@ -36,8 +56,9 @@ const VisitProfile = ({ userData }) => {
           </>
           :
           <>
-            <button onClick={() => { followUnfollowUser(userData?._id) }} className="absolute top-16 left-4 -translate-y-1/2 bg-white text-brandprimary font-bold py-2 px-4 rounded-full border-2 border-brandprimary">
-              Follow
+            {/* button of Condition for following */}
+            <button onClick={() => { followUnfollowUser(userData?._id), toogleFollowing() }} className={`absolute top-16 left-4 -translate-y-1/2 ${isFollowing ? "bg-brandprimary text-white" : "bg-white text-brandprimary"} font-bold py-2 px-4 rounded-full border-2 border-brandprimary`}>
+              {isFollowing ? "Following" : "Follow"}
             </button>
             <Link href='/messages' className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
               Message
@@ -108,9 +129,9 @@ const VisitProfile = ({ userData }) => {
                     </button>
                   </li>
                   <li>
-                    <button onClick={() => blockUser(userData?._id)} className="flex w-full items-center px-4 py-2 gap-5 hover:text-red-600">
+                    <button onClick={() => {blockUser(userData?._id), toogleBlock()}} className="flex w-full items-center px-4 py-2 gap-5 hover:text-red-600">
                       <BlockIcon w={25} h={25} fill={"currentcolor"} />
-                      Block
+                      {isBlocked ? "Unblock" : "Block"}
                     </button>
                   </li>
                 </ul>
