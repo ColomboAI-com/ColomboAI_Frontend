@@ -4,7 +4,7 @@ import { useContext, useState } from "react"
 
 export default function SavePost({ post }) {
 
-  const [savedCounts, setSavedCounts] = useState(post?.counts?.saved || 0)
+  const [savedCounts, setSavedCounts] = useState(post?.counts?.savedposts || 0)
   const [isSaved, setIsSaved] = useState(post?.interactions?.isSaved || false)
   const { savePost } = useContext(FeedContext)
 

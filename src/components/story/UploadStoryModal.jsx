@@ -49,20 +49,20 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
     }
   };
 
-  const { createStory } = useContext(StoryContext);
+  const { createStory, getRecentStories } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
     const res = await createStory({ fileType: mediaType, file: file, content: inputText });
     if (res) {
       MessageBox('success', res.message);
       setIsCreateStoryOpen(false);
-      getStory();
+      getRecentStories();
     }
   };
 
   return (
     <>
-      <div className="relative border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] overflow-y-auto font-sans">
+      <div className="relative border-[1px] border-brandprimary rounded-[10px] lg:min-h-[74vh] lg:max-h-[74vh] overflow-y-auto font-sans">
         <div className="flex items-center justify-between p-[22px] border-b-2 border-gray-300">
           <div>
             {nextStep ? (
@@ -95,13 +95,13 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e) => setInputText(e.target.value)} name="text" />
         </div>
         {mediaUrl !== "" && (mediaType.includes("image") || mediaType.includes("video")) && (
-          <div className="relative my-8">
+          <div className="relative my-8 xl:max-h-[38vh] lg:max-h-[22vh]">
             {mediaType.includes("image") ? (
               <img
                 key={mediaUrl}
                 src={mediaUrl}
                 alt="File Preview"
-                className="w-full h-full object-contain"
+                className="w-full h-[66vh] object-contain"
               />
             ) : (
               <video
@@ -124,7 +124,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           </div>
         )}
         {!nextStep && (
-          <div className="flex flex-col items-center py-2 h-[47svh] justify-end ">
+          <div className="flex flex-col items-center pb-[20px] pt-2 lg:h-[44vh] xl:h-[52vh] justify-end ">
             <p className="text-xl my-4">
               Drag photos and videos here or click below to select.
             </p>

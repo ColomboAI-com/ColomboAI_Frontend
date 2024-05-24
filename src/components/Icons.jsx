@@ -432,9 +432,9 @@ export const CloseDocumentIcon = () => {
 
 export const LikeIcon = ({ w = 36, h = 37, fill }) => {
     return (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
+        <svg width={w} height={h} viewBox="0 0 32 32" fill={fill || "none"} xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
             <g clipPath="url(#clip0_4774_37412)">
-                <path d="M16 28C16 28 3 21 3 12.75C3 10.9598 3.71116 9.2429 4.97703 7.97703C6.2429 6.71116 7.95979 6 9.75 6C12.5738 6 14.9925 7.53875 16 10C17.0075 7.53875 19.4262 6 22.25 6C24.0402 6 25.7571 6.71116 27.023 7.97703C28.2888 9.2429 29 10.9598 29 12.75C29 21 16 28 16 28Z" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M16 28C16 28 3 21 3 12.75C3 10.9598 3.71116 9.2429 4.97703 7.97703C6.2429 6.71116 7.95979 6 9.75 6C12.5738 6 14.9925 7.53875 16 10C17.0075 7.53875 19.4262 6 22.25 6C24.0402 6 25.7571 6.71116 27.023 7.97703C28.2888 9.2429 29 10.9598 29 12.75C29 21 16 28 16 28Z" stroke={fill || "#ACACAC"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>
                 <clipPath id="clip0_4774_37412">
@@ -447,12 +447,12 @@ export const LikeIcon = ({ w = 36, h = 37, fill }) => {
 
 export const RePostIcon = ({ w = 32, h = 33, fill }) => {
     return (
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
+        <svg width={w} height={h} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="cursor-pointer">
             <g clipPath="url(#clip0_4774_37418)">
-                <path d="M25 11L28 8L25 5" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M4 16C4 13.8783 4.84285 11.8434 6.34315 10.3431C7.84344 8.84285 9.87827 8 12 8H28" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M7 21L4 24L7 27" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M28 16C28 18.1217 27.1571 20.1566 25.6569 21.6569C24.1566 23.1571 22.1217 24 20 24H4" stroke="#ACACAC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M25 11L28 8L25 5" stroke={fill || "#ACACAC"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4 16C4 13.8783 4.84285 11.8434 6.34315 10.3431C7.84344 8.84285 9.87827 8 12 8H28" stroke={fill || "#ACACAC"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M7 21L4 24L7 27" stroke={fill || "#ACACAC"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M28 16C28 18.1217 27.1571 20.1566 25.6569 21.6569C24.1566 23.1571 22.1217 24 20 24H4" stroke={fill || "#ACACAC"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
             <defs>
                 <clipPath id="clip0_4774_37418">
