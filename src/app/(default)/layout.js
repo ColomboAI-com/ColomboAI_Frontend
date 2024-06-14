@@ -18,15 +18,23 @@ import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "@/components/Share";
 import CommentSection from "@/components/comment/CommentSection";
-
+import { getCookie } from "@/utlils/cookies";
+import { useEffect } from "react";
 
 const DefaultLayout = ({ children }) => {
+
+  useEffect(() => {
+    if (!getCookie("token")) {
+      window.location.pathname = "/sign-up"
+    }
+  },[]);
   
   const pathname = usePathname();
 
   const feedSections = [ '/feed','/video', '/vibes', '/thoughts','/images', '/explore', '/profile'];
 
-    const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
+  const { isShareOpen, setIsShareOpen, isCreatePostOpen, setIsCreatePostOpen, isCommentOpen } = useContext(GlobalContext);
+
   
   return (
     <FeedContextProvider>

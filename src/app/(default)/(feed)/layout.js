@@ -8,7 +8,7 @@ const FeedLayout = ({ children }) => {
 
     const { isCommentOpen } = useContext(GlobalContext);
 
-    console.log(isCommentOpen)
+    //console.log(isCommentOpen);
 
   return (
     <div className="border-green-500">
