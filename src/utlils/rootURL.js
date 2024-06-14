@@ -4,8 +4,11 @@
 // export const ROOT_URL_AUTH = 'http://localhost:8000'
 // export const ROOT_URL_FEED = 'http://localhost:8001'
 
-export const ROOT_URL_AUTH = 'https://userservice-dot-fair-myth-398920.uc.r.appspot.com'
-export const ROOT_URL_FEED = 'https://feedservice-dot-fair-myth-398920.uc.r.appspot.com'
+// export const ROOT_URL_AUTH = 'https://userservice-dot-fair-myth-398920.uc.r.appspot.com'
+// export const ROOT_URL_FEED = 'https://feedservice-dot-fair-myth-398920.uc.r.appspot.com'
+
+export const ROOT_URL_AUTH = 'https://userservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com'
+export const ROOT_URL_FEED = 'https://feedservice-new-dev-dot-fair-myth-398920.uc.r.appspot.com'
 
 export const ROOT_URL_LLM = 'https://llmapi.colomboai.com'
 
