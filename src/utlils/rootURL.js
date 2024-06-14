@@ -7,6 +7,9 @@
 export const ROOT_URL_AUTH = 'https://userservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com'
 export const ROOT_URL_FEED = 'https://feedservice-new-dev-dot-fair-myth-398920.uc.r.appspot.com'
 
+export const ROOT_URL_MESSAGES = 'https://messagingservice-dev-dot-fair-myth-398920.uc.r.appspot.com'
+export const ROOT_URL_NOTIFICATION = 'https://notificationservice-dev-dot-fair-myth-398920.uc.r.appspot.com'
+
 export const ROOT_URL_LLM = 'https://llmapi.colomboai.com'
 
 export const COOKIE_OPTIONS = {
