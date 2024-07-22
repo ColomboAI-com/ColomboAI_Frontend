@@ -56,8 +56,12 @@ const Post = ({ post }) => {
         {post?.type === 'video' && <VideoBlock video={post.media} />}
         {post?.content && <ContentBlock content={post.content} />}
         <div className="px-[16px] py-[12px]">
-          <PostActions post={post} />
-          <RecentComments comments={post.comments} />
+          {post &&
+            <>
+              <PostActions post={post} />
+              <RecentComments comments={post.comments} />
+            </>
+          }
         </div>
       </div></>
   )
