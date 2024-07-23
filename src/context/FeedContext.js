@@ -161,6 +161,8 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
+ 
+/*
   const rePost = async (postId = '') => {
     try {
       setLoadings(prev => ({ ...prev, rePost: true }))
@@ -172,6 +174,31 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
+      return res.data
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadings(prev => ({ ...prev, rePost: false }))
+    }
+  }
+*/
+
+  const rePost = async (postId = '') => {
+    try {
+      setLoadings(prev => ({ ...prev, rePost: true }))
+      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`,
+        null,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      if (res.data) {
+        setPosts(prevPosts => [res.data, ...prevPosts])
+      // refresh the entire feed
+      // await getPosts('all', 1)
+      }
       return res.data
     } catch (err) {
       handleError(err)
