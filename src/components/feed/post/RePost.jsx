@@ -1,29 +1,36 @@
 import { RePostIcon } from "@/components/Icons"
 import { FeedContext } from "@/context/FeedContext"
-import { useState } from "react"
-import { useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import Modal from "@/components/elements/Modal"
 import RepostModal from "@/components/RepostModal"
 import { MessageBox } from "@/components/MessageBox"
 
-export default function RePost({ post }) {
+export default function RePost({ post, currentUser }) {
 
   const [repostCounts, setRepostCounts] = useState(post?.counts?.reposts || 0)
   const [isReposted, setIsReposted] = useState(post?.interactions?.isReposted || false)
   const { rePost } = useContext(FeedContext)
   const [isRepostOpen, setIsRepostOpen] = useState(false)
+  const [repostUser, setRepostUser] = useState(null)
+  
+  useEffect(() => {
+    if (post.repostBy) {
+      setRepostUser(post.repostBy)
+      setIsReposted(true)
+    }
+  }, [post])
 
   const onRepost = async () => {
     const res = await rePost(post?._id)
-    if (res) {
+    if (res && res.post) {
       setIsReposted(true)
       setRepostCounts(prev => (prev + 1))
       setIsRepostOpen(false)
       MessageBox('success', res.message)
     }
   }
-
-  return (
+  
+  return (  
     <div className="flex items-center gap-4">
       <div onClick={() => {
         if (isReposted) return

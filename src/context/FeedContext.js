@@ -3,7 +3,7 @@ import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_FEED, ROOT_URL_LLM, ROOT_URL_AUTH } from "@/utlils/rootURL"
 import axios from "axios"
-import { createContext, useContext, useState } from "react"
+import { createContext, useState } from "react"
 
 const FeedContext = createContext()
 
@@ -183,6 +183,8 @@ export default function FeedContextProvider({ children }) {
   }
 */
 
+//modify repost function to include user's name
+
   const rePost = async (postId = '') => {
     try {
       setLoadings(prev => ({ ...prev, rePost: true }))
@@ -194,10 +196,9 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      if (res.data) {
-        setPosts(prevPosts => [res.data, ...prevPosts])
-      // refresh the entire feed
-      // await getPosts('all', 1)
+      if (res.data && res.data.post) {  
+        // Update the posts array with the new repost      
+        setPosts(prevPosts => [res.data.post, ...prevPosts])
       }
       return res.data
     } catch (err) {
@@ -352,3 +353,5 @@ export default function FeedContextProvider({ children }) {
 // }
 
 export { FeedContextProvider, FeedContext };
+
+
