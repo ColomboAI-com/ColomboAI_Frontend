@@ -161,8 +161,6 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
- 
-/*
   const rePost = async (postId = '') => {
     try {
       setLoadings(prev => ({ ...prev, rePost: true }))
@@ -174,31 +172,8 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      return res.data
-    } catch (err) {
-      handleError(err)
-    } finally {
-      setLoadings(prev => ({ ...prev, rePost: false }))
-    }
-  }
-*/
-
-//modify repost function to include user's name
-
-  const rePost = async (postId = '') => {
-    try {
-      setLoadings(prev => ({ ...prev, rePost: true }))
-      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`,
-        null,
-        {
-          headers: {
-            Authorization: getCookie('token')
-          }
-        }
-      )
-      if (res.data && res.data.post) {  
-        // Update the posts array with the new repost      
-        setPosts(prevPosts => [res.data.post, ...prevPosts])
+      if (res.data) {        
+        setPosts(prevPosts => [res.data, ...prevPosts])
       }
       return res.data
     } catch (err) {
