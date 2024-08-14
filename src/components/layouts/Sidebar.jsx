@@ -7,17 +7,23 @@ import Dropdown from '../messages/Dropdown';
 import InputBar from "./InputBar";
 import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
+import { useEffect, useState } from "react";
 
 /* eslint-disable @next/next/no-img-element */
 const Sidebar = () => {
     const a = false
-    const name = getCookie('name')
-    const profilePic = getCookie('profilePic')
+    const [name, Setname] = useState();
+    const [profilePic, SetprofilePic] = useState();
 
     const pathname = usePathname();
     const router = useRouter();
 
     const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
+
+    useEffect(() => {
+        Setname(getCookie('name'));
+        SetprofilePic(getCookie('profilePic'));
+    },[])
 
     const handleSignOut = () => {
         clearCookie();
