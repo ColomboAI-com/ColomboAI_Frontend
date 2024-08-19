@@ -12,6 +12,8 @@ export default function GlobalContextProvider({ children }) {
   let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
   let [specificPostId, setSpecificPostId] = useState()
   let [posts, setPosts] = useState()
+  let [isCreateVibeOpen, setIsCreateVibeOpen] = useState(false);
+
 
   return (
     <GlobalContext.Provider
@@ -29,7 +31,9 @@ export default function GlobalContextProvider({ children }) {
         specificPostId,
         setSpecificPostId,
         posts,
-        setPosts
+        setPosts,
+        setIsCreateVibeOpen,
+        isCreateVibeOpen
       }}
     >
       {children}
