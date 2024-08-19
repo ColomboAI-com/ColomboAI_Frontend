@@ -3,6 +3,7 @@ import { useContext, useState, useEffect } from "react"
 import {
   BackButtonIcon,
   CloseDocumentIcon,
+  CrossIcon
 } from "../Icons"
 import { FeedContext } from "@/context/FeedContext"
 import { GlobalContext } from "@/context/GlobalContext"
@@ -98,18 +99,17 @@ const CreateVibe = () => {
               </button>
             }
           </div>
-          <div className="flex items-center">
+          <div className="flex-grow flex justify-center">
             <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
               Create new Vibes
             </p>
           </div>
-          <div className="flex items-center gap-6">
-
-          </div>
+          <button onClick={() => setIsCreatePostOpen(false)}>
+            <CrossIcon w={20} h={20} fill={"#1E71F2"} />
+          </button>
         </div>
         <div className=" px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh] ">
           <div className={`flex flex-col `}>
-
           </div>
           {
             mediaUrl !== "" && postType.includes("image")
