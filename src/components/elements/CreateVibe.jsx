@@ -104,7 +104,7 @@ const CreateVibe = () => {
               Create new Vibes
             </p>
           </div>
-          <button onClick={() => setIsCreatePostOpen(false)}>
+          <button onClick={() => setIsCreateVibeOpen(false)}>
             <CrossIcon w={20} h={20} fill={"#1E71F2"} />
           </button>
         </div>
