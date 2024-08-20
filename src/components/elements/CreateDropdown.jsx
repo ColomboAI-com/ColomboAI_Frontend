@@ -8,6 +8,8 @@ import UploadStoryModal from '../story/UploadStoryModal';
 export default function CreateDropdown({ w, h, fill }) {
 
   const { setIsCreatePostOpen } = useContext(GlobalContext);
+  const { setIsCreateVibeOpen } = useContext(GlobalContext);
+  const { isCreateVibeOpen } = useContext(GlobalContext);
 
   const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
 
@@ -72,6 +74,10 @@ export default function CreateDropdown({ w, h, fill }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
+                        onClick={() => {
+                          setIsCreateVibeOpen(true)
+                        }
+                        }
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
                           } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
@@ -124,6 +130,7 @@ export default function CreateDropdown({ w, h, fill }) {
                 <UploadStoryModal setIsCreateStoryOpen={setIsCreateStoryOpen} />
               </Modal>
             }
+
           </>
         )}
 
