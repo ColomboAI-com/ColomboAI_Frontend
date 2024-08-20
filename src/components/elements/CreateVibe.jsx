@@ -51,6 +51,7 @@ const CreateVibe = () => {
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
+      setNextStep(true);  // Set nextStep to true after file selection
     }
   }
 
@@ -64,6 +65,7 @@ const CreateVibe = () => {
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(file);
       setMediaUrl(fileUrl);
+      setNextStep(true);  // Set nextStep to true after file drop
     }
   }
 
@@ -89,7 +91,7 @@ const CreateVibe = () => {
 
   return (
     <>
-      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
+      <div className="border-[1px] border-brandprimary rounded-[10px] h-[82vh] no-scrollbar overflow-hidden font-sans flex flex-col relative">
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
           <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {
@@ -128,6 +130,16 @@ const CreateVibe = () => {
                     </span>
                   </div>
                 </div>
+                {nextStep &&
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
+                    <Button
+                      title={'NEXT'}
+                      className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
+                      loading={loadings?.createPost}
+                      onClick={handleCreateVibe}
+                    />
+                  </div>
+                }
               </div>
               :
               mediaUrl !== "" && postType.includes("video")
@@ -185,7 +197,7 @@ const CreateVibe = () => {
             nextStep &&
             <div className="flex justify-center pb-[20px]">
               <Button
-                title={'SHARE POST'}
+                title={'NEXT'}
                 className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
                 loading={loadings?.createPost}
                 onClick={handleCreateVibe}
