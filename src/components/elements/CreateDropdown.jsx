@@ -13,8 +13,6 @@ export default function CreateDropdown({ w, h, fill }) {
 
   const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
 
-  console.log(isCreateVibeOpen);
-
   const handleOpen = (e) => {
     setIsCreateStoryOpen(!isCreateStoryOpen)
   }
@@ -78,7 +76,6 @@ export default function CreateDropdown({ w, h, fill }) {
                       <button
                         onClick={() => {
                           setIsCreateVibeOpen(true)
-                          console.log("hitting create vibe")
                         }
                         }
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'

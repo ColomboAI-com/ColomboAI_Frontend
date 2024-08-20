@@ -9,6 +9,7 @@ import { FeedContext } from "@/context/FeedContext"
 import { GlobalContext } from "@/context/GlobalContext"
 import Button from "@/elements/Button"
 import { MessageBox } from "../MessageBox"
+import next from "next"
 
 const CreateVibe = () => {
   const [promptInput, setPromptInput] = useState('')
@@ -51,7 +52,7 @@ const CreateVibe = () => {
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
-      setNextStep(true);  // Set nextStep to true after file selection
+      setNextStep(true);  
     }
   }
 
@@ -65,7 +66,7 @@ const CreateVibe = () => {
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(file);
       setMediaUrl(fileUrl);
-      setNextStep(true);  // Set nextStep to true after file drop
+      setNextStep(true);  
     }
   }
 
@@ -89,9 +90,10 @@ const CreateVibe = () => {
     };
   }, [mediaUrl]);
 
+
   return (
     <>
-      <div className="border-[1px] border-brandprimary rounded-[10px] h-[82vh] no-scrollbar overflow-hidden font-sans flex flex-col relative">
+      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
           <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {
@@ -134,8 +136,8 @@ const CreateVibe = () => {
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
                     <Button
                       title={'NEXT'}
-                      className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
-                      loading={loadings?.createPost}
+                      className={'w-fit sm2:text-xl text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-4 px-24 '}
+                      loading={loadings?.createVibe}
                       onClick={handleCreateVibe}
                     />
                   </div>
@@ -192,17 +194,6 @@ const CreateVibe = () => {
                 </div>
               }
             </>
-          }
-          {
-            nextStep &&
-            <div className="flex justify-center pb-[20px]">
-              <Button
-                title={'NEXT'}
-                className={'w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24 '}
-                loading={loadings?.createPost}
-                onClick={handleCreateVibe}
-              />
-            </div>
           }
         </div>
       </div>
