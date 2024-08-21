@@ -113,6 +113,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
+          
 
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[93%] ml-[7%] lg:ml-[7%] md:ml-[9%] flex flex-col relative sm:ml-[0]">
             <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
@@ -142,63 +143,15 @@ const DefaultLayout = ({ children }) => {
                 </Modal>
               )}
 
-              {isShareOpen && (
-                <Modal
-                  isOpen={isShareOpen}
-                  setIsOpen={setIsShareOpen}
-                  className="w-full absolute bottom-0 sm2:w-auto md:w-auto sm2:relative md:relative max-w-4xl transform overflow-hidden align-middle shadow-xl transition-all"
-                >
-                  <Share specificPostId={specificPostId} posts={posts} />
-                </Modal>
-              )}
-              {isCommentOpen && (
-                <Modal
-                  isOpen={isCommentOpen}
-                  setIsOpen={setIsCommentOpen}
-                  className="mx-[150px]"
-                >
-                  <CommentSection
-                    setIsCommentOpen={setIsCommentOpen}
-                    specificPostId={specificPostId}
-                    posts={posts}
-                  />
-                </Modal>
-              )}
-
-              {/* // isCommentOpen
-                // ?
-                //   <CommentSection/>
-                // :
-                // <> */}
-              {isShowChatMenu && (
-                <div className="border overflow-y-auto no-scrollbar relative h-full min-h-[100px] mx-2 max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
-                  <NotificationBar />
-                </div>
-              )}
-
-              <div
-                className={
-                  "w-[100%] lg:w-[70%] max-h-[calc((100vh-175px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"
-                }
+            {isCreateVibeOpen && (
+              <Modal
+                isOpen={isCreateVibeOpen}
+                setIsOpen={setIsCreateVibeOpen}
+                className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
               >
-                {children}
-              </div>
-              <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative ml-[1px]">
-                <RightSidebar />
-              </div>
-              {/* // </> */}
-            </div>
-
-            <div className="flex flex-1 border- border-purple-400">
-              {isCreateVibeOpen && (
-                <Modal
-                  isOpen={isCreateVibeOpen}
-                  setIsOpen={setIsCreateVibeOpen}
-                  className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
-                >
-                  <CreateVibe />
-                </Modal>
-              )}
+                <CreateVibe />
+              </Modal>
+            )}
 
               {isShareOpen && (
                 <Modal
@@ -246,10 +199,6 @@ const DefaultLayout = ({ children }) => {
               </div>
               {/* // </> */}
             </div>
-
-
-
-            
 
             {/* <CommentSection /> */}
           </div>

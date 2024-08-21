@@ -26,7 +26,7 @@ const CreateVibe = () => {
   const { generatePost, createPost, loadings, posts, setPosts } =
     useContext(FeedContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
-
+  
   const handleFileInputClick = () => {
     document.querySelector('input[type="file"][accept="media_type"]').click();
   };
@@ -115,6 +115,9 @@ const CreateVibe = () => {
           </div>
           <button onClick={() => setIsCreateVibeOpen(false)}>
             <CrossIcon w={20} h={20} fill={"#1E71F2"} />
+          </button>
+          <button>
+            3-dot menu placeholder
           </button>
         </div>
 
@@ -208,7 +211,7 @@ const CreateVibe = () => {
                     </button>
                     <button className="p-2 bg-gray-700 rounded-full">
                       {/* Add another icon here if needed */}
-                    </button>
+                    </button>  
                   </div>
                 </div>
               </div>

@@ -13,6 +13,7 @@ export default function GlobalContextProvider({ children }) {
   let [specificPostId, setSpecificPostId] = useState()
   let [posts, setPosts] = useState()
   let [isCreateVibeOpen, setIsCreateVibeOpen] = useState(false);
+  let [isSelectedFromComputer, setIsSelectedFromComputer] = useState(false);
 
 
   return (
@@ -33,7 +34,9 @@ export default function GlobalContextProvider({ children }) {
         posts,
         setPosts,
         setIsCreateVibeOpen,
-        isCreateVibeOpen
+        isCreateVibeOpen,
+        isSelectedFromComputer, 
+        setIsSelectedFromComputer
       }}
     >
       {children}
