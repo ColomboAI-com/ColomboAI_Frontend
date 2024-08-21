@@ -26,7 +26,8 @@ const CreateVibe = () => {
   const { generatePost, createPost, loadings, posts, setPosts } =
     useContext(FeedContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
-  
+  const { isSelectedFromComputer, setIsSelectedFromComputer } = useContext(GlobalContext);
+
   const handleFileInputClick = () => {
     document.querySelector('input[type="file"][accept="media_type"]').click();
   };
@@ -61,6 +62,7 @@ const CreateVibe = () => {
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
       setNextStep(true);
+      setIsSelectedFromComputer(true);
     }
   };
 
@@ -75,6 +77,7 @@ const CreateVibe = () => {
       const fileUrl = URL.createObjectURL(file);
       setMediaUrl(fileUrl);
       setNextStep(true);
+      setIsSelectedFromComputer(true);
     }
   };
 
@@ -103,7 +106,11 @@ const CreateVibe = () => {
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
           <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {nextStep && (
-              <button onClick={() => setNextStep(false)}>
+              <button onClick={() => {
+                setNextStep(false);
+                setIsSelectedFromComputer(false);
+              }}
+              >
                 <BackButtonIcon w={20} h={20} fill={"#515151"} />
               </button>
             )}
@@ -113,12 +120,17 @@ const CreateVibe = () => {
               Create new Vibes
             </p>
           </div>
-          <button onClick={() => setIsCreateVibeOpen(false)}>
-            <CrossIcon w={20} h={20} fill={"#1E71F2"} />
-          </button>
-          <button>
-            3-dot menu placeholder
-          </button>
+
+          {!isSelectedFromComputer ? (
+            <button onClick={() => setIsCreateVibeOpen(false)}>
+              <CrossIcon w={20} h={20} fill={"#1E71F2"} />
+            </button>
+          ) : (
+            <button>
+              3-dot menu placeholder
+            </button>
+          )}
+          
         </div>
 
         <div className=" px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh] ">
