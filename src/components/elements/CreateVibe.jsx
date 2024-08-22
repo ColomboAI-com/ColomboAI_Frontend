@@ -229,7 +229,7 @@ const CreateVibe = () => {
                     </span>
                   </div>
 
-                  {iconButtons}
+                  {iconButtons()}
                   
                   {isEditingText && (
                     <input
@@ -272,7 +272,7 @@ const CreateVibe = () => {
                     </span>
                   </div>
                   
-                  {iconButtons}
+                  {iconButtons()}
 
                   {isEditingText && (
                     <input
