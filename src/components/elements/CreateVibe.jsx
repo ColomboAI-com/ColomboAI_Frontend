@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+// /* eslint-disable @next/next/no-img-element */
 import { useContext, useState, useEffect } from "react";
 import {
   BackButtonIcon,
@@ -29,6 +29,15 @@ const CreateVibe = () => {
   const { isSelectedFromComputer, setIsSelectedFromComputer } = useContext(GlobalContext);
   const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
+  const [isMemuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (mediaUrl) {
+        URL.revokeObjectURL(mediaUrl);
+      }
+    };
+  }, [mediaUrl]);
 
   const iconButtons = () => {
     return (
@@ -121,7 +130,8 @@ const CreateVibe = () => {
     }
   };
 
-  // 2 handlers to add text to vibe
+  // Handlers to add text to vibe
+  // TODO: Find out if the image text will be saved in the DB
   const handleTextClick = () => {
     setIsEditingText(true)
   };
@@ -130,14 +140,22 @@ const CreateVibe = () => {
     setImageText(e.target.value);
   };
 
-  useEffect(() => {
-    return () => {
-      if (mediaUrl) {
-        URL.revokeObjectURL(mediaUrl);
-      }
-    };
-  }, [mediaUrl]);
+  // Handlers for 3-dots menu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMemuOpen);
+  }
 
+  
+  const handleSaveToDrafts = () => {
+    console.log("Saving to drafts");
+    setIsMenuOpen(false);
+  }
+
+  const handleDiscard = () => {
+    console.log("Discarding");
+    setIsMenuOpen(false);
+    setIsCreateVibeOpen(false);
+  }
 
   return (
     <>
@@ -165,9 +183,29 @@ const CreateVibe = () => {
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
             </button>
           ) : (
-            <button>
-              3-dot menu placeholder
-            </button>
+            <div>
+              <button onClick={toggleMenu}>
+                3-dot menu placeholder
+              </button>
+              {isMemuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                  <div className="py-1">
+                    <button
+                      onClick={handleSaveToDrafts}
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                      Save to Drafts
+                    </button>
+                    <button
+                      onClick={handleDiscard}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                    >
+                      Discard
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           )}
           
         </div>
