@@ -27,6 +27,35 @@ const CreateVibe = () => {
     useContext(FeedContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
   const { isSelectedFromComputer, setIsSelectedFromComputer } = useContext(GlobalContext);
+  const [imageText, setImageText] = useState("");
+  const [isEditingText, setIsEditingText] = useState(false);
+
+  const iconButtons = () => {
+    return (
+      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
+      <button className="p-2 bg-gray-700 rounded-full">
+        <CreateMagicPenIcon
+          w={25}
+          h={25}
+          fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
+          fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
+          fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
+          fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
+          fill5={isMagicPenOpen ? "#fff" : "#58268B"}
+        />
+      </button>
+      <button className="p-2 bg-gray-700 rounded-full">
+        {/* Add another icon here if needed */}
+      </button>
+      <button className="p-2 bg-gray-700 rounded-full">
+        {/* Add another icon here if needed */}
+      </button>
+      <button className="p-2 bg-gray-700 rounded-full">
+        {/* Add another icon here if needed */}
+      </button>
+    </div>
+    )
+  }
 
   const handleFileInputClick = () => {
     document.querySelector('input[type="file"][accept="media_type"]').click();
@@ -92,6 +121,15 @@ const CreateVibe = () => {
     }
   };
 
+  // 2 handlers to add text to vibe
+  const handleTextClick = () => {
+    setIsEditingText(true)
+  };
+
+  const handleTextChange = (e) => {
+    setImageText(e.target.value);
+  };
+
   useEffect(() => {
     return () => {
       if (mediaUrl) {
@@ -99,6 +137,7 @@ const CreateVibe = () => {
       }
     };
   }, [mediaUrl]);
+
 
   return (
     <>
@@ -135,7 +174,7 @@ const CreateVibe = () => {
 
         <div className=" px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh] ">
           <div className={`flex flex-col `}></div>
-          <div className="flex-grow relative overflow-hidden">
+          <div className="flex-grow relative overflow-hidden" onClick={handleTextClick}>
             {mediaUrl !== "" && postType.includes("image") ? (
               <div className="relative my-8">
                 <img
@@ -144,34 +183,25 @@ const CreateVibe = () => {
                   alt="File Preview"
                   className="w-full h-full object-contain"
                 />
+
                 <div className=" absolute top-3 right-2">
                   <div className="flex flex-row items-center justify-center">
                     <span onClick={clearFileHandler} className="px-2 pointer">
                       <CloseDocumentIcon />
                     </span>
                   </div>
-                  <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      <CreateMagicPenIcon
-                        w={25}
-                        h={25}
-                        fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
-                        fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
-                        fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
-                        fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
-                        fill5={isMagicPenOpen ? "#fff" : "#58268B"}
-                      />
-                    </button>
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      {/* Add another icon here if needed */}
-                    </button>
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      {/* Add another icon here if needed */}
-                    </button>
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      {/* Add another icon here if needed */}
-                    </button>
-                  </div>
+
+                  {iconButtons}
+                  
+                  {isEditingText && (
+                    <input
+                      type="text"
+                      value={imageText}
+                      onChange={handleTextChange}
+                      className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                      autoFocus
+                    />
+                  )}
                 </div>
                 {nextStep && (
                   <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
@@ -203,28 +233,18 @@ const CreateVibe = () => {
                       <CloseDocumentIcon />
                     </span>
                   </div>
-                  <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      <CreateMagicPenIcon
-                        w={25}
-                        h={25}
-                        fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
-                        fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
-                        fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
-                        fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
-                        fill5={isMagicPenOpen ? "#fff" : "#58268B"}
-                      />
-                    </button>
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      {/* Add another icon here if needed */}
-                    </button>
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      {/* Add another icon here if needed */}
-                    </button>
-                    <button className="p-2 bg-gray-700 rounded-full">
-                      {/* Add another icon here if needed */}
-                    </button>  
-                  </div>
+                  
+                  {iconButtons}
+
+                  {isEditingText && (
+                    <input
+                      type="text"
+                      value={imageText}
+                      onChange={handleTextChange}
+                      className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                      autoFocus
+                    />
+                  )}
                 </div>
               </div>
             ) : (
