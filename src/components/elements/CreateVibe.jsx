@@ -282,11 +282,6 @@ const CreateVibe = () => {
               />
 
               <div className=" absolute top-3 right-2">
-                <div className="flex flex-row items-center justify-center">
-                  <span onClick={clearFileHandler} className="px-2 pointer">
-                    <CloseDocumentIcon />
-                  </span>
-                </div>
 
                 {iconButtons()}
 
