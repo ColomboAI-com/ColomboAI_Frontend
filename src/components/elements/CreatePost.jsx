@@ -134,6 +134,8 @@ const CreatePost = () => {
             </button>
           </div>
         </div>
+
+
         <div className=" px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh] ">
           <div className={`flex flex-col  ${isMagicPenOpen ? " gap-5" : ""}`}>
             <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
@@ -180,6 +182,8 @@ const CreatePost = () => {
               }
             </div>
           </div>
+
+          
           {
             mediaUrl !== "" && postType.includes("image")
               ?
