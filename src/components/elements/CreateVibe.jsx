@@ -10,9 +10,11 @@ import {
 } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
 import { GlobalContext } from "@/context/GlobalContext";
+import { ThreeDots } from "react-loader-spinner"
 import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
 import next from "next";
+
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -126,7 +128,7 @@ const CreateVibe = () => {
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
-      setNextStep(true);
+      // setNextStep(true);
       setIsSelectedFromComputer(true);
     }
   };
@@ -141,7 +143,7 @@ const CreateVibe = () => {
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(file);
       setMediaUrl(fileUrl);
-      setNextStep(true);
+      // setNextStep(true);
       setIsSelectedFromComputer(true);
     }
   };
@@ -183,6 +185,7 @@ const CreateVibe = () => {
     setIsCreateVibeOpen(false);
   };
 
+  console.log(nextStep);
 
   return (
     <>
@@ -249,7 +252,7 @@ const CreateVibe = () => {
                   className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
                 />
               </div>
-              <button className=" -ml-12 mt-3 " onClick={handleGenerateVibe}>
+              <button className=" -ml-12 mt-3 " onClick={() => {handleGenerateVibe(); setNextStep(true)} }>
                 {loadings?.generatePost ? (
                   <ThreeDots
                     visible={true}
@@ -270,6 +273,25 @@ const CreateVibe = () => {
                 )}
               </button>
             </div>
+
+            {/* <div className={` flex flex-col items-end ${isMagicPenOpen ? "" : ""}`}>
+              <div className="flex items-start w-full">
+                <textarea
+                  value={postInput}
+                  onChange={e => setPostInput(e.target.value)}
+                  placeholder="Create Your Post"
+                  className=" w-full p-3 pr-12 rounded-2xl m-[2px] w-[calc(100%-4px) min-h-[30vh] border-2 border-brandprimary text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
+                />
+              </div>
+              {
+                !nextStep && 
+                <button onClick={() => setNextStep(true)} className=" text-brandprimary font-semibold mx-1">
+                  Next
+                </button>
+              }
+            </div> */}
+
+
           </div>
 
           {mediaUrl !== "" && postType.includes("image") ? (
@@ -282,10 +304,8 @@ const CreateVibe = () => {
               />
 
               <div className=" absolute top-3 right-2">
-
                 {iconButtons()}
-
-                {isEditingText && (
+                {isEditingText && !isMagicPenOpen ? (
                   <input
                     type="text"
                     value={imageText}
@@ -293,13 +313,19 @@ const CreateVibe = () => {
                     className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
                     autoFocus
                   />
-                )}
-
+                  ) : isMagicPenOpen ? (
+                    <textarea
+                    value={postInput}
+                    placeholder="text to be created by magic pen"
+                    onChange={e => setPostInput(e.target.value)}                  
+                  />
+                  ) : null
+                }
               </div>
 
               { isMagicPenOpen && colorPicker() }
 
-              {/* {nextStep && (
+              {nextStep && (
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
                   <Button
                     title={"NEXT"}
@@ -310,7 +336,8 @@ const CreateVibe = () => {
                     onClick={handleCreateVibe}
                   />
                 </div>
-              )} */}
+              )}
+
             </div>
           ) : mediaUrl !== "" && postType.includes("video") ? (
             <div className="relative my-8">
