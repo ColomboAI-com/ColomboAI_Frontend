@@ -26,7 +26,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
           set -e
           cd /var/www/html/adfjrgjf/DEV
-          git pull
+          git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
           npm install
           npm run build
         ENDSSH
