@@ -23,10 +23,17 @@ jobs:
         GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
         GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
       run: |
-        ssh -o StrictHostKeyChecking=no $gcpuser@$34.42.192.41<< 'ENDSSH'
+          - name: Deploy to GCP Instance
+      env:
+        GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
+        GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -v $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
+          set -e
           cd /var/www/html/adfjrgjf/DEV
           git pull origin dev
           npm install
           npm run build
         ENDSSH
 
+        
