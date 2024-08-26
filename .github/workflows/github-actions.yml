@@ -24,6 +24,9 @@ jobs:
     - name: Build Project
       run: npm run build
 
+    - name: Install PM2
+      run: npm install -g pm2
+
 
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
@@ -39,5 +42,6 @@ jobs:
           set -e
           cd /var/www/html/adfjrgjf/DEV
           git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
+          npm install -g pm2
           pm2 restart all
         ENDSSH
