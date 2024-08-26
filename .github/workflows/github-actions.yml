@@ -3,12 +3,11 @@ name: Deploy to GCP
 on:
   push:
     branches:
-      - dev  # Trigger deployment on pushes to the main branch
+      - dev  # Trigger deployment on pushes to the dev branch
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-lastest  # Use self-hosted runner
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -23,7 +22,7 @@ jobs:
         GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
         GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/ssh_rsa $gcpuser@34.42.192.41 << 'ENDSSH'
+        ssh -o StrictHostKeyChecking=no $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
           set -e
           cd /var/www/html/adfjrgjf/DEV
           git pull origin dev
