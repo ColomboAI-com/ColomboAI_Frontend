@@ -29,7 +29,7 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
 
-    - name: Restart PM2 Service
+    - name: Deploy to GCP Instance
       env:
         GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
         GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
@@ -38,5 +38,5 @@ jobs:
           set -e
           cd /var/www/html/adfjrgjf/DEV
           git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
-          pm2 restart nextjs-dev 
+          
         ENDSSH
