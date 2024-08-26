@@ -27,6 +27,6 @@ jobs:
           set -e
           cd /var/www/html/adfjrgjf/DEV
           git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
-          npm install
+          sudo apt install npm
           npm run build
         ENDSSH
