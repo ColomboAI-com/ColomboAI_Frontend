@@ -23,7 +23,7 @@ jobs:
         GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
         GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
       run: |
-        sudo ssh -i colombiainextjs.pem gcpuser@34.42.192.41
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/ssh_rsa $gcpuser@34.42.192.41 << 'ENDSSH'
           set -e
           cd /var/www/html/adfjrgjf/DEV
           git pull origin dev
