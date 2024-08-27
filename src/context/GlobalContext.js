@@ -1,32 +1,47 @@
 'use client'
-import { getCookie } from "@/utlils/cookies"
-import { handleError } from "@/utlils/handleError"
-import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
-import axios from "axios"
-import { createContext, useContext, useState } from "react"
+import { createContext, useState } from "react"
 
 const GlobalContext = createContext()
 
 export default function GlobalContextProvider({ children }) {
 
-    let [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
-    let [isShareOpen, setIsShareOpen] = useState(false);
-    let [isCommentOpen, setIsCommentOpen] = useState(false);
+  let [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+  let [isShareOpen, setIsShareOpen] = useState(false);
+  let [isCommentOpen, setIsCommentOpen] = useState(false);
+  let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
+  let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
+  let [specificPostId, setSpecificPostId] = useState()
+  let [posts, setPosts] = useState()
+  let [isCreateVibeOpen, setIsCreateVibeOpen] = useState(false);
+  let [isSelectedFromComputer, setIsSelectedFromComputer] = useState(false);
 
-    return (
-        <GlobalContext.Provider
-          value={{
-            isCreatePostOpen,
-            setIsCreatePostOpen,
-            isShareOpen, 
-            setIsShareOpen,
-            isCommentOpen, 
-            setIsCommentOpen,
-          }}
-        >
-          {children}
-        </GlobalContext.Provider>
-      );
+
+  return (
+    <GlobalContext.Provider
+      value={{
+        setIsCreatePostOpen,
+        isCreatePostOpen,
+        isShareOpen,
+        setIsShareOpen,
+        isCommentOpen,
+        setIsCommentOpen,
+        isNewMessageOpen,
+        setIsNewMessageOpen,
+        isUserProfileOpen,
+        setIsUserProfileOpen,
+        specificPostId,
+        setSpecificPostId,
+        posts,
+        setPosts,
+        setIsCreateVibeOpen,
+        isCreateVibeOpen,
+        isSelectedFromComputer, 
+        setIsSelectedFromComputer
+      }}
+    >
+      {children}
+    </GlobalContext.Provider>
+  );
 }
 
 export { GlobalContextProvider, GlobalContext };
