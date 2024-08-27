@@ -15,6 +15,7 @@ import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
 import next from "next";
 import ColorPicker from "./ColorPicker";
+import { connect } from "socket.io-client";
 
 
 const CreateVibe = () => {
@@ -35,6 +36,7 @@ const CreateVibe = () => {
   const [isEditingText, setIsEditingText] = useState(false);
   const [isMemuOpen, setIsMenuOpen] = useState(false);
   const [textColor, setTextColor] = useState("#000000");
+  const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -48,7 +50,9 @@ const CreateVibe = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
         <button
-          onClick={toogleMagicPen}
+          onClick={() => {
+            toogleMagicPen();
+          }}
           className={`p-2 rounded-full ${
             isMagicPenOpen
               ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
@@ -68,7 +72,12 @@ const CreateVibe = () => {
         <button className="w-10 h-10 rounded-full bg-gray-300">
           {/* Placeholder for buttons */}
         </button>
-        <button className="w-10 h-10 rounded-full bg-gray-300">
+        <button 
+          className="w-10 h-10 rounded-full bg-gray-300" 
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsColorPickerVisible(!isColorPickerVisible);
+          }}>
           {/* Placeholder for buttons */}
         </button>
         <button className="w-10 h-10 rounded-full bg-gray-300">
@@ -82,6 +91,10 @@ const CreateVibe = () => {
     document.querySelector('input[type="file"][accept="media_type"]').click();
   };
 
+  function toggleColorPickerVisible() {
+    setIsColorPickerVisible(!isColorPickerVisible);
+  }
+  
   function toogleMagicPen() {
     setIsMagicPenOpen(!isMagicPenOpen);
   }
@@ -143,7 +156,6 @@ const CreateVibe = () => {
   };
 
   // Handlers to add text to vibe
-  // TODO: Find out if the image text will be saved in the DB
   const handleTextClick = () => {
     setIsEditingText(true);
   };
@@ -168,7 +180,9 @@ const CreateVibe = () => {
     setIsCreateVibeOpen(false);
   };
 
-  console.log(nextStep);
+  console.log("isMagicPenOpen ", isMagicPenOpen);
+  console.log("isColorPickerVisible ", isColorPickerVisible);
+  console.log(textColor);
 
   return (
     <>
@@ -278,12 +292,13 @@ const CreateVibe = () => {
           </div>
 
           {mediaUrl !== "" && postType.includes("image") ? (
-            <div className="relative my-8" onClick={handleTextClick}>
+            <div className="relative my-8">
               <img
                 key={mediaUrl}
                 src={mediaUrl}
                 alt="File Preview"
                 className="w-full h-full object-contain"
+                onClick={handleTextClick}
               />
 
               <div className=" absolute top-3 right-2">
@@ -295,18 +310,20 @@ const CreateVibe = () => {
                     onChange={handleTextChange}
                     className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
                     autoFocus
+                    style={{ color: textColor }}
                   />
                   ) : isMagicPenOpen ? (
                     <textarea
                     value={postInput}
                     placeholder="text to be created by magic pen"
                     onChange={e => setPostInput(e.target.value)}                  
+                    style={{ color: textColor }}
                   />
                   ) : null
                 }
               </div>
 
-              { isMagicPenOpen && <ColorPicker /> }
+              { isMagicPenOpen && <ColorPicker textColor={textColor} setTextColor={setTextColor}/> }
 
               {nextStep && (
                 <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
@@ -316,7 +333,7 @@ const CreateVibe = () => {
                       "w-fit sm2:text-xl text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-4 px-24 "
                     }
                     loading={loadings?.createVibe}
-                    onClick={handleCreateVibe}
+                    onClick={() => setNextStep(false)}
                   />
                 </div>
               )}
@@ -391,3 +408,5 @@ const CreateVibe = () => {
 };
 
 export default CreateVibe;
+
+
