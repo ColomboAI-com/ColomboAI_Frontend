@@ -182,9 +182,7 @@ const CreateVibe = () => {
     setIsCreateVibeOpen(false);
   };
 
-  // console.log("isMagicPenOpen ", isMagicPenOpen);
-  // console.log(textColor);
-  console.log("isColorPickerVisible ", isColorPickerVisible);
+  console.log(isColorPickerVisible);
 
   return (
     <>
@@ -305,24 +303,16 @@ const CreateVibe = () => {
 
               <div className=" absolute top-3 right-2">
                 {iconButtons()}
-                {isEditingText && !isMagicPenOpen ? (
-                  <input
+
+                <input
                     type="text"
-                    value={imageText}
-                    onChange={handleTextChange}
+                    value={isMagicPenOpen ? postInput : imageText}
+                    onChange={e => isMagicPenOpen ? setPostInput(e.target.value) : handleTextChange(e)}
                     className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
                     autoFocus
                     style={{ color: textColor }}
                   />
-                  ) : (
-                    <textarea
-                    value={postInput}
-                    placeholder="text to be created by magic pen"
-                    onChange={e => setPostInput(e.target.value)}                  
-                    style={{ color: textColor }}
-                  />
-                  )
-                }
+                  
               </div>
 
               { isColorPickerVisible && (
