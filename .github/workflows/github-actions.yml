@@ -1,0 +1,42 @@
+name: Deploy to GCP
+
+on:
+  push:
+    branches:
+      - dev  # Trigger deployment on pushes to the dev branch
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18'  # Specify the Node.js version you need
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Project
+      run: npm run build
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
+
+    - name: Deploy to GCP Instance
+      env:
+        GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
+        GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
+          set -e
+          cd /var/www/html/adfjrgjf/DEV
+          git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
+          
+        ENDSSH
