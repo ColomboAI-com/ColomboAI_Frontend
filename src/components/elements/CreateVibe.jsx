@@ -14,7 +14,7 @@ import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
 import { ThreeDots } from "react-loader-spinner";
 import ColorPicker from "./ColorPicker";
-import MusicDropdown from './MusicDropdown';
+import MusicDropdown from './MusicDropDown';
 import { VideoEditor } from './VideoEditor'; 
 import next from "next";
 
