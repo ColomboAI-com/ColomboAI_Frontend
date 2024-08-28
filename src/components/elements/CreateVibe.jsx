@@ -38,7 +38,8 @@ const CreateVibe = () => {
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [imageText, setImageText] = useState("");
+  const [text, setText] = useState("");
+  // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
   const [isMemuOpen, setIsMenuOpen] = useState(false);
   const [textColor, setTextColor] = useState("#000000");
@@ -179,7 +180,7 @@ const CreateVibe = () => {
   };
 
   const handleTextChange = (e) => {
-    setImageText(e.target.value);
+    setText(e.target.value);
   };
 
   // Handlers for 3-dots menu
@@ -198,9 +199,11 @@ const CreateVibe = () => {
     setIsCreateVibeOpen(false);
   };
 
+  console.log(nextStep);
+
   return (
     <>
-      {/* <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
+      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
           <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {nextStep && (
@@ -249,99 +252,7 @@ const CreateVibe = () => {
           )}
         </div>
 
-        <div
-          className="pt-[19px] flex flex-col items-center gap-2 border-b-2 border-#BCB9B9"
-          onDrop={handleDrop}
-          onDragOver={(e) => e.preventDefault()}
-        >
-          <p className="text-lg text-brandprimary font-sans">
-            {isSelectedFromComputer
-              ? "Upload or Drag & Drop Media"
-              : "Create a new Vibe"}
-          </p>
-          <div className="pt-3 text-center">
-            {file ? (
-              <>
-                <img
-                  src={mediaUrl}
-                  alt="media"
-                  className="object-contain w-48 h-48"
-                />
-                <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
-                  <button onClick={clearFileHandler} className="text-red-500">
-                    <CloseDocumentIcon w={20} h={20} />
-                  </button>
-                  <button
-                    onClick={() => {
-                      if (postType === "video") {
-                        setIsTrimming(true); // Open the trimming modal
-                      } else {
-                        handleCreateVibe();
-                      }
-                    }}
-                    className="text-blue-500"
-                  >
-                    <SendIcon w={20} h={20} />
-                  </button>
-                </div>
-              </>
-            ) : (
-              <button
-                onClick={handleFileInputClick}
-                className="text-blue-500 border border-blue-500 px-4 py-2 rounded"
-              >
-                Select File
-              </button>
-            )}
-            <input
-              type="file"
-              accept="media_type" // Adjust media type as needed
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-          </div>
-        </div>
-
-        {isTrimming && (
-          <VideoEditor
-            videoUrl={mediaUrl}
-            onTrim={handleTrimVideo}
-            onClose={() => setIsTrimming(false)}
-          />
-        )}
-
-        {isDropdownVisible && (
-          <MusicDropdown onClose={() => setDropdownVisible(false)} />
-        )}
-      </div> */}
-
-      {/* {isMagicPenOpen && (
-          <div
-            style={{
-              position: "absolute",
-              bottom: "60px",
-              right: "60px",
-              zIndex: 1000,
-            }}
-          >
-            <ColorPicker
-              color={textColor}
-              onChange={(color) => setTextColor(color.hex)}
-              onClose={() => setIsColorPickerVisible(false)}
-            />
-          </div>
-        )} */}
-
-      {/* {isEditingText && (
-        <div className="absolute top-0 left-0 z-50 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-          <textarea
-            value={imageText}
-            onChange={handleTextChange}
-            className="bg-white p-2 rounded border border-gray-300"
-          />
-          <button onClick={() => setIsEditingText(false)}>Close</button>
-        </div>
-      )} */}
+      </div>
 
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
@@ -358,7 +269,6 @@ const CreateVibe = () => {
           onClick={() => {
             handleGenerateVibe();
             setNextStep(true);
-            setIsColorPickerVisible(false);
           }}
         >
           {loadings?.generatePost ? (
@@ -397,25 +307,31 @@ const CreateVibe = () => {
           <div className=" absolute top-3 right-2">
             {iconButtons()}
 
-            <input
-              type="text"
-              value={isMagicPenOpen ? postInput : imageText}
-              onChange={(e) =>
-                isMagicPenOpen
-                  ? setPostInput(e.target.value)
-                  : handleTextChange(e)
-              }
-              className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
-              autoFocus
+            {isEditingText && (
+              <input
+                type="text"
+                placeholder="text created manually"
+                value={text}
+                onChange={handleTextChange}
+                className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                autoFocus
+                style={{ color: textColor }}
+              />
+            )}
+
+            <textarea
+              value={postInput}
+              placeholder="text to be created by magic pen"
+              onChange={(e) => setPostInput(e.target.value)}
               style={{ color: textColor }}
             />
           </div>
 
-          {isColorPickerVisible && (
+          {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
 
-          {nextStep && (
+          {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
               <Button
                 title={"NEXT"}
@@ -426,7 +342,6 @@ const CreateVibe = () => {
                 onClick={() => {
                   setNextStep(false);
                   setIsMagicPenOpen(false);
-                  setIsColorPickerVisible(true);
                 }}
               />
             </div>
@@ -451,7 +366,6 @@ const CreateVibe = () => {
             </div>
 
             {iconButtons()}
-
           </div>
         </div>
       ) : (
@@ -467,7 +381,65 @@ const CreateVibe = () => {
               onDragOver={(event) => event.preventDefault()}
             >
               <p className="text-xl my-4">Drag photos and videos here</p>
-              <span onClick={handleFileInputClick}>
+
+              <div className="pt-3 text-center">
+                {file ? (
+                  <>
+                    <img
+                      src={mediaUrl}
+                      alt="media"
+                      className="object-contain w-48 h-48"
+                    />
+                    <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
+                      <button
+                        onClick={clearFileHandler}
+                        className="text-red-500"
+                      >
+                        <CloseDocumentIcon w={20} h={20} />
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (postType === "video") {
+                            setIsTrimming(true); // Open the trimming modal
+                          } else {
+                            handleCreateVibe();
+                          }
+                        }}
+                        className="text-blue-500"
+                      >
+                        <SendIcon w={20} h={20} />
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    onClick={handleFileInputClick}
+                    className="text-blue-500 border border-blue-500 px-4 py-2 rounded"
+                  >
+                    Select from computer
+                  </button>  
+                )}
+                <input
+                  type="file"
+                  accept="media_type" // Adjust media type as needed
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+              </div>
+
+              {isTrimming && (
+                <VideoEditor
+                  videoUrl={mediaUrl}
+                  onTrim={handleTrimVideo}
+                  onClose={() => setIsTrimming(false)}
+                />
+              )}
+
+              {isDropdownVisible && (
+                <MusicDropdown onClose={() => setDropdownVisible(false)} />
+              )}
+
+              {/* <span onClick={handleFileInputClick}>
                 <input
                   className="hidden"
                   type="file"
@@ -480,7 +452,8 @@ const CreateVibe = () => {
                     "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
                   }
                 />
-              </span>
+              </span> */}
+
             </div>
           )}
         </>
