@@ -78,7 +78,7 @@
   resolved "https://registry.npmjs.org/@ffmpeg/core-mt/-/core-mt-0.12.5.tgz"
   integrity sha512-y1OFFWf2omzq62JQ6VIiGYcc3cYNlBVKfAjc9QU4Ab+2RjgU20CbTn9/47I1ERDYKBRObM/TaasnSuSbrGVp8A==
 
-"@ffmpeg/ffmpeg@0.12.6":
+"@ffmpeg/ffmpeg@^0.12.6":
   version "0.12.6"
   resolved "https://registry.npmjs.org/@ffmpeg/ffmpeg/-/ffmpeg-0.12.6.tgz"
   integrity sha512-4CuXDaqrCga5qBwVtiDDR45y65OGPYZd7VzwGCGz3QLdrQH7xaLYEjU19XL4DTCL0WnTSH8752b8Atyb1SiiLw==
