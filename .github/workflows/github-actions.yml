@@ -1,42 +1,28 @@
-name: Deploy to GCP
+name: Deploy to App Engine
 
 on:
   push:
     branches:
-      - dev  # Trigger deployment on pushes to the dev branch
+      - dev  # Change to your target deployment branch
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
       with:
-        node-version: '18'  # Specify the Node.js version you need
+        version: 'latest'  # Use 'latest' or a specific version
 
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build Project
-      run: npm run build
-
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v1
       with:
-        ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
+        credentials_json: ${{ secrets.GCP_SA_KEY }}
 
-    - name: Deploy to GCP Instance
-      env:
-        GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
-        GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
+    - name: Deploy to App Engine
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
-          set -e
-          cd /var/www/html/adfjrgjf/DEV
-          git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
-          
-        ENDSSH
+        gcloud app deploy app.yaml --quiet
