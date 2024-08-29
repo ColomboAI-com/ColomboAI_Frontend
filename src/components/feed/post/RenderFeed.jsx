@@ -1,5 +1,4 @@
 'use client'
-import CommentSection from "@/components/comment/CommentSection"
 import Post from "@/components/elements/cards/Post"
 import Loader from "@/components/Loader"
 import NoDataFound from "@/components/NoDataFound"
@@ -19,14 +18,14 @@ export default function RenderFeed({ filter }) {
     const feedSection = document.getElementById('feed_section')
     if (
       feedSection && !loadings.getPost &&
-      feedSection.scrollTop + feedSection.clientHeight === feedSection.scrollHeight
-    ) { getPosts(filter, page) }
+      Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight
+    ) getPosts(filter, page)
   }
 
   useEffect(() => {
     const feedSection = document.getElementById('feed_section')
     feedSection?.addEventListener('scroll', handleFeedScroll)
-    return () => feedSection?.removeEventListener('scroll', handleFeedScroll)
+    return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
   }, [page, loadings.getPost])
 
   if (loadings.getPost && !posts.length)
@@ -36,18 +35,9 @@ export default function RenderFeed({ filter }) {
     <div>
       {
         posts.length ?
-        <>
-          {/* <>
-          {
-              posts.length && <CommentSection/>
-          }
-          </> */}
-          {
-            posts.map((i, index) => 
+          posts.map((i, index) =>
             <Post post={i} key={index} />
-            )
-          }
-        </>
+          )
           : <NoDataFound className={'mt-5'} />
       }
     </div>

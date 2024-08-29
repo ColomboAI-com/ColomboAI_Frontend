@@ -42,15 +42,16 @@ var trending = {
 const RightSidebar = () => {
     return (
         <div className=" w-[100%]">
-            <div className="px-[35px]">
-                <div className="mt-2">
+            <div className="px-[22px]">
+                <div className="">
                     <h5 className="text-[19px] font-sans text-[#333333] font-[700]">
-                    Trending <span className="text-[#E3E3E3]">(Sponsored Vibes)</span>
+                    Trending vibes 
+                    {/* <span className="text-[#E3E3E3]">(Sponsored Vibes)</span> */}
                     </h5>
                 </div>
             </div>
             <Trendings/>
-            <div className="p-6">
+            <div className="px-[22px]">
                 <Sponsored/>
                 <Events/>
                 <Advertisement/>
