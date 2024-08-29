@@ -17,6 +17,7 @@ import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
 import { VideoEditor } from "./VideoEditor";
 import next from "next";
+import CaptionBox from "./CaptionBox";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -45,6 +46,7 @@ const CreateVibe = () => {
   const [textColor, setTextColor] = useState("#000000");
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
+  const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
 
   useEffect(() => {
     return () => {
@@ -127,6 +129,7 @@ const CreateVibe = () => {
     } else if (result?.response_type === "text") {
       setPostInput(result?.text);
     }
+    setIsMagicPenInputVisible(false); // Hide the Magic Pen input after generating
   };
 
   const handleFileChange = (event) => {
@@ -199,8 +202,6 @@ const CreateVibe = () => {
     setIsCreateVibeOpen(false);
   };
 
-  console.log(nextStep);
-
   return (
     <>
       <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
@@ -251,7 +252,6 @@ const CreateVibe = () => {
             </div>
           )}
         </div>
-
       </div>
 
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
@@ -417,7 +417,7 @@ const CreateVibe = () => {
                     className="text-blue-500 border border-blue-500 px-4 py-2 rounded"
                   >
                     Select from computer
-                  </button>  
+                  </button>
                 )}
                 <input
                   type="file"
@@ -453,11 +453,28 @@ const CreateVibe = () => {
                   }
                 />
               </span> */}
-
             </div>
           )}
         </>
       )}
+
+
+      <CaptionBox
+        postInput={postInput}
+        setPostInput={setPostInput}
+        promptInput={promptInput}
+        setPromptInput={setPromptInput}
+        isMagicPenInputVisible={isMagicPenInputVisible}
+        handleGenerateVibe={handleGenerateVibe}
+        loadings={loadings}
+      />
+
+      <Button
+        title={"Share Reel"}
+        className={
+          "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+        }
+      />
     </>
   );
 };
