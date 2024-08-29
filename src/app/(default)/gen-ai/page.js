@@ -1,5 +1,5 @@
 import React from 'react'
-import InputGenAiSearch from '../../../components/gen-ai/InputGenAiSearch';
+// import InputGenAiSearch from '../../../components/gen-ai/InputGenAiSearch';
 import './GenSearchPage.css'
 import RightSideIcons from '@/components/gen-ai/RightSideIcons';
 

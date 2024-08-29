@@ -428,7 +428,7 @@ export const CloseDocumentIcon = () => {
             </defs>
         </svg>
     );
-<<<<<<< HEAD
+
   };
 
   export const UploudIcon = ({ w = 20, h = 17, fill }) => {
@@ -463,8 +463,7 @@ export const SettingIcon = ({ w = 26, h = 26, fill }) => {
            
     );
 };
-=======
-};
+
 
 export const LikeIcon = ({ w = 36, h = 37, fill }) => {
     return (
@@ -729,4 +728,3 @@ export const StarIcon = ({ w = 32, h = 33, fill }) => {
 
     );
 };
->>>>>>> 66820d12818939e5db83368d257e1c120f46352f
