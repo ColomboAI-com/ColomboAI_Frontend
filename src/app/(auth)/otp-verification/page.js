@@ -33,8 +33,9 @@ const OTPVerification = () => {
     if (getSessionStorage('otp-page') === 'sign-up') res = await signUp()
     else res = await signIn()
     if (res) {
+      console.log(res.data);
       setUserCookies(res.data)
-      router.replace('/')
+      setTimeout(() => router.replace('/'), 2000);
     }
   }
 
