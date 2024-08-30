@@ -18,6 +18,7 @@ import MusicDropdown from "./MusicDropDown";
 import { VideoEditor } from "./VideoEditor";
 import next from "next";
 import CaptionBox from "./CaptionBox";
+import ThreeDotMenu from "./ThreeDotMenu";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -186,73 +187,41 @@ const CreateVibe = () => {
     setText(e.target.value);
   };
 
-  // Handlers for 3-dots menu
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMemuOpen);
-  };
-
-  const handleSaveToDrafts = () => {
-    console.log("Saving to drafts");
-    setIsMenuOpen(false);
-  };
-
-  const handleDiscard = () => {
-    console.log("Discarding");
-    setIsMenuOpen(false);
-    setIsCreateVibeOpen(false);
-  };
-
   return (
     <>
-      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
-        <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
-          <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
-            {nextStep && (
-              <button
-                onClick={() => {
-                  setNextStep(false);
-                  setIsSelectedFromComputer(false);
-                }}
-              >
-                <BackButtonIcon w={20} h={20} fill={"#515151"} />
-              </button>
-            )}
-          </div>
-          <div className="flex-grow flex justify-center">
-            <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
-              Create new Vibes
-            </p>
-          </div>
-
-          {!isSelectedFromComputer ? (
+      {!isSelectedFromComputer ? (
+        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
+          <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
+            <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
+              {nextStep && (
+                <button
+                  onClick={() => {
+                    setNextStep(false);
+                    setIsSelectedFromComputer(true);
+                  }}
+                >
+                  <BackButtonIcon w={20} h={20} fill={"#515151"} />
+                </button>
+              )}
+            </div>
+            <div className="flex-grow flex justify-center">
+              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
+                Create new Vibes
+              </p>
+            </div>
             <button onClick={() => setIsCreateVibeOpen(false)}>
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
             </button>
-          ) : (
-            <div>
-              <button onClick={toggleMenu}>3-dot menu placeholder</button>
-              {isMemuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                  <div className="py-1">
-                    <button
-                      onClick={handleSaveToDrafts}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                      Save to Drafts
-                    </button>
-                    <button
-                      onClick={handleDiscard}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                    >
-                      Discard
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <button>
+            <BackButtonIcon w={20} h={20} fill={"#515151"} />
+          </button>
+          <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
+        </div>
+      )}
 
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
@@ -457,7 +426,6 @@ const CreateVibe = () => {
           )}
         </>
       )}
-
 
       <CaptionBox
         postInput={postInput}
