@@ -5,6 +5,8 @@ import axios from "axios"
 import { ROOT_URL_AUTH } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError"
 import { MessageBox } from "@/components/MessageBox"
+import { firebaseAuth } from "@/utlils/firebaseConfig"
+import { SendOTP, setupRecaptcha } from "@/utlils/firebaseFunctions"
 
 const AuthContext = createContext()
 
@@ -41,7 +43,8 @@ export const AuthContextProvider = ({ children }) => {
   const [inputs, setInputs] = useState(defaultInputs)
   const [validations, setValidations] = useState(defaultValidations)
   const [loadings, setLoadings] = useState(defaultLoadings)
-  const [new_device, setNew_device] = useState(false);
+  const [verifier, setVerifier] = useState()
+  const [new_device, setNew_device] = useState(false)
 
   const handleInputs = (event) => {
     const { name, value } = event.target
@@ -53,7 +56,7 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   const getOTP = async (action = 'sign-in') => {
-    try {
+    try {      
       setLoadings(prev => ({ ...prev, otp: true }))
       const data = (action === 'sign-in') ? {
         action,
@@ -82,7 +85,6 @@ export const AuthContextProvider = ({ children }) => {
 
   const signUp = async () => {
     try {
-      
       setLoadings(prev => ({ ...prev, auth: true }))
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-up`,
         {
@@ -107,6 +109,7 @@ export const AuthContextProvider = ({ children }) => {
   const signIn = async () => {
     try {
       setLoadings(prev => ({ ...prev, auth: true }))
+      setupRecaptcha
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-in`,
         {
           action: 'sign-in',
