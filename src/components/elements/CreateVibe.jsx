@@ -427,15 +427,7 @@ const CreateVibe = () => {
         </>
       )}
 
-      <CaptionBox
-        postInput={postInput}
-        setPostInput={setPostInput}
-        promptInput={promptInput}
-        setPromptInput={setPromptInput}
-        isMagicPenInputVisible={isMagicPenInputVisible}
-        handleGenerateVibe={handleGenerateVibe}
-        loadings={loadings}
-      />
+      <CaptionBox />
 
       <Button
         title={"Share Reel"}
