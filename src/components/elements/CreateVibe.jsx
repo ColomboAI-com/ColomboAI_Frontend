@@ -19,6 +19,7 @@ import { VideoEditor } from "./VideoEditor";
 import next from "next";
 import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
+import EditCover from "./EditCover";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -220,6 +221,7 @@ const CreateVibe = () => {
             <BackButtonIcon w={20} h={20} fill={"#515151"} />
           </button>
           <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
+          <EditCover />
         </div>
       )}
 
