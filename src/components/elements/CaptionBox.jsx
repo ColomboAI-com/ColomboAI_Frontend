@@ -1,17 +1,27 @@
 import React from "react";
+import { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
+import { FeedContext } from "@/context/FeedContext";
 
-const CaptionBox = ({
-  postInput,
-  setPostInput,
-  promptInput,
-  setPromptInput,
-  isMagicPenInputVisible,
-  handleGenerateVibe,
-  loadings,
-}) => {
+const CaptionBox = () => {
+  const [postInput, setPostInput] = useState("");
+  const [promptInput, setPromptInput] = useState("");
+  const { generatePost, loadings } =
+    useContext(FeedContext);
+  const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
   const wordCount = postInput.trim().split(/\s+/).filter(Boolean).length;
+
+  const handleGenerateVibe = async () => {
+    const result = await generatePost(promptInput);
+    if (result?.response_type !== "text") {
+      setMediaUrl(result?.text);
+      setPostType(result?.response_type);
+    } else if (result?.response_type === "text") {
+      setPostInput(result?.text);
+    }
+    setIsMagicPenInputVisible(false); // Hide the Magic Pen input after generating
+  };
 
   return (
     <div className="w-full max-w-md mx-auto p-4">
