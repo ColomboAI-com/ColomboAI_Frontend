@@ -19,4 +19,3 @@ export const COOKIE_OPTIONS = {
   secure: true,
   domain: '.colomboai.com'
 }
-
