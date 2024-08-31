@@ -4,7 +4,7 @@
 //export const ROOT_URL_AUTH = 'http://localhost:8000'
 //export const ROOT_URL_FEED = 'http://localhost:8001'
 
-export const ROOT_URL_AUTH = 'https://userservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com'
+export const ROOT_URL_AUTH = 'https://caiuserservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com'
 export const ROOT_URL_FEED = 'https://feedservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com'
 
 export const ROOT_URL_MESSAGES = 'https://messagingservice-dev-dot-fair-myth-398920.uc.r.appspot.com'
