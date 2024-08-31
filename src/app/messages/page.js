@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React, { useContext, useEffect } from "react"
 import { GlobalContext } from "@/context/GlobalContext"
 import UserProfileSection from "@/components/messages/UserProfileSection"
