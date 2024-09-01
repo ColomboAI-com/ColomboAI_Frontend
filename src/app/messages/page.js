@@ -42,7 +42,7 @@ const ComponentsAppsChat = () => {
     })
 
     return () => {
-      connectSocket.disconnect()
+    connectSocket.disconnect()
     }
   }, [])
 
