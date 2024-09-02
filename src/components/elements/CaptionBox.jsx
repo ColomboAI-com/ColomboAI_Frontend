@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
 
@@ -12,10 +12,76 @@ const CaptionBox = ({
   loadings,
 }) => {
   const wordCount = postInput.trim().split(/\s+/).filter(Boolean).length;
-
+  const [showUsers, setShowUsers] = useState(false);
+  const [search, setSearch] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const users = ['@Alice', '@Bob', '@Charlie', '@David'];
+  const filteredUsers = users.filter(user =>
+    user.toLowerCase().includes(search.toLowerCase())
+  );
+  const handleClick = () => {
+    setShowUsers(prevShowUsers => !prevShowUsers);
+  };
+  const handleUserClick = (user) => {
+    setSelectedUsers((prev) => {
+      
+      if (prev.includes(user)) {
+        
+        return prev.filter((selectedUser) => selectedUser !== user);
+      } else {
+        
+        return [...prev, user];
+      }
+    });
+  };
   return (
     <div className="w-full max-w-md mx-auto p-4">
+      <div className=" flex absolute top-[702px] bg-gray-500 text-white w-[105px] h-[22px] items-center ">
+      <button onClick={handleClick}>{selectedUsers.length > 0 ? 'Tagged' : 'Tag People'}</button>
+       </div>
+       {showUsers && (
+        <div className="absolute top-[726px] w-[470px] bg-gray-200 text-black p-4 rounded-md shadow-lg w-[250px] max-h-[300px] overflow-y-auto z-50">
+          
+            <p className="mb-4 flex justify-center">Tag people</p>
+          
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="
+              w-full
+              mb-2
+              p-2
+              border border-gray-300
+              rounded-md
+              focus:outline-none
+              focus:ring-2
+              focus:ring-gray-300
+            "
+          />
+          {/* User List */}
+          <ul>
+          {filteredUsers.length > 0 ? (
+              filteredUsers.map((user, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleUserClick(user)}
+                  className={`py-2 border-b border-gray-300 last:border-b-0 cursor-pointer ${
+                    selectedUsers.includes(user) ? 'bg-gray-300' : ''
+                  }`}
+                >
+                  {user}
+                </li>
+              ))
+            ) : (
+              <li className="py-2">No users found</li>
+            )}
+          </ul>
+        </div>
+      )} 
       <div className="bg-white rounded-lg shadow-md p-4">
+        
         <div className="relative">
           <textarea
             value={postInput}
