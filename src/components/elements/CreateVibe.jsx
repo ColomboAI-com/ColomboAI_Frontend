@@ -21,6 +21,7 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 
+
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
