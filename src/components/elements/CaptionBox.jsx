@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
@@ -7,10 +6,25 @@ import { FeedContext } from "@/context/FeedContext";
 const CaptionBox = () => {
   const [postInput, setPostInput] = useState("");
   const [promptInput, setPromptInput] = useState("");
-  const { generatePost, loadings } =
-    useContext(FeedContext);
+  const { generatePost, loadings } = useContext(FeedContext);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
-  const wordCount = postInput.trim().split(/\s+/).filter(Boolean).length;
+  const [textColor, setTextColor] = useState("#D1D1D1");
+  const [charCount, setCharCount] = useState(0);
+  const maxCharCount = 300;
+
+  const handleCharCount = (text) => {
+    const count = text.length;
+    setCharCount(count);
+    // const remainingChars = maxCharCount - count;
+    // setCharCount(remainingChars);
+    // setTextColor(remainingChars < 0 ? "#FF0000" : "#D1D1D1");
+  };
+
+  const handlePostInputChange = (e) => {
+    const newText = e.target.value;
+    setPostInput(newText);
+    handleCharCount(newText);
+  };
 
   const handleGenerateVibe = async () => {
     const result = await generatePost(promptInput);
@@ -19,8 +33,9 @@ const CaptionBox = () => {
       setPostType(result?.response_type);
     } else if (result?.response_type === "text") {
       setPostInput(result?.text);
+      handleCharCount(result?.text);
     }
-    setIsMagicPenInputVisible(false); // Hide the Magic Pen input after generating
+    setIsMagicPenInputVisible(false);
   };
 
   return (
@@ -30,17 +45,20 @@ const CaptionBox = () => {
           <textarea
             value={postInput}
             placeholder="Write your caption here"
-            onChange={(e) => setPostInput(e.target.value)}
+            onChange={handlePostInputChange}
             className="w-full p-3 rounded-md text-gray-700 bg-white placeholder-gray-400 text-sm resize-none outline-none mb-1"
             rows={3}
           />
-          <div className="absolute bottom-2 right-2 text-xs text-gray-400">
-            {wordCount}/300
+          <div
+            className="absolute bottom-2 right-2 text-xs"
+            style={{ color: textColor }}
+          >
+            {charCount}/{maxCharCount}
           </div>
         </div>
 
         {isMagicPenInputVisible && (
-          <div className="relative">
+          <div className="relative mt-4">
             <div className="border border-blue-300 rounded-md">
               <textarea
                 value={promptInput}
@@ -56,16 +74,16 @@ const CaptionBox = () => {
                 {loadings.generatePost ? (
                   <ThreeDots
                     visible={true}
-                    height="85"
-                    width="20"
+                    height="24"
+                    width="24"
                     color="#3B82F6"
                     radius="9"
                     ariaLabel="three-dots-loading"
                   />
                 ) : (
                   <SendIcon
-                    w={20}
-                    h={85}
+                    w={24}
+                    h={24}
                     fill={promptInput !== "" ? "#3B82F6" : "#E5E7EB"}
                   />
                 )}
