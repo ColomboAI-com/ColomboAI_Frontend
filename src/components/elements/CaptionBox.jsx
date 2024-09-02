@@ -38,10 +38,12 @@ const CaptionBox = () => {
     setIsMagicPenInputVisible(false);
   };
 
-
   return (
     <div className="w-full max-w-md mx-auto p-4">
-      <div className=" flex absolute top-[702px] bg-gray-500 text-white w-[105px] h-[22px] items-center ">
+      
+      {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
+
+      {/* <div className=" flex absolute top-[702px] bg-gray-500 text-white w-[105px] h-[22px] items-center ">
       <button onClick={handleClick}>{selectedUsers.length > 0 ? 'Tagged' : 'Tag People'}</button>
        </div>
        {showUsers && (
@@ -64,9 +66,11 @@ const CaptionBox = () => {
               focus:ring-2
               focus:ring-gray-300
             "
-          />
+          /> */}
+          
           {/* User List */}
-          <ul>
+
+          {/* <ul>
           {filteredUsers.length > 0 ? (
               filteredUsers.map((user, index) => (
                 <li
@@ -84,7 +88,9 @@ const CaptionBox = () => {
             )}
           </ul>
         </div>
-      )} 
+      )}  */}
+
+
       <div className="bg-white rounded-lg shadow-md p-4">
         
         <div className="relative">
