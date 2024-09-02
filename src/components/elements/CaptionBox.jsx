@@ -1,39 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
+import { FeedContext } from "@/context/FeedContext";
 
-const CaptionBox = ({
-  postInput,
-  setPostInput,
-  promptInput,
-  setPromptInput,
-  isMagicPenInputVisible,
-  handleGenerateVibe,
-  loadings,
-}) => {
+const CaptionBox = () => {
+  const [postInput, setPostInput] = useState("");
+  const [promptInput, setPromptInput] = useState("");
+  const { generatePost, loadings } =
+    useContext(FeedContext);
+  const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
   const wordCount = postInput.trim().split(/\s+/).filter(Boolean).length;
-  const [showUsers, setShowUsers] = useState(false);
-  const [search, setSearch] = useState('');
-  const [selectedUsers, setSelectedUsers] = useState([]);
-  const users = ['@Alice', '@Bob', '@Charlie', '@David'];
-  const filteredUsers = users.filter(user =>
-    user.toLowerCase().includes(search.toLowerCase())
-  );
-  const handleClick = () => {
-    setShowUsers(prevShowUsers => !prevShowUsers);
-  };
-  const handleUserClick = (user) => {
-    setSelectedUsers((prev) => {
-      
-      if (prev.includes(user)) {
-        
-        return prev.filter((selectedUser) => selectedUser !== user);
-      } else {
-        
-        return [...prev, user];
-      }
-    });
-  };
+
   return (
     <div className="w-full max-w-md mx-auto p-4">
       <div className=" flex absolute top-[702px] bg-gray-500 text-white w-[105px] h-[22px] items-center ">
