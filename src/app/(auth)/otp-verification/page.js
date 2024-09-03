@@ -3,7 +3,7 @@ import ResendOTP from "@/components/auth/ResendOTP"
 import { OTPValidation } from "@/components/Validations"
 import { useAuth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
-import { getShortEmail, setUserCookies } from "@/utlils/commonFunctions"
+import { getShortEmail, getShortPhone, setUserCookies } from "@/utlils/commonFunctions"
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
 import { isValidOTP } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
@@ -44,16 +44,20 @@ const OTPVerification = () => {
         <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:w-full">
           <div>
             <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:block" alt="welcome_to_colomboai" />
-            <h5 className="text-[24px] font-sans text-center mb-[75px]">Enter OTP from <span className="text-[#1E71F2]">Email</span></h5>
+            <h5 className="text-[24px] font-sans text-center mb-[0px] text-[#656565]">Enter OTP 
+              {/* from <span className="text-[#1E71F2]">Email</span> */}
+            </h5>
             <p className="text-[#737373] text-[16px] font-sans text-center lg:mt-[10px] lg:block sm:grid sm:mt-[35px]">
-              Enter the OTP you received on <span className="text-[#1E71F2]"> {getShortEmail(inputs.email)}</span>
+              Enter the OTP you received on 
+              <br/>
+              <span className="text-[#1E71F2]"> {getShortEmail(inputs.email)}</span> {inputs.phone == "" ? null : '&'} {inputs.phone == "" ? null : <span className="text-[#1E71F2]"> {getShortPhone(inputs.phone)}</span>}
             </p>
           </div>
           <div>
             <input
               type="tel"
-              className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-center text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-              placeholder="Type verification code"
+              className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-left text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              placeholder="Enter OTP from Email"
               autoComplete="off"
               autoFocus
               maxLength={6}
@@ -61,6 +65,17 @@ const OTPVerification = () => {
               value={inputs.otp}
               onChange={handleInputs}
             />
+            {inputs.phone == "" ? null : <input
+              type="tel"
+              className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-left text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              placeholder="Enter OTP from Phone"
+              autoComplete="off"
+              autoFocus
+              maxLength={6}
+              name={"otp"}
+              value={inputs.otp}
+              onChange={handleInputs}
+            />}
             {validations.otp && <OTPValidation value={inputs.otp} />}
             <Button
               title={'VERIFY'}
