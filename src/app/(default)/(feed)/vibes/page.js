@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import { GenAiIcon, VibesCommentIcon, VibesLikesIcon, VibesRepostIcon, VibesSaveIcon, VibesShareIcon, VibesViewIcon } from '@/components/Icons';
+import FollowButton from '@/components/elements/FollowButton';
+import ThreeDotMenuViewOthers from '@/components/elements/ThreeDotMenuViewOthers';
 import RenderFeed from '@/components/feed/post/RenderFeed'
 import { IoIosMusicalNotes } from "react-icons/io";
 import RepostVibe from '@/components/feed/vibes/Repost';
@@ -37,6 +39,8 @@ export default function Vibes() {
             <div className='flex items-center gap-2  '>
               <img src="/images/home/profile-img.png" alt="profile-image" className="w-[36px] rounded-full" />
               <p>@tanaka_haruto</p>
+              {/* Todo: Make this button is visible if the user is on another user's profile */}
+              <FollowButton />
             </div>
             <div className='flex flex-wrap mx-4'>
               <p>Dancing through the moments that make our hearts sing. ✨ #LetTheMusicMoveYou</p>
@@ -50,6 +54,10 @@ export default function Vibes() {
 
         {/* Side Options */}
         <div className='relative w-[45px] flex justify-center text-[12px] ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]'>
+          
+          {/* Todo: Make this button visible when  */}
+          <ThreeDotMenuViewOthers />
+
           <div className=' absolute bottom-0 lg:bottom-8 flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]'>
             <div className='flex flex-col items-center gap-[2px] md:gap-1'>
               <VibesViewIcon w={30} h={30} fill={"#ffffff"}/>

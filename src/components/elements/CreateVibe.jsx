@@ -5,7 +5,10 @@ import {
   CloseDocumentIcon,
   CreateMagicPenIcon,
   CrossIcon,
+  MusicNotePlusIcon,
   SendIcon,
+  TextShadowIcon,
+  VideoEditIcon,
   VideoIcon,
 } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
@@ -83,7 +86,7 @@ const CreateVibe = () => {
           />
         </button>
         <button className="w-10 h-10 rounded-full bg-gray-300">
-          {/* Placeholder for buttons */}
+          <VideoEditIcon />
         </button>
         <button
           className="w-10 h-10 rounded-full bg-gray-300"
@@ -92,10 +95,10 @@ const CreateVibe = () => {
             setIsColorPickerVisible(!isColorPickerVisible);
           }}
         >
-          {/* Placeholder for buttons */}
+          <TextShadowIcon />
         </button>
         <button className="w-10 h-10 rounded-full bg-gray-300">
-          {/* Placeholder for buttons */}
+          <MusicNotePlusIcon />
         </button>
       </div>
     );
