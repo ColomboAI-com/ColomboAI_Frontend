@@ -25,7 +25,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 
 export const firebaseAuth = getAuth(app)
-firebaseAuth.tenantId = "colomboai";
 
 // export const messaging = getMessaging(app)
 

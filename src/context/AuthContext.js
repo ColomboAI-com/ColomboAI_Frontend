@@ -5,8 +5,6 @@ import axios from "axios"
 import { ROOT_URL_AUTH } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError"
 import { MessageBox } from "@/components/MessageBox"
-import { firebaseAuth } from "@/utlils/firebaseConfig"
-import { SendOTP, setupRecaptcha } from "@/utlils/firebaseFunctions"
 
 const AuthContext = createContext()
 
@@ -111,7 +109,7 @@ export const AuthContextProvider = ({ children }) => {
   const signIn = async () => {
     try {
       setLoadings(prev => ({ ...prev, auth: true }))
-      setupRecaptcha
+
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/sign-in`,
         {
           action: 'sign-in',
