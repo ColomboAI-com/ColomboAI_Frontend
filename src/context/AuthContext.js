@@ -5,6 +5,7 @@ import axios from "axios"
 import { ROOT_URL_AUTH } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError"
 import { MessageBox } from "@/components/MessageBox"
+import { getCookie } from "@/utlils/cookies"
 
 const AuthContext = createContext()
 
@@ -61,7 +62,6 @@ export const AuthContextProvider = ({ children }) => {
       const data = (action === 'sign-in') ? {
         action,
         email: inputs.email,
-        user_name: inputs.username
       } :
       {
         action,
@@ -94,7 +94,8 @@ export const AuthContextProvider = ({ children }) => {
           age: inputs.age,
           email: inputs.email,
           contact_number: inputs.phone,
-          otp: inputs.otp
+          otp: inputs.otp,
+          phone_otp: inputs.phone_otp
         }
       )
       MessageBox('success', res.data.message)
@@ -115,7 +116,7 @@ export const AuthContextProvider = ({ children }) => {
           action: 'sign-in',
           email: inputs.email,
           otp: inputs.otp,
-          phone_otp: inputs.phone_otp ? inputs.phone_otp : "" 
+          phone_otp: inputs.phone_otp 
         }
       )
       
@@ -148,7 +149,12 @@ export const AuthContextProvider = ({ children }) => {
   const addnewdevice = async (email) => {
     try {
       const res = await axios.post(`${ROOT_URL_AUTH}/user/addnewdevice`,
-        { email }
+        { email },
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
       )
       MessageBox('success', res.data.message)
       return res
