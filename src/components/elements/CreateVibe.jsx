@@ -5,6 +5,7 @@ import {
   CloseDocumentIcon,
   CreateMagicPenIcon,
   CrossIcon,
+  FaceWithPeekingEye,
   MusicNotePlusIcon,
   SendIcon,
   TextShadowIcon,
@@ -52,7 +53,7 @@ const CreateVibe = () => {
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
-
+  const [showError,setShowError]  = useState(false)
   useEffect(() => {
     return () => {
       if (mediaUrl) {
@@ -191,8 +192,28 @@ const CreateVibe = () => {
     setText(e.target.value);
   };
 
+  const handleError = ()=>{
+      setShowError(!showError)
+  }
   return (
     <>
+    {showError && 
+    <div className="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center ">
+    <div className="bg-white    
+rounded-[10px] p-4 h-[267px] w-[350px] border border-0.5 border-[#F7F7F7] ">
+  <div className="flex float-end cursor-pointer" onClick={()=>handleError()}>
+  <CrossIcon w={12} h={12} fill={'#515151'}/>
+  </div>
+  <div className="flex justify-center">
+    <FaceWithPeekingEye  />
+  </div>
+  <div className="mt-8">
+  
+  Your Vibe is epic, but it's a bit too long and heavy! Keep it under 1 GB, shorter than 10 minutes, and in MP4, MOV, AVI, or WMV format. Let's make this Vibe rock!
+  </div>
+  </div>
+  </div>
+    }
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
@@ -436,6 +457,7 @@ const CreateVibe = () => {
 
       <Button
         title={"Share Reel"}
+        onClick={()=>handleError()}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
