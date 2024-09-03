@@ -1,14 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
+"use client"
 import { GenAiIcon, VibesCommentIcon, VibesLikesIcon, VibesRepostIcon, VibesSaveIcon, VibesShareIcon, VibesViewIcon } from '@/components/Icons';
 import RenderFeed from '@/components/feed/post/RenderFeed'
 import { IoIosMusicalNotes } from "react-icons/io";
-
+import RepostVibe from '@/components/feed/vibes/Repost';
+import ShareVibe from '@/components/feed/vibes/Share';
+import { useState } from 'react';
 export default function Vibes() {
+  const [showRepost,setRepost] = useState(false)
+  const [showShare,setShare] = useState(false)
+  const handleRepost =() =>{
+    setRepost(!showRepost)
+  }
+  const handleShare =() =>{
+    setShare(!showShare)
+  }
   return (
     <div className='border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans '>
+              {showRepost &&
+              <RepostVibe currentState = {showRepost} />
+              }
+              {
+                showShare && 
+                <ShareVibe currentState = {showShare} />
+              }
       <div className=' flex items-center justify-center object-contain w-full bg-black '>
         {/* Main Content */}
+         
+
+        {/* to view the repostvibe dialog box uncomment this component */}
+        
         <div className=" relative border- border-green-400 max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16]">
+       
           <img src={`/images/home/vibes.png`} className=' w-full h-full' alt="vibes_content" />
           <div className=' absolute bottom-0 left-0'>
             <div className='flex items-center gap-2  '>
@@ -40,11 +63,11 @@ export default function Vibes() {
               <VibesCommentIcon w={30} h={30} fill={"#ffffff"}/>
               <p>121.5k</p>
             </div>
-            <div className='flex flex-col items-center gap-[2px] md:gap-1'>
+            <div className='flex flex-col items-center gap-[2px] md:gap-1 cursor-pointer' onClick={()=>handleRepost()}>
               <VibesRepostIcon w={30} h={30} fill={"#ffffff"}/>
               <p>121.5k</p>
             </div>
-            <div className='flex flex-col items-center gap-[2px] md:gap-1'>
+            <div className='flex flex-col items-center gap-[2px] md:gap-1' onClick={()=>handleShare()}>
               <VibesShareIcon w={30} h={30} fill={"#ffffff"}/>
               <p>121.5k</p>
             </div>
