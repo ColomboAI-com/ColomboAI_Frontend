@@ -17,7 +17,8 @@ const defaultInputs = {
   email: '',
   country_code: '',
   phone: '',
-  otp: ''
+  otp: '',
+  phone_otp: ''
 }
 
 const defaultValidations = {
@@ -27,7 +28,8 @@ const defaultValidations = {
   email: false,
   country_code: false,
   phone: false,
-  otp: false
+  otp: false,
+  phone_otp: false
 }
 
 const defaultLoadings = {
@@ -50,7 +52,7 @@ export const AuthContextProvider = ({ children }) => {
     const { name, value } = event.target
     if (name === "username" && !USERNAME_REGEX.test(value)) return
     if (name === "name" && !NAME_REGEX.test(value)) return
-    if ((name === "phone" || name === "otp" || name === "age" || name === "country_code") && !INT_NUMBER_REGEX.test(value)) return
+    if ((name === "phone" || name === "otp" || name === "age" || name === "country_code" || name === "phone_otp") && !INT_NUMBER_REGEX.test(value)) return
     setInputs(prev => ({ ...prev, [name]: value }))
     setValidations(prev => ({ ...prev, [name]: false }))
   }

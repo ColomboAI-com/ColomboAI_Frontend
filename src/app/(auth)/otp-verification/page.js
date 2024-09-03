@@ -8,11 +8,13 @@ import { clearSessionStorage, getSessionStorage } from "@/utlils/utils"
 import { isValidOTP } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
+import { useState } from "react"
 
 const OTPVerification = () => {
 
   const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues, newdevice } = useAuth()
   const router = useRouter()
+  const [page, setPage] = useState('sign-in')
 
   useEffect(() => {
     const userDetails = getSessionStorage('auth-details')
@@ -22,6 +24,10 @@ const OTPVerification = () => {
       clearSessionStorage()
       resetAuthValues()
     }
+  }, [])
+
+  useEffect(() => {
+    if (getSessionStorage('otp-page') === 'sign-up') setPage('sign-up')
   }, [])
 
   const onVerify = async () => {
@@ -46,12 +52,11 @@ const OTPVerification = () => {
           <div>
             <img src="/images/auth/Star.svg" className="mb-[12px] object-cover mx-auto sm:hidden md:block" alt="welcome_to_colomboai" />
             <h5 className="text-[24px] font-sans text-center mb-[0px] text-[#656565]">Enter OTP 
-              {/* from <span className="text-[#1E71F2]">Email</span> */}
             </h5>
             <p className="text-[#737373] text-[16px] font-sans text-center lg:mt-[10px] lg:block sm:grid sm:mt-[35px]">
               Enter the OTP you received on 
               <br/>
-              <span className="text-[#1E71F2]"> {getShortEmail(inputs.email)}</span> {inputs.phone == "" ? null : '&'} {inputs.phone == "" ? null : <span className="text-[#1E71F2]"> {getShortPhone(inputs.phone)}</span>}
+              <span className="text-[#1E71F2]"> {getShortEmail(inputs.email)}</span> {page == "sign-up" || (newdevice && page == 'sign-in') ? '&' : null} {page == "sign-up" || (newdevice && page == 'sign-in') ? <span className="text-[#1E71F2]"> {getShortPhone(inputs.phone)}</span> : null}
             </p>
           </div>
           <div>
@@ -66,17 +71,17 @@ const OTPVerification = () => {
               value={inputs.otp}
               onChange={handleInputs}
             />
-            {inputs.phone == "" ? null : <input
+            {page == "sign-up" || (newdevice && page == 'sign-in') ? <input
               type="tel"
               className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-left text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Enter OTP from Phone"
               autoComplete="off"
               autoFocus
               maxLength={6}
-              name={"otp"}
-              value={inputs.otp}
+              name={"phone_otp"}
+              value={inputs.phone_otp}
               onChange={handleInputs}
-            />}
+            /> : null}
             {validations.otp && <OTPValidation value={inputs.otp} />}
             <Button
               title={'VERIFY'}
