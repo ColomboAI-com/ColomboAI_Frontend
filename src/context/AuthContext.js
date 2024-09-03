@@ -168,6 +168,7 @@ export const AuthContextProvider = ({ children }) => {
       inputs, setInputs,
       validations, setValidations,
       loadings, setLoadings,
+      new_device, setNew_device,
       handleInputs,
       getOTP, signUp, signIn,
       ssoAuthentication,

@@ -11,7 +11,7 @@ import { useEffect } from "react"
 
 const OTPVerification = () => {
 
-  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues } = useAuth()
+  const { inputs, setInputs, validations, setValidations, handleInputs, loadings, signUp, signIn, resetAuthValues, newdevice } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
