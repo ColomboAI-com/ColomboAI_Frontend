@@ -276,6 +276,7 @@ import { handleError } from "@/utlils/handleError";
 import { MessageBox } from "@/components/MessageBox";
 import { getCookie } from "@/utlils/cookies";
 import NewDevicePopup from "@/components/auth/NewDevicePopup";
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext();
 
@@ -315,6 +316,7 @@ export const AuthContextProvider = ({ children }) => {
   const [loadings, setLoadings] = useState(defaultLoadings);
   const [new_device, setNew_device] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const router = useRouter();
 
   const handleInputs = (event) => {
     const { name, value } = event.target;
@@ -439,12 +441,14 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const handlePopupConfirm = async () => {
-    await addnewdevice(inputs.email); // Perform action on confirmation
+    // await addnewdevice(inputs.email); // Perform action on confirmation
     setShowPopup(false); // Hide the popup after confirming
+    router.replace("/");
   };
 
   const handlePopupCancel = () => {
     setShowPopup(false); // Hide the popup after canceling
+    router.replace("/");
   };
 
   return (
