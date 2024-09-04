@@ -25,7 +25,8 @@ const OTPVerification = () => {
     signUp,
     signIn,
     resetAuthValues,
-    newdevice,
+    new_device,
+    setShowPopup
   } = useAuth();
   const router = useRouter();
   const [page, setPage] = useState("sign-in");
@@ -49,13 +50,18 @@ const OTPVerification = () => {
       setValidations((prev) => ({ ...prev, otp: true }));
       return;
     }
+
     let res;
     if (getSessionStorage("otp-page") === "sign-up") res = await signUp();
     else res = await signIn();
     if (res) {
-      console.log(res.data);
       setUserCookies(res.data);
-      // setTimeout(() => router.replace('/'), 2000);
+      if (page === "sign-in" && new_device) {
+        setShowPopup(true);
+      } else {
+        setTimeout(() => router.replace('/'), 2000)
+      };
+      if (page === "sign-up") setTimeout(() => router.replace('/'), 2000);
     }
   };
 
@@ -73,16 +79,16 @@ const OTPVerification = () => {
               Enter OTP
             </h5>
             <p className="text-[#737373] text-[16px] font-sans text-center lg:mt-[10px] lg:block sm:grid sm:mt-[35px]">
-              Enter the OTP you received on 
+              Enter the OTP you received on
               <br />
               <span className="text-[#1E71F2]">
                 {" "}
                 {getShortEmail(inputs.email)}
               </span>{" "}
-              {page == "sign-up" || (newdevice && page == "sign-in")
+              {page == "sign-up" || (new_device && page == "sign-in")
                 ? "&"
                 : null}{" "}
-              {page == "sign-up" || (newdevice && page == "sign-in") ? (
+              {page == "sign-up" || (new_device && page == "sign-in") ? (
                 <span className="text-[#1E71F2]">
                   {" "}
                   {getShortPhone(inputs.phone)}
@@ -102,7 +108,7 @@ const OTPVerification = () => {
               value={inputs.otp}
               onChange={handleInputs}
             />
-            {page == "sign-up" || (newdevice && page == "sign-in") ? (
+            {page == "sign-up" || (new_device && page == "sign-in") ? (
               <input
                 type="tel"
                 className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-left text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
