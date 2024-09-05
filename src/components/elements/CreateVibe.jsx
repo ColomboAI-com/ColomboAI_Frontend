@@ -23,7 +23,7 @@ import next from "next";
 import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
-import axios from 'axios';
+import axios from "axios";
 import { ROOT_URL_FEED } from "@/utlils/rootURL";
 
 const CreateVibe = () => {
@@ -195,19 +195,23 @@ const CreateVibe = () => {
 
   const handleShareReel = async () => {
     try {
-      const response = await axios.post(`${ROOT_URL_FEED}/vibes/create`, {
-        content: postInput,
-        type: postType,
-        file: file, // This should be the file object if uploading media
-        mediaUrl: mediaUrl,
-        hideLikes: false,
-        isCommentOff: false,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        `${ROOT_URL_FEED}/vibes/create`,
+        {
+          content: postInput,
+          type: postType,
+          file: file, // This should be the file object if uploading media
+          mediaUrl: mediaUrl,
+          hideLikes: false,
+          isCommentOff: false,
         },
-      });
-  
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (response.status === 201) {
         console.log("Hitting create vibe endpoint successfully");
         console.log("Response:", response.data);
@@ -224,7 +228,7 @@ const CreateVibe = () => {
         console.log("Error request:", error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error message:', error.message);
+        console.log("Error message:", error.message);
       }
       MessageBox("error", "Failed to create vibe. Please try again.");
     }
@@ -266,7 +270,6 @@ const CreateVibe = () => {
           <EditCover />
         </div>
       )}
-
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
           <textarea
@@ -304,7 +307,6 @@ const CreateVibe = () => {
           )}
         </button>
       </div>
-
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
           className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
@@ -384,7 +386,6 @@ const CreateVibe = () => {
       ) : (
         ""
       )}
-
       {nextStep === false && (
         <>
           {mediaUrl === "" && postType === defaultPostType && (
@@ -470,9 +471,7 @@ const CreateVibe = () => {
           )}
         </>
       )}
-
       <CaptionBox />
-
       <Button
         title={"Share Reel"}
         onClick={handleShareReel}
