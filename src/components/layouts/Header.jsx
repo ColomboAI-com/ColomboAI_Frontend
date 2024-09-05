@@ -12,7 +12,8 @@ import Post from "../elements/cards/Post";
 import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
 import Share from "../Share";
-import InputGenAiSearch from "../gen-ai/InputGenAiSearch";
+// import InputGenAiSearch from "../gen-ai/InputGenAiSearch";
+import GenSearch from "@/app/gen-search/layout";
 
 
 const Header = () => {
@@ -46,7 +47,7 @@ const Header = () => {
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         {/* <InputBar/> */}
-                        {pathname === '/gen-search' ? <InputGenAiSearch /> : <InputBar />}
+                        {pathname === '/gen-search' ? <GenSearch /> : <InputBar />}
 
                     </div>
                     <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">

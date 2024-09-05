@@ -3,9 +3,4 @@
     /* background: #FFFFFF; */
     opacity: 0;
   }
-  .border-gradient {
-    border-width: 0.5px;
-    border-style: solid;
-    border-image-source: linear-gradient(180deg, #FF0049 0%, #FFBE3B 25%, #00BB5C 50%, #187DC4 75%, #58268B 100%);
-    border-image-slice: 1;
-  }
+ 

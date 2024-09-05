@@ -745,7 +745,7 @@ export const RemoveIcon = ({ w = 12, h = 12, fill }) => {
 };
 export const ShareGenAiIcon = ({ w = 15, h = 15, fill }) => {
     return (
-        <svg width={15} height={15} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={w} height={h} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13.5001 5.50054C14.8809 5.50054 16.0002 4.49306 16.0002 3.25027C16.0002 2.00748 14.8809 1 13.5001 1C12.1193 1 11 2.00748 11 3.25027C11 4.49306 12.1193 5.50054 13.5001 5.50054Z" fill="white" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M3.50011 10.7505C4.88088 10.7505 6.00021 9.74306 6.00021 8.50027C6.00021 7.25748 4.88088 6.25 3.50011 6.25C2.11934 6.25 1 7.25748 1 8.50027C1 9.74306 2.11934 10.7505 3.50011 10.7505Z" fill="white" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M13.5001 16.0005C14.8809 16.0005 16.0002 14.9931 16.0002 13.7503C16.0002 12.5075 14.8809 11.5 13.5001 11.5C12.1193 11.5 11 12.5075 11 13.7503C11 14.9931 12.1193 16.0005 13.5001 16.0005Z" fill="white" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
@@ -756,7 +756,7 @@ export const ShareGenAiIcon = ({ w = 15, h = 15, fill }) => {
 };
 export const CopyGenAiIcon = ({ w = 21, h = 21, fill }) => {
     return (
-        <svg width={21} height={21} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width={w} height={h} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="mask0_7976_22849" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="21">
         <rect width="20.4379" height="20.4379" fill="#D9D9D9"/>
         </mask>

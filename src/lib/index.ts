@@ -1,41 +1,41 @@
-import { loadGroqChatModels } from '../lib/providers/qroq';
-import { loadOpenAIChatModels, loadOpenAIEmbeddingsModels } from './providers/openai';
-import { loadAnthropicChatModels } from './providers/anthropic';
+// import { loadGroqChatModels } from '../lib/providers/qroq';
+// import { loadOpenAIChatModels, loadOpenAIEmbeddingsModels } from './providers/openai';
+// import { loadAnthropicChatModels } from './providers/anthropic';
 
-const chatModelProviders = {
-  openai: loadOpenAIChatModels,
-  groq: loadGroqChatModels,
-  anthropic: loadAnthropicChatModels,
-};
+// const chatModelProviders = {
+//   openai: loadOpenAIChatModels,
+//   groq: loadGroqChatModels,
+//   anthropic: loadAnthropicChatModels,
+// };
 
-const embeddingModelProviders = {
-  openai: loadOpenAIEmbeddingsModels,
-};
+// const embeddingModelProviders = {
+//   openai: loadOpenAIEmbeddingsModels,
+// };
 
-export const getAvailableChatModelProviders = async () => {
-  const models = {};
+// export const getAvailableChatModelProviders = async () => {
+//   const models = {};
 
-  for (const provider in chatModelProviders) {
-    const providerModels = await chatModelProviders[provider]();
-    if (Object.keys(providerModels).length > 0) {
-      models[provider] = providerModels;
-    }
-  }
+//   for (const provider in chatModelProviders) {
+//     const providerModels = await chatModelProviders[provider]();
+//     if (Object.keys(providerModels).length > 0) {
+//       models[provider] = providerModels;
+//     }
+//   }
 
-  models['custom_openai'] = {};
+//   models['custom_openai'] = {};
 
-  return models;
-};
+//   return models;
+// };
 
-export const getAvailableEmbeddingModelProviders = async () => {
-  const models = {};
+// export const getAvailableEmbeddingModelProviders = async () => {
+//   const models = {};
 
-  for (const provider in embeddingModelProviders) {
-    const providerModels = await embeddingModelProviders[provider]();
-    if (Object.keys(providerModels).length > 0) {
-      models[provider] = providerModels;
-    }
-  }
+//   for (const provider in embeddingModelProviders) {
+//     const providerModels = await embeddingModelProviders[provider]();
+//     if (Object.keys(providerModels).length > 0) {
+//       models[provider] = providerModels;
+//     }
+//   }
 
-  return models;
-};
+//   return models;
+// };

@@ -1,8 +1,8 @@
-import { initServer } from '../websocket/websocketServer';
-import http from 'http';
+// import { initServer } from '../websocket/websocketServer';
+// import http from 'http';
 
-export const startWebSocketServer = (
-  server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>,
-) => {
-  initServer(server);
-};
+// export const startWebSocketServer = (
+//   server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>,
+// ) => {
+//   initServer(server);
+// };
