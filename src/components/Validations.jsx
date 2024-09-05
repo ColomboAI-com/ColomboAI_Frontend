@@ -54,3 +54,11 @@ export function OTPValidation({ value }) {
     </div>
   )
 }
+
+export function AgeValidation({ value }) {
+  return (
+    <div className="text-error">
+      {value ? (Number(value) < 0 || Number(value) > 120 ? 'Please enter a valid age between 0 and 120.' : 'Invalid age') : 'Age is mandatory'}
+    </div>
+  )
+}

@@ -6,7 +6,7 @@ import { EmailValidation, NameValidation, PhoneValidation, UsernameValidation } 
 import { useAuth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
-import { isValidEmail, isValidName, isValidPhone, isValidUserName } from "@/utlils/validate"
+import { isValidEmail, isValidName, isValidPhone, isValidUserName, isValidAge } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -34,6 +34,10 @@ const SignUp = () => {
     }
     if (!isValidEmail(inputs.email)) {
       setValidations(prev => ({ ...prev, email: true }))
+      return
+    }
+    if (!isValidAge(inputs.age)) {
+      setValidations(prev => ({ ...prev, age: true }))
       return
     }
     const res = await getOTP('sign-up')
@@ -76,6 +80,17 @@ const SignUp = () => {
             />
             {validations.name && <NameValidation value={inputs.name} />}
             <input
+              type="number"
+              className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+              placeholder="Age"
+              autoComplete="off"
+              maxLength={3}
+              name={"age"}
+              value={inputs.age}
+              onChange={handleInputs}
+            />
+            {validations.age && <AgeValidation value={inputs.age} />}
+            <input
               type="email"
               className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
               placeholder="Email address"
@@ -88,7 +103,7 @@ const SignUp = () => {
             <input
               type="tel"
               className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-              placeholder="Phone number (optional)"
+              placeholder="Phone number"
               autoComplete="off"
               maxLength={10}
               name={"phone"}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { DotsVerticalIcon } from "@heroicons/react/solid";
 
 const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   const [isMemuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +23,9 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
 
   return (
     <div>
-      <button onClick={toggleMenu}>3-dot menu placeholder</button>
+      <button onClick={toggleMenu}>
+        <DotsVerticalIcon className="h-10 w-10 text-gray-600" />
+      </button>
       {isMemuOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
           <div className="py-1">
