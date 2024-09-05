@@ -30,7 +30,7 @@ export const firebaseAuth = getAuth(app)
 
 let messaging;
 
-if (typeof window !== 'undefined') {
+if (navigator.serviceWorker !== undefined) {
   // Initialize Firebase app only in the client-side environment
   messaging = getMessaging(app);
 }
