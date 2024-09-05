@@ -23,6 +23,8 @@ import next from "next";
 import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
+import axios from 'axios';
+import { ROOT_URL_FEED } from "@/utlils/rootURL";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -189,6 +191,43 @@ const CreateVibe = () => {
 
   const handleTextChange = (e) => {
     setText(e.target.value);
+  };
+
+  const handleShareReel = async () => {
+    try {
+      const response = await axios.post(`${ROOT_URL_FEED}/vibes/create`, {
+        content: postInput,
+        type: postType,
+        file: file, // This should be the file object if uploading media
+        mediaUrl: mediaUrl,
+        hideLikes: false,
+        isCommentOff: false,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.status === 201) {
+        console.log("Hitting create vibe endpoint successfully");
+        console.log("Response:", response.data);
+        MessageBox("success", "Vibe created successfully");
+        setIsCreateVibeOpen(false); // Close the create vibe modal
+      }
+    } catch (error) {
+      console.error("Error creating vibe:", error);
+      if (error.response) {
+        console.log("Error data:", error.response.data);
+        console.log("Error status:", error.response.status);
+        console.log("Error headers:", error.response.headers);
+      } else if (error.request) {
+        console.log("Error request:", error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error message:', error.message);
+      }
+      MessageBox("error", "Failed to create vibe. Please try again.");
+    }
   };
 
   return (
@@ -436,6 +475,7 @@ const CreateVibe = () => {
 
       <Button
         title={"Share Reel"}
+        onClick={handleShareReel}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
