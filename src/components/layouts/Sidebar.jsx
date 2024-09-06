@@ -1,7 +1,7 @@
 'use client'
 import { usePathname, useRouter } from "next/navigation";
 import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon } from "../Icons";
-import { clearCookie, getCookie } from "@/utlils/cookies";
+import { clearCookie, getCookie } from "../../utlils/cookies";
 import Dropdown from '../messages/Dropdown';
 
 import InputBar from "./InputBar";

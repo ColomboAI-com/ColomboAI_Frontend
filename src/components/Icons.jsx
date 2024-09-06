@@ -1773,6 +1773,66 @@ export const VibesSaveIcon = ({ w, h, fill }) => {
   );
 };
 export const StarIcon = ({ w = 32, h = 33, fill }) => {
+
+    return (
+        <svg width={w} height={h} viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="21" cy="21" r="21" fill="url(#paint0_linear_4771_34232)" />
+            <path d="M22.4164 31.666C21.7575 33.4447 19.2425 33.4447 18.5836 31.666L16.4119 25.7953C16.2045 25.2362 15.7643 24.7953 15.2045 24.5883L9.33384 22.416C7.55539 21.7579 7.55539 19.2421 9.33384 18.584L15.2045 16.4116C15.7643 16.2047 16.2045 15.7638 16.4119 15.2046L18.5836 9.33398C19.2425 7.55534 21.7575 7.55534 22.4164 9.33398L24.5881 15.2046C24.7955 15.7638 25.2357 16.2047 25.7955 16.4116L31.6662 18.584C33.4446 19.2421 33.4446 21.7579 31.6662 22.416L25.7955 24.5883C25.2357 24.7953 24.7955 25.2362 24.5881 25.7953L22.4164 31.666Z" fill="white" />
+            <defs>
+                <linearGradient id="paint0_linear_4771_34232" x1="21" y1="0" x2="21" y2="42" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FF0049" />
+                    <stop offset="0.25" stopColor="#FFBE3B" />
+                    <stop offset="0.5" stopColor="#00BB5C" />
+                    <stop offset="0.75" stopColor="#187DC4" />
+                    <stop offset="1" stopColor="#58268B" />
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+};
+
+export const PeeksIcon = ({ w = 16.5, h = 16.5, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.4167 7.16667V15.4167H2.58333V2.58333H10.8333V0.75H2.58333C1.59333 0.75 0.75 1.575 0.75 2.58333V15.4167C0.75 16.425 1.59333 17.25 2.58333 17.25H15.4167C16.4433 17.25 17.25 16.425 17.25 15.4167V7.16667H15.4167ZM13.5833 7.16667L14.445 5.27833L16.3333 4.41667L14.445 3.555L13.5833 1.66667L12.7217 3.555L10.8333 4.41667L12.7217 5.27833L13.5833 7.16667ZM10.1458 7.85417L9 5.33333L7.85417 7.85417L5.33333 9L7.85417 10.1458L9 12.6667L10.1458 10.1458L12.6667 9L10.1458 7.85417Z" fill="#1E71F2"/>
+        </svg>        
+    );
+};
+
+export const RemoveIcon = ({ w = 12, h = 12, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.37695 8.62191L5.99845 6.00041L8.61995 8.62191M8.61995 3.37891L5.99795 6.00041L3.37695 3.37891" stroke="#8B8B8B" stroke-width="1.84348" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    );
+};
+export const ShareGenAiIcon = ({ w = 15, h = 15, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5001 5.50054C14.8809 5.50054 16.0002 4.49306 16.0002 3.25027C16.0002 2.00748 14.8809 1 13.5001 1C12.1193 1 11 2.00748 11 3.25027C11 4.49306 12.1193 5.50054 13.5001 5.50054Z" fill="white" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.50011 10.7505C4.88088 10.7505 6.00021 9.74306 6.00021 8.50027C6.00021 7.25748 4.88088 6.25 3.50011 6.25C2.11934 6.25 1 7.25748 1 8.50027C1 9.74306 2.11934 10.7505 3.50011 10.7505Z" fill="white" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13.5001 16.0005C14.8809 16.0005 16.0002 14.9931 16.0002 13.7503C16.0002 12.5075 14.8809 11.5 13.5001 11.5C12.1193 11.5 11 12.5075 11 13.7503C11 14.9931 12.1193 16.0005 13.5001 16.0005Z" fill="white" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5.65625 9.63281L11.3482 12.6182" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.3398 4.38281L5.65625 7.36817" stroke="white" stroke-width="1.70316" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    );
+};
+export const CopyGenAiIcon = ({ w = 21, h = 21, fill }) => {
+    return (
+        <svg width={w} height={h} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <mask id="mask0_7976_22849" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="21">
+        <rect width="20.4379" height="20.4379" fill="#D9D9D9"/>
+        </mask>
+        <g mask="url(#mask0_7976_22849)">
+        <path d="M7.66416 15.3284C7.19579 15.3284 6.79484 15.1616 6.4613 14.8281C6.12777 14.4945 5.961 14.0936 5.961 13.6252V3.40628C5.961 2.93791 6.12777 2.53696 6.4613 2.20343C6.79484 1.86989 7.19579 1.70312 7.66416 1.70312H15.3284C15.7967 1.70312 16.1977 1.86989 16.5312 2.20343C16.8647 2.53696 17.0315 2.93791 17.0315 3.40628V13.6252C17.0315 14.0936 16.8647 14.4945 16.5312 14.8281C16.1977 15.1616 15.7967 15.3284 15.3284 15.3284H7.66416ZM7.66416 13.6252H15.3284V3.40628H7.66416V13.6252ZM4.25784 18.7347C3.78948 18.7347 3.38852 18.5679 3.05499 18.2344C2.72145 17.9009 2.55469 17.4999 2.55469 17.0315V5.10944H4.25784V17.0315H13.6252V18.7347H4.25784Z" fill="white"/>
+        </g>
+        </svg>        
+    );
+};
+
+
+
+
   return (
     <svg
       width={w}
@@ -1850,3 +1910,4 @@ export const MusicNotePlusIcon = () => (
     />
   </svg>
 );
+
