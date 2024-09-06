@@ -129,31 +129,69 @@
 
 // export default NewDevicePopup;
 
+// import React from "react";
+
+// const NewDevicePopup = ({ onConfirm, onCancel }) => {
+//   return (
+//     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+//       <div className="w-[539px] h-[229px] bg-white rounded-[10px] p-[20px] shadow-lg flex flex-col justify-between items-center border border-gradient-to-r from-[#6237FF] to-[#258EFF]">
+//         <p className="text-[18px] font-bold mb-[10px] text-center w-full">
+//           Do you want to register this device with ColomboAI?
+//         </p>
+//         <p className="text-[14px] text-gray-600 text-center mb-[20px] w-full">
+//           It will help us remember your device!
+//         </p>
+//         <button
+//           className="bg-[#1E71F2] text-white py-[10px] px-[20px] rounded-[20px] border-none text-[14px] cursor-pointer mb-[10px] w-[380px] h-[40px]"
+//           onClick={onConfirm}
+//         >
+//           ✅ YES, REGISTER THIS DEVICE!
+//         </button>
+//         <button
+//           className="bg-[#888888] text-white py-[10px] px-[20px] rounded-[20px] border-none text-[14px] cursor-pointer w-[380px] h-[40px]"
+//           onClick={onCancel}
+//         >
+//           ❌ NO, USE THIS ONCE OR TEMPORARILY.
+//         </button>
+//         <p className="text-[14px] text-[#88888B] text-center w-[191px] h-[18px]">
+//           Thanks for being awesome! 😊
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default NewDevicePopup;
+
 import React from "react";
 
 const NewDevicePopup = ({ onConfirm, onCancel }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="w-[539px] h-[229px] bg-white rounded-[10px] p-[20px] shadow-lg flex flex-col justify-between items-center border border-gradient-to-r from-[#6237FF] to-[#258EFF]">
-        <p className="text-[18px] font-bold mb-[10px] text-center w-full">
+      <div className="w-[539px] h-[229px] bg-white rounded-[10px] p-[20px] shadow-lg flex flex-col justify-center items-center border border-gradient-to-r from-[#6237FF] to-[#258EFF] space-y-[30px]">
+        <p className="text-[22px] font-bold text-center w-full leading-[27px]">
           Do you want to register this device with ColomboAI?
         </p>
-        <p className="text-[14px] text-gray-600 text-center mb-[20px] w-full">
-          It will help us remember your device!
+        <p className="text-[14px] text-gray-600 text-center leading-[17px]">
+          <p className="text-[14px] text-gray-600 text-center leading-[17px]">
+            It&apos;ll help us remember your device!
+          </p>
         </p>
-        <button
-          className="bg-[#1E71F2] text-white py-[10px] px-[20px] rounded-[20px] border-none text-[14px] cursor-pointer mb-[10px] w-[380px] h-[40px]"
-          onClick={onConfirm}
-        >
-          ✅ YES, REGISTER THIS DEVICE!
-        </button>
-        <button
-          className="bg-[#888888] text-white py-[10px] px-[20px] rounded-[20px] border-none text-[14px] cursor-pointer w-[380px] h-[40px]"
-          onClick={onCancel}
-        >
-          ❌ NO, USE THIS ONCE OR TEMPORARILY.
-        </button>
-        <p className="text-[14px] text-[#88888B] text-center w-[191px] h-[18px]">
+        <div className="flex flex-col space-y-[10px] w-full items-center">
+          <button
+            className="bg-[#1E71F2] text-white py-[10px] px-[20px] rounded-[20px] text-[16px] cursor-pointer w-[237px] h-[40px] font-medium leading-[20px]"
+            onClick={onConfirm}
+          >
+            YES, REGISTER THIS DEVICE!
+          </button>
+          <button
+            className="bg-[#888888] text-white py-[10px] px-[20px] rounded-[20px] text-[16px] cursor-pointer w-[315px] h-[40px] font-medium leading-[20px]"
+            onClick={onCancel}
+          >
+            NO, USE THIS ONCE OR TEMPORARILY.
+          </button>
+        </div>
+        <p className="text-[14px] text-[#88888B] text-center w-full font-medium">
           Thanks for being awesome! 😊
         </p>
       </div>
