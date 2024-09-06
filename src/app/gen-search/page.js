@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import InputBar from '../../components/layouts/InputBar.jsx';
 import RightSideIcons from '../../components/gen-ai/RightSideIcons.jsx';
 import Chat from '../../components/MassageInputActions/Chat.jsx';
+import HistoryChat from '@/components/MassageInputActions/HistoryChat.jsx';
 
 function GenSearch() {
   const [messages, setMessages] = useState([]);
@@ -28,11 +29,12 @@ function GenSearch() {
         <RightSideIcons />
       </header>
       <main className="flex-grow">
-        <div className="w-full lg:w-[70%] px-5 lg:px-20 mx-auto mt-4">
+        <div className="w-full lg:w-[70%] px-5 lg:px-20  mt-4">
           <InputBar sendMessage={sendMessage} setUploadedFile={setUploadedFile} />
         </div>
+        
         {messages.length === 0 ? (
-          <p className="text-[16px] font-sans text-[#ACACAC] text-center mt-8 mx-auto max-w-[806px]">
+          <p className="text-[15px] absolute font-[450] text-justify font-sans text-[#ACACAC] max-w-[806px] h-[60px] top-[216px] left-[192px] ">
             Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you are seeking quick information or diving deeper into a topic, GenAI Search has you covered.
           </p>
         ) : (
@@ -42,6 +44,7 @@ function GenSearch() {
             sendMessage={sendMessage}
           />
         )}
+        <HistoryChat/>
       </main>
     </div>
   );

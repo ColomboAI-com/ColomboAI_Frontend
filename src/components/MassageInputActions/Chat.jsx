@@ -89,58 +89,64 @@
 
 // export default Chat;
 
-// 'use client';
+// import React from 'react';
+// import MessageBox from './MessageBox';
 
-// import React, { Fragment, useEffect, useRef } from 'react';
-// import MessageInput from './MessageInput.jsx';
-
-// const Chat = ({ loading, messages = [], sendMessage }) => {
-//   const messageEnd = useRef(null);
-
-//   useEffect(() => {
-//     if (messageEnd.current) {
-//       messageEnd.current.scrollIntoView({ behavior: 'smooth' });
-//     }
-//   }, [messages]);
-
+// const Chat = ({ loading, messages, sendMessage }) => {
 //   return (
-//     <div className="flex flex-col space-y-6 pt-8 pb-44 lg:pb-32 sm:mx-4 md:mx-8">
+//     <div className="space-y-4 mt-4">
 //       {messages.map((msg, i) => (
-//         <Fragment key={i}>
-//           <div className={`p-4 rounded-lg ${msg.role === 'user' ? 'bg-blue-100 self-end' : 'bg-gray-100'}`}>
-//             {msg.content}
-//           </div>
-//           {i < messages.length - 1 && (
-//             <div className="h-px w-full bg-light-secondary dark:bg-dark-secondary" />
-//           )}
-//         </Fragment>
+//         <MessageBox
+//           key={i}
+//           message={msg}
+//           isUser={msg.role === 'user'}
+//           sendMessage={sendMessage}
+//         />
 //       ))}
-//       {loading && <div className="p-4 rounded-lg bg-gray-100">Loading...</div>}
-//       <div ref={messageEnd} className="h-0" />
-//       <div className="fixed bottom-24 lg:bottom-10 left-0 right-0 px-4">
-//         <MessageInput loading={loading} sendMessage={sendMessage} />
-//       </div>
+//       {loading && <div className="text-center">Loading...</div>}
 //     </div>
 //   );
 // };
 
 // export default Chat;
-
+'use client';
 import React from 'react';
 import MessageBox from './MessageBox';
+import SearchImages from './SearchImages';
 
 const Chat = ({ loading, messages, sendMessage }) => {
+  const chatContainerStyle = {
+    maxWidth: '700px',
+    // margin: '0 auto',
+    padding: '20px',
+    position: 'relative'
+  };
+
+  const loadingStyle = {
+    textAlign: 'center',
+    padding: '8px 0',
+    // backgroundColor: '#f3f4f6',
+    borderRadius: '4px',
+  };
+
   return (
-    <div className="space-y-4 mt-4">
-      {messages.map((msg, i) => (
-        <MessageBox
-          key={i}
-          message={msg}
-          isUser={msg.role === 'user'}
-          sendMessage={sendMessage}
-        />
-      ))}
-      {loading && <div className="text-center">Loading...</div>}
+    <div style={{ position: 'relative' }}>
+      <div style={chatContainerStyle}>
+        {messages.map((msg, i) => (
+          <MessageBox
+            key={i}
+            message={msg}
+            isUser={msg.role === 'user'}
+            sendMessage={sendMessage}
+          />
+        ))}
+        {loading && (
+          <div style={loadingStyle}>
+            Loading...
+          </div>
+        )}
+      </div>
+      <SearchImages />
     </div>
   );
 };
