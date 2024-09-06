@@ -33,3 +33,9 @@ export const isValidOTP = (otp) => {
     if (otp.length < 6) return false
     return true
 }
+
+export const isValidAge = (age) => {
+    if (!age) return false
+    if (Number(age) < 0 || Number(age) > 120) return false
+    return true
+}

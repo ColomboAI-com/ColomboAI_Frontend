@@ -26,6 +26,7 @@ const AuthLayout = ({ children }) => {
             {children}
           </div>
         </div>
+        <div id="recaptcha-container"></div>
       </SocialAuthContextProvider>
     </AuthContextProvider>
   )

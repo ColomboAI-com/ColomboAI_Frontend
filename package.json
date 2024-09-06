@@ -9,11 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ffmpeg/core-mt": "0.12.5",
+    "@ffmpeg/ffmpeg": "^0.12.6",
+    "@ffmpeg/util": "0.12.1",
     "@headlessui/react": "^1.7.19",
+
     "@iarna/toml": "^2.2.5",
     "@langchain/anthropic": "^0.2.15",
     "@langchain/core": "^0.2.31",
     "@langchain/openai": "^0.2.8",
+
+    "@heroicons/react": "^1.0.6",
+
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/multer": "^1.4.12",
@@ -22,8 +29,13 @@
     "cookies-next": "^4.1.1",
     "copy-to-clipboard": "^3.3.3",
     "date-fns": "^3.6.0",
+
     "drizzle-orm": "^0.33.0",
     "emoji-picker-react": "^4.11.1",
+
+    "emoji-picker-react": "^4.9.2",
+    "ffmpeg": "^0.0.4",
+
     "firebase": "^10.10.0",
     "jwt-decode": "^4.0.0",
     "linkify-react": "^4.1.3",
