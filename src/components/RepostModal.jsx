@@ -3,10 +3,27 @@ import Button from "@/elements/Button"
 import ProfilePicture from "./elements/ProfilePicture"
 import { useContext } from "react"
 import { FeedContext } from "@/context/FeedContext"
+import { PostConstants } from "@/context/PostContext";
 
 const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
 
   const { loadings } = useContext(FeedContext)
+  // Determine the post type (Image, Video, etc.)
+  const postTypeLabel = () => {
+    switch (post?.type) {
+      case PostConstants.TYPES.IMAGE:
+        return 'image';
+      case PostConstants.TYPES.VIDEO:
+        return 'video';
+      case PostConstants.TYPES.THOUGHT:
+        return 'thought';
+      case PostConstants.TYPES.VIBE:
+        return 'vibe';
+      default:
+        return 'post'; 
+    }
+  };
+
 
   return (
     <div className="w-full flex flex-col items-center bg-white border-[#E3E3E3] sm2:w-[430px] md:w-[430px] z-50 rounded-t-[20px] md:mx-auto sm2:rounded-[20px] md:rounded-[20px] px-[14px] pt-[40px] pb-[29px]">
@@ -16,7 +33,7 @@ const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
         </div>
         <div className="mt-[29px]">
           <p className="font-sans text-[#515151] text-[22.29px] font-[450] leading-[25.57px] text-center">Are you sure you want to repost <br />
-            <span className="font-[700]">@{post?.creator?.user_name}</span>{"'s"} post ?</p>
+            <span className="font-[700]">@{post?.creator?.user_name}</span>{"'s"} {postTypeLabel()} ?</p>
         </div>
         <div>
           <Button
