@@ -1,6 +1,6 @@
 'use client'
 import { usePathname, useRouter } from "next/navigation";
-import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon } from "../Icons";
+import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon, VibesIcon } from "../Icons";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 import Dropdown from '../messages/Dropdown';
 
@@ -8,6 +8,13 @@ import InputBar from "./InputBar";
 import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useEffect, useState } from "react";
+import { Plus_Jakarta_Sans } from '@next/font/google';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+});
 
 /* eslint-disable @next/next/no-img-element */
 const Sidebar = () => {
@@ -18,7 +25,7 @@ const Sidebar = () => {
     const pathname = usePathname();
     const router = useRouter();
 
-    const feedSections = ['/feed', '/video', '/vibes', '/thoughts', '/images', '/explore', '/profile'];
+    const feedSections = ['/feed', '/video', '/thoughts', '/images', '/explore', '/profile'];
 
     useEffect(() => {
         Setname(getCookie('name'));
@@ -31,7 +38,7 @@ const Sidebar = () => {
     };
 
     return (
-        <>
+        <main className={plusJakartaSans.className}>
             {/* Desktop View */}
             <div className="w-[100%] mt-[80px]">
                 <div className="mb-[46px] mt-[20px] relative">
@@ -43,8 +50,8 @@ const Sidebar = () => {
                         button={<ProfilePicture image={profilePic} />}
                     >
                         <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
-                            <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans text-brandprimary">{name}</li></Link>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans" onClick={handleSignOut}>Log out</li>
+                            <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-brandprimary">{name}</li></Link>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>Log out</li>
                         </ul>
                     </Dropdown>
                 </div>
@@ -57,16 +64,16 @@ const Sidebar = () => {
                             <div className="w-[29px] mx-auto">
                                 <GenAiIcon w="30" h="30" className="mx-auto" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
                             </div>
-                            <p className={`${pathname === '/gen-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Gen AI</p>
+                            <p className={`${pathname === '/gen-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] `}>Gen AI</p>
                         </div>
                     </Link>
 
-                    <Link href="/task-bot">
+                    <Link href="/vibes">
                         <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <TaskBotIcon w="30" h="30" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
+                            <div className="w-[35px] mx-auto">
+                                <VibesIcon w="36" h="36" fill={pathname === '/vibes' ? "#1E71F2" : "#8E8E93"} />
                             </div>
-                            <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Task bot</p>
+                            <p className={`${pathname === '/vibes' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] `}>Vibes</p>
                         </div>
                     </Link>
 
@@ -75,16 +82,16 @@ const Sidebar = () => {
                             <div className="w-[29px] mx-auto">
                                 <FeedIcon w="30" h="30" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
                             </div>
-                            <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Feed</p>
+                            <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] `}>Feed</p>
                         </div>
                     </Link>
 
                     <Link href="/shop">
                         <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <ShopIcon w="30" h="30" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
+                            <div className="w-[35px] mx-auto">
+                                <ShopIcon w="36" h="36" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
                             </div>
-                            <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Shop</p>
+                            <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] `}>Shop</p>
                         </div>
                     </Link>
 
@@ -93,19 +100,19 @@ const Sidebar = () => {
                             <div className="w-[29px] mx-auto">
                                 <NewsIcon w="30" h="30" fill={pathname === '/news' ? "#1E71F2" : "#8E8E93"} />
                             </div>
-                            <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>News</p>
+                            <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] `}>News</p>
                         </div>
                     </Link>
                     {/* <Link> */}
                     <div className="mb-[34px]">
-                        <div className="w-[29px] mx-auto">
-                            <StarIcon w="30" h="30" fill={pathname === '/star' ? "#1E71F2" : "#8E8E93"} />
+                        <div className="w-[40px] mx-auto">
+                            <StarIcon w="40" h="40" fill={pathname === '/star' ? "#1E71F2" : "#8E8E93"} />
                         </div>
                     </div>
                     {/* </Link> */}
                 </div>
             </div>
-        </>
+        </main>
     );
 }
 
