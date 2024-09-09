@@ -24,6 +24,7 @@ import next from "next";
 import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
+import axios from "axios";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -192,28 +193,9 @@ const CreateVibe = () => {
     setText(e.target.value);
   };
 
-  const handleError = ()=>{
-      setShowError(!showError)
-  }
+
   return (
     <>
-    {showError && 
-    <div className="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center ">
-    <div className="bg-white    
-rounded-[10px] p-4 h-[267px] w-[350px] border border-0.5 border-[#F7F7F7] ">
-  <div className="flex float-end cursor-pointer" onClick={()=>handleError()}>
-  <CrossIcon w={12} h={12} fill={'#515151'}/>
-  </div>
-  <div className="flex justify-center">
-    <FaceWithPeekingEye  />
-  </div>
-  <div className="mt-8">
-  
-  Your Vibe is epic, but it's a bit too long and heavy! Keep it under 1 GB, shorter than 10 minutes, and in MP4, MOV, AVI, or WMV format. Let's make this Vibe rock!
-  </div>
-  </div>
-  </div>
-    }
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
@@ -248,7 +230,6 @@ rounded-[10px] p-4 h-[267px] w-[350px] border border-0.5 border-[#F7F7F7] ">
           <EditCover />
         </div>
       )}
-
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
           <textarea
@@ -286,7 +267,6 @@ rounded-[10px] p-4 h-[267px] w-[350px] border border-0.5 border-[#F7F7F7] ">
           )}
         </button>
       </div>
-
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
           className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
@@ -366,7 +346,6 @@ rounded-[10px] p-4 h-[267px] w-[350px] border border-0.5 border-[#F7F7F7] ">
       ) : (
         ""
       )}
-
       {nextStep === false && (
         <>
           {mediaUrl === "" && postType === defaultPostType && (
@@ -452,12 +431,9 @@ rounded-[10px] p-4 h-[267px] w-[350px] border border-0.5 border-[#F7F7F7] ">
           )}
         </>
       )}
-
       <CaptionBox />
-
       <Button
         title={"Share Reel"}
-        onClick={()=>handleError()}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
