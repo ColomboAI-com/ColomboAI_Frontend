@@ -25,6 +25,9 @@ import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
 import { Plus_Jakarta_Sans } from '@next/font/google';
+import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
+import Image from "next/image";
+
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ['400', '500', '600', '700'],
@@ -32,21 +35,21 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
 });
 
-const CreateVibe = () => {
+const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep }) => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
   const [postInput, setPostInput] = useState("");
-  const [file, setFile] = useState(null);
-  const [mediaUrl, setMediaUrl] = useState("");
+  const [file, setFile] = useState(uploadedFile);
+  const [mediaUrl, setMediaUrl] = useState(uploadedMediaUrl);
   const defaultPostType = "thought";
-  const [postType, setPostType] = useState(defaultPostType);
-  const [nextStep, setNextStep] = useState(false);
+  const [postType, setPostType] = useState(uploadedPostType);
+  const [nextStep, setNextStep] = useState(uploadedNextStep);
   const { generatePost, createPost, loadings, posts, setPosts } =
     useContext(FeedContext);
   const {
     setIsCreateVibeOpen,
     isSelectedFromComputer,
-    setIsSelectedFromComputer,
+    setIsSelectedFromComputer
   } = useContext(GlobalContext);
 
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
@@ -62,12 +65,22 @@ const CreateVibe = () => {
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
 
   useEffect(() => {
+    console.log(mediaUrl)
     return () => {
       if (mediaUrl) {
         URL.revokeObjectURL(mediaUrl);
       }
     };
   }, [mediaUrl]);
+
+  useEffect(() => {
+    console.log(file)
+    console.log("file changed")
+    if (file) {
+      onFileUpload(file)
+      setIsSelectedFromComputer(true);
+    }
+  }, [file, setFile])
 
   const iconButtons = () => {
     return (
@@ -148,13 +161,13 @@ const CreateVibe = () => {
     const selectedFiles = event.target.files;
     if (selectedFiles.length > 0) {
       const selectedFile = selectedFiles[0];
+      console.log(selectedFile)
       setFile(selectedFile);
       const fileType = selectedFile.type.split("/")[0];
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
       setNextStep(true);
-      setIsSelectedFromComputer(true);
     }
   };
 
@@ -191,7 +204,7 @@ const CreateVibe = () => {
 
   // Handlers to add text to vibe
   const handleTextClick = () => {
-    setIsEditingText(true);
+    // setIsEditingText(true);
   };
 
   const handleTextChange = (e) => {
@@ -200,9 +213,9 @@ const CreateVibe = () => {
 
 
   return (
-    <>
+    <main className={plusJakartaSans.className}>
       {!isSelectedFromComputer ? (
-        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
+        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
               {nextStep && (
@@ -217,7 +230,7 @@ const CreateVibe = () => {
               )}
             </div>
             <div className="flex-grow flex justify-center">
-              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
+              <p className="pl-[17px]  text-2xl  tracking-wider ">
                 Create new Vibes
               </p>
             </div>
@@ -273,13 +286,35 @@ const CreateVibe = () => {
               <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
             </button>
           </div>
-          <img
+          {/* <img
             key={mediaUrl}
             src={mediaUrl}
             alt="File Preview"
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
-          />
+          /> */}
+          <div className="relative h-[32rem]">
+            <img
+              key={mediaUrl}
+              src={mediaUrl}
+              alt="File Preview"
+              className="w-full h-full object-contain rounded-[0.9rem]"
+              onClick={handleTextClick}
+            />
+            {isTrimming ?
+              <Image src={tmp_trim} alt="none" className="absolute bottom-0 rounded-b-[0.9rem]"/>
+              : <Button
+                title={"NEXT"}
+                className={
+                  "absolute bottom-4 right-[2.5rem] w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
+                }
+                loading={loadings?.createVibe}
+                onClick={() => {
+                  setNextStep(false);
+                  setIsMagicPenOpen(false);
+                }}
+              />}
+          </div>
           <div className="flex flex-col">
             <div className="ml-6">
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
@@ -305,22 +340,22 @@ const CreateVibe = () => {
                   fill5={isMagicPenOpen ? "#fff" : "#58268B"}
                 />
               </button>
-              <div className="flex flex-col rounded-full bg-gray-400 py-5">
-              <button className="w-10 h-10 flex flex-row justify-center items-center">
-                <VideoEditIcon />
-              </button>
-              <button
-                className="w-10 h-10 flex flex-row justify-center items-center"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsColorPickerVisible(!isColorPickerVisible);
-                }}
-              >
-                <TextShadowIcon />
-              </button>
-              <button className="w-10 h-10 flex flex-row justify-center items-center">
-                <MusicNotePlusIcon />
-              </button>
+              <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
+                <button className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${isTrimming && `rounded-full bg-[#245FDF]`}`} onClick={e => setIsTrimming(!isTrimming)}>
+                  <VideoEditIcon />
+                </button>
+                <button
+                  className="w-10 h-10 flex flex-row justify-center items-center"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsColorPickerVisible(!isColorPickerVisible);
+                  }}
+                >
+                  <TextShadowIcon />
+                </button>
+                <button className="w-10 h-10 flex flex-row justify-center items-center">
+                  <MusicNotePlusIcon />
+                </button>
               </div>
               {isEditingText && (
                 <input
@@ -348,17 +383,17 @@ const CreateVibe = () => {
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
-              <Button
+              {/* <Button
                 title={"NEXT"}
                 className={
-                  "w-fit sm2:text-xl text-blue-500 font-sans shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-4 px-24 "
+                  "w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 "
                 }
                 loading={loadings?.createVibe}
                 onClick={() => {
                   setNextStep(false);
                   setIsMagicPenOpen(false);
                 }}
-              />
+              /> */}
             </div>
           )}
         </div>
@@ -478,7 +513,7 @@ const CreateVibe = () => {
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
       /> */}
-    </>
+    </main>
   );
 };
 
