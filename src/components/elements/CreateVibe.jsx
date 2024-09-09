@@ -24,6 +24,13 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
+import { Plus_Jakarta_Sans } from '@next/font/google';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+});
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -70,11 +77,10 @@ const CreateVibe = () => {
             toogleMagicPen();
             setIsColorPickerVisible(!isColorPickerVisible);
           }}
-          className={`p-2 rounded-full ${
-            isMagicPenOpen
-              ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-              : "bg-white"
-          } outline-none focus:ring-offset-0 focus:ring-0`}
+          className={`p-2 rounded-full ${isMagicPenOpen
+            ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+            : "bg-white"
+            } outline-none focus:ring-offset-0 focus:ring-0`}
         >
           <CreateMagicPenIcon
             w={25}
@@ -220,15 +226,7 @@ const CreateVibe = () => {
             </button>
           </div>
         </div>
-      ) : (
-        <div>
-          <button>
-            <BackButtonIcon w={20} h={20} fill={"#515151"} />
-          </button>
-          <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
-          <EditCover />
-        </div>
-      )}
+      ) : null}
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
           <textarea
@@ -268,49 +266,92 @@ const CreateVibe = () => {
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
+          className={`relative my-8 pb-8 ${isSelectedTextIcon ? "opacity-50" : ""} flex flex-row w-full justify-center`}
         >
+          <div>
+            <button onClick={e => setIsSelectedFromComputer(false)} className="mr-6">
+              <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+            </button>
+          </div>
           <img
             key={mediaUrl}
             src={mediaUrl}
             alt="File Preview"
-            className={`w-full h-full object-contain`}
+            className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           />
+          <div className="flex flex-col">
+            <div className="ml-6">
+              <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
+            </div>
+            <div className="flex flex-col h-full justify-center ml-4 gap-3">
+              <button
+                onClick={() => {
+                  toogleMagicPen();
+                  setIsColorPickerVisible(!isColorPickerVisible);
+                }}
+                className={`p-2 rounded-full self-start ${isMagicPenOpen
+                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                  : "bg-white"
+                  } outline-none focus:ring-offset-0 focus:ring-0`}
+              >
+                <CreateMagicPenIcon
+                  w={25}
+                  h={25}
+                  fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
+                  fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
+                  fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
+                  fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
+                  fill5={isMagicPenOpen ? "#fff" : "#58268B"}
+                />
+              </button>
+              <div className="flex flex-col rounded-full bg-gray-400 py-5">
+              <button className="w-10 h-10 flex flex-row justify-center items-center">
+                <VideoEditIcon />
+              </button>
+              <button
+                className="w-10 h-10 flex flex-row justify-center items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsColorPickerVisible(!isColorPickerVisible);
+                }}
+              >
+                <TextShadowIcon />
+              </button>
+              <button className="w-10 h-10 flex flex-row justify-center items-center">
+                <MusicNotePlusIcon />
+              </button>
+              </div>
+              {isEditingText && (
+                <input
+                  type="text"
+                  placeholder="text created manually"
+                  value={text}
+                  onChange={handleTextChange}
+                  className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                  autoFocus
+                  style={{ color: textColor }}
+                />
+              )}
 
-          <div className=" absolute top-3 right-2">
-            {iconButtons()}
-
-            {isEditingText && (
-              <input
-                type="text"
-                placeholder="text created manually"
-                value={text}
-                onChange={handleTextChange}
-                className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
-                autoFocus
-                style={{ color: textColor }}
-              />
-            )}
-
-            <textarea
+              {/* <textarea
               value={postInput}
               placeholder="text to be created by magic pen"
               onChange={(e) => setPostInput(e.target.value)}
               style={{ color: textColor }}
-            />
+            /> */}
+            </div>
           </div>
-
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
 
           {nextStep && !isMagicPenOpen && (
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
               <Button
                 title={"NEXT"}
                 className={
-                  "w-fit sm2:text-xl text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-4 px-24 "
+                  "w-fit sm2:text-xl text-blue-500 font-sans shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-4 px-24 "
                 }
                 loading={loadings?.createVibe}
                 onClick={() => {
@@ -430,13 +471,13 @@ const CreateVibe = () => {
           )}
         </>
       )}
-      <CaptionBox />
-      <Button
+      {/* <CaptionBox /> */}
+      {/* <Button
         title={"Share Reel"}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
-      />
+      /> */}
     </>
   );
 };

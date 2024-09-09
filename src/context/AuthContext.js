@@ -70,8 +70,7 @@ export const AuthContextProvider = ({ children }) => {
               email: inputs.email,
               contact_number: inputs.phone,
             };
-      const res = await axios.post(`${ROOT_URL_AUTH}/auth/get-otp`, data);
-      setNew_device(res.data.new_device);
+            const res = await axios.post(`${ROOT_URL_AUTH}/auth/get-otp`, data, { headers: { "Content-Type": "application/json" }});      setNew_device(res.data.new_device);
       MessageBox("success", res.data.message);
       return res;
     } catch (err) {

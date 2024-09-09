@@ -1,9 +1,15 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { GlobalContext } from "@/context/GlobalContext";
+
+
 
 const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   const [isMemuOpen, setIsMenuOpen] = useState(false);
+  const {
+    isSelectedFromComputer,
+  } = useContext(GlobalContext);
 
   // Handlers for 3-dots menu
   const toggleMenu = () => {
@@ -24,7 +30,7 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   return (
     <div>
       <button onClick={toggleMenu}>
-        <DotsVerticalIcon className="h-10 w-10 text-gray-600" />
+        <DotsVerticalIcon className={isSelectedFromComputer ? `text-white h-6 w-6` : `h-10 w-10  text-gray-600`} />
       </button>
       {isMemuOpen && (
         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
