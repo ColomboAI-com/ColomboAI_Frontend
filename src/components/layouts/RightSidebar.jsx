@@ -60,8 +60,8 @@ const RightSidebar = () => {
         </div>
         <Trendings />
         <div className="px-[22px]">
-        <img src="/images/home/new_ad.png" alt="sponsored_image" className="w-full" />
-        {/* <img src="/images/home/new_ad2.png" className="w-full" /> */}
+        <img src="/images/home/new_ad.png" alt="sponsored_image" className="w-full pl-1" />
+        {/* <img src="/images/home/new_ad2.png" alt="sponsored_image" className="w-full pl-1" /> */}
           {/* <Sponsored /> */}
           <Events />
           <Advertisement />
