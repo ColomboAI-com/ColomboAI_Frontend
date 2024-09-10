@@ -24,6 +24,7 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
+<<<<<<< mock-vibes-rohan
 import { Plus_Jakarta_Sans } from '@next/font/google';
 import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
 import Image from "next/image";
@@ -37,20 +38,25 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep, onReset }) => {
+=======
+import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
+
+const CreateVibe = () => {
+>>>>>>> dev
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
   const [postInput, setPostInput] = useState("");
-  const [file, setFile] = useState(uploadedFile);
-  const [mediaUrl, setMediaUrl] = useState(uploadedMediaUrl);
+  const [file, setFile] = useState(null);
+  const [mediaUrl, setMediaUrl] = useState("");
   const defaultPostType = "thought";
-  const [postType, setPostType] = useState(uploadedPostType);
-  const [nextStep, setNextStep] = useState(uploadedNextStep);
+  const [postType, setPostType] = useState(defaultPostType);
+  const [nextStep, setNextStep] = useState(false);
   const { generatePost, createPost, loadings, posts, setPosts } =
     useContext(FeedContext);
   const {
     setIsCreateVibeOpen,
     isSelectedFromComputer,
-    setIsSelectedFromComputer
+    setIsSelectedFromComputer,
   } = useContext(GlobalContext);
 
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
@@ -64,9 +70,8 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
-
+  const [showError,setShowError]  = useState(false)
   useEffect(() => {
-    console.log(mediaUrl)
     return () => {
       if (mediaUrl) {
         URL.revokeObjectURL(mediaUrl);
@@ -74,6 +79,7 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
     };
   }, [mediaUrl]);
 
+<<<<<<< mock-vibes-rohan
   useEffect(() => {
     console.log(file)
     console.log("file changed")
@@ -84,6 +90,8 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   }, [file, setFile])
 
 
+=======
+>>>>>>> dev
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -92,10 +100,11 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
             toogleMagicPen();
             setIsColorPickerVisible(!isColorPickerVisible);
           }}
-          className={`p-2 rounded-full ${isMagicPenOpen
-            ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-            : "bg-white"
-            } outline-none focus:ring-offset-0 focus:ring-0`}
+          className={`p-2 rounded-full ${
+            isMagicPenOpen
+              ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+              : "bg-white"
+          } outline-none focus:ring-offset-0 focus:ring-0`}
         >
           <CreateMagicPenIcon
             w={25}
@@ -163,13 +172,13 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
     const selectedFiles = event.target.files;
     if (selectedFiles.length > 0) {
       const selectedFile = selectedFiles[0];
-      console.log(selectedFile)
       setFile(selectedFile);
       const fileType = selectedFile.type.split("/")[0];
       setPostType(fileType);
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
       setNextStep(true);
+      setIsSelectedFromComputer(true);
     }
   };
 
@@ -206,18 +215,26 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
 
   // Handlers to add text to vibe
   const handleTextClick = () => {
-    // setIsEditingText(true);
+    setIsEditingText(true);
   };
 
   const handleTextChange = (e) => {
     setText(e.target.value);
   };
 
-
+  const handleVibeValidation = ()=>{
+    // to-do task 
+    // call this method whenever there is error while creating a vibe
+    setShowError(!showError)
+  }
+  
   return (
-    <main className={plusJakartaSans.className}>
+    <>
+      {showError && 
+        <CreateVibeErrorComponent currentState={showError}/>
+    }
       {!isSelectedFromComputer ? (
-        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto">
+        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
               {nextStep && (
@@ -232,7 +249,7 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
               )}
             </div>
             <div className="flex-grow flex justify-center">
-              <p className="pl-[17px]  text-2xl  tracking-wider ">
+              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
                 Create new Vibes
               </p>
             </div>
@@ -241,7 +258,15 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
             </button>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div>
+          <button>
+            <BackButtonIcon w={20} h={20} fill={"#515151"} />
+          </button>
+          <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
+          <EditCover />
+        </div>
+      )}
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
           <textarea
@@ -281,121 +306,65 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 pb-8 ${isSelectedTextIcon ? "opacity-50" : ""} flex flex-row w-full justify-center`}
+          className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
         >
+<<<<<<< mock-vibes-rohan
           <div>
             <button onClick={e => onReset()} className="mr-6">
               <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
             </button>
           </div>
           {/* <img
+=======
+          <img
+>>>>>>> dev
             key={mediaUrl}
             src={mediaUrl}
             alt="File Preview"
-            className={`h-[32rem] object-contain rounded-[0.9rem]`}
+            className={`w-full h-full object-contain`}
             onClick={handleTextClick}
-          /> */}
-          <div className="relative h-[32rem]">
-            <img
-              key={mediaUrl}
-              src={mediaUrl}
-              alt="File Preview"
-              className="w-full h-full object-contain rounded-[0.9rem]"
-              onClick={handleTextClick}
-            />
-            {isTrimming ?
-              <Image src={tmp_trim} alt="none" className="absolute bottom-0 rounded-b-[0.9rem]"/>
-              : <Button
-                title={"NEXT"}
-                className={
-                  "absolute bottom-4 right-[2.5rem] w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
-                }
-                loading={loadings?.createVibe}
-                onClick={() => {
-                  setNextStep(false);
-                  setIsMagicPenOpen(false);
-                }}
-              />}
-          </div>
-          <div className="flex flex-col">
-            <div className="ml-6">
-              <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
-            </div>
-            <div className="flex flex-col h-full justify-center ml-4 gap-3">
-              <button
-                onClick={() => {
-                  toogleMagicPen();
-                  setIsColorPickerVisible(!isColorPickerVisible);
-                }}
-                className={`p-2 rounded-full self-start ${isMagicPenOpen
-                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                  : "bg-white"
-                  } outline-none focus:ring-offset-0 focus:ring-0`}
-              >
-                <CreateMagicPenIcon
-                  w={25}
-                  h={25}
-                  fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
-                  fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
-                  fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
-                  fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
-                  fill5={isMagicPenOpen ? "#fff" : "#58268B"}
-                />
-              </button>
-              <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
-                <button className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${isTrimming && `rounded-full bg-[#245FDF]`}`} onClick={e => setIsTrimming(!isTrimming)}>
-                  <VideoEditIcon />
-                </button>
-                <button
-                  className="w-10 h-10 flex flex-row justify-center items-center"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsColorPickerVisible(!isColorPickerVisible);
-                  }}
-                >
-                  <TextShadowIcon />
-                </button>
-                <button className="w-10 h-10 flex flex-row justify-center items-center">
-                  <MusicNotePlusIcon />
-                </button>
-              </div>
-              {isEditingText && (
-                <input
-                  type="text"
-                  placeholder="text created manually"
-                  value={text}
-                  onChange={handleTextChange}
-                  className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
-                  autoFocus
-                  style={{ color: textColor }}
-                />
-              )}
+          />
 
-              {/* <textarea
+          <div className=" absolute top-3 right-2">
+            {iconButtons()}
+
+            {isEditingText && (
+              <input
+                type="text"
+                placeholder="text created manually"
+                value={text}
+                onChange={handleTextChange}
+                className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                autoFocus
+                style={{ color: textColor }}
+              />
+            )}
+
+            <textarea
               value={postInput}
               placeholder="text to be created by magic pen"
               onChange={(e) => setPostInput(e.target.value)}
               style={{ color: textColor }}
-            /> */}
-            </div>
+            />
           </div>
+
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
 
           {nextStep && !isMagicPenOpen && (
-            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
-              {/* <Button
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
+              <Button
                 title={"NEXT"}
                 className={
-                  "w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 "
+                  "w-fit sm2:text-xl text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-4 px-24 "
                 }
                 loading={loadings?.createVibe}
                 onClick={() => {
                   setNextStep(false);
                   setIsMagicPenOpen(false);
                 }}
-              /> */}
+              />
             </div>
           )}
         </div>
@@ -508,14 +477,15 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
           )}
         </>
       )}
-      {/* <CaptionBox /> */}
-      {/* <Button
+      <CaptionBox />
+      <Button
         title={"Share Reel"}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
-      /> */}
-    </main>
+        // onClick={()=>handleVibeValidation()}
+      />
+    </>
   );
 };
 

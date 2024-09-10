@@ -57,6 +57,7 @@ const DefaultLayout = ({ children }) => {
     posts,
     setPosts,
     isCreateVibeOpen,
+<<<<<<< mock-vibes-rohan
     setIsCreateVibeOpen,
     isSelectedFromComputer,
     setIsSelectedFromComputer
@@ -81,6 +82,10 @@ const DefaultLayout = ({ children }) => {
     setUploadedNextStep(false);
     setIsSelectedFromComputer(false);
   }
+=======
+    setIsCreateVibeOpen
+  } = useContext(GlobalContext);
+>>>>>>> dev
   const [isShowChatMenu, setIsShowChatMenu] = useState(false);
   const StoreFcmToken = async (token) => {
     try {
@@ -135,7 +140,7 @@ const DefaultLayout = ({ children }) => {
           <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
-
+          
 
           <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[93%] ml-[7%] lg:ml-[7%] md:ml-[9%] flex flex-col relative sm:ml-[0]">
             <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
@@ -154,7 +159,7 @@ const DefaultLayout = ({ children }) => {
               isShowChatMenu={isShowChatMenu}
             />
 
-            {!isSelectedFromComputer ? <div className="flex flex-1 border-purple-400">
+            <div className="flex flex-1 border- border-purple-400">
               {isCreatePostOpen && (
                 <Modal
                   isOpen={isCreatePostOpen}
@@ -164,6 +169,7 @@ const DefaultLayout = ({ children }) => {
                   <CreatePost />
                 </Modal>
               )}
+<<<<<<< mock-vibes-rohan
               {isCreateVibeOpen && (
                 <Modal
                   isOpen={isCreateVibeOpen}
@@ -173,6 +179,19 @@ const DefaultLayout = ({ children }) => {
                   <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
                 </Modal>
               )}
+=======
+
+            {isCreateVibeOpen && (
+              <Modal
+                isOpen={isCreateVibeOpen}
+                setIsOpen={setIsCreateVibeOpen}
+                className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
+              >
+                <CreateVibe />
+              </Modal>
+            )}
+
+>>>>>>> dev
               {isShareOpen && (
                 <Modal
                   isOpen={isShareOpen}
@@ -218,18 +237,20 @@ const DefaultLayout = ({ children }) => {
                 <RightSidebar />
               </div>
               {/* // </> */}
+<<<<<<< mock-vibes-rohan
             </div> : 
             <div className="bg-[#333333] w-full h-full">
               <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
+=======
+>>>>>>> dev
             </div>
-            }
 
             {/* <CommentSection /> */}
           </div>
         </div>
 
         {/* Bottombar Mobile View */}
-        {/* <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
+        <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-4 flex flex-wrap items-center justify-evenly">
               <Link href="/gen-search">
@@ -337,7 +358,7 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       {/* Bottombar Mobile View */}
       <Bottombar />
