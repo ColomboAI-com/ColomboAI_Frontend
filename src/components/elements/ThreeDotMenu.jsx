@@ -1,13 +1,14 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useContext } from "react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { GlobalContext } from "@/context/GlobalContext";
 
 const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
-  const [isMemuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isSelectedFromComputer } = useContext(GlobalContext);
 
   // Handlers for 3-dots menu
   const toggleMenu = () => {
-    setIsMenuOpen(!isMemuOpen);
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const handleSaveToDrafts = () => {
@@ -22,12 +23,14 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   };
 
   return (
-    <div>
+    <div className="relative inline-block">
       <button onClick={toggleMenu}>
-        <DotsVerticalIcon className="h-10 w-10 text-gray-600" />
+        <DotsVerticalIcon className={isSelectedFromComputer ? `text-white h-6 w-6` : `h-10 w-10 text-gray-600`} />
       </button>
-      {isMemuOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+      {isMenuOpen && (
+        <div
+          className={`absolute left-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg z-50`}
+        >
           <div className="py-1">
             <button
               onClick={handleSaveToDrafts}
