@@ -27,6 +27,7 @@ import axios from "axios";
 import { Plus_Jakarta_Sans } from '@next/font/google';
 import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
 import Image from "next/image";
+import { set } from "date-fns";
 
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -35,7 +36,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
 });
 
-const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep }) => {
+const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep, onReset }) => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
   const [postInput, setPostInput] = useState("");
@@ -81,6 +82,7 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
       setIsSelectedFromComputer(true);
     }
   }, [file, setFile])
+
 
   const iconButtons = () => {
     return (
@@ -282,7 +284,7 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
           className={`relative my-8 pb-8 ${isSelectedTextIcon ? "opacity-50" : ""} flex flex-row w-full justify-center`}
         >
           <div>
-            <button onClick={e => setIsSelectedFromComputer(false)} className="mr-6">
+            <button onClick={e => onReset()} className="mr-6">
               <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
             </button>
           </div>

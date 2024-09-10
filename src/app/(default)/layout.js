@@ -59,6 +59,7 @@ const DefaultLayout = ({ children }) => {
     isCreateVibeOpen,
     setIsCreateVibeOpen,
     isSelectedFromComputer,
+    setIsSelectedFromComputer
   } = useContext(GlobalContext);
   const [uploadedFile, setUploadedFile] = useState(null);
   const defaultPostType = "thought";
@@ -72,8 +73,14 @@ const DefaultLayout = ({ children }) => {
     const fileUrl = URL.createObjectURL(file);
     setUploadedMediaUrl(fileUrl);
     setUploadedNextStep(true);
-
   };
+  const handleReset = () => {
+    setUploadedFile(null);
+    setUploadedPostType(defaultPostType)
+    setUploadedMediaUrl("");
+    setUploadedNextStep(false);
+    setIsSelectedFromComputer(false);
+  }
   const [isShowChatMenu, setIsShowChatMenu] = useState(false);
   const StoreFcmToken = async (token) => {
     try {
@@ -163,7 +170,7 @@ const DefaultLayout = ({ children }) => {
                   setIsOpen={setIsCreateVibeOpen}
                   className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                 >
-                  <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep}/>
+                  <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
                 </Modal>
               )}
               {isShareOpen && (
@@ -213,7 +220,7 @@ const DefaultLayout = ({ children }) => {
               {/* // </> */}
             </div> : 
             <div className="bg-[#333333] w-full h-full">
-              <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep}/>
+              <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
             </div>
             }
 
