@@ -3,6 +3,7 @@ import "./globals.css"
 import GlobalContextProvider from "@/context/GlobalContext"
 import FeedContextProvider from "@/context/FeedContext"
 import StoryContextProvider from "@/context/StoryContext"
+import VibeContextProvider from "@/context/VibeContext"
 
 export const metadata = {
   title: "ColomboAI",
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
           <GlobalContextProvider>
             <FeedContextProvider>
               <StoryContextProvider>
-                {children}
+                <VibeContextProvider>
+                  {children}
+                </VibeContextProvider>
               </StoryContextProvider>
             </FeedContextProvider>
           </GlobalContextProvider>

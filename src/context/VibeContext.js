@@ -15,27 +15,28 @@ export default function VibeContextProvider({ children }) {
         createVibe: false
     })
     
-    const createVibe = async ({fileType, file, content}) => {
+    const createVibe = async ({type, file, text, textColor, caption, isHideLikes = false, isHideComments = false }) => {
         try {
-            setLoadings(prev => ({ ...prev, createStory: true }))
+            setLoadings(prev => ({ ...prev, createVibe: true }))
             const formData = new FormData()
-            formData.append('type', fileType)
-            formData.append('file', file[0])
-
-            // fields to possibly include
-            // type: postType,
-            // file: file, // This should be the file object if uploading media
-            // mediaUrl: mediaUrl,
-            // hideLikes: false,
-            // isCommentOff: false,
+            formData.append('type', type)
+            formData.append('file', file || '')
+            formData.append('text', text || '')
+            formData.append('textColor', textColor || '')
+            formData.append('caption', caption || '')
+            formData.append('hideLikes', isHideLikes)
+            formData.append('isCommentOff', isHideComments)
+            // fields to possibly include:
+            // music 
+            // taggedPeople
 
             const response = await axios.post(`${ROOT_URL_FEED}/vibes/create`,
                 formData,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
+                {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                }
           );
           if (response.status === 201) {
             console.log("Hitting create vibe endpoint successfully");
@@ -62,6 +63,7 @@ export default function VibeContextProvider({ children }) {
                     }
                 }
             )
+            console.log(response.data)
             return response.data
         } catch (error) {
             handleError(error)
@@ -84,3 +86,5 @@ export default function VibeContextProvider({ children }) {
     )
 }
 
+
+export { VibeContextProvider, VibeContext };

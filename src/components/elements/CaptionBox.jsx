@@ -3,8 +3,8 @@ import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
 
-const CaptionBox = () => {
-  const [postInput, setPostInput] = useState("");
+const CaptionBox = ({captionInput, setCaptionInput}) => {
+  // const [captionInput, setCaptionInput] = useState("");
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
@@ -22,7 +22,7 @@ const CaptionBox = () => {
 
   const handlePostInputChange = (e) => {
     const newText = e.target.value;
-    setPostInput(newText);
+    setCaptionInput(newText);
     handleCharCount(newText);
   };
 
@@ -32,7 +32,7 @@ const CaptionBox = () => {
       setMediaUrl(result?.text);
       setPostType(result?.response_type);
     } else if (result?.response_type === "text") {
-      setPostInput(result?.text);
+      setCaptionInput(result?.text);
       handleCharCount(result?.text);
     }
     setIsMagicPenInputVisible(false);
@@ -95,7 +95,7 @@ const CaptionBox = () => {
         
         <div className="relative">
           <textarea
-            value={postInput}
+            value={captionInput}
             placeholder="Write your caption here"
             onChange={handlePostInputChange}
             className="w-full p-3 rounded-md text-gray-700 bg-white placeholder-gray-400 text-sm resize-none outline-none mb-1"

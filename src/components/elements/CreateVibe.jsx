@@ -24,6 +24,7 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
+import { VibeContext } from "@/context/VibeContext";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -41,6 +42,7 @@ const CreateVibe = () => {
     isSelectedFromComputer,
     setIsSelectedFromComputer,
   } = useContext(GlobalContext);
+  const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
@@ -53,6 +55,7 @@ const CreateVibe = () => {
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
+  const [captionInput, setCaptionInput] = useState("");
 
   useEffect(() => {
     return () => {
@@ -168,12 +171,18 @@ const CreateVibe = () => {
   };
 
   const handleCreateVibe = async () => {
-    const res = await createPost({ type: postType, file, content: postInput });
+    const res = await createPost({
+      file,
+      type: postType,
+      text: postInput,
+      textColor,
+      caption: captionInput
+    });
     if (res) {
       MessageBox("success", res.message);
-      let postData = [...posts];
-      postData.unshift(res.data?.post);
-      setPosts(postData);
+      let vibeData = [...vibes];
+      vibeData.unshift(res.data?.vibe);
+      setVibes(vibeData);
       setIsCreateVibeOpen(false);
     }
   };
@@ -191,7 +200,6 @@ const CreateVibe = () => {
   const handleTextChange = (e) => {
     setText(e.target.value);
   };
-
 
   return (
     <>
@@ -430,9 +438,13 @@ const CreateVibe = () => {
           )}
         </>
       )}
-      <CaptionBox />
+      <CaptionBox
+        captionInput={captionInput}
+        setCaptionInput={setCaptionInput}
+      />
       <Button
         title={"Share Reel"}
+        onClick={createVibe}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
