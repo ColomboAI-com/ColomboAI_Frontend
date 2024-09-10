@@ -18,7 +18,7 @@ const AuthLayout = ({ children }) => {
           <div>{children}</div>
         </div>
         <div className="2xl:hidden xl:hidden h-screen font-sans sm:block md:block sm2:block lg:hidden">
-          <div className="bg-[url('/images/auth/mobile-verification.png')] bg-no-repeat bg-[length:100%_100%] bg-top sm:h-[322px] sm2:h-[450px] md:h-[450px] flex items-center justify-center">
+          <div className="bg-[url('/images/auth/mobile-verification.png')] bg-no-repeat bg-[length:100%_100%] bg-top sm:h-[235px] sm:shrink-0 sm2:md:shrink-0 sm2:h-[450px] md:h-[450px] flex items-center justify-center">
             <div>
               <h5 className="text-[32px] font-sans text-[#fff] text-center">
                 Welcome to
