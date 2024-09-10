@@ -1833,38 +1833,38 @@ export const CopyGenAiIcon = ({ w = 21, h = 21, fill }) => {
 
 
 
-  return (
-    <svg
-      width={w}
-      height={h}
-      viewBox="0 0 42 42"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="21" cy="21" r="21" fill="url(#paint0_linear_4771_34232)" />
-      <path
-        d="M22.4164 31.666C21.7575 33.4447 19.2425 33.4447 18.5836 31.666L16.4119 25.7953C16.2045 25.2362 15.7643 24.7953 15.2045 24.5883L9.33384 22.416C7.55539 21.7579 7.55539 19.2421 9.33384 18.584L15.2045 16.4116C15.7643 16.2047 16.2045 15.7638 16.4119 15.2046L18.5836 9.33398C19.2425 7.55534 21.7575 7.55534 22.4164 9.33398L24.5881 15.2046C24.7955 15.7638 25.2357 16.2047 25.7955 16.4116L31.6662 18.584C33.4446 19.2421 33.4446 21.7579 31.6662 22.416L25.7955 24.5883C25.2357 24.7953 24.7955 25.2362 24.5881 25.7953L22.4164 31.666Z"
-        fill="white"
-      />
-      <defs>
-        <linearGradient
-          id="paint0_linear_4771_34232"
-          x1="21"
-          y1="0"
-          x2="21"
-          y2="42"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#FF0049" />
-          <stop offset="0.25" stopColor="#FFBE3B" />
-          <stop offset="0.5" stopColor="#00BB5C" />
-          <stop offset="0.75" stopColor="#187DC4" />
-          <stop offset="1" stopColor="#58268B" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-};
+//   return (
+//     <svg
+//       width={w}
+//       height={h}
+//       viewBox="0 0 42 42"
+//       fill="none"
+//       xmlns="http://www.w3.org/2000/svg"
+//     >
+//       <circle cx="21" cy="21" r="21" fill="url(#paint0_linear_4771_34232)" />
+//       <path
+//         d="M22.4164 31.666C21.7575 33.4447 19.2425 33.4447 18.5836 31.666L16.4119 25.7953C16.2045 25.2362 15.7643 24.7953 15.2045 24.5883L9.33384 22.416C7.55539 21.7579 7.55539 19.2421 9.33384 18.584L15.2045 16.4116C15.7643 16.2047 16.2045 15.7638 16.4119 15.2046L18.5836 9.33398C19.2425 7.55534 21.7575 7.55534 22.4164 9.33398L24.5881 15.2046C24.7955 15.7638 25.2357 16.2047 25.7955 16.4116L31.6662 18.584C33.4446 19.2421 33.4446 21.7579 31.6662 22.416L25.7955 24.5883C25.2357 24.7953 24.7955 25.2362 24.5881 25.7953L22.4164 31.666Z"
+//         fill="white"
+//       />
+//       <defs>
+//         <linearGradient
+//           id="paint0_linear_4771_34232"
+//           x1="21"
+//           y1="0"
+//           x2="21"
+//           y2="42"
+//           gradientUnits="userSpaceOnUse"
+//         >
+//           <stop stopColor="#FF0049" />
+//           <stop offset="0.25" stopColor="#FFBE3B" />
+//           <stop offset="0.5" stopColor="#00BB5C" />
+//           <stop offset="0.75" stopColor="#187DC4" />
+//           <stop offset="1" stopColor="#58268B" />
+//         </linearGradient>
+//       </defs>
+//     </svg>
+//   );
+// };
 
 export const TextShadowIcon = ({ width = 24, height = 24, fill = "black" }) => (
   <svg

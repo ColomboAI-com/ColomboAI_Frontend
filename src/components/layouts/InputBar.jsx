@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef} from 'react';
 import { SendIcon, UploudIcon, PeeksIcon, RemoveIcon } from "../Icons";
 
 const InputBar = ({ sendMessage, setUploadedFile }) => {
