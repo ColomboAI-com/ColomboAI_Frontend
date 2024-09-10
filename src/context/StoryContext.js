@@ -20,14 +20,16 @@ export default function StoryContextProvider({ children }) {
     })
 
 
-    const createStory = async ({ fileType, file, content }) => {
+    const createStory = async ({ fileType, file, content,isHideLikes = false, isHideComments = false  }) => {
         try {
             setLoadings(prev => ({ ...prev, createStory: true }))
             const formData = new FormData()
             formData.append('type', fileType)
             formData.append('file', file[0])
             formData.append('text', content)
-            const res = await axios.post(`${ROOT_URL_FEED}/stories/create`,
+            formData.append('hideLikes', isHideLikes)
+            formData.append('isCommentOff', isHideComments)
+            const res = await axios.post(${ROOT_URL_FEED}/stories/create,
                 formData,
                 {
                     headers: {
@@ -46,7 +48,7 @@ export default function StoryContextProvider({ children }) {
     const getStoriesOfUser = async (userid) => {
         try {
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.get(`${ROOT_URL_FEED}/stories/user/${userid}`,
+            const res = await axios.get(${ROOT_URL_FEED}/stories/users/${userid},
                 {
                     headers: {
                         Authorization: getCookie('token')
@@ -64,7 +66,7 @@ export default function StoryContextProvider({ children }) {
     const getRecentStories = async () => {
         try {
             setLoadings(prev => ({ ...prev, reactStory: true }))
-            const res = await axios.get(`${ROOT_URL_FEED}/stories/recent`,
+            const res = await axios.get(${ROOT_URL_FEED}/stories/recent,
                 {
                     headers: {
                         Authorization: getCookie('token')
@@ -83,7 +85,7 @@ export default function StoryContextProvider({ children }) {
         try {
             const token = getCookie('token');
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.post(`${ROOT_URL_FEED}/stories/${userid}/view`,{},
+            const res = await axios.post(${ROOT_URL_FEED}/stories/users/${userid}/view,{},
                 {
                     headers: {
                         Authorization: token
