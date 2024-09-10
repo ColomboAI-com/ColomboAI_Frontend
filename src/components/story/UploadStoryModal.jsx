@@ -4,13 +4,6 @@ import Button from "@/elements/Button";
 import { useState, useEffect, useContext } from "react";
 import { StoryContext } from "@/context/StoryContext";
 import { MessageBox } from "../MessageBox";
-import { Plus_Jakarta_Sans } from '@next/font/google';
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['400', '500', '600', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
-});
 
 const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const [file, setFile] = useState(null);
@@ -68,7 +61,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   };
 
   return (
-    <main className={plusJakartaSans.className}>
+    <>
       <div className=" border-[1px] border-brandprimary rounded-[10px] lg:min-h-[74vh] lg:max-h-[74vh] overflow-y-auto font-sans">
         <div className="flex items-center justify-between p-[22px] border-b-2 border-gray-300">
           <div>
@@ -161,7 +154,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           </div>
         )}
       </div>
-    </main>
+    </>
   );
 };
 

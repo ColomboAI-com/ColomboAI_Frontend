@@ -5,13 +5,6 @@ import Modal from "../Modal";
 
 import { StoryContext } from "@/context/StoryContext"
 import { clearCookie, getCookie } from "@/utlils/cookies";
-import { Plus_Jakarta_Sans } from '@next/font/google';
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['400', '500', '600', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
-});
 
 const CreateStory = ({reFetchingStory}) => {
     const [isCreateStoryOpen,setIsCreateStoryOpen] = useState(false);
@@ -23,7 +16,7 @@ const CreateStory = ({reFetchingStory}) => {
  
 
     return (
-        <main className={plusJakartaSans.className}>
+        <>
         {/* <div className="bg-[url('/images/home/create-story.svg')] bg-[length:100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}> */}
         <div className="relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}>
             <img src={getCookie('profilePic')} className="h-[167px] object-cover rounded-[10px]" />
@@ -32,7 +25,7 @@ const CreateStory = ({reFetchingStory}) => {
                 <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
                 <img src="/images/home/add-new-story.svg" />
                 </div>
-                <h6 className="text-[12px] font-[450px]  text-white text-center relative top-9">
+                <h6 className="text-[12px] font-[450px] font-sans text-white text-center relative top-9">
                 Create New Story
                 
                 </h6>
@@ -44,7 +37,7 @@ const CreateStory = ({reFetchingStory}) => {
                   <UploadStoryModal setIsCreateStoryOpen={setIsCreateStoryOpen} getStory={reFetchingStory} />
                 </Modal>
               }
-        </main>
+        </>
     );
 }
 
