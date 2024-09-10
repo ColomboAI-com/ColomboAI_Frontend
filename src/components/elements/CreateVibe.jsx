@@ -194,9 +194,11 @@ const CreateVibe = () => {
   };
 
   const handleVibeValidation = ()=>{
+    // to-do task 
+    // call this method whenever there is error while creating a vibe
     setShowError(!showError)
   }
-
+  
   return (
     <>
       {showError && 
@@ -443,7 +445,7 @@ const CreateVibe = () => {
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
-        onClick={()=>handleVibeValidation()}
+        // onClick={()=>handleVibeValidation()}
       />
     </>
   );

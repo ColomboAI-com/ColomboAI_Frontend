@@ -8,6 +8,7 @@ import { IoIosMusicalNotes } from "react-icons/io";
 import RepostVibe from '@/components/feed/vibes/Repost';
 import ShareVibe from '@/components/feed/vibes/Share';
 import { useState } from 'react';
+import BannerAdComponent from '@/components/feed/vibes/BannerAd';
 export default function Vibes() {
   const [showRepost,setRepost] = useState(false)
   const [showShare,setShare] = useState(false)
@@ -17,7 +18,9 @@ export default function Vibes() {
   const handleShare =() =>{
     setShare(!showShare)
   }
+
   return (
+    
     <div className='border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans '>
               {showRepost &&
               <RepostVibe currentState = {showRepost} />
@@ -49,7 +52,12 @@ export default function Vibes() {
                 <p>Madness - by Moonbin and Sanha</p>
               </div>
             </div>
+
+           <BannerAdComponent/>
           </div>
+
+
+
         </div>
 
         {/* Side Options */}
@@ -90,8 +98,12 @@ export default function Vibes() {
               <img src="/images/vibes/vibes_music.jpeg" alt="vibes-music" className="w-[41px] rounded-full" />
             </div>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   )
 }
