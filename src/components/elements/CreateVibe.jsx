@@ -25,6 +25,7 @@ import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
 import { VibeContext } from "@/context/VibeContext";
+import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -56,6 +57,7 @@ const CreateVibe = () => {
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
   const [captionInput, setCaptionInput] = useState("");
+  const [showError,setShowError]  = useState(false)
 
   useEffect(() => {
     return () => {
@@ -201,8 +203,17 @@ const CreateVibe = () => {
     setText(e.target.value);
   };
 
+  const handleVibeValidation = ()=>{
+    // to-do task 
+    // call this method whenever there is error while creating a vibe
+    setShowError(!showError)
+  }
+  
   return (
     <>
+      {showError && 
+        <CreateVibeErrorComponent currentState={showError}/>
+    }
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
@@ -448,6 +459,7 @@ const CreateVibe = () => {
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
+        // onClick={()=>handleVibeValidation()}
       />
     </>
   );

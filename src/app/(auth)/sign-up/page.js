@@ -89,7 +89,6 @@ const SignUp = () => {
               value={inputs.age}
               onChange={handleInputs}
             />
-            {validations.age && <AgeValidation value={inputs.age} />}
             <input
               type="email"
               className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
