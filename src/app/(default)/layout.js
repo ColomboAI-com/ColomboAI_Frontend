@@ -57,8 +57,35 @@ const DefaultLayout = ({ children }) => {
     posts,
     setPosts,
     isCreateVibeOpen,
+<<<<<<< mock-vibes-rohan
+    setIsCreateVibeOpen,
+    isSelectedFromComputer,
+    setIsSelectedFromComputer
+  } = useContext(GlobalContext);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const defaultPostType = "thought";
+  const [uploadedPostType, setUploadedPostType] = useState(defaultPostType);
+  const [uploadedMediaUrl, setUploadedMediaUrl] = useState("");
+  const [uploadedNextStep, setUploadedNextStep] = useState(false);
+  const handleFileUpload = (file) => {
+    setUploadedFile(file);
+    const fileType = file.type.split("/")[0];
+    setUploadedPostType(fileType)
+    const fileUrl = URL.createObjectURL(file);
+    setUploadedMediaUrl(fileUrl);
+    setUploadedNextStep(true);
+  };
+  const handleReset = () => {
+    setUploadedFile(null);
+    setUploadedPostType(defaultPostType)
+    setUploadedMediaUrl("");
+    setUploadedNextStep(false);
+    setIsSelectedFromComputer(false);
+  }
+=======
     setIsCreateVibeOpen
   } = useContext(GlobalContext);
+>>>>>>> dev
   const [isShowChatMenu, setIsShowChatMenu] = useState(false);
   const StoreFcmToken = async (token) => {
     try {
@@ -142,6 +169,17 @@ const DefaultLayout = ({ children }) => {
                   <CreatePost />
                 </Modal>
               )}
+<<<<<<< mock-vibes-rohan
+              {isCreateVibeOpen && (
+                <Modal
+                  isOpen={isCreateVibeOpen}
+                  setIsOpen={setIsCreateVibeOpen}
+                  className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
+                >
+                  <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
+                </Modal>
+              )}
+=======
 
             {isCreateVibeOpen && (
               <Modal
@@ -153,6 +191,7 @@ const DefaultLayout = ({ children }) => {
               </Modal>
             )}
 
+>>>>>>> dev
               {isShareOpen && (
                 <Modal
                   isOpen={isShareOpen}
@@ -198,6 +237,12 @@ const DefaultLayout = ({ children }) => {
                 <RightSidebar />
               </div>
               {/* // </> */}
+<<<<<<< mock-vibes-rohan
+            </div> : 
+            <div className="bg-[#333333] w-full h-full">
+              <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
+=======
+>>>>>>> dev
             </div>
 
             {/* <CommentSection /> */}

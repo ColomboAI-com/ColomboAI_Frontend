@@ -25,12 +25,19 @@ import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
 import { Plus_Jakarta_Sans } from '@next/font/google';
+import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
+import Image from "next/image";
+import { set } from "date-fns";
+
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ['400', '500', '600', '700'],
   style: ['normal'],
   subsets: ['latin'],
 });
+
+const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep, onReset }) => {
+import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -60,7 +67,7 @@ const CreateVibe = () => {
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
-
+  const [showError,setShowError]  = useState(false)
   useEffect(() => {
     return () => {
       if (mediaUrl) {
@@ -68,6 +75,16 @@ const CreateVibe = () => {
       }
     };
   }, [mediaUrl]);
+
+  useEffect(() => {
+    console.log(file)
+    console.log("file changed")
+    if (file) {
+      onFileUpload(file)
+      setIsSelectedFromComputer(true);
+    }
+  }, [file, setFile])
+
 
   const iconButtons = () => {
     return (
@@ -199,9 +216,17 @@ const CreateVibe = () => {
     setText(e.target.value);
   };
 
-
+  const handleVibeValidation = ()=>{
+    // to-do task 
+    // call this method whenever there is error while creating a vibe
+    setShowError(!showError)
+  }
+  
   return (
     <main className={plusJakartaSans.className}>
+      {showError && 
+        <CreateVibeErrorComponent currentState={showError}/>
+    }
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
@@ -277,6 +302,11 @@ const CreateVibe = () => {
         <div
           className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
         >
+          <div>
+            <button onClick={e => onReset()} className="mr-6">
+              <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+            </button>
+          </div>
           <img
             key={mediaUrl}
             src={mediaUrl}
@@ -443,6 +473,7 @@ const CreateVibe = () => {
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
+        // onClick={()=>handleVibeValidation()}
       />
     </main>
   );

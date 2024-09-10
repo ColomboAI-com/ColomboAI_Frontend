@@ -59,9 +59,11 @@ const OTPVerification = () => {
       if (page === "sign-in" && new_device) {
         setShowPopup(true);
       } else {
-        setTimeout(() => router.replace('/'), 2000)
+        setTimeout(() => {
+          window.location.pathname = '/'
+        }, 1000)
       };
-      if (page === "sign-up") setTimeout(() => router.replace('/'), 2000);
+
     }
   };
 
