@@ -24,7 +24,6 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
-<<<<<<< mock-vibes-rohan
 import { Plus_Jakarta_Sans } from '@next/font/google';
 import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
 import Image from "next/image";
@@ -38,11 +37,9 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep, onReset }) => {
-=======
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
 const CreateVibe = () => {
->>>>>>> dev
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
   const [postInput, setPostInput] = useState("");
@@ -79,7 +76,6 @@ const CreateVibe = () => {
     };
   }, [mediaUrl]);
 
-<<<<<<< mock-vibes-rohan
   useEffect(() => {
     console.log(file)
     console.log("file changed")
@@ -90,8 +86,6 @@ const CreateVibe = () => {
   }, [file, setFile])
 
 
-=======
->>>>>>> dev
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -229,7 +223,7 @@ const CreateVibe = () => {
   }
   
   return (
-    <>
+    <main className={plusJakartaSans.className}>
       {showError && 
         <CreateVibeErrorComponent currentState={showError}/>
     }
@@ -308,16 +302,12 @@ const CreateVibe = () => {
         <div
           className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
         >
-<<<<<<< mock-vibes-rohan
           <div>
             <button onClick={e => onReset()} className="mr-6">
               <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
             </button>
           </div>
-          {/* <img
-=======
           <img
->>>>>>> dev
             key={mediaUrl}
             src={mediaUrl}
             alt="File Preview"
@@ -485,7 +475,7 @@ const CreateVibe = () => {
         }
         // onClick={()=>handleVibeValidation()}
       />
-    </>
+    </main>
   );
 };
 

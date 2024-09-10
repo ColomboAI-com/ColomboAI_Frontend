@@ -4,6 +4,13 @@ import { CreateIcon, CreateMagicPenIcon, CreatePostIcon, CreateStoryIcon, Create
 import { GlobalContext } from '@/context/GlobalContext';
 import Modal from "./Modal";
 import UploadStoryModal from '../story/UploadStoryModal';
+import { Plus_Jakarta_Sans } from '@next/font/google';
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+});
 
 export default function CreateDropdown({ w, h, fill }) {
 
@@ -18,7 +25,7 @@ export default function CreateDropdown({ w, h, fill }) {
   }
 
   return (
-    <div>
+    <div className={plusJakartaSans.className}>
       <Menu as="div" className="relative inline-block text-left z-50">
         {({ open }) => (
           <>
@@ -48,7 +55,7 @@ export default function CreateDropdown({ w, h, fill }) {
                       <button
                         onClick={() => setIsCreatePostOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px] font-sans font-[500]`}
+                          } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px]  font-[500]`}
                       >
                         Post
                         <CreatePostIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -62,7 +69,7 @@ export default function CreateDropdown({ w, h, fill }) {
                       <button
                         onClick={() => setIsCreateStoryOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
+                          } group flex w-full items-center justify-between p-3 text-lg text-[21px]  font-[500]`}
                       >
                         Story
                         <CreateStoryIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -79,7 +86,7 @@ export default function CreateDropdown({ w, h, fill }) {
                         }
                         }
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
+                          } group flex w-full items-center justify-between p-3 text-lg text-[21px]  font-[500]`}
                       >
                         Vibe
                         <CreateVibeIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -93,7 +100,7 @@ export default function CreateDropdown({ w, h, fill }) {
                       <button
                         onClick={() => setIsCreatePostOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
+                          } group flex w-full items-center justify-between p-3 text-lg text-[21px]  font-[500]`}
                       >
                         Thought
                         <CreateThoughtIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
@@ -107,7 +114,7 @@ export default function CreateDropdown({ w, h, fill }) {
                       <button
                         onClick={() => setIsCreatePostOpen(true)}
                         className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px] font-sans font-[500]`}
+                          } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px]  font-[500]`}
                       >
                         <p>Magic Pen <span className='text-xs'>(Generative AI)</span></p>
                         <CreateMagicPenIcon w={25} h={25}
