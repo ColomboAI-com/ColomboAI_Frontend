@@ -15,6 +15,7 @@ export default function GlobalContextProvider({ children }) {
   let [isCreateVibeOpen, setIsCreateVibeOpen] = useState(false);
   let [isSelectedFromComputer, setIsSelectedFromComputer] = useState(false);
 
+
   return (
     <GlobalContext.Provider
       value={{
