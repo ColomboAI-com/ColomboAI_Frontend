@@ -3,7 +3,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import InputBar from "./InputBar";
+import InputBar from "./InputBar.jsx";
 import { ChatBubbleIcon, CreateIcon, NotificationIcon, SearchIcon } from "../Icons";
 import FeedFilter from "./FeedFilter";
 import CreateDropdown from "../elements/CreateDropdown";
@@ -14,12 +14,26 @@ import { GlobalContext } from "@/context/GlobalContext";
 import Share from "../Share";
 // import InputGenAiSearch from "../gen-ai/InputGenAiSearch";
 import GenSearch from "@/app/gen-search/layout";
+import { useState, useCallback } from "react";
 
 
 const Header = () => {
 
     const { isShareOpen, setIsShareOpen } = useContext(GlobalContext);
     const pathname = usePathname();
+    const [chatId, setChatId] = useState(null);
+    const [showChat, setShowChat] = useState(false);
+    const [initialMessage, setInitialMessage] = useState('');
+    const [initialFile, setInitialFile] = useState(null);
+  
+    const handleStartChat = useCallback((message, file) => {
+      // Generate a new chat ID or fetch from an API
+      const newChatId = Date.now().toString();
+      setChatId(newChatId);
+      setShowChat(true);
+      setInitialMessage(message);
+      setInitialFile(file);
+    }, []);
 
     return (
         <div className=" bg-white sticky top-14 z-40">
@@ -75,7 +89,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="w-full">
-                        <InputBar/>
+                        <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile}/>
                     </div>
                 </div>
             </div>

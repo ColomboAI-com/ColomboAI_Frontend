@@ -110,7 +110,7 @@
 
 // export default Chat;
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MessageBox from './MessageBox';
 import SearchImages from './SearchImages';
 
@@ -129,9 +129,19 @@ const Chat = ({ loading, messages, sendMessage }) => {
     borderRadius: '4px',
   };
 
+  const [messageNum, setMessageNum] = useState(false)
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      setMessageNum(true)
+    } else {
+      setMessageNum(false)
+    }
+  }, [messages])
+
   return (
     <div style={{ position: 'relative' }}>
-      <div style={chatContainerStyle}>
+      {messages.length > 0 ? <div style={chatContainerStyle}>
         {messages.map((msg, i) => (
           <MessageBox
             key={i}
@@ -145,8 +155,11 @@ const Chat = ({ loading, messages, sendMessage }) => {
             Loading...
           </div>
         )}
-      </div>
-      <SearchImages />
+      </div> : 
+      <p className="text-[15px] absolute font-[450] text-justify  text-[#ACACAC] max-w-[806px] h-[60px] top-[21px] left-[5rem]">
+      Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you are seeking quick information or diving deeper into a topic, GenAI Search has you covered.
+    </p>}
+      <SearchImages messages={messageNum}/>
     </div>
   );
 };

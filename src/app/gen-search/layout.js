@@ -17,7 +17,7 @@ const GenSearch = ({ children }) => {
                     <Sidebar />
                 </div>
                 <div className="w-full md:ml-[10%] xl:ml-[7%]">
-                    <header className="sticky top-0 z-50">
+                    <header className="sticky top-0 z-50 bg-white">
                         <div className=" border-purple-50 py-2">
                             <img src="/images/home/ColomboAI-logo.svg" alt="ColomboAI Logo" className="mx-auto text-center " />
                             <RightSideIcons/>

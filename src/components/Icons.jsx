@@ -1128,11 +1128,11 @@ export const CloseDocumentIcon = () => {
   );
 };
 
-export const UploudIcon = ({ w = 20, h = 17, fill }) => {
+export const UploadIcon = ({ w = 20, h = 17, fill }) => {
   return (
     <svg
       width={w}
-      height={17}
+      height={h}
       viewBox="0 0 20 17"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

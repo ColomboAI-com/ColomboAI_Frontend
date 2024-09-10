@@ -84,7 +84,7 @@
 
 // import React, { useRef, useState, useEffect } from 'react';
 // import { cn } from '../lib/utils';
-// import { SendIcon, UploudIcon } from "../Icons";
+// import { SendIcon, UploadIcon } from "../Icons";
 // import { X, ArrowUp } from 'lucide-react';
 
 // const MessageInput = ({ sendMessage, loading, onFileUpload }) => {
@@ -155,7 +155,7 @@
 //           className="absolute top-[15px] right-[75px]"
 //           onClick={triggerFileUpload}
 //         >
-//           <UploudIcon w={20} h={17} />
+//           <UploadIcon w={20} h={17} />
 //         </button>
 //         <button
 //           type="submit"
