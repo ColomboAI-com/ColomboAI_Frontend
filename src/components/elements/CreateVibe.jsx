@@ -173,7 +173,7 @@ const CreateVibe = () => {
   };
 
   const handleCreateVibe = async () => {
-    const res = await createPost({
+    const res = await createVibe({
       file,
       type: postType,
       text: postInput,
@@ -455,7 +455,7 @@ const CreateVibe = () => {
       />
       <Button
         title={"Share Reel"}
-        onClick={createVibe}
+        onClick={handleCreateVibe}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
