@@ -63,6 +63,9 @@ import Chat from '../../components/MassageInputActions/Chat.jsx';
 import HistoryChat from '@/components/MassageInputActions/HistoryChat.jsx';
 import { Plus_Jakarta_Sans } from '@next/font/google';
 import { UploadIcon } from "../../components/Icons.jsx";
+import FooterAdComponent from '@/components/ads/Ad.jsx';
+
+
 
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -179,6 +182,9 @@ function GenSearch() {
           />
         )}
         <HistoryChat/>
+        <div className='border border-red-600 absolute bottom-0 left-[198px] w-[728px] h-[90px] '>
+     <FooterAdComponent/>
+   </div>    
       </main>
     </div>
   );

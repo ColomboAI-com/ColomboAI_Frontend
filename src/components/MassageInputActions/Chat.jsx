@@ -117,6 +117,7 @@ import leftArrow from '../../../public/images/icons/leftArrow.png'
 import rightArrow from '../../../public/images/icons/rightArrow.png'
 import { Plus_Jakarta_Sans } from '@next/font/google';
 import Image from 'next/image';
+import BannerAdComponent from '../ads/Ad';
 
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -200,6 +201,7 @@ const Chat = ({ loading, messages, sendMessage }) => {
           Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you are seeking quick information or diving deeper into a topic, GenAI Search has you covered.
         </p>}
       <SearchImages messages={messageNum} />
+     
     </div>
   );
 };

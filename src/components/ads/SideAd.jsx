@@ -5,7 +5,7 @@ const SideAdComponent = () => {
         const loadGPTScript = () => {
           return new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = 'https://www.googletagservices.com/tag/js/gpt.js';
+            script.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
             script.async = true;
             script.onload = resolve;
             script.onerror = reject;
@@ -21,8 +21,8 @@ const SideAdComponent = () => {
                 try {
                   console.log('Defining ad slot...');
                  
-                  window.googletag.defineSlot('/23102803892/genai_desktop_300v_sidebar', [[728, 90], [320, 50], [168, 42], [88, 31], [120, 20], [216, 36], [120, 90], [234, 60], [120, 60], [120, 30], [300, 50], [216, 54], [468, 60], [300, 75], [168, 28]],
-                     'div-gpt-ad-1726060291570-0')
+                  window.googletag.defineSlot('/23102803892/genai_desktop_300v_sidebar', [[300, 250], [250, 250], [125, 125], [300, 600], [320, 480], [200, 200], [336, 280], [300, 100]],
+                     'div-gpt-ad-1726060623768-0')
                   .addService(window.googletag.pubads());
                   
                 //   console.log('Enabling single request mode...');
@@ -37,7 +37,7 @@ const SideAdComponent = () => {
                   console.log('Displaying ad...');
                   
 
-                  window.googletag.display('div-gpt-ad-1726060291570-0');
+                  window.googletag.display('div-gpt-ad-1726060623768-0');
                   
                 } catch (error) {
                   console.error('Error setting up Google Publisher Tag:', error);
@@ -63,7 +63,7 @@ const SideAdComponent = () => {
 
       </Head>
    
-    <div id='div-gpt-ad-1726060291570-0' style={{  minWidth: '88px', minHeight: '20px' }}>
+    <div id='div-gpt-ad-1726060623768-0' style={{  border:'1px solid red',minWidth: '125px', minHeight: '100px' }}>
    
     </div> 
    

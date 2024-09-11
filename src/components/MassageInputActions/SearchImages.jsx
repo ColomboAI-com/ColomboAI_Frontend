@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import "../../../src/app/globals.css"
+import SideAdComponent from '../ads/SideAd';
+import SideTopAdComponent from '../ads/SideTopAd';
 
 
 const SearchImages = ({ messages }) => {
@@ -17,23 +19,28 @@ const SearchImages = ({ messages }) => {
   return (
     <div className="fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
       <div className="grid grid-cols-2 gap-2">
-        {images.slice(0, 4).map((image, i) => (
+        <SideAdComponent/>
+        <SideAdComponent/>
+        <SideAdComponent/>
+        <SideAdComponent/>
+        {/* {images.slice(0, 4).map((image, i) => (
           <img
             key={i}
             src={image.img_src}
             alt={image.title}
             className="h-full w-[351px] aspect-video object-cover rounded-lg transition duration-200 hover:scale-[1.02] cursor-pointer"
           />
-        ))}
+        ))} */}
       </div>
-      {images.slice(4).map((image, i) => (
+          <SideTopAdComponent/>
+      {/* {images.slice(4).map((image, i) => (
         <img
           key={i + 4}
           src={image.img_src}
           alt={image.title}
           className="w-[90%] transition duration-200 hover:scale-[1.02] cursor-pointer"
         />
-      ))}
+      ))} */}
     </div>
   );
 };
