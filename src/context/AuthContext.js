@@ -149,7 +149,7 @@ export const AuthContextProvider = ({ children }) => {
       MessageBox("success", res.data.message);
       return res;
     } catch (error) {
-      handleError(err);
+      handleError(error);
     }
   };
 
