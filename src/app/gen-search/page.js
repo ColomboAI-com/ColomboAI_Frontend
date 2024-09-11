@@ -185,4 +185,3 @@ function GenSearch() {
 }
 
 export default GenSearch;
-
