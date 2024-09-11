@@ -121,7 +121,8 @@ export const MessagesContextProvider = ({ children }) => {
       getChatHistory, chatHistory, setChatHistory,
       messageInput, setMessageInput,
       messageFile, setMessageFile,
-      sendMessage
+      sendMessage,
+    
     }}>
       {children}
     </MessagesContext.Provider>
