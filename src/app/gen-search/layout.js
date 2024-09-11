@@ -9,6 +9,8 @@ import Bottombar from "@/components/layouts/Bottombar";
 
 import InputBar from "@/components/layouts/InputBar";
 import BannerAdComponent from "@/components/feed/vibes/BannerAd";
+import SideAdComponent from "@/components/ads/SideAd";
+import SideTopAdComponent from "@/components/ads/SideTopAd";
 
 
 const GenSearch = ({ children }) => {
@@ -16,12 +18,14 @@ const GenSearch = ({ children }) => {
 
   const feedSections = ['/gen-search'];
   return (
+<>
     <div>
       <div className="min-w-screen border- border-yellow-400">
         <div className="flex border- border-green-400">
           <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed overflow-auto h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
+         
           <div className="xl:ml-[7%] lg:ml-[7%] w-full mx-auto sm:ml-0">
             <header className="sticky top-0 z-50 shadow-[0px_2px_4px_0px_#0000001A] bg-white">
               <div className="border-2 border-purple-50">
@@ -79,6 +83,9 @@ const GenSearch = ({ children }) => {
                     </div>
                   </div>
                 </div>
+                <div className="flex justify-center">
+                <BannerAdComponent/>
+                </div>
               </div>
             </div>
             <div className="w-[90px]">
@@ -128,14 +135,29 @@ const GenSearch = ({ children }) => {
               </div>
             </div>
           </div>
+          
+          {/* <div className="w-full bg-gray-200 p-4  float-end">
+       <SideTopAdComponent/>
+       <SideAdComponent/>
+      </div> */}
+
+
         </div>
       </div>
-      <div className="flex justify-center ">
-      <BannerAdComponent/>
-      </div>
-      <Bottombar />
-    </div>
+     
 
+      <Bottombar />
+    
+      
+    </div>
+    <div className="fixed top-[220px] border border-red-400 right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+   <div className="grid grid-cols-2 gap-2">
+    Side AD Content goes here
+   
+   </div>
+  
+ </div>
+ </>
   )
 }
 
