@@ -24,7 +24,7 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
-import { ROOT_URL_FEED } from "@/utlils/rootURL";
+import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -54,7 +54,7 @@ const CreateVibe = () => {
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
-
+  const [showError,setShowError]  = useState(false)
   useEffect(() => {
     return () => {
       if (mediaUrl) {
@@ -193,49 +193,17 @@ const CreateVibe = () => {
     setText(e.target.value);
   };
 
-  const handleShareReel = async () => {
-    try {
-      const response = await axios.post(
-        `${ROOT_URL_FEED}/vibes/create`,
-        {
-          content: postInput,
-          type: postType,
-          file: file, // This should be the file object if uploading media
-          mediaUrl: mediaUrl,
-          hideLikes: false,
-          isCommentOff: false,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 201) {
-        console.log("Hitting create vibe endpoint successfully");
-        console.log("Response:", response.data);
-        MessageBox("success", "Vibe created successfully");
-        setIsCreateVibeOpen(false); // Close the create vibe modal
-      }
-    } catch (error) {
-      console.error("Error creating vibe:", error);
-      if (error.response) {
-        console.log("Error data:", error.response.data);
-        console.log("Error status:", error.response.status);
-        console.log("Error headers:", error.response.headers);
-      } else if (error.request) {
-        console.log("Error request:", error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log("Error message:", error.message);
-      }
-      MessageBox("error", "Failed to create vibe. Please try again.");
-    }
-  };
-
+  const handleVibeValidation = ()=>{
+    // to-do task 
+    // call this method whenever there is error while creating a vibe
+    setShowError(!showError)
+  }
+  
   return (
     <>
+      {showError && 
+        <CreateVibeErrorComponent currentState={showError}/>
+    }
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
@@ -474,10 +442,10 @@ const CreateVibe = () => {
       <CaptionBox />
       <Button
         title={"Share Reel"}
-        onClick={handleShareReel}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
+        // onClick={()=>handleVibeValidation()}
       />
     </>
   );
