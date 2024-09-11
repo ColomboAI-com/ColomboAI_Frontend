@@ -63,7 +63,7 @@ const SideAdComponent = () => {
 
       </Head>
    
-    <div id='div-gpt-ad-1726060623768-0' style={{  border:'1px solid red',minWidth: '125px', minHeight: '100px' }}>
+    <div id='div-gpt-ad-1726060623768-0' style={{  minWidth: '125px', minHeight: '100px' }}>
    
     </div> 
    
