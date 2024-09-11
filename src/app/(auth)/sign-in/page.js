@@ -1,6 +1,7 @@
 'use client'
 import RedirectLink from "@/components/auth/RedirectLink"
 import SocialAuthentication from "@/components/auth/SocialAuthentication"
+import UserPolicyComponent from "@/components/auth/UserPolicyPopup"
 import { EmailValidation } from "@/components/Validations"
 import { useAuth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
@@ -32,6 +33,14 @@ const SignIn = () => {
   }
 
   return (
+    <>
+
+    {/* ---To do--- 
+    implement the logic where if we want to show the user policy updated popup 
+    to user, call this component below */}
+
+    {/* <UserPolicyComponent/> */}
+
     <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
       <div className='min-h-screen flex justify-center lg:items-center sm:px-[20px]'>
         <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:w-full">
@@ -67,6 +76,7 @@ const SignIn = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

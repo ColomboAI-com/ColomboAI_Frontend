@@ -8,6 +8,7 @@ import NotificationBar from "@/components/notifications/NotificationBar";
 import Bottombar from "@/components/layouts/Bottombar";
 
 import InputBar from "@/components/layouts/InputBar";
+import BannerAdComponent from "@/components/feed/vibes/BannerAd";
 
 
 const GenSearch = ({ children }) => {
@@ -128,6 +129,9 @@ const GenSearch = ({ children }) => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex justify-center ">
+      <BannerAdComponent/>
       </div>
       <Bottombar />
     </div>
