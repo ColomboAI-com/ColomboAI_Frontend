@@ -34,7 +34,11 @@ const SignIn = () => {
 
   return (
     <>
-    {/* call this component to display the user policy updated popup */}
+
+    {/* ---To do--- 
+    implement the logic where if we want to show the user policy updated popup 
+    to user, call this component below */}
+
     {/* <UserPolicyComponent/> */}
 
     <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
