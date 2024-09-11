@@ -2,11 +2,11 @@
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions"
 import RedirectLink from "@/components/auth/RedirectLink"
 import SocialAuthentication from "@/components/auth/SocialAuthentication"
-import { EmailValidation, NameValidation, PhoneValidation, UsernameValidation } from "@/components/Validations"
+import { EmailValidation, NameValidation, UsernameValidation } from "@/components/Validations"
 import { useAuth } from "@/context/AuthContext"
 import Button from "@/elements/Button"
 import { setSessionStorage } from "@/utlils/utils"
-import { isValidEmail, isValidName, isValidPhone, isValidUserName, isValidAge } from "@/utlils/validate"
+import { isValidEmail, isValidName, isValidUserName, isValidAge } from "@/utlils/validate"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
@@ -28,10 +28,7 @@ const SignUp = () => {
       setValidations(prev => ({ ...prev, name: true }))
       return
     }
-    if (inputs.phone && !isValidPhone(inputs.phone)) {
-      setValidations(prev => ({ ...prev, phone: true }))
-      return
-    }
+
     if (!isValidEmail(inputs.email)) {
       setValidations(prev => ({ ...prev, email: true }))
       return
@@ -99,17 +96,6 @@ const SignUp = () => {
               onChange={handleInputs}
             />
             {validations.email && <EmailValidation value={inputs.email} />}
-            <input
-              type="tel"
-              className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-              placeholder="Phone number"
-              autoComplete="off"
-              maxLength={10}
-              name={"phone"}
-              value={inputs.phone}
-              onChange={handleInputs}
-            />
-            {validations.phone && <PhoneValidation value={inputs.phone} />}
             <Button
               title={'GET OTP'}
               className={'mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}

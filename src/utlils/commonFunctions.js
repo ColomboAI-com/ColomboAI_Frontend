@@ -15,12 +15,6 @@ export const getShortEmail = (email) => {
   return email.substr(0, 2) + "****" + email.substr(email.indexOf("@"))
 }
 
-export const getShortPhone = (phone, coutryCode) => {
-  if (!phone) return ''
-  if (coutryCode) return coutryCode + " " + "****" + phone.substr(-4)
-  else return "****" + phone.substr(-4)
-}
-
 export const getShortUsername = (username) => {
   if (!username) return ''
   if (username.length > 10) return `${username.substring(0, 9)}...`

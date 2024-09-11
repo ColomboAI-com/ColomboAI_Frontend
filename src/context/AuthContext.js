@@ -15,9 +15,7 @@ const defaultInputs = {
   name: "",
   age: "",
   email: "",
-  phone: "",
   otp: "",
-  phone_otp: "",
 };
 
 const defaultValidations = {
@@ -25,9 +23,7 @@ const defaultValidations = {
   name: false,
   age: false,
   email: false,
-  phone: false,
   otp: false,
-  phone_otp: false,
 };
 
 const defaultLoadings = {
@@ -68,7 +64,6 @@ export const AuthContextProvider = ({ children }) => {
               name: inputs.name,
               age: inputs.age,
               email: inputs.email,
-              contact_number: inputs.phone,
             };
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/get-otp`, data);
       setNew_device(res.data.new_device);
@@ -90,9 +85,7 @@ export const AuthContextProvider = ({ children }) => {
         name: inputs.name,
         age: inputs.age,
         email: inputs.email,
-        contact_number: inputs.phone,
         otp: inputs.otp,
-        phone_otp: inputs.phone_otp,
       });
       MessageBox("success", res.data.message);
       return res;
@@ -111,7 +104,6 @@ export const AuthContextProvider = ({ children }) => {
         action: "sign-in",
         email: inputs.email,
         otp: inputs.otp,
-        phone_otp: inputs.phone_otp,
       });
 
       if (res.data.new_device) {
