@@ -30,11 +30,12 @@ export default function VibeContextProvider({ children }) {
             // music 
             // taggedPeople
 
+            console.log(formData)
             const response = await axios.post(`${ROOT_URL_FEED}/vibes/create`,
                 formData,
                 {
                 headers: {
-                    "Content-Type": "application/json",
+                    Authorization: getCookie('token'),
                 },
                 }
           );
