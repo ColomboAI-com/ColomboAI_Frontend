@@ -182,6 +182,9 @@ function GenSearch() {
           />
         )}
         <HistoryChat/>
+        <div className='border border-red-600 absolute bottom-0 left-[198px] w-[728px] h-[90px] '>
+     <FooterAdComponent/>
+   </div>    
       </main>
     </div>
   );
