@@ -63,7 +63,7 @@ const FooterAdComponent = () => {
 
       </Head>
    
-    <div id='div-gpt-ad-1726060291570-0' style={{border:'1px solid red',  minWidth: '88px', minHeight: '20px' }}>
+    <div id='div-gpt-ad-1726060291570-0' style={{ minWidth: '88px', minHeight: '20px' }}>
    
     </div> 
    
