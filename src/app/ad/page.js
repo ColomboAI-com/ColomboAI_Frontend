@@ -1,7 +1,7 @@
 "use client"
 import SideAdComponent from "@/components/ads/SideAd"
 import SideTopAdComponent from "@/components/ads/SideTopAd"
-import BannerAdComponent from "@/components/feed/vibes/BannerAd"
+import FooterAdComponent from "@/components/ads/Ad"
 export default function adsFinal(){
     return (
 
@@ -9,10 +9,10 @@ export default function adsFinal(){
 
             
             <div>
-                <BannerAdComponent/>
+
                 <SideAdComponent/>
                 <SideTopAdComponent/>
-                
+                <FooterAdComponent/>
             </div>
  
     )

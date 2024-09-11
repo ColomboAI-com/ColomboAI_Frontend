@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-const BannerAdComponent = () => {
+const FooterAdComponent = () => {
     useEffect(() => {
         const loadGPTScript = () => {
           return new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = 'https://www.googletagservices.com/tag/js/gpt.js';
+            script.src = 'https://securepubads.g.doubleclick.net/tag/js/gpt.js';
             script.async = true;
             script.onload = resolve;
             script.onerror = reject;
@@ -63,7 +63,7 @@ const BannerAdComponent = () => {
 
       </Head>
    
-    <div id='div-gpt-ad-1726060291570-0' style={{  minWidth: '88px', minHeight: '20px' }}>
+    <div id='div-gpt-ad-1726060291570-0' style={{border:'1px solid red',  minWidth: '88px', minHeight: '20px' }}>
    
     </div> 
    
@@ -71,4 +71,4 @@ const BannerAdComponent = () => {
   );
 };
 
-export default BannerAdComponent;
+export default FooterAdComponent;

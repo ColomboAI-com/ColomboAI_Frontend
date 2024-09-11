@@ -5,7 +5,7 @@ const SideAdComponent = () => {
         const loadGPTScript = () => {
           return new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = 'https://www.googletagservices.com/tag/js/gpt.js';
+            script.src = "https://securepubads.g.doubleclick.net/tag/js/gpt.js";
             script.async = true;
             script.onload = resolve;
             script.onerror = reject;
