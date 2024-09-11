@@ -3,7 +3,6 @@ import React from 'react';
 import { HistoryIcon, SettingIcon } from "../Icons";
 
 
-
 const RightSideIcons = () => {
     return (
       <div className="fixed top-[113px] left-[1281px] w-[83px] h-[27px] flex items-center justify-between">
