@@ -123,4 +123,4 @@ function GenSearch() {
   );
 }
 
-export default GenSearch;
+export default GenSearch

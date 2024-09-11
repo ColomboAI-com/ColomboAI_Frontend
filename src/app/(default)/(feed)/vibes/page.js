@@ -8,6 +8,8 @@ import { IoIosMusicalNotes } from "react-icons/io";
 import RepostVibe from '@/components/feed/vibes/Repost';
 import ShareVibe from '@/components/feed/vibes/Share';
 import { useState } from 'react';
+import BannerAdComponent from '@/components/feed/vibes/BannerAd';
+import SponsoredAdComponent from '@/components/feed/vibes/SponsoredAd';
 export default function Vibes() {
   const [showRepost,setRepost] = useState(false)
   const [showShare,setShare] = useState(false)
@@ -17,7 +19,9 @@ export default function Vibes() {
   const handleShare =() =>{
     setShare(!showShare)
   }
+
   return (
+    
     <div className='border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans '>
               {showRepost &&
               <RepostVibe currentState = {showRepost} />
@@ -32,10 +36,16 @@ export default function Vibes() {
 
         {/* to view the repostvibe dialog box uncomment this component */}
         
-        <div className=" relative border- border-green-400 max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16]">
+        <div className=" relative border- border-green-400  max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16]">
        
           <img src={`/images/home/vibes.png`} className=' w-full h-full' alt="vibes_content" />
           <div className=' absolute bottom-0 left-0'>
+
+            {/* whenever there is sponsored ad uncomment and call this component */}
+
+              {/* <SponsoredAdComponent/> */}
+
+
             <div className='flex items-center gap-2  '>
               <img src="/images/home/profile-img.png" alt="profile-image" className="w-[36px] rounded-full" />
               <p>@tanaka_haruto</p>
@@ -49,7 +59,12 @@ export default function Vibes() {
                 <p>Madness - by Moonbin and Sanha</p>
               </div>
             </div>
+
+           <BannerAdComponent/>
           </div>
+
+
+
         </div>
 
         {/* Side Options */}
@@ -90,8 +105,12 @@ export default function Vibes() {
               <img src="/images/vibes/vibes_music.jpeg" alt="vibes-music" className="w-[41px] rounded-full" />
             </div>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   )
 }
