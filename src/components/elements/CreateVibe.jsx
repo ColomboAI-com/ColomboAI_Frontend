@@ -24,9 +24,25 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
+<<<<<<< mock-vibes-rohan
+import { Plus_Jakarta_Sans } from '@next/font/google';
+import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
+import Image from "next/image";
+import { set } from "date-fns";
+
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal'],
+  subsets: ['latin'],
+});
+
+const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep, onReset }) => {
+=======
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
 const CreateVibe = () => {
+>>>>>>> dev
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
   const [postInput, setPostInput] = useState("");
@@ -63,6 +79,19 @@ const CreateVibe = () => {
     };
   }, [mediaUrl]);
 
+<<<<<<< mock-vibes-rohan
+  useEffect(() => {
+    console.log(file)
+    console.log("file changed")
+    if (file) {
+      onFileUpload(file)
+      setIsSelectedFromComputer(true);
+    }
+  }, [file, setFile])
+
+
+=======
+>>>>>>> dev
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -279,7 +308,16 @@ const CreateVibe = () => {
         <div
           className={`relative my-8 ${isSelectedTextIcon ? "opacity-50" : ""}`}
         >
+<<<<<<< mock-vibes-rohan
+          <div>
+            <button onClick={e => onReset()} className="mr-6">
+              <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+            </button>
+          </div>
+          {/* <img
+=======
           <img
+>>>>>>> dev
             key={mediaUrl}
             src={mediaUrl}
             alt="File Preview"

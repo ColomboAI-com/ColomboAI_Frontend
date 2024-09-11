@@ -157,101 +157,154 @@
 
 // export default ChatWindow;
 
-'use client';
+// 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
-import Chat from '../MassageInputActions/Chat';
+// import React, { useState, useEffect, useCallback } from 'react';
+// import { toast } from 'react-toastify';
+// import Chat from '../MassageInputActions/Chat';
 
-const ChatWindow = ({ id, initialMessage, initialFile }) => {
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [ws, setWs] = useState(null);
+// const ChatWindow = ({ id, initialMessage, initialFile }) => {
+//   const [messages, setMessages] = useState([]);
+//   const [loading, setLoading] = useState(false);
+//   const [ws, setWs] = useState(null);
 
-  useEffect(() => {
-    const socket = new WebSocket(`ws://127.0.0.1:3001`);
-    setWs(socket);
+//   useEffect(() => {
+//     const socket = new WebSocket(`ws://127.0.0.1:3001`);
+//     setWs(socket);
 
-    return () => {
-      socket.close();
-    };
-  }, []);
+//     return () => {
+//       socket.close();
+//     };
+//   }, []);
 
-  useEffect(() => {
-    if (initialMessage) {
-      sendMessage(initialMessage, initialFile);
-    }
-  }, [initialMessage, initialFile]);
+//   useEffect(() => {
+//     if (initialMessage) {
+//       sendMessage(initialMessage, initialFile);
+//     }
+//   }, [initialMessage, initialFile]);
 
-  const sendMessage = useCallback(async (message, file) => {
-    setLoading(true);
-
-    
-    setMessages(prevMessages => [...prevMessages, { role: 'user', content: message, file: file }]);
-
-    try {
-     
-      const requestBody = {
-        message: message,
-        chatId: id,
-        history: messages.map(msg => [msg.role, msg.content]),
-      };
-
-      
-      if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('message', JSON.stringify(requestBody));
-
-        
-        const response = await fetch(`ws://127.0.0.1:3001`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to get response from API');
-        }
-
-        const data = await response.json();
-
-        
-        setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: data.response }]);
-      } else {
-      
-        const response = await fetch(`ws://127.0.0.1:3001`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to get response from API');
-        }
-
-        const data = await response.json();
+//   const sendMessage = useCallback(async (message, file) => {
+//     setLoading(true);
 
     
-        setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: data.response }]);
-      }
-    } catch (error) {
-      console.error('Error in API request:', error);
+//     setMessages(prevMessages => [...prevMessages, { role: 'user', content: message, file: file }]);
+
+//     try {
      
-      setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
-    } finally {
-      setLoading(false);
-    }
-  }, [id, messages]);
+//       const requestBody = {
+//         message: message,
+//         chatId: id,
+//         history: messages.map(msg => [msg.role, msg.content]),
+//       };
 
-  return (
-    <Chat
-      loading={loading}
-      messages={messages}
-      sendMessage={sendMessage}
-    />
-  );
-};
+      
+//       if (file) {
+//         const formData = new FormData();
+//         formData.append('file', file);
+//         formData.append('message', JSON.stringify(requestBody));
 
-export default ChatWindow;
+        
+//         const response = await fetch(`ws://127.0.0.1:3001`, {
+//           method: 'POST',
+//           body: formData,
+//         });
+
+//         if (!response.ok) {
+//           throw new Error('Failed to get response from API');
+//         }
+
+//         const data = await response.json();
+
+        
+//         setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: data.response }]);
+//       } else {
+      
+//         const response = await fetch(`ws://127.0.0.1:3001`, {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify(requestBody),
+//         });
+
+//         if (!response.ok) {
+//           throw new Error('Failed to get response from API');
+//         }
+
+//         const data = await response.json();
+
+    
+//         setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: data.response }]);
+//       }
+//     } catch (error) {
+//       console.error('Error in API request:', error);
+     
+//       setMessages(prevMessages => [...prevMessages, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
+//     } finally {
+//       setLoading(false);
+//     }
+//   }, [id, messages]);
+
+//   return (
+//     <Chat
+//       loading={loading}
+//       messages={messages}
+//       sendMessage={sendMessage}
+//     />
+//   );
+// };
+
+// export default ChatWindow;
+
+// import React, { useState, useCallback, useEffect } from 'react';
+// import useWebSocket, { ReadyState } from 'react-use-websocket';
+
+// export const ChatWindow = () => {
+//   //Public API that will echo messages sent to it back to the client
+//   const [socketUrl, setSocketUrl] = useState('ws://35.239.74.176:3001/');
+//   const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>([]);
+
+//   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
+
+//   useEffect(() => {
+//     if (lastMessage !== null) {
+//       setMessageHistory((prev) => prev.concat(lastMessage));
+//     }
+//   }, [lastMessage]);
+
+//   const handleClickChangeSocketUrl = useCallback(
+//     () => setSocketUrl('wss://demos.kaazing.com/echo'),
+//     []
+//   );
+
+//   const handleClickSendMessage = useCallback(() => sendMessage('Hello'), []);
+
+//   const connectionStatus = {
+//     [ReadyState.CONNECTING]: 'Connecting',
+//     [ReadyState.OPEN]: 'Open',
+//     [ReadyState.CLOSING]: 'Closing',
+//     [ReadyState.CLOSED]: 'Closed',
+//     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
+//   }[readyState];
+
+//   return (
+//     <div>
+//       <button onClick={handleClickChangeSocketUrl}>
+//         Click Me to change Socket Url
+//       </button>
+//       <button
+//         onClick={handleClickSendMessage}
+//         disabled={readyState !== ReadyState.OPEN}
+//       >
+//         Click Me to send 'Hello'
+//       </button>
+//       <span>The WebSocket is currently {connectionStatus}</span>
+//       {lastMessage ? <span>Last message: {lastMessage.data}</span> : null}
+//       <ul>
+//         {messageHistory.map((message, idx) => (
+//           <span key={idx}>{message ? message.data : null}</span>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
