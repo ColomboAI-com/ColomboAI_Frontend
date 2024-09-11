@@ -35,6 +35,7 @@ const GenSearch = ({ children }) => {
                             </div>
                         )}
                         {children}
+                        
                     </main>
                 </div>
             </div>
