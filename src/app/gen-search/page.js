@@ -80,7 +80,6 @@ function GenSearch() {
   const fileInputRef = useRef(null);
 
   const handleStartChat = useCallback((message, file) => {
-    // Generate a new chat ID or fetch from an API
     const newChatId = Date.now().toString();
     setChatId(newChatId);
     setShowChat(true);
@@ -115,11 +114,6 @@ function GenSearch() {
             <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} uploading={onUploadChange} uploadedFile={fileInputRef} />
           </div>
           {isUploading ? null : <div>
-          {/* {!showChat ? (
-            <p className="text-[15px] absolute font-[450] text-justify  text-[#ACACAC] max-w-[806px] h-[60px] top-[216px] left-[192px]">
-              Welcome to GenAI Search, your go-to tool for instant answers and web exploration! Simply type your question or topic of interest, and GenAI will provide you with accurate answers along with related links from the web. Whether you are seeking quick information or diving deeper into a topic, GenAI Search has you covered.
-            </p>
-          ) : ( */}
             <ChatWindow id={chatId} initialMessage={initialMessage} initialFile={initialFile} />
           </div>}
           <HistoryChat />

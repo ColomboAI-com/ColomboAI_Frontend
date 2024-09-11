@@ -37,7 +37,7 @@ import { ShareGenAiIcon, CopyGenAiIcon } from "../Icons";
 const MessageBox = ({ message, isUser, sendMessage }) => {
   const contentStyle = {
     width: '700px',
-    minHeight: '113px',
+    minHeight: '70px',
     margin: '0 auto',
     position: 'relative',
   };

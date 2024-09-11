@@ -27,7 +27,6 @@ const Header = () => {
     const [initialFile, setInitialFile] = useState(null);
   
     const handleStartChat = useCallback((message, file) => {
-      // Generate a new chat ID or fetch from an API
       const newChatId = Date.now().toString();
       setChatId(newChatId);
       setShowChat(true);

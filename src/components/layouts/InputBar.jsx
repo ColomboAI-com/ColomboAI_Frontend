@@ -13,7 +13,6 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('in submit')
     router.push('/gen-search')
     if (message.trim() || file) {
       sendMessage(message, file);
