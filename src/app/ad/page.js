@@ -12,6 +12,7 @@ export default function adsFinal(){
                 <BannerAdComponent/>
                 <SideAdComponent/>
                 <SideTopAdComponent/>
+                
             </div>
  
     )

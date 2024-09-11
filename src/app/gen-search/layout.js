@@ -150,12 +150,17 @@ const GenSearch = ({ children }) => {
     
       
     </div>
-    <div className="fixed top-[220px] border border-red-400 right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
-   <div className="grid grid-cols-2 gap-2">
-    Side AD Content goes here
+    <div className="fixed top-[220px] border border-red-400 right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+   {/* <div className="grid grid-cols-2 gap-2">
+    <SideTopAdComponent/>
    
    </div>
-  
+   <div className="grid grid-cols-2 gap-2">
+    <SideAdComponent/>
+   
+   </div> */}
+   <SideTopAdComponent/>
+   <SideAdComponent/>
  </div>
  </>
   )
