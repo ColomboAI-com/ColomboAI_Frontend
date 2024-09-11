@@ -64,6 +64,9 @@ import HistoryChat from '@/components/MassageInputActions/HistoryChat.jsx';
 import { Plus_Jakarta_Sans } from '@next/font/google';
 import { UploadIcon } from "../../components/Icons.jsx";
 import FooterAdComponent from '@/components/ads/Ad.jsx';
+import SideTopAdComponent from '@/components/ads/SideTopAd.jsx';
+import SideAdComponent from '@/components/ads/SideAd.jsx';
+
 
 
 
@@ -161,6 +164,7 @@ function GenSearch() {
 
 
   return (
+    <>
     <div className="flex flex-col min-h-screen">
       <header className="sticky top-0 z-50 bg-white shadow-md">
         <RightSideIcons />
@@ -185,8 +189,22 @@ function GenSearch() {
         <div className=' absolute bottom-0 left-[198px] w-[728px] h-[90px] '>
      <FooterAdComponent/>
    </div>    
+   
       </main>
+       
     </div>
+    <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+    <div className='w-[300px]  h-[250px] cursor-pointer'>
+           
+            <SideTopAdComponent/>
+            
+          </div>
+          <div className='w-[300px] h-[600px] cursor-pointer'>
+         
+            <SideAdComponent/>
+          </div>
+</div>
+    </>
   );
 }
 
