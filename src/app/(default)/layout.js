@@ -170,7 +170,7 @@ const DefaultLayout = ({ children }) => {
                   setIsOpen={setIsCreateVibeOpen}
                   className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                 >
-                  <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
+                  {/* <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/> */}
                 </Modal>
               )}
               {isShareOpen && (
@@ -219,9 +219,9 @@ const DefaultLayout = ({ children }) => {
               </div>
               {/* // </> */}
             </div> : 
-            <div className="bg-[#333333] w-full h-full">
+            {/* <div className="bg-[#333333] w-full h-full">
               <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
-            </div>
+            </div> */}
 
             {/* <CommentSection /> */}
           </div>

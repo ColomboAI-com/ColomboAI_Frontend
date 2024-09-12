@@ -9,9 +9,9 @@ const RightSideIcons = () => {
       <Link  className="" href={"/history"}>
         <HistoryIcon w={29} h={27}/>
       </Link>
-      <button className=" ">
+      {/* <button className=" ">
         <SettingIcon w={26} h={26}/>
-      </button>
+      </button> */}
     </div>
        
       

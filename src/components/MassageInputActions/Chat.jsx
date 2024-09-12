@@ -118,6 +118,7 @@ import rightArrow from "../../../public/images/icons/rightArrow.png";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Image from "next/image";
 import BannerAdComponent from "../ads/Ad";
+import '../../../src/app/globals.css'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
@@ -235,10 +236,7 @@ const Chat = ({ loading, messages, sendMessage, chatId, query, sources, displays
   );
 
   return (
-    <div
-      style={{ position: "relative" }}
-      className={`${plusJakartaSans.className} flex flex-row w-full md:gap-[0rem] lg:gap-[2rem] xl:gap-[8rem]`}
-    >
+    <div style={{ position: "relative" }} className={`${plusJakartaSans.className} wider-scrollbar overflow-y-scroll max-h-[31rem] flex flex-row w-full md:gap-[0rem] lg:gap-[2rem] xl:gap-[8rem]`}>
       {messages.length > 0 && (
         <div
           style={chatContainerStyle}
