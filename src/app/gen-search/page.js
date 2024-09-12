@@ -118,7 +118,7 @@ function GenSearch() {
           break;
         case "sources":
           // Handle 'sources' type, append each URL from the metadata as a new line
-          if (messageData.data.length > 0) {
+          if (messageData.data?.length > 0) {
             const urls = messageData.data
               .map((item) => item.metadata.url + "\n") // Extract URL and add newline
               .join(""); // Collect all URLs
@@ -214,7 +214,7 @@ function GenSearch() {
           {!isUploading && (
             <div>
               {messages.length === 0 ? (
-                <p className="md:text-[0.8rem] mt-[1rem] lg:text-[0.9375rem] md:ml-[1.8rem] lg:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] lg:w-[48rem]">
+                <p className="md:text-[0.8rem] mt-[1rem] lg:ml-[4rem] xl:text-[0.9375rem] md:ml-[1.8rem] xl:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] xl:w-[48rem]">
                   Welcome to GenAI Search, your go-to tool for instant answers
                   and web exploration! Simply type your question or topic of
                   interest, and GenAI will provide you with accurate answers
@@ -234,21 +234,19 @@ function GenSearch() {
             </div>
           )}
           <HistoryChat />
-          <div className=" absolute bottom-0 left-[198px] w-[728px] h-[90px] ">
+          <div className=" absolute bottom-0 md:left-[8rem] md:w-[30rem] md:h-[3.374999]  lg:left-[10rem] lg:w-[35rem] lg:h-[3.9375rem] xl:left-[12.375rem] xl:w-[50rem] xl:h-[5.625rem] border-[1px] border-black">
             <FooterAdComponent />
           </div>
         </main>
       </div>
-      {messages.length === 0 && (
-        <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
-          <div className="w-[300px]  h-[250px] cursor-pointer">
+        <div className={`} fixed ${messages?.length == 0 || isUploading ?`top-[220px]` : `md:top-[250px] lg:top-[300px] xl:top-[380px]`} right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto`}>
+          <div className="border-[1px] border-black md:w-[8rem] md:h-[6.666667rem] lg:w-[12rem] lg:h-[10rem] xl:w-[18.75rem] xl:h-[15.625rem] cursor-pointer">
             <SideTopAdComponent divid={"top2"} />
           </div>
-          <div className="w-[300px] h-[600px] cursor-pointer">
+          <div className="md:w-[8rem] md:h-[16rem] lg:w-[12rem] lg:h-[24rem] xl:w-[18.75rem] xl:h-[37.5rem] border-[1px] border-black  cursor-pointer">
             <SideAdComponent divid={"bottom2"} />
           </div>
         </div>
-      )}
     </>
   );
 }
