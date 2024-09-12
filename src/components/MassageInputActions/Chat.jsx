@@ -125,7 +125,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const Chat = ({ loading, messages, sendMessage }) => {
+const Chat = ({ loading, messages, sendMessage, chatId, query }) => {
   const chatContainerStyle = {
     maxWidth: "700px",
     // margin: '0 auto',
@@ -220,7 +220,7 @@ const Chat = ({ loading, messages, sendMessage }) => {
           into a topic, GenAI Search has you covered.
         </p>
       )}
-      <SearchImages messages={messageNum} />
+      <SearchImages query={query} chatId={chatId} />
     </div>
   );
 };

@@ -79,6 +79,7 @@ function GenSearch() {
   const [loading, setLoading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [chatId, setChatId] = useState(uuidv4()); // State for storing a unique chat ID
+  const [currentQuery, setCurrentQuery] = useState("");
 
   const socketUrl = "ws://35.239.74.176:3001/";
   const httpUrl = "http://35.239.74.176:3001/";
@@ -144,6 +145,7 @@ function GenSearch() {
   const sendMessage = useCallback(
     (message, file) => {
       setLoading(true);
+      setCurrentQuery(message);
       setMessages((prevMessages) => [
         ...prevMessages,
         { role: "user", content: message, file: file },
@@ -209,6 +211,8 @@ function GenSearch() {
               loading={loading}
               messages={messages}
               sendMessage={sendMessage}
+              chatId={chatId}
+              query={currentQuery}
             />
           )}
           <HistoryChat />
