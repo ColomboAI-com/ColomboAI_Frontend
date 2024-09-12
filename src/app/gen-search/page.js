@@ -105,13 +105,14 @@ function GenSearch() {
 
   useEffect(() => {
     if (lastMessage !== null) {
-      console.log("last message:", lastMessage);
+      //console.log("last message:", lastMessage);
       const messageData = JSON.parse(lastMessage.data);
 
       switch (messageData.type) {
         case "messageEnd":
-          // Concatenate message data first and URL data at the end
-          const fullMessage = messageBuffer + "\n" + urlBuffer;
+          // Concatenate message data first and URL data at the endz
+          
+          const fullMessage = messageBuffer;
           handleReceivedMessage(fullMessage);
           setMessageBuffer(""); // Clear the message buffer
           setUrlBuffer(""); // Clear the URL buffer

@@ -3,6 +3,7 @@ import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
 import RedirectLink from "@/components/auth/RedirectLink";
 import SocialAuthentication from "@/components/auth/SocialAuthentication";
 import {
+  AgeValidation,
   EmailValidation,
   NameValidation,
   UsernameValidation,
@@ -110,6 +111,7 @@ const SignUp = () => {
                 value={inputs.age}
                 onChange={handleInputs}
               />
+               {validations.age && <AgeValidation value={inputs.age} />}
               <input
                 type="email"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
