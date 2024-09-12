@@ -5,7 +5,6 @@ import SocialAuthentication from "@/components/auth/SocialAuthentication";
 import {
   EmailValidation,
   NameValidation,
-  PhoneValidation,
   UsernameValidation,
 } from "@/components/Validations";
 import { useAuth } from "@/context/AuthContext";
@@ -14,7 +13,6 @@ import { setSessionStorage } from "@/utlils/utils";
 import {
   isValidEmail,
   isValidName,
-  isValidPhone,
   isValidUserName,
   isValidAge,
 } from "@/utlils/validate";
@@ -44,10 +42,6 @@ const SignUp = () => {
     }
     if (!isValidName(inputs.name)) {
       setValidations((prev) => ({ ...prev, name: true }));
-      return;
-    }
-    if (inputs.phone && !isValidPhone(inputs.phone)) {
-      setValidations((prev) => ({ ...prev, phone: true }));
       return;
     }
     if (!isValidEmail(inputs.email)) {
@@ -126,17 +120,6 @@ const SignUp = () => {
                 onChange={handleInputs}
               />
               {validations.email && <EmailValidation value={inputs.email} />}
-              <input
-                type="tel"
-                className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="Phone number"
-                autoComplete="off"
-                maxLength={10}
-                name={"phone"}
-                value={inputs.phone}
-                onChange={handleInputs}
-              />
-              {validations.phone && <PhoneValidation value={inputs.phone} />}
               <Button
                 title={"GET OTP"}
                 className={
