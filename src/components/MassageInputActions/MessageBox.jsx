@@ -33,37 +33,37 @@
 
 import React from 'react';
 import { ShareGenAiIcon, CopyGenAiIcon } from "../Icons";
-import parse from 'html-react-parser';
+import Markdown from 'markdown-to-jsx'
 
 const MessageBox = ({ message, isUser, sendMessage }) => {
 
-//   const sidebarStyle = {
-//     width: '351px',
-//     height: '223px',
-//     position: 'absolute',
-//     top: '220px',
-//     right: '0',
-//     borderRadius: '10px 0 0 0',
-//     opacity: 1,
-//     display: 'grid',
-//     gridTemplateColumns: 'repeat(2, 1fr)',
-//     gap: '0px',
-//   };
+  //   const sidebarStyle = {
+  //     width: '351px',
+  //     height: '223px',
+  //     position: 'absolute',
+  //     top: '220px',
+  //     right: '0',
+  //     borderRadius: '10px 0 0 0',
+  //     opacity: 1,
+  //     display: 'grid',
+  //     gridTemplateColumns: 'repeat(2, 1fr)',
+  //     gap: '0px',
+  //   };
 
   const messageStyle = isUser
     ? {
-        backgroundColor: '#F3F4F6',
-        borderRadius: '18px 18px 0px 18px',
-        padding: '12px',
-        maxWidth: '80%',
-        marginLeft: 'auto',
-      }
+      backgroundColor: '#F3F4F6',
+      borderRadius: '18px 18px 0px 18px',
+      padding: '12px',
+      maxWidth: '80%',
+      marginLeft: 'auto',
+    }
     : {
-        background: 'linear-gradient(180deg, #6237FF 30.5%, #258EFF 100%)',
-        borderRadius: '18px 18px 18px 0px',
-        padding: '12px',
-        maxWidth: '80%',
-      };
+      background: 'linear-gradient(180deg, #6237FF 30.5%, #258EFF 100%)',
+      borderRadius: '18px 18px 18px 0px',
+      padding: '12px',
+      maxWidth: '80%',
+    };
 
   const textStyle = {
     fontFamily: 'Circular, sans-serif',
@@ -93,8 +93,11 @@ const MessageBox = ({ message, isUser, sendMessage }) => {
   return (
     <div className='lg:w-[39rem] xl:w-[44rem] md:w-[38rem]'>
       <div style={messageStyle}>
-        <p style={textStyle}>{message.content}</p>
-        {/* <p style={textStyle}>{parse(message.content)}</p> */}
+        <p style={textStyle}>
+          <Markdown>
+            {message.content}
+          </Markdown>
+        </p>
         {isUser && message.file && (
           <p style={fileNameStyle}>{message.file.name}</p>
         )}
@@ -105,7 +108,7 @@ const MessageBox = ({ message, isUser, sendMessage }) => {
           </div>
         )}
       </div>
-   
+
     </div>
   );
 };

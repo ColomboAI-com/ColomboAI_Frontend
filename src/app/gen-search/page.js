@@ -112,9 +112,7 @@ function GenSearch() {
         case "messageEnd":
           // Concatenate message data first and URL data at the endz
           
-          //.replace(/\[(.*?)\]\((http[s]?:\/\/[^\s)]+)\)/g, (match, number, url) => `<a href="${url}">${number}</a>`)
-
-          const fullMessage = messageBuffer + "\n" + urlBuffer;
+          const fullMessage = messageBuffer;
           handleReceivedMessage(fullMessage);
           setMessageBuffer(""); // Clear the message buffer
           setUrlBuffer(""); // Clear the URL buffer
