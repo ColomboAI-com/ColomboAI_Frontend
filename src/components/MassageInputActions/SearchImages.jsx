@@ -17,7 +17,7 @@ const SearchImages = ({ messages }) => {
   const [messageNum, setMessageNum] = useState(messages)
 
   return (
-    <div className=" fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+    <div className="fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
       <div className="grid grid-cols-2 gap-2">
        
         {images.slice(0, 4).map((image, i) => (
