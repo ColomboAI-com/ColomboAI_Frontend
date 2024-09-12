@@ -20,7 +20,6 @@ const GenSearch = ({ children }) => {
                     <header className="sticky top-0 z-50 bg-white">
                         <div className=" border-purple-50 py-2">
                             <img src="/images/home/ColomboAI-logo.svg" alt="ColomboAI Logo" className="mx-auto text-center " />
-                            <RightSideIcons/>
                         </div>
                         <div className=" bg-white border" style={{borderColor: 'rgba(227, 227, 227, 1)',borderWidth: '1px', borderStyle: 'solid'}}>
                         </div>

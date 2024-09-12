@@ -35,12 +35,6 @@ import React from 'react';
 import { ShareGenAiIcon, CopyGenAiIcon } from "../Icons";
 
 const MessageBox = ({ message, isUser, sendMessage }) => {
-  const contentStyle = {
-    width: '700px',
-    minHeight: '70px',
-    margin: '0 auto',
-    position: 'relative',
-  };
 
 //   const sidebarStyle = {
 //     width: '351px',
@@ -89,8 +83,14 @@ const MessageBox = ({ message, isUser, sendMessage }) => {
     marginTop: '5px',
   };
 
+  // const contentStyle = {
+  //   width: '700px',
+  //   minHeight: '70px',
+  //   margin: '0 auto',
+  //   position: 'relative',
+  // };
   return (
-    <div className='' style={contentStyle}>
+    <div className='lg:w-[39rem] xl:w-[44rem] md:w-[38rem]'>
       <div style={messageStyle}>
         <p style={textStyle}>{message.content}</p>
         {isUser && message.file && (

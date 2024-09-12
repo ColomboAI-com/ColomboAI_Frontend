@@ -50,7 +50,7 @@
 //   };
 
 //   return (
-//     <div className="flex flex-col space-y-6 pt-8 pb-44 lg:pb-32 sm:mx-4 md:mx-8">
+//     <div className="flex flex-col space-y-6 pt-8 pb-44 xl:pb-32 sm:mx-4 md:mx-8">
 //       {messages.map((msg, i) => {
 //         const isLast = i === messages.length - 1;
 
@@ -77,7 +77,7 @@
 //       <div ref={messageEnd} className="h-0" />
 //       {dividerWidth > 0 && (
 //         <div
-//           className="bottom-24 lg:bottom-10 fixed z-40"
+//           className="bottom-24 xl:bottom-10 fixed z-40"
 //           style={{ width: dividerWidth }}
 //         >
 //           <MessageInput loading={loading} sendMessage={handleSendMessage} onFileUpload={onFileUpload} />
@@ -151,52 +151,52 @@ const Chat = ({ loading, messages, sendMessage }) => {
   }, [messages]);
 
   return (
-    <div style={{ position: "relative" }} className={plusJakartaSans.className}>
-      {messages.length > 0 ? (
+    <div style={{ position: "relative" }} className={`${plusJakartaSans.className} flex flex-row w-full md:gap-[0rem] lg:gap-[2rem] xl:gap-[8rem]`}>
+      {messages.length > 0 && (
         <div
           style={chatContainerStyle}
-          className="ml-[7rem] flex flex-col items-center"
+          className="md:ml-[2.4rem] lg:ml-[7rem] flex flex-col md:items-start xl:items-center"
         >
-          <div className="flex flex-col w-[48rem] gap-3 text-center p-3 bg-[#F7F7F7] border-[1px] rounded-3xl border-blue-500">
+          <div className="flex flex-col md:w-[36rem] xl:w-[48rem] gap-3 text-center p-3 bg-[#F7F7F7] border-[1px] rounded-3xl border-blue-500">
             <div className="flex items-center justify-between">
               <Image src={leftArrow} alt="colombo" className="ml-1" />
-              <p className="flex-grow text-center font-[450] text-[#1E71F2]">
+              <p className="flex-grow text-center font-[450] text-[#1E71F2] md:text-sm xl:text-base">
                 https://vimeo.com/blog/post/what-is-a-video-player/
               </p>
               <div className="flex items-center gap-2">
-                <p className="mr-1 text-[#8B8B8B] text-lg font-[450]">$3</p>
+                <p className="mr-1 text-[#8B8B8B] md:text-base xl:text-lg font-[450]">$3</p>
                 <Image src={rightArrow} alt="colombo" />
               </div>
             </div>
-            <p className="font-[450] text-[#8B8B8B] mx-3">
+            <p className="font-[450] text-[#8B8B8B] md:text-sm xl:text-base md:mx-1 xl:mx-3">
               What is a video player? Plus, 5 platforms to consider. Today,
               video streaming online is very much part of our daily lives. But
               what exactly is the mechanism that allows us to play video to on a
               computer or smartphone?
             </p>
           </div>
-          <div className="flex flex-row justify-center gap-3 my-[1rem] w-[48rem]">
-            <div className="rounded-xl bg-[#F7F7F7] border-[1px] border-[#ACACAC] p-1 gap-2 flex flex-col items-center">
-              <p className="text-[#1E71F2] border-b-[#1E71F2] border-b-[1px] text-[0.6rem]">
+          <div className="flex flex-row justify-center md:gap-2 xl:gap-3 my-[1rem] md:w-[36rem] xl:w-[48rem]">
+            <div className="rounded-xl bg-[#F7F7F7] border-[1px] border-[#ACACAC] md:p-[0.15rem] xl:p-1 md:gap-1 xl:gap-2 flex flex-col items-center">
+              <p className="text-[#1E71F2] border-b-[#1E71F2] border-b-[1px] md:text-[0.45rem] xl:text-[0.6rem]">
                 coschedule.com
               </p>
-              <p className="text-[#ACACAC] mx-1 text-[0.6rem]">
+              <p className="text-[#ACACAC] md:mx-0.5 xl:mx-1 md:text-[0.45rem] xl:text-[0.6rem]">
                 What Is a​ Video? - Ultimate Marketing Dictionary
               </p>
             </div>
-            <div className="rounded-xl bg-[#F7F7F7] border-[1px] border-[#ACACAC] p-1 gap-2 flex flex-col items-center">
-              <p className="text-[#1E71F2] border-b-[#1E71F2] border-b-[1px] text-[0.6rem]">
+            <div className="rounded-xl bg-[#F7F7F7] border-[1px] border-[#ACACAC] md:p-[0.15rem] xl:p-1 md:gap-1 xl:gap-2 flex flex-col items-center">
+              <p className="text-[#1E71F2] border-b-[#1E71F2] border-b-[1px] md:text-[0.45rem] xl:text-[0.6rem]">
                 info.flip.com
               </p>
-              <p className="text-[#ACACAC] mx-1 text-[0.6rem]">
+              <p className="text-[#ACACAC] md:mx-0.5 xl:mx-1 md:text-[0.45rem] xl:text-[0.6rem]">
                 Flip is a video discussion and sharing app, free f...
               </p>
             </div>
-            <div className="rounded-xl bg-[#F7F7F7] border-[1px] border-[#ACACAC] p-1 gap-2 flex flex-col items-center">
-              <p className="text-[#1E71F2] border-b-[#1E71F2] border-b-[1px] text-[0.6rem]">
+            <div className="rounded-xl bg-[#F7F7F7] border-[1px] border-[#ACACAC] md:p-[0.15rem] xl:p-1 md:gap-1 xl:gap-2 flex flex-col items-center">
+              <p className="text-[#1E71F2] border-b-[#1E71F2] border-b-[1px] md:text-[0.45rem] xl:text-[0.6rem]">
                 arxiv.org
               </p>
-              <p className="text-[#ACACAC] mx-1 text-[0.6rem]">
+              <p className="text-[#ACACAC] mx-1 md:text-[0.45rem] xl:text-[0.6rem]">
                 An Image is Worth 16x16 Words, What is a Video Worth?
               </p>
             </div>
@@ -211,14 +211,6 @@ const Chat = ({ loading, messages, sendMessage }) => {
           ))}
           {loading && <div style={loadingStyle}>Loading...</div>}
         </div>
-      ) : (
-        <p className="text-[15px] absolute font-[450] text-justify  text-[#ACACAC] max-w-[806px] h-[60px] top-[21px] left-[5rem]">
-          Welcome to GenAI Search, your go-to tool for instant answers and web
-          exploration! Simply type your question or topic of interest, and GenAI
-          will provide you with accurate answers along with related links from
-          the web. Whether you are seeking quick information or diving deeper
-          into a topic, GenAI Search has you covered.
-        </p>
       )}
       <SearchImages messages={messageNum} />
     </div>

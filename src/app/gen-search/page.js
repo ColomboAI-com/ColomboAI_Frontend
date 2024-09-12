@@ -53,7 +53,7 @@
 // export default GenSearch;
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import InputBar from "../../components/layouts/InputBar.jsx";
 import RightSideIcons from "../../components/gen-ai/RightSideIcons.jsx";
@@ -77,8 +77,11 @@ function GenSearch() {
   const [messageBuffer, setMessageBuffer] = useState("");
   const [urlBuffer, setUrlBuffer] = useState(""); // Buffer to store URLs
   const [loading, setLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [chatId, setChatId] = useState(uuidv4()); // State for storing a unique chat ID
+  const fileInputRef = useRef(null);
+
 
   const socketUrl = "ws://35.239.74.176:3001/";
   const httpUrl = "http://35.239.74.176:3001/";
@@ -173,6 +176,14 @@ function GenSearch() {
     [readyState, sendWebSocketMessage, messages, chatId]
   );
 
+  const onUploadChange = (bool) => {
+    if (bool) {
+      setIsUploading(true)
+    } else {
+      setIsUploading(false)
+    }
+  }
+
   const borderStyle = {
     border: "0.5px solid transparent",
     backgroundClip: "padding-box",
@@ -184,19 +195,24 @@ function GenSearch() {
   return (
     <>
       <div className="flex flex-col min-h-screen">
-        <header className="sticky top-0 z-50 bg-white shadow-md">
+        {/* <header className="sticky top-0 z-50 bg-white shadow-md">
           <RightSideIcons />
-        </header>
+        </header> */}
         <main className="flex-grow">
-          <div className="w-full lg:w-[70%] px-5 lg:px-20 mt-4">
+          <div className="flex flex-row items-start">
+          <div className="w-full md:w-[70%] lg:w-[70%] px-5 lg:px-20 mt-4">
             <InputBar
               sendMessage={sendMessage}
               setUploadedFile={setUploadedFile}
+              uploading={onUploadChange} 
+              uploadedFile={fileInputRef}
             />
           </div>
-
+          <RightSideIcons />
+          </div>
+          {!isUploading &&<div>
           {messages.length === 0 ? (
-            <p className="text-[15px] absolute font-[450] text-justify font-sans text-[#ACACAC] max-w-[806px] h-[60px] top-[216px] left-[192px] ">
+            <p className="md:text-[0.8rem] mt-[1rem] lg:text-[0.9375rem] md:ml-[1.8rem] lg:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] lg:w-[48rem]">
               Welcome to GenAI Search, your go-to tool for instant answers and
               web exploration! Simply type your question or topic of interest,
               and GenAI will provide you with accurate answers along with
@@ -211,6 +227,7 @@ function GenSearch() {
               sendMessage={sendMessage}
             />
           )}
+          </div>}
           <HistoryChat />
           <div className=" absolute bottom-0 left-[198px] w-[728px] h-[90px] ">
             <FooterAdComponent />
