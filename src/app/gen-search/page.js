@@ -237,9 +237,9 @@ function GenSearch() {
             </div>
           )}
           <HistoryChat />
-          <div className="absolute bottom-0 left-[198px] w-[728px] h-[90px]">
+          {/* <div className="absolute bottom-0 left-[198px] w-[728px] h-[90px]">
             <FooterAdComponent />
-          </div>
+          </div> */}
         </main>
       </div>
 
