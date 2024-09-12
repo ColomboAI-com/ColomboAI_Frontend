@@ -1,7 +1,8 @@
 import React from 'react';
-import logoImage from './CommingSoon/images/feedimage/image.png'; // Import the image from the src folder
-import logoog from './CommingSoon/images/logoimage/image.png';
-
+// import logoImage from './CommingSoon/images/feedimage/image.png'; // Import the image from the src folder
+// import logoog from './CommingSoon/images/logoimage/image.png';
+import logoog from './images/logoimage/image.png'
+import logoImage from './images/feedimage/image.png'
 const App = () => {
   // Inline Styles
   const appStyle = {
@@ -13,15 +14,15 @@ const App = () => {
     justifyContent: 'center',
     textAlign: 'center',
     padding: '36px',
-    marginTop:'40px',
+    // marginTop:'40px',
     marginBottom:'0' ,
-    
+
     
   };
 
   return (
     <div style={appStyle}>
-      <Header />
+      {/* <Header /> */}
       <FeedPlaceholder />
     </div>
   );
@@ -44,7 +45,7 @@ const Header = () => {
   return (
     <header style={headerStyle}>
       <img 
-        src={logoog}  // Use the imported image here
+        src={logoog.src}  // Use the imported image here
         alt="ColomboAI Logo"
         style={logoStyle}
       />
@@ -107,7 +108,7 @@ const FeedPlaceholder = () => {
       {/* Robot Image and Placeholder Text */}
       <div style={imageContainerStyle}>
         <img
-          src={logoImage}  // Use the imported image for the robot too
+          src={logoImage.src}  // Use the imported image for the robot too
           alt="Robot"
           style={imageStyle}
         />
