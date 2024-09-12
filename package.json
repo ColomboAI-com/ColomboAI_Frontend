@@ -14,7 +14,7 @@
     "@ffmpeg/util": "0.12.1",
     "@headlessui/react": "^1.7.19",
     "@heroicons/react": "^1.0.6",
-    "@next/font": "^14.2.9",
+    "@next/font": "^14.2.10",
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.6.8",
