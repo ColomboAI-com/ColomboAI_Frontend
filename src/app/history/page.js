@@ -1,51 +1,55 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const App = () => {
-  const [history, setHistory] = useState([
-    {
-      date: '11th May, 2024',
-      queries: [
-        { id: 1, query: 'What is a Video', checked: false },
-        { id: 2, query: 'What is the capital of Sri Lanka?', checked: false },
-        { id: 3, query: 'How does quantum computing work?', checked: false },
-      ],
-    },
-    {
-      date: '10th May, 2024',
-      queries: [
-        { id: 4, query: 'Will Gojo Sataru come back?', checked: false },
-        { id: 5, query: 'Best ramyeon recipe?', checked: false },
-        { id: 6, query: 'Who is the best vocalist in K-pop?', checked: false },
-      ],
-    },
-    {
-      date: '9th May, 2024',
-      queries: [
-        { id: 7, query: 'How to learn React quickly?', checked: false },
-        { id: 8, query: 'Best practices for coding interviews?', checked: false },
-      ],
-    },
-    {
-      date: '8th May, 2024',
-      queries: [
-        { id: 9, query: 'What are the latest trends in AI?', checked: false },
-        { id: 10, query: 'How to manage time effectively?', checked: false },
-      ],
-    },
-
-    {
-        date: '7th May, 2024',
-        queries: [
-          { id: 11, query: 'what to work effectively?', checked: false },
-          { id: 12, query: 'How to complete work before deadline?', checked: false },
-        ],
-      },
-  ]);
-
+  const [history, setHistory] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showClearAllModal, setShowClearAllModal] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(null);
+
+  useEffect(() => {
+    const fetchQueries = async () => {
+      try {
+        const chatResponse = await axios.get(
+          "https://genaimlapi.colomboai.com/chats"
+        );
+        const queries = chatResponse.data.chats;
+
+        // Group the queries by date
+        const groupedByDate = groupQueriesByDate(queries);
+        setHistory(groupedByDate);
+        // setHistory(queries);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchQueries();
+  }, []);
+  console.log(history);
+
+  const groupQueriesByDate = (queries) => {
+    // Helper function to extract just the date portion from createdAt timestamp
+    const getDateFromTimestamp = (timestamp) =>
+      new Date(timestamp).toLocaleDateString();
+
+    const groupedData = queries.reduce((acc, query) => {
+      const queryDate = getDateFromTimestamp(query.createdAt);
+      const existingDay = acc.find((day) => day.date === queryDate);
+
+      if (existingDay) {
+        existingDay.queries.push({ ...query, checked: false });
+      } else {
+        acc.push({
+          date: queryDate,
+          queries: [{ ...query, checked: false }],
+        });
+      }
+      return acc;
+    }, []);
+
+    return groupedData;
+  };
 
   const toggleCheckbox = (dayIndex, queryId) => {
     const newHistory = [...history];
@@ -110,7 +114,7 @@ const App = () => {
                     onChange={() => toggleCheckbox(dayIndex, query.id)}
                     style={styles.checkbox}
                   />
-                  <label style={styles.queryLabel}>{query.query}</label>
+                  <label style={styles.queryLabel}>{query.title}</label>
                 </div>
               ))}
             </div>
@@ -128,7 +132,10 @@ const App = () => {
           <div style={styles.modalOverlay}>
             <div style={styles.modal}>
               <h2 style={styles.modalTitle}>Delete Queries</h2>
-              <p>Are you sure you want to delete all checked queries for this day?</p>
+              <p>
+                Are you sure you want to delete all checked queries for this
+                day?
+              </p>
               <div style={styles.modalActions}>
                 <button
                   style={styles.deleteBtn}
@@ -154,10 +161,7 @@ const App = () => {
               <h2 style={styles.modalTitle}>Clear All History</h2>
               <p>Are you sure you want to clear all search history?</p>
               <div style={styles.modalActions}>
-                <button
-                  style={styles.deleteBtn}
-                  onClick={handleClearAll}
-                >
+                <button style={styles.deleteBtn} onClick={handleClearAll}>
                   Clear All
                 </button>
                 <button
@@ -178,112 +182,112 @@ const App = () => {
 // Inline styles
 const styles = {
   container: {
-    display: 'flex',
-    height: '100vh',
+    display: "flex",
+    height: "100vh",
   },
   sidebar: {
-    width: '15%',
-    backgroundColor: '#f0f0f0',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    borderRight: '1px solid #ddd',
+    width: "15%",
+    backgroundColor: "#f0f0f0",
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    borderRight: "1px solid #ddd",
   },
   mainContent: {
     flex: 1,
-    padding: '20px',
+    padding: "20px",
   },
   heading: {
-    textAlign: 'center',
-    marginBottom: '20px',
+    textAlign: "center",
+    marginBottom: "20px",
   },
   historySection: {
-    maxWidth: '800px',
-    margin: '0 auto',
+    maxWidth: "800px",
+    margin: "0 auto",
   },
   dateSection: {
-    position: 'relative',
-    border: '1px solid #ccc',
-    borderRadius: '10px',
-    padding: '20px',
-    marginBottom: '20px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    position: "relative",
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    padding: "20px",
+    marginBottom: "20px",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
   },
   dateTitle: {
-    marginBottom: '20px',
+    marginBottom: "20px",
   },
   deleteBtnDay: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    backgroundColor: '#ff4c4c',
-    border: 'none',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    backgroundColor: "#ff4c4c",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
   historyItem: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '10px 0',
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 0",
   },
   checkbox: {
-    marginRight: '10px',
+    marginRight: "10px",
   },
   queryLabel: {
-    marginLeft: '5px',  // Space between checkbox and label
-    flex: 1,             // Allow label to take remaining space
+    marginLeft: "5px", // Space between checkbox and label
+    flex: 1, // Allow label to take remaining space
   },
   deleteBtn: {
-    backgroundColor: '#ff4c4c',
-    border: 'none',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    backgroundColor: "#ff4c4c",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
   clearAllBtn: {
-    backgroundColor: '#007bff',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    border: 'none',
-    cursor: 'pointer',
-    marginTop: '20px',
+    backgroundColor: "#007bff",
+    color: "white",
+    padding: "10px 20px",
+    borderRadius: "5px",
+    border: "none",
+    cursor: "pointer",
+    marginTop: "20px",
   },
   modalOverlay: {
-    position: 'fixed',
+    position: "fixed",
     inset: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modal: {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
   },
   modalTitle: {
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
   modalActions: {
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "10px",
   },
   cancelBtn: {
-    backgroundColor: '#aaa',
-    border: 'none',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    backgroundColor: "#aaa",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
 };
 
