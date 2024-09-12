@@ -29,14 +29,19 @@ const SearchImages = ({ messages }) => {
           />
         ))}
       </div>
-        
-          <div className='w-[300px] h-[250px] transition duration-200 hover:scale-[1.02] cursor-pointer'>
+      <div className="w-[300px] h-[250px] cursor-pointer">
+          <SideTopAdComponent />
+        </div>
+        <div className="w-[300px] h-[600px]  cursor-pointer">
+          <SideAdComponent />
+        </div>
+          {/* <div className='w-[300px] h-[250px] transition duration-200 hover:scale-[1.02] cursor-pointer'>
             <SideTopAdComponent/>
             
           </div>
           <div className='w-[300px] h-[600px]  transition duration-200 hover:scale-[1.02] cursor-pointer'>
             <SideAdComponent/>
-          </div>
+          </div> */}
       {/* {images.slice(4).map((image, i) => (
         <img
           key={i + 4}
