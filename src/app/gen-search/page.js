@@ -82,6 +82,8 @@ function GenSearch() {
   const [chatId, setChatId] = useState(uuidv4()); // State for storing a unique chat ID
   const [currentQuery, setCurrentQuery] = useState("");
   const fileInputRef = useRef(null);
+  const [sources, setSources] = useState([]);
+  const [displaySource, setDisplaySource] = useState([]);
 
   // const socketUrl = "ws://35.239.74.176:3001/";
   const socketUrl = "wss://genaimlapi.colomboai.com";
@@ -99,50 +101,86 @@ function GenSearch() {
     shouldReconnect: (closeEvent) => true,
   });
 
+  let newSources = [];
   // useEffect(() => {
   //   if (lastMessage !== null) {
   //     handleReceivedMessage(lastMessage.data);
   //   }
   // }, [lastMessage]);
 
+  // useEffect(() => {
+  //   if (lastMessage !== null) {
+  //     //console.log("last message:", lastMessage);
+  //     const messageData = JSON.parse(lastMessage.data);
+
+  //     switch (messageData.type) {
+  //       case "messageEnd":
+  //         // Concatenate message data first and URL data at the endz
+
+  //         const fullMessage = messageBuffer;
+  //         handleReceivedMessage(fullMessage);
+  //         setMessageBuffer(""); // Clear the message buffer
+  //         setUrlBuffer(""); // Clear the URL buffer
+  //         break;
+  //       case "sources":
+  //         // Handle 'sources' type, append each URL from the metadata as a new line
+  //         if (messageData.data.length > 0) {
+  //           const urls = messageData.data
+  //             .map((item) => item.metadata.url + "\n") // Extract URL and add newline
+  //             .join(""); // Collect all URLs
+  //           setUrlBuffer((prev) => prev + urls);
+
+  //           const newSources = messageData.data.map((item) => ({
+  //             title: item.metadata.title,
+  //             url: item.metadata.url,
+  //           }));
+  //           setSources(newSources);
+  //           console.log("newsources:", newSources);
+  //         }
+  //         break;
+  //       case "message":
+  //         // Append 'message' type data directly to the buffer
+  //         setMessageBuffer((prev) => prev + messageData.data);
+  //         break;
+  //       default:
+  //         // Optionally handle other types or errors
+  //         break;
+  //     }
+  //   }
+  // }, [lastMessage]);
   useEffect(() => {
     if (lastMessage !== null) {
-      //console.log("last message:", lastMessage);
       const messageData = JSON.parse(lastMessage.data);
 
       switch (messageData.type) {
         case "messageEnd":
-          // Concatenate message data first and URL data at the endz
-
-          const fullMessage = messageBuffer;
-          handleReceivedMessage(fullMessage);
-          setMessageBuffer(""); // Clear the message buffer
-          setUrlBuffer(""); // Clear the URL buffer
+          handleReceivedMessage(messageBuffer, sources);
+          setMessageBuffer(""); // Clear the message buffer after handling
+          setSources([]); // Clear sources after they're passed
           break;
         case "sources":
-          // Handle 'sources' type, append each URL from the metadata as a new line
-          if (messageData.data.length > 0) {
-            const urls = messageData.data
-              .map((item) => item.metadata.url + "\n") // Extract URL and add newline
-              .join(""); // Collect all URLs
-            setUrlBuffer((prev) => prev + urls);
-          }
+          const newSources = messageData.data.map((item) => ({
+            title: item.metadata.title,
+            url: item.metadata.url,
+            pageContent: item.pageContent,
+          }));
+          // setSources(newSources); // Set newSources ready for when message ends
+          setSources((prevSources) => [...prevSources, ...newSources]);
           break;
         case "message":
-          // Append 'message' type data directly to the buffer
           setMessageBuffer((prev) => prev + messageData.data);
           break;
         default:
-          // Optionally handle other types or errors
           break;
       }
     }
   }, [lastMessage]);
 
-  const handleReceivedMessage = (content) => {
+  const handleReceivedMessage = (content, sources) => {
+    console.log("sources:", sources);
     setMessages((prevMessages) => [
       ...prevMessages,
-      { role: "assistant", content: content },
+      { role: "assistant", content: content, sources: sources },
     ]);
     setLoading(false);
   };
@@ -232,6 +270,7 @@ function GenSearch() {
                   sendMessage={sendMessage}
                   chatId={chatId}
                   query={currentQuery}
+                  sources={sources}
                 />
               )}
             </div>
