@@ -125,7 +125,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const Chat = ({ loading, messages, sendMessage }) => {
+const Chat = ({ loading, messages, sendMessage, chatId, query }) => {
   const chatContainerStyle = {
     maxWidth: "700px",
     // margin: '0 auto',
@@ -212,7 +212,7 @@ const Chat = ({ loading, messages, sendMessage }) => {
           {loading && <div style={loadingStyle}>Loading...</div>}
         </div>
       )}
-      <SearchImages messages={messageNum} />
+      <SearchImages query={query} chatId={chatId} />
     </div>
   );
 };

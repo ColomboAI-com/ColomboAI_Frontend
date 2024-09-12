@@ -80,8 +80,8 @@ function GenSearch() {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [chatId, setChatId] = useState(uuidv4()); // State for storing a unique chat ID
+  const [currentQuery, setCurrentQuery] = useState("");
   const fileInputRef = useRef(null);
-
 
   const socketUrl = "ws://35.239.74.176:3001/";
   const httpUrl = "http://35.239.74.176:3001/";
@@ -147,6 +147,7 @@ function GenSearch() {
   const sendMessage = useCallback(
     (message, file) => {
       setLoading(true);
+      setCurrentQuery(message);
       setMessages((prevMessages) => [
         ...prevMessages,
         { role: "user", content: message, file: file },
@@ -178,11 +179,11 @@ function GenSearch() {
 
   const onUploadChange = (bool) => {
     if (bool) {
-      setIsUploading(true)
+      setIsUploading(true);
     } else {
-      setIsUploading(false)
+      setIsUploading(false);
     }
-  }
+  };
 
   const borderStyle = {
     border: "0.5px solid transparent",
@@ -200,50 +201,54 @@ function GenSearch() {
         </header> */}
         <main className="flex-grow">
           <div className="flex flex-row items-start">
-          <div className="w-full md:w-[70%] lg:w-[70%] px-5 lg:px-20 mt-4">
-            <InputBar
-              sendMessage={sendMessage}
-              setUploadedFile={setUploadedFile}
-              uploading={onUploadChange} 
-              uploadedFile={fileInputRef}
-            />
+            <div className="w-full md:w-[70%] lg:w-[70%] px-5 lg:px-20 mt-4">
+              <InputBar
+                sendMessage={sendMessage}
+                setUploadedFile={setUploadedFile}
+                uploading={onUploadChange}
+                uploadedFile={fileInputRef}
+              />
+            </div>
+            <RightSideIcons />
           </div>
-          <RightSideIcons />
-          </div>
-          {!isUploading &&<div>
-          {messages.length === 0 ? (
-            <p className="md:text-[0.8rem] mt-[1rem] lg:text-[0.9375rem] md:ml-[1.8rem] lg:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] lg:w-[48rem]">
-              Welcome to GenAI Search, your go-to tool for instant answers and
-              web exploration! Simply type your question or topic of interest,
-              and GenAI will provide you with accurate answers along with
-              related links from the web. Whether you are seeking quick
-              information or diving deeper into a topic, GenAI Search has you
-              covered.
-            </p>
-          ) : (
-            <Chat
-              loading={loading}
-              messages={messages}
-              sendMessage={sendMessage}
-            />
+          {!isUploading && (
+            <div>
+              {messages.length === 0 ? (
+                <p className="md:text-[0.8rem] mt-[1rem] lg:text-[0.9375rem] md:ml-[1.8rem] lg:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] lg:w-[48rem]">
+                  Welcome to GenAI Search, your go-to tool for instant answers
+                  and web exploration! Simply type your question or topic of
+                  interest, and GenAI will provide you with accurate answers
+                  along with related links from the web. Whether you are seeking
+                  quick information or diving deeper into a topic, GenAI Search
+                  has you covered.
+                </p>
+              ) : (
+                <Chat
+                  loading={loading}
+                  messages={messages}
+                  sendMessage={sendMessage}
+                  chatId={chatId}
+                  query={currentQuery}
+                />
+              )}
+            </div>
           )}
-          </div>}
           <HistoryChat />
           <div className=" absolute bottom-0 left-[198px] w-[728px] h-[90px] ">
             <FooterAdComponent />
           </div>
         </main>
       </div>
-      {messages.length === 0 &&
-      <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
-        <div className="w-[300px]  h-[250px] cursor-pointer">
-          <SideTopAdComponent divid={'top2'}/>
+      {messages.length === 0 && (
+        <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+          <div className="w-[300px]  h-[250px] cursor-pointer">
+            <SideTopAdComponent divid={"top2"} />
+          </div>
+          <div className="w-[300px] h-[600px] cursor-pointer">
+            <SideAdComponent divid={"bottom2"} />
+          </div>
         </div>
-        <div className="w-[300px] h-[600px] cursor-pointer">
-          <SideAdComponent divid={'bottom2'}/>
-        </div>
-      </div>
-}
+      )}
     </>
   );
 }
