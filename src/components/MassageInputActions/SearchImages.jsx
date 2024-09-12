@@ -258,6 +258,12 @@ const SearchImages = ({ chatId, query }) => {
           </a>
         ))}
       </div>
+      <div className="w-[300px]  h-[250px] cursor-pointer">
+          <SideTopAdComponent divid={"top1"} />
+        </div>
+        <div className="w-[300px] h-[600px] cursor-pointer">
+          <SideAdComponent divid={"bottom1"} />
+        </div>
       {/* <div className="md:w-[8rem] md:h-[6.666667rem] lg:w-[12rem] lg:h-[10rem] xl:w-[18.75rem] xl:h-[15.625rem] border-[1px] border-black cursor-pointer">
         <SideTopAdComponent divid={"top1"} />
       </div>
