@@ -217,6 +217,7 @@ function GenSearch() {
           </div>
         </main>
       </div>
+      {messages.length === 0 &&
       <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
         <div className="w-[300px]  h-[250px] cursor-pointer">
           <SideTopAdComponent />
@@ -225,6 +226,7 @@ function GenSearch() {
           <SideAdComponent />
         </div>
       </div>
+}
     </>
   );
 }
