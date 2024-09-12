@@ -34,7 +34,7 @@ export default function SocialAuthentication() {
           {loadings.google ? <Loader /> : "Continue with Google"}
         </h6>
       </div>
-      <div
+      {/* <div
         className="flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[0.4rem] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px]  2xl:px-[24px] px-[24px] py-[13px] mb-[0.6rem] cursor-pointer lg:bg-transparent"
         onClick={() => handleSocialAuthentication("meta")}
       >
@@ -59,7 +59,7 @@ export default function SocialAuthentication() {
         <h6 className="mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]">
           {loadings.microsoft ? <Loader /> : "Continue with Microsoft"}
         </h6>
-      </div>
+      </div> */}
     </div>
   );
 }

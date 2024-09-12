@@ -121,7 +121,7 @@ const History = () => {
                     onChange={() => toggleCheckbox(dayIndex, query.id)}
                     style={styles.checkbox}
                   />
-                  <label style={styles.queryLabel}>{query.query}</label>
+                  <label style={styles.queryLabel}>{query.title}</label>
                 </div>
               ))}
             </div>
@@ -139,7 +139,10 @@ const History = () => {
           <div style={styles.modalOverlay}>
             <div style={styles.modal}>
               <h2 style={styles.modalTitle}>Delete Queries</h2>
-              <p>Are you sure you want to delete all checked queries for this day?</p>
+              <p>
+                Are you sure you want to delete all checked queries for this
+                day?
+              </p>
               <div style={styles.modalActions}>
                 <button
                   style={styles.deleteBtn}
@@ -165,10 +168,7 @@ const History = () => {
               <h2 style={styles.modalTitle}>Clear All History</h2>
               <p>Are you sure you want to clear all search history?</p>
               <div style={styles.modalActions}>
-                <button
-                  style={styles.deleteBtn}
-                  onClick={handleClearAll}
-                >
+                <button style={styles.deleteBtn} onClick={handleClearAll}>
                   Clear All
                 </button>
                 <button
@@ -189,112 +189,112 @@ const History = () => {
 // Inline styles
 const styles = {
   container: {
-    display: 'flex',
-    height: '100vh',
+    display: "flex",
+    height: "100vh",
   },
   sidebar: {
-    width: '15%',
-    backgroundColor: '#f0f0f0',
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    borderRight: '1px solid #ddd',
+    width: "15%",
+    backgroundColor: "#f0f0f0",
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    borderRight: "1px solid #ddd",
   },
   mainContent: {
     flex: 1,
-    padding: '20px',
+    padding: "20px",
   },
   heading: {
-    textAlign: 'center',
-    marginBottom: '20px',
+    textAlign: "center",
+    marginBottom: "20px",
   },
   historySection: {
-    maxWidth: '800px',
-    margin: '0 auto',
+    maxWidth: "800px",
+    margin: "0 auto",
   },
   dateSection: {
-    position: 'relative',
-    border: '1px solid #ccc',
-    borderRadius: '10px',
-    padding: '20px',
-    marginBottom: '20px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    position: "relative",
+    border: "1px solid #ccc",
+    borderRadius: "10px",
+    padding: "20px",
+    marginBottom: "20px",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
   },
   dateTitle: {
-    marginBottom: '20px',
+    marginBottom: "20px",
   },
   deleteBtnDay: {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    backgroundColor: '#ff4c4c',
-    border: 'none',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    backgroundColor: "#ff4c4c",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
   historyItem: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '10px 0',
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 0",
   },
   checkbox: {
-    marginRight: '10px',
+    marginRight: "10px",
   },
   queryLabel: {
-    marginLeft: '5px',  // Space between checkbox and label
-    flex: 1,             // Allow label to take remaining space
+    marginLeft: "5px", // Space between checkbox and label
+    flex: 1, // Allow label to take remaining space
   },
   deleteBtn: {
-    backgroundColor: '#ff4c4c',
-    border: 'none',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    backgroundColor: "#ff4c4c",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
   clearAllBtn: {
-    backgroundColor: '#007bff',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    border: 'none',
-    cursor: 'pointer',
-    marginTop: '20px',
+    backgroundColor: "#007bff",
+    color: "white",
+    padding: "10px 20px",
+    borderRadius: "5px",
+    border: "none",
+    cursor: "pointer",
+    marginTop: "20px",
   },
   modalOverlay: {
-    position: 'fixed',
+    position: "fixed",
     inset: 0,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modal: {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    textAlign: 'center',
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    textAlign: "center",
   },
   modalTitle: {
-    marginBottom: '10px',
+    marginBottom: "10px",
   },
   modalActions: {
-    marginTop: '20px',
-    display: 'flex',
-    justifyContent: 'center',
-    gap: '10px',
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "center",
+    gap: "10px",
   },
   cancelBtn: {
-    backgroundColor: '#aaa',
-    border: 'none',
-    color: 'white',
-    padding: '5px 10px',
-    borderRadius: '5px',
-    cursor: 'pointer',
+    backgroundColor: "#aaa",
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "5px",
+    cursor: "pointer",
   },
 };
 
