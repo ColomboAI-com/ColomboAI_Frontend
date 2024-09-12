@@ -8,6 +8,8 @@ import InputBar from "./InputBar";
 import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import vibes from "../../../public/images/icons/vibes.png"
 
 /* eslint-disable @next/next/no-img-element */
 const Sidebar = () => {
@@ -64,9 +66,9 @@ const Sidebar = () => {
                     <Link href="/task-bot">
                         <div className="mb-[34px]">
                             <div className="w-[29px] mx-auto">
-                                <TaskBotIcon w="30" h="30" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
+                                <Image src={vibes} alt="colombo"/>
                             </div>
-                            <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Task bot</p>
+                            <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Vibes</p>
                         </div>
                     </Link>
 
