@@ -39,13 +39,6 @@ export function EmailValidation({ value }) {
   )
 }
 
-export function PhoneValidation({ value }) {
-  return (
-    <div className="text-error">
-      {value ? <p>Inalid phone number</p> : <p>Phone number is mandatory</p>}
-    </div>
-  )
-}
 
 export function OTPValidation({ value }) {
   return (
