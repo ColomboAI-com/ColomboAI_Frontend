@@ -30,10 +30,10 @@ const SearchImages = ({ messages }) => {
         ))}
       </div>
       <div className="w-[300px] h-[250px] cursor-pointer">
-          <SideTopAdComponent />
+          <SideTopAdComponent divid={'top1'}/>
         </div>
         <div className="w-[300px] h-[600px]  cursor-pointer">
-          <SideAdComponent />
+          <SideAdComponent divid={'bottom1'}/>
         </div>
           {/* <div className='w-[300px] h-[250px] transition duration-200 hover:scale-[1.02] cursor-pointer'>
             <SideTopAdComponent/>
