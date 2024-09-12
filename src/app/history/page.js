@@ -1,55 +1,59 @@
-"use client";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+"use client"
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import leftArrow from "../../../public/images/icons/leftArrow.png";
+import Image from 'next/image';
 
-const App = () => {
-  const [history, setHistory] = useState([]);
+
+const History = () => {
+  const router = useRouter()
+  const [history, setHistory] = useState([
+    {
+      date: '11th May, 2024',
+      queries: [
+        { id: 1, query: 'What is a Video', checked: false },
+        { id: 2, query: 'What is the capital of Sri Lanka?', checked: false },
+        { id: 3, query: 'How does quantum computing work?', checked: false },
+      ],
+    },
+    {
+      date: '10th May, 2024',
+      queries: [
+        { id: 4, query: 'Will Gojo Sataru come back?', checked: false },
+        { id: 5, query: 'Best ramyeon recipe?', checked: false },
+        { id: 6, query: 'Who is the best vocalist in K-pop?', checked: false },
+      ],
+    },
+    {
+      date: '9th May, 2024',
+      queries: [
+        { id: 7, query: 'How to learn React quickly?', checked: false },
+        { id: 8, query: 'Best practices for coding interviews?', checked: false },
+      ],
+    },
+    {
+      date: '8th May, 2024',
+      queries: [
+        { id: 9, query: 'What are the latest trends in AI?', checked: false },
+        { id: 10, query: 'How to manage time effectively?', checked: false },
+      ],
+    },
+
+    {
+        date: '7th May, 2024',
+        queries: [
+          { id: 11, query: 'what to work effectively?', checked: false },
+          { id: 12, query: 'How to complete work before deadline?', checked: false },
+        ],
+      },
+  ]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showClearAllModal, setShowClearAllModal] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(null);
 
-  useEffect(() => {
-    const fetchQueries = async () => {
-      try {
-        const chatResponse = await axios.get(
-          "https://genaimlapi.colomboai.com/chats"
-        );
-        const queries = chatResponse.data.chats;
-
-        // Group the queries by date
-        const groupedByDate = groupQueriesByDate(queries);
-        setHistory(groupedByDate);
-        // setHistory(queries);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchQueries();
-  }, []);
-  console.log(history);
-
-  const groupQueriesByDate = (queries) => {
-    // Helper function to extract just the date portion from createdAt timestamp
-    const getDateFromTimestamp = (timestamp) =>
-      new Date(timestamp).toLocaleDateString();
-
-    const groupedData = queries.reduce((acc, query) => {
-      const queryDate = getDateFromTimestamp(query.createdAt);
-      const existingDay = acc.find((day) => day.date === queryDate);
-
-      if (existingDay) {
-        existingDay.queries.push({ ...query, checked: false });
-      } else {
-        acc.push({
-          date: queryDate,
-          queries: [{ ...query, checked: false }],
-        });
-      }
-      return acc;
-    }, []);
-
-    return groupedData;
-  };
+  const handleClearHistory = () => {
+    setShowClearAllModal(true);
+  }
 
   const toggleCheckbox = (dayIndex, queryId) => {
     const newHistory = [...history];
@@ -78,6 +82,7 @@ const App = () => {
   const handleClearAll = () => {
     setHistory([]);
     setShowClearAllModal(false);
+    // router.push('/gen-search')
   };
 
   return (
@@ -89,6 +94,8 @@ const App = () => {
 
       {/* Main Content */}
       <div style={styles.mainContent}>
+        <button onClick={e => router.push('/gen-search')}><Image src={leftArrow} alt="colombo" className="w-2" />
+        </button>
         {/* Title */}
         <h2 style={styles.heading}>GenAI Search History</h2>
 
@@ -122,7 +129,7 @@ const App = () => {
         </div>
         <button
           style={styles.clearAllBtn}
-          onClick={() => setShowClearAllModal(true)}
+          onClick={() => handleClearHistory()}
         >
           Clear All History
         </button>
@@ -291,4 +298,4 @@ const styles = {
   },
 };
 
-export default App;
+export default History;

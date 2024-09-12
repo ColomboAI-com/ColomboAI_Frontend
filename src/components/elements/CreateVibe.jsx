@@ -204,7 +204,7 @@ const CreateVibe = () => {
       {showError && 
         <CreateVibeErrorComponent currentState={showError}/>
     }
-      {!isSelectedFromComputer ? (
+      {/* {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto  font-sans">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
@@ -237,7 +237,7 @@ const CreateVibe = () => {
           <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
           <EditCover />
         </div>
-      )}
+      )} */}
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
         <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
           <textarea
