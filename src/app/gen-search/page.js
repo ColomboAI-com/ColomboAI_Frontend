@@ -83,7 +83,9 @@ function GenSearch() {
   const [currentQuery, setCurrentQuery] = useState("");
   const fileInputRef = useRef(null);
 
-  const socketUrl = "ws://35.239.74.176:3001/";
+  // const socketUrl = "ws://35.239.74.176:3001/";
+  const socketUrl = "wss://genaimlapi.colomboai.com";
+
   const httpUrl = "http://35.239.74.176:3001/";
 
   const {
@@ -111,7 +113,7 @@ function GenSearch() {
       switch (messageData.type) {
         case "messageEnd":
           // Concatenate message data first and URL data at the endz
-          
+
           const fullMessage = messageBuffer;
           handleReceivedMessage(fullMessage);
           setMessageBuffer(""); // Clear the message buffer
