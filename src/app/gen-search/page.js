@@ -83,7 +83,9 @@ function GenSearch() {
   const [currentQuery, setCurrentQuery] = useState("");
   const fileInputRef = useRef(null);
 
-  const socketUrl = "ws://35.239.74.176:3001/";
+  // const socketUrl = "ws://35.239.74.176:3001/";
+  const socketUrl = "wss://genaimlapi.colomboai.com";
+
   const httpUrl = "http://35.239.74.176:3001/";
 
   const {
@@ -111,7 +113,7 @@ function GenSearch() {
       switch (messageData.type) {
         case "messageEnd":
           // Concatenate message data first and URL data at the endz
-          
+
           const fullMessage = messageBuffer;
           handleReceivedMessage(fullMessage);
           setMessageBuffer(""); // Clear the message buffer
@@ -119,7 +121,7 @@ function GenSearch() {
           break;
         case "sources":
           // Handle 'sources' type, append each URL from the metadata as a new line
-          if (messageData.data.length > 0) {
+          if (messageData.data?.length > 0) {
             const urls = messageData.data
               .map((item) => item.metadata.url + "\n") // Extract URL and add newline
               .join(""); // Collect all URLs
@@ -215,7 +217,7 @@ function GenSearch() {
           {!isUploading && (
             <div>
               {messages.length === 0 ? (
-                <p className="md:text-[0.8rem] mt-[1rem] lg:text-[0.9375rem] md:ml-[1.8rem] lg:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] lg:w-[48rem]">
+                <p className="md:text-[0.8rem] mt-[1rem] lg:ml-[4rem] xl:text-[0.9375rem] md:ml-[1.8rem] xl:ml-[5rem] font-[450] text-justify font-sans text-[#ACACAC] md:w-[36rem] xl:w-[48rem]">
                   Welcome to GenAI Search, your go-to tool for instant answers
                   and web exploration! Simply type your question or topic of
                   interest, and GenAI will provide you with accurate answers
@@ -235,21 +237,19 @@ function GenSearch() {
             </div>
           )}
           <HistoryChat />
-          <div className=" absolute bottom-0 left-[198px] w-[728px] h-[90px] ">
+          <div className="absolute bottom-0 left-[198px] w-[728px] h-[90px]">
             <FooterAdComponent />
           </div>
         </main>
       </div>
-      {messages.length === 0 && (
-        <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
-          <div className="w-[300px]  h-[250px] cursor-pointer">
-            <SideTopAdComponent divid={"top2"} />
-          </div>
-          <div className="w-[300px] h-[600px] cursor-pointer">
-            <SideAdComponent divid={"bottom2"} />
-          </div>
+      <div className=" fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+        <div className="w-[300px]  h-[250px] cursor-pointer">
+          <SideTopAdComponent divid={"top2"} />
         </div>
-      )}
+        <div className="w-[300px] h-[600px] cursor-pointer">
+          <SideAdComponent divid={"bottom2"} />
+        </div>
+      </div>
     </>
   );
 }

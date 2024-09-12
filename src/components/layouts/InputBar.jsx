@@ -136,31 +136,30 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
           </div>
         )}
       </form> :
-        <div className='flex flex-col items-center md:w-[36rem] md:h-[15rem] lg:w-[42rem] lg:h-[17rem] xl:w-[45rem] xl:h-[17rem] mt-[1.2rem] ml-[6rem] rounded-[1.5rem]' style={borderStyle}>
-          <p className='p-5 font-[700] md:text-lg lg:text-xl'>Drag and Drop or upload your file here</p>
-          <hr className='border-[0.1px] md:w-[36rem] lg:w-[42rem] xl:w-[45rem] border-[#FF0049]' />
+        <div className='flex flex-col items-center md:w-[28rem] md:h-[10.52rem] lg:w-[30rem] lg:h-[11.32rem] xl:w-[45rem] xl:h-[17rem] mt-[1.2rem] ml-[6rem] rounded-[1.5rem]' style={borderStyle}>
+          <p className='lg:p-1 xl:p-5 font-[700] md:text-base lg:text-lg xl:text-xl'>Drag and Drop or upload your file here</p>
+          <hr className='border-[0.1px] md:w-[28rem] lg:w-[30rem] xl:w-[45rem] border-[#FF0049]' />
           <button
             type="button"
             onClick={() => [fileInputRef.current.click()]}
-            className='mt-[1rem]'
+            className='lg:mt-[0.3rem] xl:mt-[1rem]'
           >
-            <UploadIcon w={80} h={80} />
+            <UploadIcon w={80} h={80}/>
             
           </button>
           <button style={{
             background: 'linear-gradient(180deg, #6237FF, #258EFF)',
             color: 'white',
-            padding: '8px 40px',
             border: 'none',
             borderRadius: '15px',
             cursor: 'pointer',
             fontWeight: 'normal'
-          }} className='mt-[0.5rem] md:text-[0.8rem] lg:text-[1rem]'
+          }} className='mt-[0.3rem] xl:mt-[0.5rem] md:text-[0.8rem] lg:text-[0.8rem] xl:text-[1rem] md:px-[1.25rem] md:py-[0.3rem] lg:px-[1.25rem] lg:py-[0.3rem] xl:px-[1.75rem] xl:py-[0.4rem]'
             onClick={() => [fileInputRef.current.click()]}
           >
             UPLOAD
           </button>
-          <p className='text-[#8B8B8B] md:mt-[1rem] lg:mt-[1.75rem] md:text-xs lg:text-sm'>Max ??mb only</p>
+          <p className='text-[#8B8B8B] md:mt-[0.75rem] lg:mt-[0.5rem] xl:mt-[1.75rem] md:text-xs lg:text-sm'>Max ??mb only</p>
           <input
           type="file"
           ref={fileInputRef}
