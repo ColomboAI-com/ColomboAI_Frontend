@@ -151,7 +151,7 @@ const Chat = ({ loading, messages, sendMessage, chatId, query }) => {
   }, [messages]);
 
   return (
-    <div style={{ position: "relative" }} className={`${plusJakartaSans.className} flex flex-row w-full md:gap-[0rem] lg:gap-[2rem] xl:gap-[8rem]`}>
+    <div style={{ position: "relative" }} className={`${plusJakartaSans.className} overflow-y-scroll max-h-[31rem] flex flex-row w-full md:gap-[0rem] lg:gap-[2rem] xl:gap-[8rem]`}>
       {messages.length > 0 && (
         <div
           style={chatContainerStyle}
