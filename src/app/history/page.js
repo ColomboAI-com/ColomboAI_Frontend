@@ -1,7 +1,12 @@
 "use client"
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import leftArrow from "../../../public/images/icons/leftArrow.png";
+import Image from 'next/image';
 
-const App = () => {
+
+const History = () => {
+  const router = useRouter()
   const [history, setHistory] = useState([
     {
       date: '11th May, 2024',
@@ -42,10 +47,13 @@ const App = () => {
         ],
       },
   ]);
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showClearAllModal, setShowClearAllModal] = useState(false);
   const [selectedDayIndex, setSelectedDayIndex] = useState(null);
+
+  const handleClearHistory = () => {
+    setShowClearAllModal(true);
+  }
 
   const toggleCheckbox = (dayIndex, queryId) => {
     const newHistory = [...history];
@@ -74,6 +82,7 @@ const App = () => {
   const handleClearAll = () => {
     setHistory([]);
     setShowClearAllModal(false);
+    // router.push('/gen-search')
   };
 
   return (
@@ -85,6 +94,8 @@ const App = () => {
 
       {/* Main Content */}
       <div style={styles.mainContent}>
+        <button onClick={e => router.push('/gen-search')}><Image src={leftArrow} alt="colombo" className="w-2" />
+        </button>
         {/* Title */}
         <h2 style={styles.heading}>GenAI Search History</h2>
 
@@ -118,7 +129,7 @@ const App = () => {
         </div>
         <button
           style={styles.clearAllBtn}
-          onClick={() => setShowClearAllModal(true)}
+          onClick={() => handleClearHistory()}
         >
           Clear All History
         </button>
@@ -287,4 +298,4 @@ const styles = {
   },
 };
 
-export default App;
+export default History;
