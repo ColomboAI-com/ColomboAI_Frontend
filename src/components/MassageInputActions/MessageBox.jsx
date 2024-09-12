@@ -33,6 +33,7 @@
 
 import React from 'react';
 import { ShareGenAiIcon, CopyGenAiIcon } from "../Icons";
+import parse from 'html-react-parser';
 
 const MessageBox = ({ message, isUser, sendMessage }) => {
 
@@ -93,6 +94,7 @@ const MessageBox = ({ message, isUser, sendMessage }) => {
     <div className='lg:w-[39rem] xl:w-[44rem] md:w-[38rem]'>
       <div style={messageStyle}>
         <p style={textStyle}>{message.content}</p>
+        {/* <p style={textStyle}>{parse(message.content)}</p> */}
         {isUser && message.file && (
           <p style={fileNameStyle}>{message.file.name}</p>
         )}
