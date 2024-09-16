@@ -59,6 +59,17 @@ body {
     display: none;
   }
 
+  .wider-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .wider-scrollbar {
+    /* -ms-overflow-style: none; */
+    /* IE and Edge */
+    scrollbar-width: 8px;
+    /* Firefox */
+  }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     /* IE and Edge */

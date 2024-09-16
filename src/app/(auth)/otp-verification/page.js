@@ -5,7 +5,6 @@ import { useAuth } from "@/context/AuthContext";
 import Button from "@/elements/Button";
 import {
   getShortEmail,
-  getShortPhone,
   setUserCookies,
 } from "@/utlils/commonFunctions";
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils";
@@ -86,16 +85,7 @@ const OTPVerification = () => {
               <span className="text-[#1E71F2]">
                 {" "}
                 {getShortEmail(inputs.email)}
-              </span>{" "}
-              {page == "sign-up" || (new_device && page == "sign-in")
-                ? "&"
-                : null}{" "}
-              {page == "sign-up" || (new_device && page == "sign-in") ? (
-                <span className="text-[#1E71F2]">
-                  {" "}
-                  {getShortPhone(inputs.phone)}
-                </span>
-              ) : null}
+              </span>{" "}           
             </p>
           </div>
           <div>
@@ -110,19 +100,6 @@ const OTPVerification = () => {
               value={inputs.otp}
               onChange={handleInputs}
             />
-            {page == "sign-up" || (new_device && page == "sign-in") ? (
-              <input
-                type="tel"
-                className="mt-4 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[12px] text-left text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="Enter OTP from Phone"
-                autoComplete="off"
-                autoFocus
-                maxLength={6}
-                name={"phone_otp"}
-                value={inputs.phone_otp}
-                onChange={handleInputs}
-              />
-            ) : null}
             {validations.otp && <OTPValidation value={inputs.otp} />}
             <Button
               title={"VERIFY"}

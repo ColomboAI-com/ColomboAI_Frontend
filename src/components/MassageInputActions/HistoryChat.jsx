@@ -19,7 +19,7 @@ const HistoryChat = () => {
         onMouseEnter={handleMouseEnter}
       />
       <div
-        className={`fixed top-0 left-16 xl:left-[6.2rem] h-screen transition-all ${isExpanded ? `w-[365px]` : 'w-[0rem]'} duration-700 ease-in-out overflow-hidden ${
+        className={`fixed top-0 z-10 left-16 xl:left-[6.2rem] h-screen transition-all ${isExpanded ? `w-[365px]` : 'w-[0rem]'} duration-700 ease-in-out overflow-hidden ${
           isExpanded ? 'w-64 bg-[rgba(30,113,242,1)]' : 'w-0 bg-transparent'
         }`}
         onMouseLeave={handleMouseLeave}

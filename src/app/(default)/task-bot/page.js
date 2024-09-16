@@ -1,8 +1,11 @@
+import App from "@/CommingSoon/taskbot";
+
 const TaskBot = () => {
     return (
-        <p className="text-center mt-5">
-            Coming Soon
-        </p>
+        <App/>
+        // <p className="text-center mt-5">
+        //     Coming Soon
+        // </p>
     );
 }
 

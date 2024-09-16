@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-const SideTopAdComponent = () => {
+const SideTopAdComponent = ({divid}) => {
     useEffect(() => {
         const loadGPTScript = () => {
           return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ const SideTopAdComponent = () => {
                   console.log('Defining ad slot...');
                  
                   window.googletag.defineSlot('/23102803892/Genai_Desktop_300v_sidebar_top', [[300, 250], [336, 280]],
-                     'div-gpt-ad-1726060799394-0')
+                     divid)
                   .addService(window.googletag.pubads());
                   
                 //   console.log('Enabling single request mode...');
@@ -37,7 +37,7 @@ const SideTopAdComponent = () => {
                   console.log('Displaying ad...');
                   
 
-                  window.googletag.display('div-gpt-ad-1726060799394-0');
+                  window.googletag.display(divid);
                   
                 } catch (error) {
                   console.error('Error setting up Google Publisher Tag:', error);
@@ -63,7 +63,7 @@ const SideTopAdComponent = () => {
 
       </Head>
    
-    <div id='div-gpt-ad-1726060799394-0' style={{  border:'1px solid red',minWidth: '300px', minHeight: '250px' }}>
+    <div id={divid} style={{  minWidth: '300px', minHeight: '250px' }}>
    
     </div> 
    
