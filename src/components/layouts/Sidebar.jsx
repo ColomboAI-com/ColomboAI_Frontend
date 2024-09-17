@@ -57,7 +57,7 @@ const Sidebar = () => {
                             <div className="w-[29px] mx-auto">
                                 <GenAiIcon w="30" h="30" className="mx-auto" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
                             </div>
-                            <p className={`${pathname === '/gen-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Gen AI</p>
+                            <p className={`${pathname === '/genai-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[14px] mt-[7px] font-sans`}>Gen AI</p>
                         </div>
                     </Link>
 
