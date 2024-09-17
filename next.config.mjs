@@ -2,7 +2,8 @@
 const nextConfig = {
     swcMinify: false,
     reactStrictMode: false,
-    eslint: { ignoreDuringBuilds: true }
+    eslint: { ignoreDuringBuilds: true },
+    basePath: '/folder',
 };
 
 export default nextConfig;
