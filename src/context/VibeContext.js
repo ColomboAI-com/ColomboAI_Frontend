@@ -3,7 +3,7 @@ import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
 import axios from "axios"
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 
 const VibeContext = createContext();
 
@@ -15,28 +15,33 @@ export default function VibeContextProvider({ children }) {
         createVibe: false
     })
     
-    const createVibe = async ({fileType, file, content}) => {
+    const createVibe = async ({type, file, text, textColor, caption, isHideLikes = false, isHideComments = false }) => {
+        // console.log(type, file, text, textColor, caption);
+        
         try {
-            setLoadings(prev => ({ ...prev, createStory: true }))
+            setLoadings(prev => ({ ...prev, createVibe: true }))
             const formData = new FormData()
-            formData.append('type', fileType)
-            formData.append('file', file[0])
+            formData.append('type', type)
+            formData.append('file', file || '')
+            formData.append('text', text || '')
+            formData.append('textColor', textColor || '')
+            formData.append('caption', caption || '')
+            formData.append('hideLikes', isHideLikes)
+            formData.append('isCommentOff', isHideComments)
+            // fields to include:
+            // music 
+            // taggedPeople
 
-            // fields to possibly include
-            // type: postType,
-            // file: file, // This should be the file object if uploading media
-            // mediaUrl: mediaUrl,
-            // hideLikes: false,
-            // isCommentOff: false,
-
+            console.log(formData)
             const response = await axios.post(`${ROOT_URL_FEED}/vibes/create`,
                 formData,
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
+                {
+                headers: {
+                    Authorization: getCookie('token'),
+                },
+                }
           );
+
           if (response.status === 201) {
             console.log("Hitting create vibe endpoint successfully");
             console.log("Response:", response.data);
@@ -62,12 +67,18 @@ export default function VibeContextProvider({ children }) {
                     }
                 }
             )
+            console.log(response.data)
             return response.data
         } catch (error) {
             handleError(error)
         } finally {
             setLoadings(prev => ({ ...prev, reactVibe: false}))
         }
+    }
+
+    // TODO
+    const deleteVibe = async () => {
+
     }
 
 
@@ -84,3 +95,5 @@ export default function VibeContextProvider({ children }) {
     )
 }
 
+
+export { VibeContextProvider, VibeContext };

@@ -8,7 +8,6 @@ import SectionHeading from "@/components/elements/SectionHeading"
 import RenderFeed from "@/components/feed/post/RenderFeed"
 import CommentSection from "@/components/comment/CommentSection"
 
-
 const Feed = () => {
 
   return (

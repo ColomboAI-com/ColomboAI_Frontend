@@ -63,12 +63,12 @@ const Header = () => {
                         {pathname === '/gen-search' ? <GenSearch /> : <InputBar />}
 
                     </div>
-                    {/* <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
+                    <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
                         <SearchIcon w={35} h={35} fill={'#646464'} />
                         <CreateDropdown/>
                         <NotificationIcon w={35} h={35} fill={'#646464'} />
                         <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
-                    </div> */}
+                    </div>
                 </div>
             </div>
 
