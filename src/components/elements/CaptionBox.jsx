@@ -1,16 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
 
-const CaptionBox = () => {
-  const [postInput, setPostInput] = useState("");
+const CaptionBox = ({ captionInput, setCaptionInput }) => {
+  // const [captionInput, setCaptionInput] = useState("");
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
   const [textColor, setTextColor] = useState("#D1D1D1");
   const [charCount, setCharCount] = useState(0);
   const maxCharCount = 300;
+  const [showUsers, setShowUsers] = useState(false);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const handleCharCount = (text) => {
     const count = text.length;
@@ -20,9 +24,37 @@ const CaptionBox = () => {
     // setTextColor(remainingChars < 0 ? "#FF0000" : "#D1D1D1");
   };
 
+  const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
+  useEffect(() => {
+    // Filter users based on search input
+    setFilteredUsers(
+      allUsers.filter((user) =>
+        user.toLowerCase().includes(search.toLowerCase())
+      )
+    );
+  }, [search]);
+
+  const handleClick = () => {
+    setShowUsers((prevShowUsers) => !prevShowUsers);
+  };
+
+  const handleUserClick = (user) => {
+    setSelectedUsers((prevSelectedUsers) => {
+      if (prevSelectedUsers.includes(user)) {
+        // Remove user if already selected
+        return prevSelectedUsers.filter(
+          (selectedUser) => selectedUser !== user
+        );
+      } else {
+        // Add user if not selected
+        return [...prevSelectedUsers, user];
+      }
+    });
+  };
+
   const handlePostInputChange = (e) => {
     const newText = e.target.value;
-    setPostInput(newText);
+    setCaptionInput(newText);
     handleCharCount(newText);
   };
 
@@ -32,25 +64,29 @@ const CaptionBox = () => {
       setMediaUrl(result?.text);
       setPostType(result?.response_type);
     } else if (result?.response_type === "text") {
-      setPostInput(result?.text);
+      setCaptionInput(result?.text);
       handleCharCount(result?.text);
     }
     setIsMagicPenInputVisible(false);
   };
 
+  const buttonClass = `flex absolute top-[702px] text-white w-[105px] h-[22px] items-center ${
+    selectedUsers.length > 0 ? "bg-blue-500" : "bg-gray-500"
+  }`;
+
   return (
     <div className="w-full max-w-md mx-auto p-4">
-      
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
-      {/* <div className=" flex absolute top-[702px] bg-gray-500 text-white w-[105px] h-[22px] items-center ">
-      <button onClick={handleClick}>{selectedUsers.length > 0 ? 'Tagged' : 'Tag People'}</button>
-       </div>
-       {showUsers && (
+      <div className={buttonClass}>
+        <button onClick={handleClick}>
+          {selectedUsers.length > 0 ? "Tagged" : "Tag People"}
+        </button>
+      </div>
+      {showUsers && (
         <div className="absolute top-[726px] w-[470px] bg-gray-200 text-black p-4 rounded-md shadow-lg w-[250px] max-h-[300px] overflow-y-auto z-50">
-          
-            <p className="mb-4 flex justify-center">Tag people</p>
-          
+          <p className="mb-4 flex justify-center">Tag people</p>
+
           <input
             type="text"
             placeholder="Search..."
@@ -66,18 +102,18 @@ const CaptionBox = () => {
               focus:ring-2
               focus:ring-gray-300
             "
-          /> */}
-          
+          />
+
           {/* User List */}
 
-          {/* <ul>
-          {filteredUsers.length > 0 ? (
+          <ul>
+            {filteredUsers.length > 0 ? (
               filteredUsers.map((user, index) => (
                 <li
                   key={index}
                   onClick={() => handleUserClick(user)}
                   className={`py-2 border-b border-gray-300 last:border-b-0 cursor-pointer ${
-                    selectedUsers.includes(user) ? 'bg-gray-300' : ''
+                    selectedUsers.includes(user) ? "bg-gray-300" : ""
                   }`}
                 >
                   {user}
@@ -88,14 +124,12 @@ const CaptionBox = () => {
             )}
           </ul>
         </div>
-      )}  */}
-
+      )}
 
       <div className="bg-white rounded-lg shadow-md p-4">
-        
         <div className="relative">
           <textarea
-            value={postInput}
+            value={captionInput}
             placeholder="Write your caption here"
             onChange={handlePostInputChange}
             className="w-full p-3 rounded-md text-gray-700 bg-white placeholder-gray-400 text-sm resize-none outline-none mb-1"

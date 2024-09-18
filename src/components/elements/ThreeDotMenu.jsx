@@ -5,7 +5,6 @@ import { DotsVerticalIcon } from "@heroicons/react/solid";
 const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   const [isMemuOpen, setIsMenuOpen] = useState(false);
 
-  // Handlers for 3-dots menu
   const toggleMenu = () => {
     setIsMenuOpen(!isMemuOpen);
   };
@@ -17,6 +16,34 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
 
   const handleDiscard = () => {
     console.log("Discarding");
+    setIsMenuOpen(false);
+    setIsCreateVibeOpen(false);
+  };
+
+  // TODO: render the buttons related to these only after a vibe has been created
+  
+  const handleArchive = () => {
+    console.log("Archiving");
+    setIsMenuOpen(false);
+  };
+
+  const handleEdit = () => {
+    console.log("Editing");
+    setIsMenuOpen(false);
+  };
+
+  const handleHideLikeCounts = () => {
+    console.log("Hiding like counts");
+    setIsMenuOpen(false);
+  };
+
+  const handleTurnOffCommenting = () => {
+    console.log("Turning off commenting");
+    setIsMenuOpen(false);
+  };
+
+  const handleDelete = () => {
+    console.log("Deleting");
     setIsMenuOpen(false);
     setIsCreateVibeOpen(false);
   };
@@ -40,6 +67,36 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
               className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
             >
               Discard
+            </button>
+            <button
+              onClick={handleArchive}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Archive 
+            </button>
+            <button
+              onClick={handleEdit}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleHideLikeCounts}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Hide like counts
+            </button>
+            <button
+              onClick={handleTurnOffCommenting}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+            >
+              Turn Off Commenting
+            </button>
+            <button
+              onClick={handleDelete}
+              className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+            >
+              Delete
             </button>
           </div>
         </div>
