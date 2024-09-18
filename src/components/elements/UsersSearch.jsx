@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const UsersSearch = () => {
-  const [userSearchQuery, setUserSearchQuery] = useState("JustinTuanNguyen");
+  const [userSearchQuery, setUserSearchQuery] = useState('');
   const [users, setUsers] = useState([]);
 
   const handleSubmit = async (e) => {
