@@ -26,6 +26,7 @@ import EditCover from "./EditCover";
 import axios from "axios";
 import { VibeContext } from "@/context/VibeContext";
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
+import UsersSearch from "./UsersSearch";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -49,7 +50,6 @@ const CreateVibe = () => {
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [text, setText] = useState("");
-  // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
   const [isMemuOpen, setIsMenuOpen] = useState(false);
   const [textColor, setTextColor] = useState("#000000");
