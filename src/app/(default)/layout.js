@@ -132,12 +132,12 @@ const DefaultLayout = ({ children }) => {
     <FeedContextProvider>
       <div className="min-w-screen border- border-yellow-400 relative">
         <div className="flex max-h-[87vh] border- border-green-400 xl:h-screen">
-          <div className="min-w-[10%] xl:min-w-[7%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="min-w-[10%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
           
 
-          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[93%] ml-[7%] lg:ml-[7%] md:ml-[9%] flex flex-col relative sm:ml-[0]">
+          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
             <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
               <div className="py-[14px]">
                 <img
