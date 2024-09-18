@@ -49,12 +49,12 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <button onClick={toggleMenu}>
-        <DotsVerticalIcon className="h-10 w-10 text-gray-600" />
+        <DotsVerticalIcon className="h-10 w-10 text-white" />
       </button>
       {isMemuOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+        <div className="absolute left-3 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
           <div className="py-1">
             <button
               onClick={handleSaveToDrafts}
