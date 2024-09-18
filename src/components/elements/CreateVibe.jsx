@@ -66,7 +66,6 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
 
   useEffect(() => {
-    console.log(mediaUrl)
     return () => {
       if (mediaUrl) {
         URL.revokeObjectURL(mediaUrl);
@@ -75,8 +74,6 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   }, [mediaUrl]);
 
   useEffect(() => {
-    console.log(file)
-    console.log("file changed")
     if (file) {
       onFileUpload(file)
       setIsSelectedFromComputer(true);
@@ -163,7 +160,6 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
     const selectedFiles = event.target.files;
     if (selectedFiles.length > 0) {
       const selectedFile = selectedFiles[0];
-      console.log(selectedFile)
       setFile(selectedFile);
       const fileType = selectedFile.type.split("/")[0];
       setPostType(fileType);
