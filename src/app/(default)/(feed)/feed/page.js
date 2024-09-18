@@ -7,6 +7,7 @@ import LikeThis from "@/components/elements/sliders/LikeThis"
 import SectionHeading from "@/components/elements/SectionHeading"
 import RenderFeed from "@/components/feed/post/RenderFeed"
 import CommentSection from "@/components/comment/CommentSection"
+import UsersSearch from "@/components/elements/UsersSearch"
 
 
 const Feed = () => {
@@ -31,6 +32,7 @@ const Feed = () => {
         {/* <LikeThis /> */}
 
       </div>
+      <UsersSearch />
     </>
   )
 }

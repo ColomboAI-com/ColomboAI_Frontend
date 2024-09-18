@@ -3,7 +3,7 @@ import { getCookie } from "@/utlils/cookies"
 import { handleError } from "@/utlils/handleError"
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL"
 import axios from "axios"
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 
 const VibeContext = createContext();
 
@@ -16,6 +16,8 @@ export default function VibeContextProvider({ children }) {
     })
     
     const createVibe = async ({type, file, text, textColor, caption, isHideLikes = false, isHideComments = false }) => {
+        // console.log(type, file, text, textColor, caption);
+        
         try {
             setLoadings(prev => ({ ...prev, createVibe: true }))
             const formData = new FormData()
@@ -39,6 +41,7 @@ export default function VibeContextProvider({ children }) {
                 },
                 }
           );
+
           if (response.status === 201) {
             console.log("Hitting create vibe endpoint successfully");
             console.log("Response:", response.data);
@@ -71,6 +74,11 @@ export default function VibeContextProvider({ children }) {
         } finally {
             setLoadings(prev => ({ ...prev, reactVibe: false}))
         }
+    }
+
+    // TODO
+    const deleteVibe = async () => {
+
     }
 
 

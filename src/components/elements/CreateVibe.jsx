@@ -26,6 +26,7 @@ import EditCover from "./EditCover";
 import axios from "axios";
 import { VibeContext } from "@/context/VibeContext";
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
+import UsersSearch from "./UsersSearch";
 
 const CreateVibe = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);

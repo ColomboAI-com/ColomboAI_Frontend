@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { DotsVerticalIcon } from '@heroicons/react/solid';
+import { Delete } from "lucide-react";
 
 const ThreeDotMenuViewOthers = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,6 +44,10 @@ const ThreeDotMenuViewOthers = () => {
         console.log("Handling report.");
     };
 
+    const handleDelete = () => {
+        console.log("Handling delete.");
+    };
+
     const menuItems = [
         { icon: "M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z", label: "Save" },
         { icon: "M13 7a4 4 0 11-8 0 4 4 0 018 0zM9 14a6 6 0 00-6 6v1h12v-1a6 6 0 00-6-6zM21 12h-6", label: "Unfollow" },
@@ -50,6 +55,7 @@ const ThreeDotMenuViewOthers = () => {
         { icon: "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z", label: "Why are you seeing this" },
         { icon: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z", label: "About this account" },
         { icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9", label: "Report", className: "text-red-500" },
+        { icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9", label: "Delete", className: "text-red-500" },
     ];
 
     const handleFunctions = {
@@ -59,6 +65,7 @@ const ThreeDotMenuViewOthers = () => {
         "Why are you seeing this": handleWhyAreYouSeeingThis,
         "About this account": handleAboutThisAccount,
         Report: handleReport,
+        Delete: handleDelete,
     };
 
     return (
