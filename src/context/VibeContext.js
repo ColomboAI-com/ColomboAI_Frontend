@@ -28,7 +28,7 @@ export default function VibeContextProvider({ children }) {
             formData.append('caption', caption || '')
             formData.append('hideLikes', isHideLikes)
             formData.append('isCommentOff', isHideComments)
-            // fields to possibly include:
+            // fields to include:
             // music 
             // taggedPeople
 

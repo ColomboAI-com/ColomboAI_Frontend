@@ -50,7 +50,6 @@ const CreateVibe = () => {
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [text, setText] = useState("");
-  // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
   const [isMemuOpen, setIsMenuOpen] = useState(false);
   const [textColor, setTextColor] = useState("#000000");
