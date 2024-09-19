@@ -24,19 +24,27 @@ import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
-import { Plus_Jakarta_Sans } from '@next/font/google';
-import tmp_trim from "../../../public/images/vibes/tmp_trim.png"
+import { Plus_Jakarta_Sans } from "@next/font/google";
+import tmp_trim from "../../../public/images/vibes/tmp_trim.png";
 import Image from "next/image";
 import { set } from "date-fns";
-
+import { VibeContext } from "@/context/VibeContext";
+import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ['400', '500', '600', '700'],
-  style: ['normal'],
-  subsets: ['latin'],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
 });
 
-const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMediaUrl, uploadedNextStep, onReset }) => {
+const CreateVibe = ({
+  uploadedFile,
+  onFileUpload,
+  uploadedPostType,
+  uploadedMediaUrl,
+  uploadedNextStep,
+  onReset,
+}) => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
   const [promptInput, setPromptInput] = useState("");
   const [postInput, setPostInput] = useState("");
@@ -50,8 +58,9 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   const {
     setIsCreateVibeOpen,
     isSelectedFromComputer,
-    setIsSelectedFromComputer
+    setIsSelectedFromComputer,
   } = useContext(GlobalContext);
+  const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
@@ -63,7 +72,8 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   const [textColor, setTextColor] = useState("#000000");
   const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
-  const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
+  const [captionInput, setCaptionInput] = useState("");
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     return () => {
@@ -75,11 +85,10 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
 
   useEffect(() => {
     if (file) {
-      onFileUpload(file)
+      onFileUpload(file);
       setIsSelectedFromComputer(true);
     }
-  }, [file, setFile])
-
+  }, [file, setFile]);
 
   const iconButtons = () => {
     return (
@@ -89,10 +98,11 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
             toogleMagicPen();
             setIsColorPickerVisible(!isColorPickerVisible);
           }}
-          className={`p-2 rounded-full ${isMagicPenOpen
-            ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-            : "bg-white"
-            } outline-none focus:ring-offset-0 focus:ring-0`}
+          className={`p-2 rounded-full ${
+            isMagicPenOpen
+              ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+              : "bg-white"
+          } outline-none focus:ring-offset-0 focus:ring-0`}
         >
           <CreateMagicPenIcon
             w={25}
@@ -185,12 +195,18 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
   };
 
   const handleCreateVibe = async () => {
-    const res = await createPost({ type: postType, file, content: postInput });
+    const res = await createVibe({
+      file,
+      type: postType,
+      text: postInput,
+      textColor,
+      caption: captionInput,
+    });
     if (res) {
       MessageBox("success", res.message);
-      let postData = [...posts];
-      postData.unshift(res.data?.post);
-      setPosts(postData);
+      let vibeData = [...vibes];
+      vibeData.unshift(res.data?.vibe);
+      setVibes(vibeData);
       setIsCreateVibeOpen(false);
     }
   };
@@ -209,9 +225,15 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
     setText(e.target.value);
   };
 
+  const handleVibeValidation = () => {
+    // to-do task
+    // call this method whenever there is error while creating a vibe
+    setShowError(!showError);
+  };
 
   return (
     <main className={plusJakartaSans.className}>
+      {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
@@ -277,10 +299,12 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 pb-8 ${isSelectedTextIcon ? "opacity-50" : ""} flex flex-row w-full justify-center`}
+          className={`relative my-8 pb-8 ${
+            isSelectedTextIcon ? "opacity-50" : ""
+          } flex flex-row w-full justify-center`}
         >
           <div>
-            <button onClick={e => onReset()} className="mr-6">
+            <button onClick={(e) => onReset()} className="mr-6">
               <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
             </button>
           </div>
@@ -299,9 +323,14 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
               className="w-full h-full object-contain rounded-[0.9rem]"
               onClick={handleTextClick}
             />
-            {isTrimming ?
-              <Image src={tmp_trim} alt="none" className="absolute bottom-0 rounded-b-[0.9rem]"/>
-              : <Button
+            {isTrimming ? (
+              <Image
+                src={tmp_trim}
+                alt="none"
+                className="absolute bottom-0 rounded-b-[0.9rem]"
+              />
+            ) : (
+              <Button
                 title={"NEXT"}
                 className={
                   "absolute bottom-4 right-[2.5rem] w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
@@ -311,7 +340,8 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
                   setNextStep(false);
                   setIsMagicPenOpen(false);
                 }}
-              />}
+              />
+            )}
           </div>
           <div className="flex flex-col">
             <div className="ml-4">
@@ -323,10 +353,11 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
                   toogleMagicPen();
                   setIsColorPickerVisible(!isColorPickerVisible);
                 }}
-                className={`p-2 rounded-full self-start ${isMagicPenOpen
-                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                  : "bg-white"
-                  } outline-none focus:ring-offset-0 focus:ring-0`}
+                className={`p-2 rounded-full self-start ${
+                  isMagicPenOpen
+                    ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                    : "bg-white"
+                } outline-none focus:ring-offset-0 focus:ring-0`}
               >
                 <CreateMagicPenIcon
                   w={25}
@@ -339,7 +370,12 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
                 />
               </button>
               <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
-                <button className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${isTrimming && `rounded-full bg-[#245FDF]`}`} onClick={e => setIsTrimming(!isTrimming)}>
+                <button
+                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
+                    isTrimming && `rounded-full bg-[#245FDF]`
+                  }`}
+                  onClick={(e) => setIsTrimming(!isTrimming)}
+                >
                   <VideoEditIcon />
                 </button>
                 <button
@@ -355,7 +391,7 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
                   <MusicNotePlusIcon />
                 </button>
               </div>
-              {isEditingText && (
+              {/* {isEditingText && (
                 <input
                   type="text"
                   placeholder="text created manually"
@@ -365,14 +401,17 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
                   autoFocus
                   style={{ color: textColor }}
                 />
-              )}
+              )} */}
 
-              {/* <textarea
-              value={postInput}
-              placeholder="text to be created by magic pen"
-              onChange={(e) => setPostInput(e.target.value)}
-              style={{ color: textColor }}
-            /> */}
+              <input
+                type="text"
+                placeholder="Dancing gracefully through life's rhythms"
+                value={postInput}
+                onChange={(e) => setPostInput(e.target.value)}
+                className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                autoFocus
+                style={{ color: textColor }}
+              />
             </div>
           </div>
           {(isMagicPenOpen || isColorPickerVisible) && (
@@ -504,13 +543,17 @@ const CreateVibe = ({ uploadedFile, onFileUpload, uploadedPostType, uploadedMedi
           )}
         </>
       )}
-      {/* <CaptionBox /> */}
-      {/* <Button
+      <CaptionBox
+        captionInput={captionInput}
+        setCaptionInput={setCaptionInput}
+      />
+      <Button
         title={"Share Reel"}
+        onClick={handleCreateVibe}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
-      /> */}
+      />
     </main>
   );
 };
