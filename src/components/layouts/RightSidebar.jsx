@@ -5,6 +5,8 @@ import Sponsored from "../elements/cards/Sponsored";
 import Events from "../elements/cards/Events";
 import Advertisement from "../elements/cards/Advertisement";
 import Trendings from "../elements/sliders/Trendings";
+import SideTopAdComponent from "../ads/SideTopAd";
+import SideAdComponent from "../ads/SideAd";
 
 var trending = {
     dots: false,
@@ -52,9 +54,11 @@ const RightSidebar = () => {
             </div>
             <Trendings/>
             <div className="px-[22px]">
-                <Sponsored/>
+              <SideTopAdComponent divid='maindsidetop'/>
+              <SideAdComponent divid='mainsidebottom'/>
+                {/* <Sponsored/>
                 <Events/>
-                <Advertisement/>
+                <Advertisement/> */}
             </div>
         </div>
     );
