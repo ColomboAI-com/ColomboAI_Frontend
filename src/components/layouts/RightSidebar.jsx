@@ -55,7 +55,8 @@ const RightSidebar = () => {
             <Trendings/>
             <div className="px-[22px]">
               <SideTopAdComponent divid='maindsidetop'/>
-              <SideAdComponent divid='mainsidebottom'/>
+              <SideAdComponent divid='mainsidemid'/>
+              <SideTopAdComponent divid='mainsidebottom'/>
                 {/* <Sponsored/>
                 <Events/>
                 <Advertisement/> */}

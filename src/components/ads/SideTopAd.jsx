@@ -63,7 +63,7 @@ const SideTopAdComponent = ({divid}) => {
 
       </Head>
    
-    <div id={divid} style={{  minWidth: '300px', minHeight: '250px', border:'1px solid red' }}>
+    <div id={divid} style={{  minWidth: '300px', minHeight: '250px' }}>
    
     </div> 
    
