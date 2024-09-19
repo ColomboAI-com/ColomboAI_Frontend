@@ -41,8 +41,6 @@ export default function FeedContextProvider({ children }) {
       )
       setPosts(prev => ([...prev, ...res.data?.posts || []]))
       if (res.data?.posts?.length) setPage(prev => (prev + 1))
-      console.log(res.data);
-      
     } catch (err) {
       handleError(err)
     } finally {
@@ -50,15 +48,16 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
-  const createPost = async ({ type, files=[], content, isHideLikes = false, isHideComments = false }) => {
+  const createPost = async ({ type, file, content, isHideLikes = false, isHideComments = false }) => {
     try {
       setLoadings(prev => ({ ...prev, createPost: true }))
       const formData = new FormData()
       formData.append('type', type)
-      //formData.append('file', file || '')
-      // Append all files to the FormData
-      for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i])}
+      formData.append('file', file || '')
+       /*Append all files to the FormData
+       Multiple Files
+     for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i])}*/
       formData.append('content', content)
       formData.append('hideLikes', isHideLikes)
       formData.append('isCommentOff', isHideComments)
@@ -67,7 +66,7 @@ export default function FeedContextProvider({ children }) {
         {
           headers: {
             Authorization: getCookie('token'),
-            'Content-Type': 'multipart/form-data'
+           // 'Content-Type': 'multipart/form-data'
           }
         }
       )
