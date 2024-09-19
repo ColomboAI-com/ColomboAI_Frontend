@@ -70,7 +70,7 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
     setIsMagicPenInputVisible(false);
   };
 
-  const buttonClass = `flex absolute top-[702px] text-white w-[105px] h-[22px] items-center ${
+  const buttonClass = `flex text-white w-[105px] h-[22px] items-center mb-2 ${
     selectedUsers.length > 0 ? "bg-blue-500" : "bg-gray-500"
   }`;
 
@@ -84,7 +84,7 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
         </button>
       </div>
       {showUsers && (
-        <div className="absolute top-[726px] w-[470px] bg-gray-200 text-black p-4 rounded-md shadow-lg w-[250px] max-h-[300px] overflow-y-auto z-50">
+        <div className="absolute top-[820px] w-[470px] bg-gray-200 text-black p-4 rounded-md shadow-lg max-h-[300px] overflow-y-auto z-50">
           <p className="mb-4 flex justify-center">Tag people</p>
 
           <input
