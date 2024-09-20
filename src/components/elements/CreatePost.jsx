@@ -114,7 +114,7 @@ const CreatePost = () => {
     <>
       <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto font-sans">
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
-          <div className={${!nextStep ? "p-[10px]" : " justify-center"}}>
+          <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {
             nextStep && (
               <button onClick={() => setNextStep(false)}>
@@ -150,8 +150,8 @@ const CreatePost = () => {
         </div>
 
         <div className="px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh]">
-          <div className={flex flex-col ${isMagicPenOpen ? "gap-5" : ""}}>
-            <div className={${isMagicPenOpen ? "flex" : "hidden"} items-start}>
+          <div className={`flex flex-col ${isMagicPenOpen ? "gap-5" : ""}`}>
+            <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
               <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
                 <textarea
                   value={promptInput}
@@ -201,7 +201,7 @@ const CreatePost = () => {
                     {postType.includes("image") ? (
                       <img
                         src={url}
-                        alt={File Preview${index + 1}}
+                        // alt={File Preview{index + 1}}
                         className="w-full h-full object-contain"
                       />
                     ) : postType.includes("video") ? (

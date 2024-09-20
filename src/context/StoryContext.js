@@ -29,7 +29,7 @@ export default function StoryContextProvider({ children }) {
             formData.append('text', content)
             formData.append('hideLikes', isHideLikes)
             formData.append('isCommentOff', isHideComments)
-            const res = await axios.post(${ROOT_URL_FEED}/stories/create,
+            const res = await axios.post(`${ROOT_URL_FEED}/stories/create`,
                 formData,
                 {
                     headers: {
@@ -48,7 +48,7 @@ export default function StoryContextProvider({ children }) {
     const getStoriesOfUser = async (userid) => {
         try {
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.get(${ROOT_URL_FEED}/stories/users/${userid},
+            const res = await axios.get(`${ROOT_URL_FEED}/stories/users/${userid}`,
                 {
                     headers: {
                         Authorization: getCookie('token')
@@ -66,7 +66,7 @@ export default function StoryContextProvider({ children }) {
     const getRecentStories = async () => {
         try {
             setLoadings(prev => ({ ...prev, reactStory: true }))
-            const res = await axios.get(${ROOT_URL_FEED}/stories/recent,
+            const res = await axios.get(`${ROOT_URL_FEED}/stories/recent`,
                 {
                     headers: {
                         Authorization: getCookie('token')
@@ -85,7 +85,7 @@ export default function StoryContextProvider({ children }) {
         try {
             const token = getCookie('token');
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.post(${ROOT_URL_FEED}/stories/users/${userid}/view,{},
+            const res = await axios.post(`${ROOT_URL_FEED}/stories/users/${userid}/view`,{},
                 {
                     headers: {
                         Authorization: token
