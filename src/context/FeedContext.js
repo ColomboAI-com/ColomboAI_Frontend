@@ -31,7 +31,7 @@ export default function FeedContextProvider({ children }) {
   const getPosts = async (type, page = 1, limit = 10) => {
     try {
       setLoadings(prev => ({ ...prev, getPost: true }))
-      const res = await axios.get(${ROOT_URL_FEED}/post/feed,
+      const res = await axios.get(`${ROOT_URL_FEED}/post/feed`,
         {
           params: { type, page, limit },
           headers: {
@@ -61,7 +61,7 @@ export default function FeedContextProvider({ children }) {
       formData.append('content', content)
       formData.append('hideLikes', isHideLikes)
       formData.append('isCommentOff', isHideComments)
-      const res = await axios.post(${ROOT_URL_FEED}/post/create,
+      const res = await axios.post(`${ROOT_URL_FEED}/post/create`,
         formData,
         {
           headers: {
@@ -85,7 +85,7 @@ export default function FeedContextProvider({ children }) {
   const deletePost = async (postId = '') => {
     try {
       setLoadings(prev => ({ ...prev, deletePost: true }))
-      const res = await axios.delete(${ROOT_URL_FEED}/post/${postId},
+      const res = await axios.delete(`${ROOT_URL_FEED}/post/${postId}`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -109,7 +109,7 @@ export default function FeedContextProvider({ children }) {
 
   const likePost = async (postId = '') => {
     try {
-      const res = await axios.put(${ROOT_URL_FEED}/post/${postId}/like,
+      const res = await axios.put(`${ROOT_URL_FEED}/post/${postId}/like`,
         null,
         {
           headers: {
@@ -126,7 +126,7 @@ export default function FeedContextProvider({ children }) {
   const getComments = async (postId, page = 1, count = 10) => {
     try {
       setLoadings((prev) => ({ ...prev, getComments: true }));
-      const res = await axios.get(${ROOT_URL_FEED}/post/${postId}/comments, {
+      const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/comments`, {
         params: { page, count },
         headers: {
           Authorization: getCookie("token"),
@@ -143,7 +143,7 @@ export default function FeedContextProvider({ children }) {
   const addComment = async ({ postId = '', content }) => {
     try {
       setLoadings(prev => ({ ...prev, addComment: true }))
-      const res = await axios.put(${ROOT_URL_FEED}/post/${postId}/comment,
+      const res = await axios.put(`${ROOT_URL_FEED}/post/${postId}/comment`,
         { content },
         {
           headers: {
@@ -162,7 +162,7 @@ export default function FeedContextProvider({ children }) {
   const deleteComment = async ({ postId = '', commentId = '' }) => {
     try {
       setLoadings(prev => ({ ...prev, deleteComment: true }))
-      const res = await axios.delete(${ROOT_URL_FEED}/post/${postId}/comment/${commentId},
+      const res = await axios.delete(`${ROOT_URL_FEED}/post/${postId}/comment/${commentId}`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -180,7 +180,7 @@ export default function FeedContextProvider({ children }) {
   const rePost = async (postId = '') => {
     try {
       setLoadings(prev => ({ ...prev, rePost: true }))
-      const res = await axios.post(${ROOT_URL_FEED}/post/${postId}/repost,
+      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`,
         null,
         {
           headers: {
@@ -201,7 +201,7 @@ export default function FeedContextProvider({ children }) {
 
   const savePost = async (postId = '') => {
     try {
-      const res = await axios.post(${ROOT_URL_FEED}/post/${postId}/save,
+      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/save`,
         null,
         {
           headers: {
@@ -218,7 +218,7 @@ export default function FeedContextProvider({ children }) {
   const generatePost = async (prompt = '') => {
     try {
       setLoadings(prev => ({ ...prev, generatePost: true }))
-      const res = await axios.post(${ROOT_URL_LLM}/vertex-generate-text_from_promt,
+      const res = await axios.post(`${ROOT_URL_LLM}/vertex-generate-text_from_promt`,
         { promt: prompt.trim() },
         {
           headers: {
@@ -240,7 +240,7 @@ export default function FeedContextProvider({ children }) {
       const formData = new FormData()
       formData.append('prompt', prompt)
       formData.append('text', post)
-      const res = await axios.post(${ROOT_URL_LLM}/vertex-generate-comment,
+      const res = await axios.post(`${ROOT_URL_LLM}/vertex-generate-comment`,
         formData,
         {
           headers: {
@@ -259,7 +259,7 @@ export default function FeedContextProvider({ children }) {
   const getPostsOfUser = async (username = '') => {
     try {
       setLoadings(prev => ({ ...prev, GetUserPost: true }))
-      const res = await axios.get(${ROOT_URL_FEED}/post/user/${username},
+      const res = await axios.get(`${ROOT_URL_FEED}/post/user/${username}`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -282,7 +282,7 @@ export default function FeedContextProvider({ children }) {
     try {
       
       setLoadings((prev) => ({ ...prev, searchUser: true }));
-      const res = await axios.get(${ROOT_URL_AUTH}/user/search?q=${query},
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?q=${query}`,
       {
         headers: {
           Authorization: getCookie("token"),
@@ -301,7 +301,7 @@ export default function FeedContextProvider({ children }) {
     try {
       
       setLoadings((prev) => ({ ...prev, topUser: true }));
-      const res = await axios.get(${ROOT_URL_AUTH}/user/top,
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/top`,
       {
         headers: {
           Authorization: getCookie("token"),
