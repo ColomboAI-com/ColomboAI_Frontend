@@ -85,7 +85,8 @@ export default function StoryContextProvider({ children }) {
         try {
             const token = getCookie('token');
             setLoadings(prev => ({ ...prev, getUserStory: true }))
-            const res = await axios.post(`${ROOT_URL_FEED}/stories/users/${userid}/view,{}`,
+
+            const res = await axios.post(`${ROOT_URL_FEED}/stories/users/${userid}/view`,{},
                 {
                     headers: {
                         Authorization: token

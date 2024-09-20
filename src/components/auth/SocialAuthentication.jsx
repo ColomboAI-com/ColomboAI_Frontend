@@ -1,40 +1,65 @@
-import React from 'react'
-import { useSocialAuth } from '@/context/SocialAuthContext'
-import Loader from '../Loader'
-import { useAuth } from '@/context/AuthContext'
+import React from "react";
+import { useSocialAuth } from "@/context/SocialAuthContext";
+import Loader from "../Loader";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SocialAuthentication() {
-
-  const { continueWithGoogle, continueWithMeta, continueWithMicrosoft, setSelectedProvider } = useSocialAuth()
-  const { loadings } = useAuth()
+  const {
+    continueWithGoogle,
+    continueWithMeta,
+    continueWithMicrosoft,
+    setSelectedProvider,
+  } = useSocialAuth();
+  const { loadings } = useAuth();
 
   const handleSocialAuthentication = (provider) => {
-    setSelectedProvider(provider)
-    if (provider === 'google') continueWithGoogle()
-    if (provider === 'meta') continueWithMeta()
-    if (provider === 'microsoft') continueWithMicrosoft()
-  }
+    setSelectedProvider(provider);
+    if (provider === "google") continueWithGoogle();
+    if (provider === "meta") continueWithMeta();
+    if (provider === "microsoft") continueWithMicrosoft();
+  };
 
   return (
     <div className="md:block sm:flex sm:items-center sm:justify-center sm:gap-[16px] lg:block">
-      <div className='flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[13px] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px] 2xl:px-[24px] px-[24px] py-[13px] mb-[15px] cursor-pointer lg:bg-transparent' onClick={() => handleSocialAuthentication('google')}>
-        <img src="/images/auth/google.svg" alt="google_logo" className="w-[20.25px] sm:w-[20px] sm:h-[20px] object-cover" />
-        <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]'>
-          {loadings.google ? <Loader /> : 'Continue with Google'}
+      <div
+        className="flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[0.4rem] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px] 2xl:px-[24px] px-[24px] py-[13px] mb-[0.6rem] cursor-pointer lg:bg-transparent"
+        onClick={() => handleSocialAuthentication("google")}
+      >
+        <img
+          src="/images/auth/google.svg"
+          alt="google_logo"
+          className="w-[20.25px] sm:w-[20px] sm:h-[20px] object-cover"
+        />
+        <h6 className="mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]">
+          {loadings.google ? <Loader /> : "Continue with Google"}
         </h6>
       </div>
-      <div className='flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[13px] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px]  2xl:px-[24px] px-[24px] py-[13px] mb-[15px] cursor-pointer lg:bg-transparent' onClick={() => handleSocialAuthentication('meta')}>
-        <img src="/images/auth/meta.svg" alt="meta_logo" className="w-[20.25px] sm:w-[20px] sm:h-[20px] object-cover" />
-        <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]'>
-          {loadings.meta ? <Loader /> : 'Continue with Meta'}
+      {/* <div
+        className="flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[0.4rem] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px]  2xl:px-[24px] px-[24px] py-[13px] mb-[0.6rem] cursor-pointer lg:bg-transparent"
+        onClick={() => handleSocialAuthentication("meta")}
+      >
+        <img
+          src="/images/auth/meta.svg"
+          alt="meta_logo"
+          className="w-[20.25px] sm:w-[20px] sm:h-[20px] object-cover"
+        />
+        <h6 className="mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]">
+          {loadings.meta ? <Loader /> : "Continue with Meta"}
         </h6>
       </div>
-      <div className='flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[13px] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px] 2xl:px-[24px] px-[24px] py-[13px] mb-[12px] cursor-pointer lg:bg-transparent' onClick={() => handleSocialAuthentication('microsoft')}>
-        <img src="/images/auth/microsoft.svg" alt="microsoft_logo" className="w-[20.25px] sm:w-[20px] sm:h-[20px] object-cover" />
-        <h6 className='mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]'>
-          {loadings.microsoft ? <Loader /> : 'Continue with Microsoft'}
+      <div
+        className="flex items-center bg-opacity-45 rounded-full border-[1px] border-brandprimary md:w-full md:h-auto md:bg-transparent md:px-[24px] md:py-[0.4rem] sm:bg-[#E2F2FF] sm:w-[40px] sm:h-[40px] sm:px-[10px] sm:py-[10px] 2xl:px-[24px] px-[24px] py-[13px] mb-[0.6rem] cursor-pointer lg:bg-transparent"
+        onClick={() => handleSocialAuthentication("microsoft")}
+      >
+        <img
+          src="/images/auth/microsoft.svg"
+          alt="microsoft_logo"
+          className="w-[20.25px] sm:w-[20px] sm:h-[20px] object-cover"
+        />
+        <h6 className="mx-auto text-[16px] text-[#7A7A7A] font-sans 2xl:block xl:block sm:hidden md:block lg:block lg:font-[500]">
+          {loadings.microsoft ? <Loader /> : "Continue with Microsoft"}
         </h6>
-      </div>
+      </div> */}
     </div>
-  )
+  );
 }
