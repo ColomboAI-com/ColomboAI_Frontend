@@ -67,7 +67,7 @@ const CreatePost = () => {
       for (let i = 0; i < selectedFiles.length; i++) {
         const fileUrl = URL.createObjectURL(selectedFiles[i]);
         newMediaUrls.push(fileUrl);
-        console.log('Media URLs:', newMediaUrls); 
+        console.log('Media URLs:', newMediaUrls);
       }
       setMediaUrl(newMediaUrls);
     }
@@ -92,7 +92,7 @@ const CreatePost = () => {
   };
 
   const handleCreatePost = async () => {
-    
+
     const res = await createPost({ type: postType, file, content: postInput });
     console.log(res)
     if (res) {
@@ -116,11 +116,11 @@ const CreatePost = () => {
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
           <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {
-            nextStep && (
-              <button onClick={() => setNextStep(false)}>
-                <BackButtonIcon w={20} h={20} fill={"#515151"} />
-              </button>
-            )}
+              nextStep && (
+                <button onClick={() => setNextStep(false)}>
+                  <BackButtonIcon w={20} h={20} fill={"#515151"} />
+                </button>
+              )}
           </div>
           <div className="flex items-center">
             <p className="pl-[17px] text-2xl font-sans tracking-wider">Create new Post</p>
@@ -192,87 +192,86 @@ const CreatePost = () => {
                 </button>
               )}
             </div>
-            
-           {
-            mediaUrl.length > 0 && (
-              <div className="flex flex-wrap gap-4 mt-4">
-                {mediaUrl.map((url, index) => (
-                  <div key={index} className="relative my-8">
-                    {postType.includes("image") ? (
-                      <img
-                        src={url}
-                        // alt={File Preview{index + 1}}
-                        className="w-full h-full object-contain"
-                      />
-                    ) : postType.includes("video") ? (
-                      <video
-                        src={url}
-                        autoPlay
-                        loop
-                        controls
-                        className="w-full aspect-video"
-                      >
-                        <source src={url} />
-                      </video>
-                    ) : null}
-                    <div className="absolute top-3 right-2">
-                      <div className="flex flex-row items-center justify-center">
-                        <span onClick={() => clearFileHandler(index)} className="px-2 cursor-pointer">
-                          <CloseDocumentIcon />
-                        </span>
+            {
+              mediaUrl.length > 0 && (
+                <div className="flex flex-wrap gap-4 mt-4">
+                  {mediaUrl.map((url, index) => (
+                    <div key={index} className="relative my-8">
+                      {postType.includes("image") ? (
+                        <img
+                          src={url}
+                          alt={`File Preview${index + 1}`}
+                          className="w-full h-full object-contain"
+                        />
+                      ) : postType.includes("video") ? (
+                        <video
+                          src={url}
+                          autoPlay
+                          loop
+                          controls
+                          className="w-full aspect-video"
+                        >
+                          <source src={url} />
+                        </video>
+                      ) : null}
+                      <div className="absolute top-3 right-2">
+                        <div className="flex flex-row items-center justify-center">
+                          <span onClick={() => clearFileHandler(index)} className="px-2 cursor-pointer">
+                            <CloseDocumentIcon />
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )
-          }
-          
-          {nextStep === false && (
-            <>
-              {mediaUrl.length === 0 && postType === defaultPostType && (
-                <div
-                  className="flex flex-col items-center py-2 rounded-xl"
-                  onDrop={handleDrop}
-                  onDragOver={(event) => event.preventDefault()}
-                >
-                  <p className="text-xl my-4">Drag photos and videos here</p>
-                  <span onClick={handleFileInputClick}>
-                    <input
-                      className="hidden"
-                      type="file"
-                      accept="image/, video/"
-                      multiple
-                      onChange={handleFileChange}
-                    />
-                    <Button
-                      title="Select from computer"
-                      className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
-                    />
-                  </span>
+                  ))}
                 </div>
-              )}
-            </>
-          )}
-          
-          {nextStep && (
-            <div className="flex justify-center pb-[20px]">
-              <Button
-                title="SHARE POST"
-                className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24"
-                loading={loadings?.createPost}
-                onClick={handleCreatePost}
-              />
-            </div>
-          )}
-          
-         
+              )
+            }
+
+            {nextStep === false && (
+              <>
+                {mediaUrl.length === 0 && postType === defaultPostType && (
+                  <div
+                    className="flex flex-col items-center py-2 rounded-xl"
+                    onDrop={handleDrop}
+                    onDragOver={(event) => event.preventDefault()}
+                  >
+                    <p className="text-xl my-4">Drag photos and videos here</p>
+                    <span onClick={handleFileInputClick}>
+                      <input
+                        className="hidden"
+                        type="file"
+                        accept="image/, video/"
+                        multiple
+                        onChange={handleFileChange}
+                      />
+                      <Button
+                        title="Select from computer"
+                        className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+                      />
+                    </span>
+                  </div>
+                )}
+              </>
+            )}
+
+            {nextStep && (
+              <div className="flex justify-center pb-[20px]">
+                <Button
+                  title="SHARE POST"
+                  className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24"
+                  loading={loadings?.createPost}
+                  onClick={handleCreatePost}
+                />
+              </div>
+            )}
+
+
           </div>
-          </div>
-          </div>
-          </>
-    
-);
+        </div>
+      </div>
+    </>
+
+  );
 };
 
 export default CreatePost;
