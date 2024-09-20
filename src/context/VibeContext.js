@@ -20,11 +20,11 @@ export default function VibeContextProvider({ children }) {
     file,
     text,
     textColor,
-    caption,
+    content,
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    // console.log(type, file, text, textColor, caption);
+    console.log(type, file, text, textColor, content);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -33,7 +33,7 @@ export default function VibeContextProvider({ children }) {
       formData.append("file", file || "");
       formData.append("text", text || "");
       formData.append("textColor", textColor || "");
-      formData.append("caption", caption || "");
+      formData.append("content", content || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
       // fields to include:
