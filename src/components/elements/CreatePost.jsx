@@ -192,7 +192,6 @@ const CreatePost = () => {
                 </button>
               )}
             </div>
-
             {
               mediaUrl.length > 0 && (
                 <div className="flex flex-wrap gap-4 mt-4">
