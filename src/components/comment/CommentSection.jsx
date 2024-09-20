@@ -39,7 +39,10 @@ const CommentSection = ({ specificPostId, posts }) => {
     const fetchComments = async () => {
       try {
         const res = await getComments(specificPostId, page);
-        setComments((prevComments) => [...prevComments, ...res.comments]);
+         if (res && res.comments) {
+            setComments((prevComments) => [...prevComments, ...res.comments]);
+            setHasMore(res.currentPage < res.totalPages);}
+        
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -94,11 +97,12 @@ const CommentSection = ({ specificPostId, posts }) => {
           content: commentData || generatedComment,
         });
         const updatedComments = await getComments(specificPostId, 1);
-        setComments(updatedComments.comments);
+        setComments(updatedComments?.comments || []);
         setCommentData("");
         setGeneratedComment("");
         setGenerateCommentData("");
         commentBoxInputRef.current.focus();
+        setPage(1);
         setLoading(false);
         setIsClick(false);
       } catch (error) {
