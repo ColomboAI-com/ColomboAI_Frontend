@@ -98,11 +98,10 @@ const CreateVibe = ({
             toogleMagicPen();
             setIsColorPickerVisible(!isColorPickerVisible);
           }}
-          className={`p-2 rounded-full ${
-            isMagicPenOpen
+          className={`p-2 rounded-full ${isMagicPenOpen
               ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
               : "bg-white"
-          } outline-none focus:ring-offset-0 focus:ring-0`}
+            } outline-none focus:ring-offset-0 focus:ring-0`}
         >
           <CreateMagicPenIcon
             w={25}
@@ -299,9 +298,8 @@ const CreateVibe = ({
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 pb-8 ${
-            isSelectedTextIcon ? "opacity-50" : ""
-          } flex flex-row w-full justify-center`}
+          className={`relative my-8 pb-8 ${isSelectedTextIcon ? "opacity-50" : ""
+            } flex flex-row w-full justify-center`}
         >
           <div>
             <button onClick={(e) => onReset()} className="mr-6">
@@ -342,9 +340,22 @@ const CreateVibe = ({
                 }}
               />
             )}
+            {isColorPickerVisible ?
+              <div draggable={true}>
+                <textarea
+                  type="text"
+                  placeholder="Dancing gracefully through life's rhythms"
+                  value={postInput}
+                  rows={4}
+                  onChange={(e) => setPostInput(e.target.value)}
+                  className="bg-transparent text-black text-center text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
+                  autoFocus
+                />
+              </div>
+              : null}
           </div>
           <div className="flex flex-col">
-            <div className="ml-4">
+            <div className="ml-4" onClick={e => console.log(isSelectedFromComputer)}>
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -353,11 +364,10 @@ const CreateVibe = ({
                   toogleMagicPen();
                   setIsColorPickerVisible(!isColorPickerVisible);
                 }}
-                className={`p-2 rounded-full self-start ${
-                  isMagicPenOpen
+                className={`p-2 rounded-full self-start ${isMagicPenOpen
                     ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
                     : "bg-white"
-                } outline-none focus:ring-offset-0 focus:ring-0`}
+                  } outline-none focus:ring-offset-0 focus:ring-0`}
               >
                 <CreateMagicPenIcon
                   w={25}
@@ -371,9 +381,8 @@ const CreateVibe = ({
               </button>
               <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
                 <button
-                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
-                    isTrimming && `rounded-full bg-[#245FDF]`
-                  }`}
+                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${isTrimming && `rounded-full bg-[#245FDF]`
+                    }`}
                   onClick={(e) => setIsTrimming(!isTrimming)}
                 >
                   <VideoEditIcon />
@@ -402,16 +411,6 @@ const CreateVibe = ({
                   style={{ color: textColor }}
                 />
               )} */}
-
-              <input
-                type="text"
-                placeholder="Dancing gracefully through life's rhythms"
-                value={postInput}
-                onChange={(e) => setPostInput(e.target.value)}
-                className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
-                autoFocus
-                style={{ color: textColor }}
-              />
             </div>
           </div>
           {(isMagicPenOpen || isColorPickerVisible) && (
@@ -543,17 +542,17 @@ const CreateVibe = ({
           )}
         </>
       )}
-      <CaptionBox
+      {isSelectedFromComputer ? <CaptionBox
         captionInput={captionInput}
         setCaptionInput={setCaptionInput}
-      />
-      <Button
+      /> : null}
+      {isSelectedFromComputer ? <div className="w-full flex flex-row justify-center pb-3"><Button
         title={"Share Reel"}
         onClick={handleCreateVibe}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
         }
-      />
+      /></div> : null}
     </main>
   );
 };
