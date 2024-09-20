@@ -54,6 +54,10 @@ export default function FeedContextProvider({ children }) {
       const formData = new FormData()
       formData.append('type', type)
       formData.append('file', file || '')
+       /*Append all files to the FormData
+       Multiple Files
+     for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i])}*/
       formData.append('content', content)
       formData.append('hideLikes', isHideLikes)
       formData.append('isCommentOff', isHideComments)
@@ -61,11 +65,16 @@ export default function FeedContextProvider({ children }) {
         formData,
         {
           headers: {
-            Authorization: getCookie('token')
+            Authorization: getCookie('token'),
+           // 'Content-Type': 'multipart/form-data'
           }
         }
       )
+      
+      setPosts(prev => ([res.data?.post, ...prev]));
       return res.data
+      
+      
     } catch (err) {
       handleError(err)
     } finally {
@@ -83,11 +92,18 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
+      
+      if (res.data.success) {
+        //Remove the deleted post from the posts array
+        setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
+        
+      }   
       return res.data
     } catch (err) {
       handleError(err)
     } finally {
       setLoadings(prev => ({ ...prev, deletePost: false }))
+
     }
   }
 
@@ -250,7 +266,11 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      return res.data
+      // Assuming posts are returned in res.data.posts
+      setPosts(res.data.posts || []);
+      return res.data;
+      
+      
     } catch (err) {
       handleError(err)
     } finally {
@@ -328,5 +348,3 @@ export default function FeedContextProvider({ children }) {
 // }
 
 export { FeedContextProvider, FeedContext };
-
-

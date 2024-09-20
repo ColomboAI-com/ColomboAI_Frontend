@@ -141,7 +141,7 @@ const SignUp = () => {
           <RedirectLink
             title={"Already have an account?"}
             href={"/sign-in"}
-            linkName={"Sign In"}
+            linkName={"LOG IN"}
           />
           <AgreeTermAndConditions />
         </div>
