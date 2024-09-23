@@ -199,7 +199,7 @@ const CreateVibe = ({
       type: postType,
       text: postInput,
       textColor,
-      caption: captionInput,
+      content: captionInput,
     });
     if (res) {
       MessageBox("success", res.message);
