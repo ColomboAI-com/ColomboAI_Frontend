@@ -397,7 +397,7 @@ const CreateVibe = ({
                   <TextShadowIcon />
                 </button>
                 <button className="w-10 h-10 flex flex-row justify-center items-center">
-                  <MusicNotePlusIcon />
+                  <MusicNotePlusIcon/>
                 </button>
               </div>
               {/* {isEditingText && (
