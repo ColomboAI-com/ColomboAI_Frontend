@@ -13,6 +13,7 @@ export default function VibeContextProvider({ children }) {
   const [loadings, setLoadings] = useState({
     getUserVibe: false,
     createVibe: false,
+    deleteVibe: false,
   });
 
   const createVibe = async ({
@@ -39,6 +40,7 @@ export default function VibeContextProvider({ children }) {
       // fields to include:
       // music
       // taggedPeople
+      // tag: “DRAFT” if saving a post as draft
 
       const response = await axios.post(
         `${ROOT_URL_FEED}/vibes/create`,
@@ -82,8 +84,49 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  // TODO
-  const deleteVibe = async () => {};
+  const deleteVibe = async (postId = '') => {
+    // Using postId because vibe is a type of post
+    try {
+      setLoadings(prev => ({ ...prev, deleteVibe: true }))
+      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/delete`,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      if (res.data.success) {
+        //Remove the deleted post from the posts array
+        setVibes(prevPosts => prevPosts.filter(post => post._id !== postId));
+      }   
+      return res.data
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadings(prev => ({ ...prev, deletePost: false }))
+    }
+  }
+
+  const discardVibe = async (postId = '') => {
+    try {
+      setLoadings(prev => ({ ...prev, deleteVibe: true }))
+      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/discard`,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      if (res.data.success) {
+        setVibes(prevPosts => prevPosts.filter(post => post._id !== postId));
+      }   
+      return res.data
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoadings(prev => ({ ...prev, deletePost: false }))
+    }
+  }
 
   return (
     <VibeContext.Provider
@@ -93,6 +136,8 @@ export default function VibeContextProvider({ children }) {
         loadings,
         createVibe,
         getVibes,
+        discardVibe, 
+        deleteVibe
       }}
     >
       {children}
