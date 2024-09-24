@@ -69,7 +69,7 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
             >
               Discard
             </button>
-            <button
+            {/* <button
               onClick={handleArchive}
               className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
@@ -98,7 +98,9 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
               className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
             >
               Delete
-            </button>
+            </button> */}        
+            
+                       {/* this can be used when we are using this three dot menu for watching others vibes  */}
           </div>
         </div>
       )}
