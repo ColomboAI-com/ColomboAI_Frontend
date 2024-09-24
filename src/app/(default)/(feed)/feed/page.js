@@ -12,7 +12,7 @@ const Feed = () => {
 
   return (
     <>
-      <div>
+      <div className="xl:mx-[5rem] lg:mx-[2rem] sm:mx-[2rem]">
         <Stories />
 
         {/* {loadings.getPost ? <Loader /> :

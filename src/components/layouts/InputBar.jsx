@@ -91,7 +91,7 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
     //   </div>
 
     <div className='relative'>
-      {!isUploading ? <form onSubmit={handleSubmit} className="py-[21px]">
+      {!isUploading ? <form onSubmit={handleSubmit} className="lg:pb-[21px] sm:pb-0 pt-[21px]">
         <div
           className="relative w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px]"
           style={borderStyle}
