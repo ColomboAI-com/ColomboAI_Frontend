@@ -33,8 +33,8 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className="w-[100%] mt-[0px]">
-                <div className="mb-[46px] mt-[20px] relative">
+            <div className="xl:w-[100%] lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem]">
+                <div className="lg:mb-[46px] xl:mt-[20px] lg:mt-[6rem] relative">
 
                     <Dropdown
                         offset={[0, 10]}

@@ -42,7 +42,7 @@ const Post = ({ post }) => {
             <Dropdown
               offset={[0, 10]}
               placement="bottom-start"
-              btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
+              btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
               button={<PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"} />}
             >
               <ul className="rounded bg-white shadow-md">
