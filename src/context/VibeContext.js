@@ -84,11 +84,10 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const deleteVibe = async (postId = '') => {
-    // Using postId because vibe is a type of post
+  const deleteVibe = async (vibeId = '') => {
     try {
       setLoadings(prev => ({ ...prev, deleteVibe: true }))
-      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/delete`,
+      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -97,7 +96,7 @@ export default function VibeContextProvider({ children }) {
       )
       if (res.data.success) {
         //Remove the deleted post from the posts array
-        setVibes(prevPosts => prevPosts.filter(post => post._id !== postId));
+        setVibes(prevPosts => prevPosts.filter(vibe => vibe._id !== vibeId));
       }   
       return res.data
     } catch (err) {
@@ -107,10 +106,10 @@ export default function VibeContextProvider({ children }) {
     }
   }
 
-  const discardVibe = async (postId = '') => {
+  const discardVibe = async (vibeId = '') => {
     try {
       setLoadings(prev => ({ ...prev, deleteVibe: true }))
-      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/discard`,
+      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}/discard`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -118,7 +117,7 @@ export default function VibeContextProvider({ children }) {
         }
       )
       if (res.data.success) {
-        setVibes(prevPosts => prevPosts.filter(post => post._id !== postId));
+        setVibes(prevPosts => prevPosts.filter(post => post._id !== vibeId));
       }   
       return res.data
     } catch (err) {
