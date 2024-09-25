@@ -47,7 +47,7 @@ const RightSidebar = () => {
             <div className="px-[22px]">
                 <div className="">
                     <h5 className="text-[19px] font-sans text-[#333333] font-[700]">
-                    Trending vibes 
+                    Suggested Vibes For You
                     {/* <span className="text-[#E3E3E3]">(Sponsored Vibes)</span> */}
                     </h5>
                 </div>

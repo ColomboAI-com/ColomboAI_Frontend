@@ -130,14 +130,12 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <FeedContextProvider>
-      <div className="min-w-screen border- border-yellow-400 relative">
-        <div className="flex max-h-[87vh] border- border-green-400 xl:h-screen">
-          <div className="min-w-[10%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
+      <div className="min-w-screen border-yellow-400 relative">
+        <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
+          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
-          
-
-          <div className="min-w-[100%] md:min-w-[90%] xl:min-w-[95%] ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
+          <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
             <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
               <div className="py-[14px]">
                 <img
@@ -145,7 +143,6 @@ const DefaultLayout = ({ children }) => {
                   alt="logo-image"
                   className="mx-auto w-[174px]"
                 />
-
                 {/* <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" /> */}
               </div>
             </header>
@@ -154,7 +151,7 @@ const DefaultLayout = ({ children }) => {
               isShowChatMenu={isShowChatMenu}
             />
 
-            {!isSelectedFromComputer ? <div className="flex flex-1 border- border-purple-400">
+            {!isSelectedFromComputer ? <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400">
               {isCreatePostOpen && (
                 <Modal
                   isOpen={isCreatePostOpen}
@@ -170,7 +167,7 @@ const DefaultLayout = ({ children }) => {
                   setIsOpen={setIsCreateVibeOpen}
                   className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                 >
-                  <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
+                  <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
                 </Modal>
               )}
               {isShareOpen && (
@@ -209,26 +206,26 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  "w-[100%] lg:w-[70%] max-h-[calc((100vh-175px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"
+                  "w-[100%] lg:w-[100%] max-h-[calc((100vh-175px)-155px)] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"
                 }
               >
                 {children}
               </div>
-              <div className="hidden lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block lg:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative ml-[1px]">
+              {/* // </> */}
+              <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
                 <RightSidebar />
               </div>
-              {/* // </> */}
-            </div> : 
-            <div className="bg-[#333333] w-full h-full">
-              <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset}/>
-            </div>}
+            </div> :
+              <div className="bg-[#333333] w-full h-full">
+                <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
+              </div>}
 
             {/* <CommentSection /> */}
           </div>
         </div>
 
         {/* Bottombar Mobile View */}
-        <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
+        <div className="md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-4 flex flex-wrap items-center justify-evenly">
               <Link href="/gen-search">
@@ -339,7 +336,7 @@ const DefaultLayout = ({ children }) => {
         </div>
       </div>
       {/* Bottombar Mobile View */}
-      <Bottombar />
+      {/* <Bottombar /> */}
     </FeedContextProvider>
   );
 };
