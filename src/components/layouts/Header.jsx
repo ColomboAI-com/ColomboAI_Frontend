@@ -74,14 +74,14 @@ const Header = () => {
 
             {/* mobile view */}
 
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-                <div className=" block md:hidden">
+            <div className="lg:shadow-[0px_2px_4px_0px_#0000001A]">
+                <div className="sm:mx-3 block md:hidden">
                     <div className="flex justify-between">
-                        <div className="flex items-center">
-                            <img src="/images/home/profile-img.png" alt="profile-image" className="w-[58px] mx-auto" />
+                        <div className="flex items-center sm:gap-2">
+                            <img src="/images/home/profile-img.png" alt="profile-image" className="w-[58px] mx-auto sm:rounded-full" />
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
-                        <div className="flex items-center gap-4 lg:gap-8 mx-9 ">
+                        <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
                             <CreateDropdown/>
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
                             <ChatBubbleIcon w={35} h={35} fill={'#646464'} />

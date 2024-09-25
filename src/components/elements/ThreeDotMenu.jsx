@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { VibeContext } from "@/context/VibeContext";
 
 const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
+  const { deleteVibe } = useContext(VibeContext);
   const [isMemuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -21,7 +23,6 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   };
 
   // TODO: render the buttons related to these only after a vibe has been created
-  
   const handleArchive = () => {
     console.log("Archiving");
     setIsMenuOpen(false);
@@ -43,7 +44,7 @@ const ThreeDotMenu = ({ setIsCreateVibeOpen }) => {
   };
 
   const handleDelete = () => {
-    console.log("Deleting");
+    deleteVibe();
     setIsMenuOpen(false);
     setIsCreateVibeOpen(false);
   };
