@@ -60,7 +60,7 @@ const Header = () => {
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         {/* <InputBar/> */}
-                        {pathname === '/gen-search' ? <GenSearch /> : <InputBar />}
+                        {pathname === '/gen-search' ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
 
                     </div>
                     <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">

@@ -27,7 +27,7 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
     setFile(selectedFile);
     setUploadedFile(selectedFile);
     setIsUploading(false);
-    uploading(false);
+    // uploading(false);
     // setMessage(`~${selectedFile.name}`);
   };
 
