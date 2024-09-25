@@ -396,7 +396,7 @@ const CreateVibe = ({
                 >
                   <TextShadowIcon />
                 </button>
-                <button className="w-10 h-10 flex flex-row justify-center items-center">
+                <button className="w-10 h-10 flex flex-row justify-center items-center" onClick={toggleDropdown}>
                   <MusicNotePlusIcon/>
                 </button>
               </div>
@@ -416,6 +416,13 @@ const CreateVibe = ({
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
+          {/* Changes */}
+         {isDropdownVisible && (
+  <div className="fixed inset-0 flex items-center justify-center z-50">
+   
+      <MusicDropdown onClose={() => setDropdownVisible(false)}/>
+  </div>
+)}
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
@@ -520,9 +527,9 @@ const CreateVibe = ({
                 />
               )}
 
-              {isDropdownVisible && (
+              {/* {isDropdownVisible && (
                 <MusicDropdown onClose={() => setDropdownVisible(false)} />
-              )}
+              )} */}
 
               {/* <span onClick={handleFileInputClick}>
                 <input

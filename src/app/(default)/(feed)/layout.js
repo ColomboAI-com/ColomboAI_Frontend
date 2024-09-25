@@ -1,5 +1,6 @@
 "use client";
 import Feed from "@/app/(default)/(feed)/feed/page";
+import MusicSearch from "@/components/elements/MusicSearch";
 import FeedFilter from "@/components/layouts/FeedFilter";
 import { GlobalContext } from "@/context/GlobalContext";
 import UserProfileContextProvider from "@/context/UserProfileContext";
@@ -10,6 +11,7 @@ const FeedLayout = ({ children }) => {
 
   return (
     <UserProfileContextProvider>
+      {/* <MusicSearch/> */}
       {/* <div className="border-green-500 flex flex-row justify-center"> */}
         {/* <p className="mt-[1.25rem]">Coming Soon</p> */}
         <Feed/>
