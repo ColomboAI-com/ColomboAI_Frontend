@@ -416,13 +416,14 @@ const CreateVibe = ({
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
-          {/* Changes */}
-         {isDropdownVisible && (
-  <div className="fixed inset-0 flex items-center justify-center z-50">
-   
-      <MusicDropdown onClose={() => setDropdownVisible(false)}/>
-  </div>
-)}
+    
+          {isDropdownVisible && (
+        <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <MusicDropdown />
+          </div>
+        </div>
+      )}
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
