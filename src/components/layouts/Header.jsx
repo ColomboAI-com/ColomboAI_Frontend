@@ -15,7 +15,13 @@ import Share from "../Share";
 // import InputGenAiSearch from "../gen-ai/InputGenAiSearch";
 import GenSearch from "@/app/gen-search/layout";
 import { useState, useCallback } from "react";
+import { Plus_Jakarta_Sans } from "@next/font/google";
 
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 
 const Header = () => {
 
@@ -35,7 +41,7 @@ const Header = () => {
     }, []);
 
     return (
-        <div className=" bg-white sticky top-14 z-40">
+        <div className={`bg-white sticky top-14 z-40 ${plusJakartaSans.className}`}>
             {/* Desktop view */}
 
             {/* <div className=" hidden lg:flex items-center justify-between shadow-[0px_2px_4px_0px_#0000001A] lg:py-9">

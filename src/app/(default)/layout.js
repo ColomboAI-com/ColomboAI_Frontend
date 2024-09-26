@@ -33,6 +33,13 @@ import { MessageBox } from "@/components/MessageBox";
 import CreateVibe from "@/components/elements/CreateVibe";
 import Image from "next/image";
 import genai_pen from "../../../public/images/icons/genai_pen.svg"
+import { Plus_Jakarta_Sans } from "@next/font/google";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
@@ -132,7 +139,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <FeedContextProvider>
-      <div className="min-w-screen border-yellow-400 relative">
+      <div className={`min-w-screen border-yellow-400 relative ${plusJakartaSans.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
           <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
@@ -244,7 +251,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/gen-search"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Gen AI
                   </p>
@@ -264,7 +271,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/task-bot"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Task bot
                   </p>
@@ -288,7 +295,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${feedSections.includes(`${pathname}`)
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Feed
                   </p>
@@ -308,7 +315,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/shop"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Shop
                   </p>
@@ -328,7 +335,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/news"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     News
                   </p>
