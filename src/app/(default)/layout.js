@@ -145,7 +145,7 @@ const DefaultLayout = ({ children }) => {
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
-            <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+            <header className="sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
               <div className="py-[14px]">
                 <img
                   src="/images/home/ColomboAI-logo.svg"

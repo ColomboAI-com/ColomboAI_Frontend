@@ -1,199 +1,214 @@
-  /* eslint-disable @next/next/no-img-element */
-  import { useContext, useState, useEffect } from "react";
-  import {
-    BackButtonIcon,
-    CloseDocumentIcon,
-    CreateMagicPenIcon,
-    CrossIcon,
-    MusicNotePlusIcon,
-    SendIcon,
-    TextShadowIcon,
-    VideoEditIcon,
-    VideoIcon,
-  } from "../Icons";
-  import { FeedContext } from "@/context/FeedContext";
-  import { GlobalContext } from "@/context/GlobalContext";
-  import Button from "@/elements/Button";
-  import { MessageBox } from "../MessageBox";
-  import { ThreeDots } from "react-loader-spinner";
-  import ColorPicker from "./ColorPicker";
-  import MusicDropdown from "./MusicDropDown";
-  import { VideoEditor } from "./VideoEditor";
-  import next from "next";
-  import CaptionBox from "./CaptionBox";
-  import ThreeDotMenu from "./ThreeDotMenu";
-  import EditCover from "./EditCover";
-  import axios from "axios";
-  import { Plus_Jakarta_Sans } from "@next/font/google";
-  import tmp_trim from "../../../public/images/vibes/tmp_trim.png";
-  import Image from "next/image";
-  import { set } from "date-fns";
-  import { VibeContext } from "@/context/VibeContext";
-  import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
+/* eslint-disable @next/next/no-img-element */
+import { useContext, useState, useEffect } from "react";
+import {
+  BackButtonIcon,
+  CloseDocumentIcon,
+  CreateMagicPenIcon,
+  CrossIcon,
+  MusicNotePlusIcon,
+  SendIcon,
+  TextShadowIcon,
+  VideoEditIcon,
+  VideoIcon,
+} from "../Icons";
+import { FeedContext } from "@/context/FeedContext";
+import { GlobalContext } from "@/context/GlobalContext";
+import Button from "@/elements/Button";
+import { MessageBox } from "../MessageBox";
+import { ThreeDots } from "react-loader-spinner";
+import ColorPicker from "./ColorPicker";
+import MusicDropdown from "./MusicDropDown";
+import { VideoEditor } from "./VideoEditor";
+import next from "next";
+import CaptionBox from "./CaptionBox";
+import ThreeDotMenu from "./ThreeDotMenu";
+import EditCover from "./EditCover";
+import axios from "axios";
+import { Plus_Jakarta_Sans } from "@next/font/google";
+import tmp_trim from "../../../public/images/vibes/tmp_trim.png";
+import Image from "next/image";
+import { set } from "date-fns";
+import { VibeContext } from "@/context/VibeContext";
+import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
-  const plusJakartaSans = Plus_Jakarta_Sans({
-    weight: ["400", "500", "600", "700"],
-    style: ["normal"],
-    subsets: ["latin"],
-  });
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 
-  const CreateVibe = ({
-    uploadedFile,
-    onFileUpload,
-    uploadedPostType,
-    uploadedMediaUrl,
-    uploadedNextStep,
-    onReset,
-  }) => {
-    const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
-    const [promptInput, setPromptInput] = useState("");
-    const [postInput, setPostInput] = useState("");
-    const [file, setFile] = useState(uploadedFile);
-    const [mediaUrl, setMediaUrl] = useState(uploadedMediaUrl);
-    const defaultPostType = "thought";
-    const [postType, setPostType] = useState(uploadedPostType);
-    const [nextStep, setNextStep] = useState(uploadedNextStep);
-    const { generatePost, createPost, loadings, posts, setPosts } =
-      useContext(FeedContext);
-    const {
-      setIsCreateVibeOpen,
-      isSelectedFromComputer,
-      setIsSelectedFromComputer,
-    } = useContext(GlobalContext);
-    const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
+const CreateVibe = ({
+  uploadedFile,
+  onFileUpload,
+  uploadedPostType,
+  uploadedMediaUrl,
+  uploadedNextStep,
+  onReset,
+}) => {
+  const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
+  const [promptInput, setPromptInput] = useState("");
+  const [postInput, setPostInput] = useState("");
+  const [file, setFile] = useState(uploadedFile);
+  const [mediaUrl, setMediaUrl] = useState(uploadedMediaUrl);
+  const defaultPostType = "thought";
+  const [postType, setPostType] = useState(uploadedPostType);
+  const [nextStep, setNextStep] = useState(uploadedNextStep);
+  const { generatePost, createPost, loadings, posts, setPosts } =
+    useContext(FeedContext);
+  const {
+    setIsCreateVibeOpen,
+    isSelectedFromComputer,
+    setIsSelectedFromComputer,
+  } = useContext(GlobalContext);
+  const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
 
-    const [isTrimming, setIsTrimming] = useState(false); // Trimming state
-    const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
-    const [isDropdownVisible, setDropdownVisible] = useState(false);
-    const [text, setText] = useState("");
-    // const [imageText, setImageText] = useState("");
-    const [isEditingText, setIsEditingText] = useState(false);
-    const [isMemuOpen, setIsMenuOpen] = useState(false);
-    const [textColor, setTextColor] = useState("#000000");
-    const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
-    const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
-    const [captionInput, setCaptionInput] = useState("");
-    const [showError, setShowError] = useState(false);
-    const [songId, setSongId] = useState("");
+  const [isTrimming, setIsTrimming] = useState(false); // Trimming state
+  const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [text, setText] = useState("");
+  // const [imageText, setImageText] = useState("");
+  const [isEditingText, setIsEditingText] = useState(false);
+  const [isMemuOpen, setIsMenuOpen] = useState(false);
+  const [textColor, setTextColor] = useState("#000000");
+  const [isColorPickerVisible, setIsColorPickerVisible] = useState(false);
+  const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
+  const [captionInput, setCaptionInput] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [songId, setSongId] = useState("");
 
-    useEffect(() => {
-      return () => {
-        if (mediaUrl) {
-          URL.revokeObjectURL(mediaUrl);
-        }
-      };
-    }, [mediaUrl]);
-
-    useEffect(() => {
-      if (file) {
-        onFileUpload(file);
-        setIsSelectedFromComputer(true);
+  useEffect(() => {
+    return () => {
+      if (mediaUrl) {
+        URL.revokeObjectURL(mediaUrl);
       }
-    }, [file, setFile]);
-
-    const iconButtons = () => {
-      return (
-        <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
-          <button
-            onClick={() => {
-              toogleMagicPen();
-              setIsColorPickerVisible(!isColorPickerVisible);
-            }}
-            className={`p-2 rounded-full ${isMagicPenOpen
-                ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                : "bg-white"
-              } outline-none focus:ring-offset-0 focus:ring-0`}
-          >
-            <CreateMagicPenIcon
-              w={25}
-              h={25}
-              fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
-              fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
-              fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
-              fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
-              fill5={isMagicPenOpen ? "#fff" : "#58268B"}
-            />
-          </button>
-          <button className="w-10 h-10 rounded-full bg-gray-300">
-            <VideoEditIcon />
-          </button>
-          <button
-            className="w-10 h-10 rounded-full bg-gray-300"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsColorPickerVisible(!isColorPickerVisible);
-            }}
-          >
-            <TextShadowIcon />
-          </button>
-          <button className="w-10 h-10 rounded-full bg-gray-300" >
-            <MusicNotePlusIcon />
-          </button>
-          
-        </div>
-      );
     };
+  }, [mediaUrl]);
 
-    const handleFileInputClick = () => {
-      document.querySelector('input[type="file"][accept="media_type"]').click();
-    };
-
-    const toggleDropdown = () => {
-      setDropdownVisible(!isDropdownVisible);
-    };
-
-    function toggleColorPickerVisible() {
-      setIsColorPickerVisible(!isColorPickerVisible);
+  useEffect(() => {
+    if (file) {
+      onFileUpload(file);
+      setIsSelectedFromComputer(true);
     }
+  }, [file, setFile]);
 
-    function toogleMagicPen() {
-      setIsMagicPenOpen(!isMagicPenOpen);
+  const iconButtons = () => {
+    return (
+      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
+        <button
+          onClick={() => {
+            toogleMagicPen();
+          }}
+          className={`p-2 rounded-full ${isMagicPenOpen
+            ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+            : "bg-white"
+            } outline-none focus:ring-offset-0 focus:ring-0`}
+        >
+          <CreateMagicPenIcon
+            w={25}
+            h={25}
+            fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
+            fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
+            fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
+            fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
+            fill5={isMagicPenOpen ? "#fff" : "#58268B"}
+          />
+        </button>
+        <button className="w-10 h-10 rounded-full bg-gray-300">
+          <VideoEditIcon />
+        </button>
+        <button
+          className="w-10 h-10 rounded-full bg-gray-300"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsColorPickerVisible(!isColorPickerVisible);
+          }}
+        >
+          <TextShadowIcon />
+        </button>
+        <button className="w-10 h-10 rounded-full bg-gray-300" >
+          <MusicNotePlusIcon />
+        </button>
+
+      </div>
+    );
+  };
+
+  const handleFileInputClick = () => {
+    document.querySelector('input[type="file"][accept="media_type"]').click();
+  };
+
+  const toggleDropdown = () => {
+    setIsMagicPenOpen(false);
+    setIsTrimming(false)
+    setIsColorPickerVisible(false)
+    setDropdownVisible(!isDropdownVisible);
+  };
+
+  function toggleColorPickerVisible() {
+    setIsMagicPenOpen(false);
+    setDropdownVisible(false)
+    setIsTrimming(false)
+    setIsColorPickerVisible(!isColorPickerVisible);
+  }
+
+  function toggleTrimming() {
+    setIsMagicPenOpen(false);
+    setDropdownVisible(false)
+    setIsColorPickerVisible(false);
+    setIsTrimming(!isTrimming)
+  }
+
+  function toogleMagicPen() {
+    setIsTrimming(false)
+    setIsColorPickerVisible(false)
+    setDropdownVisible(false);
+    setIsMagicPenOpen(!isMagicPenOpen);
+  }
+
+  const clearFileHandler = () => {
+    setFile(null);
+    setMediaUrl("");
+    setPostType(defaultPostType);
+  };
+
+  const handleGenerateVibe = async () => {
+    const result = await generatePost(promptInput);
+    if (result?.response_type !== "text") {
+      setMediaUrl(result?.text);
+      setPostType(result?.response_type);
+    } else if (result?.response_type === "text") {
+      setPostInput(result?.text);
     }
+    setIsMagicPenOpen(false); // Hide the Magic Pen input after generating
+  };
 
-    const clearFileHandler = () => {
-      setFile(null);
-      setMediaUrl("");
-      setPostType(defaultPostType);
-    };
+  const handleFileChange = (event) => {
+    const selectedFiles = event.target.files;
+    if (selectedFiles.length > 0) {
+      const selectedFile = selectedFiles[0];
+      setFile(selectedFile);
+      const fileType = selectedFile.type.split("/")[0];
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setMediaUrl(fileUrl);
+      setNextStep(true);
+    }
+  };
 
-    const handleGenerateVibe = async () => {
-      const result = await generatePost(promptInput);
-      if (result?.response_type !== "text") {
-        setMediaUrl(result?.text);
-        setPostType(result?.response_type);
-      } else if (result?.response_type === "text") {
-        setPostInput(result?.text);
-      }
-      setIsMagicPenInputVisible(false); // Hide the Magic Pen input after generating
-    };
-
-    const handleFileChange = (event) => {
-      const selectedFiles = event.target.files;
-      if (selectedFiles.length > 0) {
-        const selectedFile = selectedFiles[0];
-        setFile(selectedFile);
-        const fileType = selectedFile.type.split("/")[0];
-        setPostType(fileType);
-        const fileUrl = URL.createObjectURL(selectedFile);
-        setMediaUrl(fileUrl);
-        setNextStep(true);
-      }
-    };
-
-    const handleDrop = (event) => {
-      event.preventDefault();
-      const droppedFiles = event.dataTransfer.files;
-      if (droppedFiles && droppedFiles.length > 0) {
-        const file = droppedFiles[0];
-        const fileType = file.type.split("/")[0];
-        setFile(file);
-        setPostType(fileType);
-        const fileUrl = URL.createObjectURL(file);
-        setMediaUrl(fileUrl);
-        setNextStep(true);
-        setIsSelectedFromComputer(true);
-      }
-    };
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const droppedFiles = event.dataTransfer.files;
+    if (droppedFiles && droppedFiles.length > 0) {
+      const file = droppedFiles[0];
+      const fileType = file.type.split("/")[0];
+      setFile(file);
+      setPostType(fileType);
+      const fileUrl = URL.createObjectURL(file);
+      setMediaUrl(fileUrl);
+      setNextStep(true);
+      setIsSelectedFromComputer(true);
+    }
+  };
 
   const handleCreateVibe = async () => {
     const res = await createVibe({
@@ -213,25 +228,25 @@
     }
   };
 
-    const handleTrimVideo = (trimmedUrl) => {
-      setTrimmedVideoUrl(trimmedUrl);
-      setIsTrimming(false); // Close the trimming modal
-    };
+  const handleTrimVideo = (trimmedUrl) => {
+    setTrimmedVideoUrl(trimmedUrl);
+    setIsTrimming(false); // Close the trimming modal
+  };
 
-    // Handlers to add text to vibe
-    const handleTextClick = () => {
-      // setIsEditingText(true);
-    };
+  // Handlers to add text to vibe
+  const handleTextClick = () => {
+    // setIsEditingText(true);
+  };
 
-    const handleTextChange = (e) => {
-      setText(e.target.value);
-    };
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+  };
 
-    const handleVibeValidation = () => {
-      // to-do task
-      // call this method whenever there is error while creating a vibe
-      setShowError(!showError);
-    };
+  const handleVibeValidation = () => {
+    // to-do task
+    // call this method whenever there is error while creating a vibe
+    setShowError(!showError);
+  };
 
   return (
     <main className={plusJakartaSans.className}>
@@ -330,6 +345,19 @@
                 alt="none"
                 className="absolute bottom-0 rounded-b-[0.9rem]"
               />
+            ) : isDropdownVisible ? (
+              <div className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10" onClick={toggleDropdown}>
+                <div onClick={(e) => e.stopPropagation()}>
+                  <MusicDropdown setSongId={setSongId} />
+                </div>
+              </div>
+            ) : !nextStep ? (
+              <div className="absolute bottom-0">
+                <CaptionBox
+                  captionInput={captionInput}
+                  setCaptionInput={setCaptionInput}
+                />
+              </div>
             ) : (
               <Button
                 title={"NEXT"}
@@ -365,11 +393,11 @@
               <button
                 onClick={() => {
                   toogleMagicPen();
-                  setIsColorPickerVisible(!isColorPickerVisible);
+                  // setIsColorPickerVisible(!isColorPickerVisible);
                 }}
                 className={`p-2 rounded-full self-start ${isMagicPenOpen
-                    ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                    : "bg-white"
+                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                  : "bg-white"
                   } outline-none focus:ring-offset-0 focus:ring-0`}
               >
                 <CreateMagicPenIcon
@@ -386,21 +414,23 @@
                 <button
                   className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${isTrimming && `rounded-full bg-[#245FDF]`
                     }`}
-                  onClick={(e) => setIsTrimming(!isTrimming)}
+                  onClick={(e) => toggleTrimming()}
                 >
                   <VideoEditIcon />
                 </button>
                 <button
-                  className="w-10 h-10 flex flex-row justify-center items-center"
+                  className={`w-10 h-10 flex flex-row justify-center items-center ${isColorPickerVisible && `rounded-full bg-[#245FDF]`
+                    }`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    setIsColorPickerVisible(!isColorPickerVisible);
+                    toggleColorPickerVisible();
                   }}
                 >
                   <TextShadowIcon />
                 </button>
-                <button className="w-10 h-10 flex flex-row justify-center items-center" onClick={toggleDropdown}>
-                  <MusicNotePlusIcon/>
+                <button className={`w-10 h-10 flex flex-row justify-center items-center ${isDropdownVisible && `rounded-full bg-[#245FDF]`
+                  }`} onClick={toggleDropdown}>
+                  <MusicNotePlusIcon />
                 </button>
               </div>
               {/* {isEditingText && (
@@ -419,14 +449,14 @@
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
-    
-          {isDropdownVisible && (
-        <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <MusicDropdown setSongId={setSongId}/>
-          </div>
-        </div>
-      )}
+
+          {/* {isDropdownVisible && (
+            <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
+              <div onClick={(e) => e.stopPropagation()}>
+                <MusicDropdown setSongId={setSongId} />
+              </div>
+            </div>
+          )} */}
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
@@ -462,85 +492,85 @@
               </span>
             </div>
 
-              {iconButtons()}
-            </div>
+            {iconButtons()}
           </div>
-        ) : (
-          ""
-        )}
-        {nextStep === false && (
-          <>
-            {mediaUrl === "" && postType === defaultPostType && (
-              <div
-                className="flex flex-col items-center py-2 rounded-xl "
-                onDrop={handleDrop}
-                onDragOver={(event) => event.preventDefault()}
-              >
-                <p className="text-xl my-4">Drag photos and videos here</p>
+        </div>
+      ) : (
+        ""
+      )}
+      {nextStep === false && (
+        <>
+          {mediaUrl === "" && postType === defaultPostType && (
+            <div
+              className="flex flex-col items-center py-2 rounded-xl "
+              onDrop={handleDrop}
+              onDragOver={(event) => event.preventDefault()}
+            >
+              <p className="text-xl my-4">Drag photos and videos here</p>
 
-                <div className="pt-3 text-center">
-                  {file ? (
-                    <>
-                      <img
-                        src={mediaUrl}
-                        alt="media"
-                        className="object-contain w-48 h-48"
-                      />
-                      <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
-                        <button
-                          onClick={clearFileHandler}
-                          className="text-red-500"
-                        >
-                          <CloseDocumentIcon w={20} h={20} />
-                        </button>
-                        <button
-                          onClick={() => {
-                            if (postType === "video") {
-                              setIsTrimming(true); // Open the trimming modal
-                            } else {
-                              handleCreateVibe();
-                            }
-                          }}
-                          className="text-blue-500"
-                        >
-                          <SendIcon w={20} h={20} />
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <button
-                      onClick={handleFileInputClick}
-                      className="text-blue-500 border border-blue-500 px-4 py-2 rounded"
-                    >
-                      Select from computer
-                    </button>
-                  )}
-                  <input
-                    type="file"
-                    accept="media_type" // Adjust media type as needed
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
-                </div>
-
-                {isTrimming && (
-                  <VideoEditor
-                    videoUrl={mediaUrl}
-                    onTrim={handleTrimVideo}
-                    onClose={() => setIsTrimming(false)}
-                  />
+              <div className="pt-3 text-center">
+                {file ? (
+                  <>
+                    <img
+                      src={mediaUrl}
+                      alt="media"
+                      className="object-contain w-48 h-48"
+                    />
+                    <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
+                      <button
+                        onClick={clearFileHandler}
+                        className="text-red-500"
+                      >
+                        <CloseDocumentIcon w={20} h={20} />
+                      </button>
+                      <button
+                        onClick={() => {
+                          if (postType === "video") {
+                            setIsTrimming(true); // Open the trimming modal
+                          } else {
+                            handleCreateVibe();
+                          }
+                        }}
+                        className="text-blue-500"
+                      >
+                        <SendIcon w={20} h={20} />
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    onClick={handleFileInputClick}
+                    className="text-blue-500 border border-blue-500 px-4 py-2 rounded"
+                  >
+                    Select from computer
+                  </button>
                 )}
+                <input
+                  type="file"
+                  accept="media_type" // Adjust media type as needed
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+              </div>
+
+              {isTrimming && (
+                <VideoEditor
+                  videoUrl={mediaUrl}
+                  onTrim={handleTrimVideo}
+                  onClose={() => setIsTrimming(false)}
+                />
+              )}
 
 
               {/* {isDropdownVisible && (
                 <MusicDropdown onClose={() => setDropdownVisible(false)} />
               )} */}
 
-                {isDropdownVisible && (
-                  <MusicDropdown onClose={() => setDropdownVisible(false)} />
-                )}
+              {/* {isDropdownVisible && (
+                <MusicDropdown onClose={() => setDropdownVisible(false)} />
+              )} */}
 
-                {/* <span onClick={handleFileInputClick}>
+              {/* <span onClick={handleFileInputClick}>
                   <input
                     className="hidden"
                     type="file"
@@ -554,11 +584,11 @@
                     }
                   />
                 </span> */}
-              </div>
-            )}
-          </>
-        )}
-        {isSelectedFromComputer ? <CaptionBox
+            </div>
+          )}
+        </>
+      )}
+      {/* {isSelectedFromComputer ? <CaptionBox
           captionInput={captionInput}
           setCaptionInput={setCaptionInput}
         /> : null}
@@ -568,9 +598,9 @@
           className={
             "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
           }
-        /></div> : null}
-      </main>
-    );
-  };
+        /></div> : null} */}
+    </main>
+  );
+};
 
-  export default CreateVibe;
+export default CreateVibe;
