@@ -23,6 +23,7 @@ export default function VibeContextProvider({ children }) {
     text,
     textColor,
     content,
+    trackId,
     isHideLikes = false,
     isHideComments = false,
   }) => {
@@ -36,6 +37,7 @@ export default function VibeContextProvider({ children }) {
       formData.append("text", text || "");
       formData.append("textColor", textColor || "");
       formData.append("content", content || "");
+      formData.append("trackId", trackId || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
       // fields to include:
@@ -85,7 +87,7 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const deleteVibe = async (vibeId = '') => {
+  const deleteVibe = async (vibeId) => {
     try {
       setLoadings(prev => ({ ...prev, deleteVibe: true }))
       const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}`,
@@ -106,6 +108,10 @@ export default function VibeContextProvider({ children }) {
       setLoadings(prev => ({ ...prev, deletePost: false }))
     }
   }
+
+  // const deleteVibe = (vibeId) => {
+  //   console.log(vibeId);
+  // }
 
   const archiveVibe = async (id = '66f34a4536049e10646e09f9') => {
     try {
