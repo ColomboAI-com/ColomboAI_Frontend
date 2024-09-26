@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Play, Pause, ChevronDown } from "lucide-react";
+import "../../app/globals.css"
 
 const https = require("https");
 
@@ -89,7 +90,7 @@ const MusicSearch = ({ setSongId }) => {
   }
 
   return (
-    <div className="absolute w-[468px]  top-[168px] left-[450px] bg-blue-600 rounded-t-[15.22px]  flex flex-col p-6  text-white">
+    <div className="w-[19.5rem] max-h-[20rem] overflow-y-scroll bg-blue-600 hide-scrollbar rounded-t-[15.22px] rounded-b-[0.9rem] flex flex-col p-6 text-white">
       <h1 className="text-2xl font-bold mb-4 text-center">Add Music</h1>
       <div className="relative mb-6">
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
