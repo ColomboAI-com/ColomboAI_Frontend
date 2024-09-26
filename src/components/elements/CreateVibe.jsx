@@ -74,6 +74,7 @@
     const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
     const [captionInput, setCaptionInput] = useState("");
     const [showError, setShowError] = useState(false);
+    const [songId, setSongId] = useState("");
 
     useEffect(() => {
       return () => {
@@ -196,11 +197,12 @@
 
   const handleCreateVibe = async () => {
     const res = await createVibe({
-      file:mediaUrl,
+      file: mediaUrl,
       type: postType,
       text: postInput,
       textColor,
-      caption: captionInput,
+      content: captionInput,
+      songId
     });
     if (res) {
       MessageBox("success", res.message);
@@ -421,7 +423,7 @@
           {isDropdownVisible && (
         <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
           <div onClick={(e) => e.stopPropagation()}>
-            <MusicDropdown />
+            <MusicDropdown setSongId={setSongId}/>
           </div>
         </div>
       )}

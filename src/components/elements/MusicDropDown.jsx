@@ -1,59 +1,61 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, Play, Pause, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { Search, Play, Pause, ChevronDown } from "lucide-react";
 
-const https = require('https');
+const https = require("https");
 
-const MusicSearch = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+const MusicSearch = ({ setSongId }) => {
+  const [searchTerm, setSearchTerm] = useState("");
   const [songs, setSongs] = useState([]);
   const [playing, setPlaying] = useState(null);
   const audioRef = useRef(new Audio());
 
-  const CLIENT_ID = 'de0269ba'; // client ID
+  const CLIENT_ID = "de0269ba"; // client ID
 
   const genres = [
-    { name: 'Pop', image: '/api/placeholder/100/100' },
-    { name: 'Rock', image: '/api/placeholder/100/100' },
-    { name: 'Hip-hop', image: '/api/placeholder/100/100' },
-    { name: 'Jazz', image: '/api/placeholder/100/100' },
-    { name: 'R&B', image: '/api/placeholder/100/100' },
-    { name: 'Classical', image: '/api/placeholder/100/100' },
+    { name: "Pop", image: "/api/placeholder/100/100" },
+    { name: "Rock", image: "/api/placeholder/100/100" },
+    { name: "Hip-hop", image: "/api/placeholder/100/100" },
+    { name: "Jazz", image: "/api/placeholder/100/100" },
+    { name: "R&B", image: "/api/placeholder/100/100" },
+    { name: "Classical", image: "/api/placeholder/100/100" },
   ];
 
   const getMusicUrl = (type) => {
     return new Promise((resolve, reject) => {
       const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&format=json&limit=16&search=${type}&include=musicinfo`;
-      
-      https.get(url, (response) => {
-        let data = '';
-        response.on('data', (chunk) => {
-          data += chunk;
-        });
 
-        response.on('end', () => {
-          try {
-            const parsedData = JSON.parse(data);
-            console.log('API response:', parsedData);
-            resolve(parsedData.results);
-          } catch (error) {
-            console.error('Error parsing JSON:', error);
-            reject(error);
-          }
+      https
+        .get(url, (response) => {
+          let data = "";
+          response.on("data", (chunk) => {
+            data += chunk;
+          });
+
+          response.on("end", () => {
+            try {
+              const parsedData = JSON.parse(data);
+              console.log("API response:", parsedData);
+              resolve(parsedData.results);
+            } catch (error) {
+              console.error("Error parsing JSON:", error);
+              reject(error);
+            }
+          });
+        })
+        .on("error", (error) => {
+          console.error("Error fetching music:", error);
+          reject(error);
         });
-      }).on('error', (error) => {
-        console.error('Error fetching music:', error);
-        reject(error);
-      });
     });
   };
 
   useEffect(() => {
     const fetchSongs = async () => {
       try {
-        const results = await getMusicUrl(searchTerm || 'popular');
+        const results = await getMusicUrl(searchTerm || "popular");
         setSongs(results);
       } catch (error) {
-        console.error('Error in fetchSongs:', error);
+        console.error("Error in fetchSongs:", error);
         setSongs([]);
       }
     };
@@ -62,9 +64,9 @@ const MusicSearch = () => {
   }, [searchTerm]);
 
   useEffect(() => {
-    audioRef.current.addEventListener('ended', () => setPlaying(null));
+    audioRef.current.addEventListener("ended", () => setPlaying(null));
     return () => {
-      audioRef.current.removeEventListener('ended', () => setPlaying(null));
+      audioRef.current.removeEventListener("ended", () => setPlaying(null));
     };
   }, []);
 
@@ -81,6 +83,10 @@ const MusicSearch = () => {
       setPlaying(song.id);
     }
   };
+
+  const handSelectSong = (songId) => {
+    setSongId(songId)
+  }
 
   return (
     <div className="absolute w-[468px]  top-[168px] left-[450px] bg-blue-600 rounded-t-[15.22px]  flex flex-col p-6  text-white">
@@ -99,31 +105,42 @@ const MusicSearch = () => {
 
       <h2 className="text-xl font-semibold mb-3">Genres</h2>
       <div className="flex justify-between mb-6">
-  {genres.map((genre) => (
-    <div key={genre.name} className="relative w-[65px] h-[65px] rounded-xl overflow-hidden">
-      <img src={genre.image}  className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-        <p className="text-white text-xs font-medium">{genre.name}</p>
+        {genres.map((genre) => (
+          <div
+            key={genre.name}
+            className="relative w-[65px] h-[65px] rounded-xl overflow-hidden"
+          >
+            <img src={genre.image} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+              <p className="text-white text-xs font-medium">{genre.name}</p>
+            </div>
+          </div>
+        ))}
       </div>
-    </div>
-  ))}
-</div>
-<div className="border-b border-white  mb-4"></div>
+      <div className="border-b border-white  mb-4"></div>
 
       <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
       <div className="flex flex-col space-y-4">
         {songs.slice(0, 7).map((song) => (
-          <div key={song.id} className="flex items-center">
-            <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3" />
+          <div key={song.id} className="flex items-center" onClick={() => handSelectSong(song.id)}>
+            <img
+              src={song.image}
+              alt={song.name}
+              className="w-10 h-10 rounded-full object-cover mr-3"
+            />
             <div className="flex-grow">
               <p className="font-medium text-sm">{song.name}</p>
               <p className="text-xs opacity-80">by {song.artist_name}</p>
             </div>
-            <button onClick={() => togglePlay(song)} className="p-2 bg-white rounded-full">
-              {playing === song.id ? 
-                <Pause className="text-blue-600 w-4 h-4" /> : 
+            <button
+              onClick={() => togglePlay(song)}
+              className="p-2 bg-white rounded-full"
+            >
+              {playing === song.id ? (
+                <Pause className="text-blue-600 w-4 h-4" />
+              ) : (
                 <Play className="text-blue-600 w-4 h-4" />
-              }
+              )}
             </button>
           </div>
         ))}

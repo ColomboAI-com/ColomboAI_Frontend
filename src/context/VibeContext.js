@@ -23,11 +23,11 @@ export default function VibeContextProvider({ children }) {
     text,
     textColor,
     content,
-    trackId,
+    songId,
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content);
+    console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
