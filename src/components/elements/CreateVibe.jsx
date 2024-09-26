@@ -74,6 +74,7 @@
     const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
     const [captionInput, setCaptionInput] = useState("");
     const [showError, setShowError] = useState(false);
+    const [songId, setSongId] = useState("");
 
     useEffect(() => {
       return () => {
@@ -196,11 +197,12 @@
 
   const handleCreateVibe = async () => {
     const res = await createVibe({
-      file:mediaUrl,
+      file: mediaUrl,
       type: postType,
       text: postInput,
       textColor,
-      caption: captionInput,
+      content: captionInput,
+      songId
     });
     if (res) {
       MessageBox("success", res.message);
@@ -397,8 +399,8 @@
                 >
                   <TextShadowIcon />
                 </button>
-                <button className="w-10 h-10 flex flex-row justify-center items-center">
-                  <MusicNotePlusIcon />
+                <button className="w-10 h-10 flex flex-row justify-center items-center" onClick={toggleDropdown}>
+                  <MusicNotePlusIcon/>
                 </button>
               </div>
               {/* {isEditingText && (
@@ -417,6 +419,14 @@
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
+    
+          {isDropdownVisible && (
+        <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <MusicDropdown setSongId={setSongId}/>
+          </div>
+        </div>
+      )}
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
@@ -520,6 +530,11 @@
                     onClose={() => setIsTrimming(false)}
                   />
                 )}
+
+
+              {/* {isDropdownVisible && (
+                <MusicDropdown onClose={() => setDropdownVisible(false)} />
+              )} */}
 
                 {isDropdownVisible && (
                   <MusicDropdown onClose={() => setDropdownVisible(false)} />

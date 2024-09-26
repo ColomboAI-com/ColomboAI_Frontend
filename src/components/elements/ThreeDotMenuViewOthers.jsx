@@ -1,11 +1,13 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { DotsVerticalIcon } from '@heroicons/react/solid';
 import { Delete } from "lucide-react";
+import { VibeContext } from "@/context/VibeContext";
 
 const ThreeDotMenuViewOthers = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
+    const { vibes, getVibes, deleteVibe } = useContext(VibeContext);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -46,6 +48,9 @@ const ThreeDotMenuViewOthers = () => {
 
     const handleDelete = () => {
         console.log("Handling delete.");
+        // Using the first vibe in the array for testing purposes
+        const vibeId = vibes[0]._id;
+        deleteVibe(vibeId);
     };
 
     const menuItems = [
