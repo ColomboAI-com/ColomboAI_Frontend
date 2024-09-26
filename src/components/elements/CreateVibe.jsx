@@ -353,6 +353,7 @@
                   onChange={(e) => setPostInput(e.target.value)}
                   className="bg-transparent text-black text-center text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
                   autoFocus
+                  style={{ color: textColor }}
                 />
               </div>
               : null}
