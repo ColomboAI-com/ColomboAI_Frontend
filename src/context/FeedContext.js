@@ -66,7 +66,7 @@ export default function FeedContextProvider({ children }) {
         {
           headers: {
             Authorization: getCookie('token'),
-           // 'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data'
           }
         }
       )
