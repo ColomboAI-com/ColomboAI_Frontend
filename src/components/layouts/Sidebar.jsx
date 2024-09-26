@@ -8,7 +8,13 @@ import InputBar from "./InputBar";
 import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useEffect, useState } from "react";
+import { Plus_Jakarta_Sans } from "@next/font/google";
 
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 /* eslint-disable @next/next/no-img-element */
 const Sidebar = () => {
     const a = false
@@ -23,7 +29,7 @@ const Sidebar = () => {
     useEffect(() => {
         Setname(getCookie('name'));
         SetprofilePic(getCookie('profilePic'));
-    },[])
+    }, [])
 
     const handleSignOut = () => {
         clearCookie();
@@ -33,7 +39,7 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className="xl:w-[100%] lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem]">
+            <div className={`xl:w-[100%] lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${plusJakartaSans.className}`}>
                 <div className="lg:mb-[46px] xl:mt-[20px] lg:mt-[6rem] relative">
 
                     <Dropdown
@@ -43,68 +49,54 @@ const Sidebar = () => {
                         button={<ProfilePicture image={profilePic} />}
                     >
                         <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
-                            <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans text-brandprimary">{name}</li></Link>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer font-sans" onClick={handleSignOut}>Log out</li>
+                            <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li></Link>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>Log out</li>
                         </ul>
                     </Dropdown>
                 </div>
                 {/* <div className="mb-[46px] mt-[20px]">
                     <img src={getCookie('profilePic')} alt="profile-image" className="w-[42px] mx-auto rounded-full" />
                 </div> */}
-                <div className="h-[75vh] overflow-auto">
+                <div className="h-[75vh] overflow-auto flex flex-col items-center">
                     <Link href="https://colomboai.com/genai-search/">
-                        <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <GenAiIcon w="24" h="24" className="mx-auto" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
-                            </div>
-                            <p className={`${pathname === '/genai-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] font-sans`}>Gen AI</p>
+                        <div className="mb-[34px] flex flex-col items-center">
+                            <GenAiIcon w="24" h="24" className="mx-auto" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
+                            <p className={`${pathname === '/genai-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Gen AI</p>
                         </div>
                     </Link>
 
                     <Link href="/task-bot">
-                        <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <TaskBotIcon w="24" h="24" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
-                            </div>
-                            <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] font-sans`}>Task bot</p>
+                        <div className="mb-[34px] flex flex-col items-center">
+                            <TaskBotIcon w="24" h="24" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
+                            <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Task bot</p>
                         </div>
                     </Link>
 
                     <Link href="/feed">
-                        <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <FeedIcon w="24" h="24" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
-                            </div>
-                            <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] font-sans`}>Feed.</p>
+                        <div className="mb-[34px] flex flex-col items-center">
+                            <FeedIcon w="24" h="24" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
+                            <p className={`${feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Feed</p>
                         </div>
                     </Link>
 
                     <Link href="/shop">
-                        <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <ShopIcon w="24" h="24" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
-                            </div>
-                            <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] font-sans`}>Shop</p>
+                        <div className="mb-[34px] flex flex-col items-center">
+                            <ShopIcon w="24" h="24" fill={pathname === '/shop' ? "#1E71F2" : "#8E8E93"} />
+                            <p className={`${pathname === '/shop' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Shop</p>
                         </div>
                     </Link>
 
                     <Link href="/news">
-                        <div className="mb-[34px]">
-                            <div className="w-[29px] mx-auto">
-                                <NewsIcon w="24" h="24" fill={pathname === '/news' ? "#1E71F2" : "#8E8E93"} />
-                            </div>
-                            <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] font-sans`}>News</p>
+                        <div className="mb-[34px] flex flex-col items-center">
+                            <NewsIcon w="24" h="24" fill={pathname === '/news' ? "#1E71F2" : "#8E8E93"} />
+                            <p className={`${pathname === '/news' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>News</p>
                         </div>
                     </Link>
                     {/* <Link> */}
-                    <div className="mb-[34px]">
-                        <div className="w-[29px] mx-auto">
-                            <StarIcon w="24" h="24" fill={pathname === '/star' ? "#1E71F2" : "#8E8E93"} />
-                        </div>
+                    <div className="mb-[34px] flex flex-col items-center">
+                        <StarIcon w="24" h="24" fill={pathname === '/star' ? "#1E71F2" : "#8E8E93"} />
                     </div>
                     {/* </Link> */}
-
-                    
                 </div>
             </div>
         </>
