@@ -31,6 +31,8 @@ import axios from "axios";
 import { getCookie } from "@/utlils/cookies";
 import { MessageBox } from "@/components/MessageBox";
 import CreateVibe from "@/components/elements/CreateVibe";
+import Image from "next/image";
+import genai_pen from "../../../public/images/icons/genai_pen.svg"
 
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
@@ -231,11 +233,12 @@ const DefaultLayout = ({ children }) => {
               <Link href="/gen-search">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <GenAiIcon
+                    {/* <GenAiIcon
                       w="30"
                       h="30"
                       fill={pathname === "/gen-ai-icon" ? "#1E71F2" : "#8E8E93"}
-                    />
+                    /> */}
+                    <Image src={genai_pen} alt="colombo"/>
                   </div>
                   <p
                     className={`${pathname === "/gen-search"
@@ -248,7 +251,7 @@ const DefaultLayout = ({ children }) => {
                 </div>
               </Link>
 
-              <Link href="/task-bot">
+              <Link href="/vibes">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
                     <TaskBotIcon
