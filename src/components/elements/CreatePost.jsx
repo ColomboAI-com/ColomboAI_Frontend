@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import {
   BackButtonIcon,
   CloseDocumentIcon,
@@ -25,12 +25,14 @@ const CreatePost = () => {
   const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
   const { setIsCreatePostOpen } = useContext(GlobalContext);
 
+  const InputFile = useRef(null);
+
   function toggleMagicPen() {
     setIsMagicPenOpen(!isMagicPenOpen);
   }
 
   const handleFileInputClick = () => {
-    document.querySelector('input[type="file"]').click();
+    InputFile.current.click();
   };
 
   const clearFileHandler = (index) => {
@@ -57,19 +59,18 @@ const CreatePost = () => {
 
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = [...file, ...selectedFiles];
-      setFile(newFiles);
-      console.log('Files:', newFiles);
-      const fileType = selectedFiles[0].type.split('/')[0];
+    if (selectedFiles.length > 0) {
+      
+      const selectedFile = selectedFiles[0];
+      setFile([selectedFile, ...file]);
+      
+      const fileType = selectedFile.type.split("/")[0];
       setPostType(fileType);
-      const newMediaUrls = [...mediaUrl];
-      for (let i = 0; i < selectedFiles.length; i++) {
-        const fileUrl = URL.createObjectURL(selectedFiles[i]);
-        newMediaUrls.push(fileUrl);
-        console.log('Media URLs:', newMediaUrls);
-      }
-      setMediaUrl(newMediaUrls);
+
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setMediaUrl([fileUrl, ...mediaUrl]);
+      
+      setNextStep(true);
     }
   };
 
@@ -92,8 +93,7 @@ const CreatePost = () => {
   };
 
   const handleCreatePost = async () => {
-
-    const res = await createPost({ type: postType, file, content: postInput });
+    const res = await createPost({ type: postType, file: file[0], content: postInput });
     console.log(res)
     if (res) {
       MessageBox('success', res.message);
@@ -241,8 +241,9 @@ const CreatePost = () => {
                         className="hidden"
                         type="file"
                         accept="image/, video/"
-                        multiple
                         onChange={handleFileChange}
+                        ref={InputFile}
+                        multiple
                       />
                       <Button
                         title="Select from computer"
