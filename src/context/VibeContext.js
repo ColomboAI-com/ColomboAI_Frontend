@@ -27,7 +27,7 @@ export default function VibeContextProvider({ children }) {
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content, songId);
+    // console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -37,11 +37,11 @@ export default function VibeContextProvider({ children }) {
       formData.append("text", text || "");
       formData.append("textColor", textColor || "");
       formData.append("content", content || "");
-      formData.append("trackId", trackId || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
+      formData.append("songId", songId || "");
+
       // fields to include:
-      // music
       // taggedPeople
       // tag: “DRAFT” if saving a post as draft
 
@@ -108,10 +108,6 @@ export default function VibeContextProvider({ children }) {
       setLoadings(prev => ({ ...prev, deletePost: false }))
     }
   }
-
-  // const deleteVibe = (vibeId) => {
-  //   console.log(vibeId);
-  // }
 
   const archiveVibe = async (id = '66f34a4536049e10646e09f9') => {
     try {
