@@ -3,7 +3,9 @@ import { getCookie } from "@/utlils/cookies";
 import { handleError } from "@/utlils/handleError";
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { GlobalContext } from "./GlobalContext";
 
 const VibeContext = createContext();
 
@@ -16,6 +18,8 @@ export default function VibeContextProvider({ children }) {
     createVibe: false,
     deleteVibe: false,
   });
+  const { setIsCreateVibeOpen } = useContext(GlobalContext);
+  const router = useRouter();
 
   const createVibe = async ({
     type,
@@ -54,14 +58,19 @@ export default function VibeContextProvider({ children }) {
           },
         }
       );
-      // console.log(response.data)
-
+      
+      if(response.data.success === true) {
+        router.push('/vibes')
+        setIsCreateVibeOpen(false)
+      }
+      
       if (response.status === 201) {
         console.log("Hitting create vibe endpoint successfully");
         console.log("Response:", response.data);
         MessageBox("success", "Vibe created successfully");
-        setIsCreateVibeOpen(false); // Close the create vibe modal
       }
+
+
     } catch (error) {
       handleError(error);
       //   MessageBox("error", "Failed to create vibe. Please try again.");
@@ -78,7 +87,6 @@ export default function VibeContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-      // console.log(response.data);
       setVibes(prev => ([...prev, ...response.data?.posts || []]))
     } catch (error) {
       handleError(error);
