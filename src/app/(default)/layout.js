@@ -137,6 +137,16 @@ const DefaultLayout = ({ children }) => {
     requestPermission();
   }, [isShowChatMenu]);
 
+  useEffect(() => {
+    const re = window.sessionStorage.getItem("redirect");
+    
+    if (!re) {
+      window.sessionStorage.setItem("redirect", "false");
+      window.location = "https://colomboai.com/genai-search";
+    }
+
+  },[]);
+
   return (
     <FeedContextProvider>
       <div className={`min-w-screen border-yellow-400 relative ${plusJakartaSans.className}`}>
