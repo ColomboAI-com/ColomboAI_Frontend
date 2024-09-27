@@ -3,13 +3,13 @@ import { Search, Play, Pause, ChevronDown } from 'lucide-react';
 
 const https = require('https');
 
-const MusicSearch = () => {
+const MusicDropDown = ({ onSongSelect }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [songs, setSongs] = useState([]);
   const [playing, setPlaying] = useState(null);
   const audioRef = useRef(new Audio());
 
-  const CLIENT_ID = 'de0269ba'; // client ID
+  const CLIENT_ID = 'de0269ba'; 
 
   const genres = [
     { name: 'Pop', image: '/api/placeholder/100/100' },
@@ -81,6 +81,13 @@ const MusicSearch = () => {
       setPlaying(song.id);
     }
   };
+  const handleSongSelect = (song) => {
+    if (playing) {
+      audioRef.current.pause();
+      setPlaying(null);
+    }
+    onSongSelect(song);
+  };
 
   return (
     <div className="absolute w-[468px]  top-[168px] left-[450px] bg-blue-600 rounded-t-[15.22px]  flex flex-col p-6  text-white">
@@ -115,7 +122,7 @@ const MusicSearch = () => {
         {songs.slice(0, 7).map((song) => (
           <div key={song.id} className="flex items-center">
             <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3" />
-            <div className="flex-grow">
+            <div className="flex-grow" onClick={() => handleSongSelect(song)}>
               <p className="font-medium text-sm">{song.name}</p>
               <p className="text-xs opacity-80">by {song.artist_name}</p>
             </div>
@@ -136,4 +143,4 @@ const MusicSearch = () => {
   );
 };
 
-export default MusicSearch;
+export default MusicDropDown;

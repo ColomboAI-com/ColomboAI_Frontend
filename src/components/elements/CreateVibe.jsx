@@ -18,6 +18,7 @@ import { MessageBox } from "../MessageBox";
 import { ThreeDots } from "react-loader-spinner";
 import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
+import MusicOverlay from "./MusicOverlay";
 import { VideoEditor } from "./VideoEditor";
 import next from "next";
 import CaptionBox from "./CaptionBox";
@@ -65,6 +66,8 @@ const CreateVibe = ({
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [text, setText] = useState("");
   // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
@@ -138,6 +141,15 @@ const CreateVibe = ({
 
   const toggleDropdown = () => {
     setDropdownVisible(!isDropdownVisible);
+  };
+  const handleSongSelect = (song) => {
+    setSelectedSong(song);
+    setDropdownVisible(false);
+    setIsPlaying(true);
+  };
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
   };
 
   function toggleColorPickerVisible() {
@@ -353,6 +365,15 @@ const CreateVibe = ({
                 />
               </div>
               : null}
+
+              {selectedSong && (
+                 <MusicOverlay
+                   song={selectedSong}
+                   isPlaying={isPlaying}
+                   onPlayPause={handlePlayPause}
+                   onClose={() => setSelectedSong(null)}
+                 />
+               )}
           </div>
           <div className="flex flex-col">
             <div className="ml-4" onClick={e => console.log(isSelectedFromComputer)}>
@@ -420,7 +441,7 @@ const CreateVibe = ({
           {isDropdownVisible && (
         <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
           <div onClick={(e) => e.stopPropagation()}>
-            <MusicDropdown />
+            <MusicDropdown onSongSelect={handleSongSelect}/>
           </div>
         </div>
       )}
@@ -527,10 +548,6 @@ const CreateVibe = ({
                   onClose={() => setIsTrimming(false)}
                 />
               )}
-
-              {/* {isDropdownVisible && (
-                <MusicDropdown onClose={() => setDropdownVisible(false)} />
-              )} */}
 
               {/* <span onClick={handleFileInputClick}>
                 <input
