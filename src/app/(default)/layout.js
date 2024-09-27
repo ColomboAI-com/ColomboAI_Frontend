@@ -31,6 +31,15 @@ import axios from "axios";
 import { getCookie } from "@/utlils/cookies";
 import { MessageBox } from "@/components/MessageBox";
 import CreateVibe from "@/components/elements/CreateVibe";
+import Image from "next/image";
+import genai_pen from "../../../public/images/icons/genai_pen.svg"
+import { Plus_Jakarta_Sans } from "@next/font/google";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
@@ -128,15 +137,25 @@ const DefaultLayout = ({ children }) => {
     requestPermission();
   }, [isShowChatMenu]);
 
+  useEffect(() => {
+    const re = window.sessionStorage.getItem("redirect");
+    
+    if (!re) {
+      window.sessionStorage.setItem("redirect", "false");
+      window.location = "https://colomboai.com/genai-search";
+    }
+
+  },[]);
+
   return (
     <FeedContextProvider>
-      <div className="min-w-screen border-yellow-400 relative">
+      <div className={`min-w-screen border-yellow-400 relative ${plusJakartaSans.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
           <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
-            <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+            <header className="sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
               <div className="py-[14px]">
                 <img
                   src="/images/home/ColomboAI-logo.svg"
@@ -216,9 +235,25 @@ const DefaultLayout = ({ children }) => {
                 <RightSidebar />
               </div>
             </div> :
-              <div className="bg-[#333333] w-full h-full">
-                <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
-              </div>}
+              // <div className="bg-[#333333] w-full h-full">
+              //   <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
+              // </div>
+              (
+                 isCreateVibeOpen && (
+                  <div className="bg-[#333333] w-full h-full">
+                    <CreateVibe
+                      uploadedFile={uploadedFile}
+                      onFileUpload={handleFileUpload}
+                      uploadedPostType={uploadedPostType}
+                      uploadedMediaUrl={uploadedMediaUrl}
+                      uploadedNextStep={uploadedNextStep}
+                      onReset={handleReset}
+                    />
+                  </div>
+                )
+              )
+            
+              }
 
             {/* <CommentSection /> */}
           </div>
@@ -231,24 +266,25 @@ const DefaultLayout = ({ children }) => {
               <Link href="/gen-search">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <GenAiIcon
+                    {/* <GenAiIcon
                       w="30"
                       h="30"
                       fill={pathname === "/gen-ai-icon" ? "#1E71F2" : "#8E8E93"}
-                    />
+                    /> */}
+                    <Image src={genai_pen} alt="colombo"/>
                   </div>
                   <p
                     className={`${pathname === "/gen-search"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Gen AI
                   </p>
                 </div>
               </Link>
 
-              <Link href="/task-bot">
+              <Link href="/vibes">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
                     <TaskBotIcon
@@ -261,7 +297,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/task-bot"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Task bot
                   </p>
@@ -285,7 +321,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${feedSections.includes(`${pathname}`)
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Feed
                   </p>
@@ -305,7 +341,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/shop"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     Shop
                   </p>
@@ -325,7 +361,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/news"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3 font-sans`}
+                      } text-center text-[14px] mt-3`}
                   >
                     News
                   </p>

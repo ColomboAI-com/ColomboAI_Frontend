@@ -3,7 +3,9 @@ import { getCookie } from "@/utlils/cookies";
 import { handleError } from "@/utlils/handleError";
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { GlobalContext } from "./GlobalContext";
 
 const VibeContext = createContext();
 
@@ -11,10 +13,13 @@ export default function VibeContextProvider({ children }) {
   const [vibes, setVibes] = useState([]);
   const [page, setPage] = useState(1);
   const [loadings, setLoadings] = useState({
+    getVibe: true,
     getUserVibe: false,
     createVibe: false,
     deleteVibe: false,
   });
+  const { setIsCreateVibeOpen } = useContext(GlobalContext);
+  const router = useRouter();
 
   const createVibe = async ({
     type,
@@ -22,10 +27,11 @@ export default function VibeContextProvider({ children }) {
     text,
     textColor,
     content,
+    songId,
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content);
+    // console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -37,8 +43,9 @@ export default function VibeContextProvider({ children }) {
       formData.append("content", content || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
+      formData.append("songId", songId || "");
+
       // fields to include:
-      // music
       // taggedPeople
       // tag: “DRAFT” if saving a post as draft
 
@@ -51,14 +58,19 @@ export default function VibeContextProvider({ children }) {
           },
         }
       );
-      // console.log(response.data)
-
+      
+      if(response.data.success === true) {
+        router.push('/vibes')
+        setIsCreateVibeOpen(false)
+      }
+      
       if (response.status === 201) {
         console.log("Hitting create vibe endpoint successfully");
         console.log("Response:", response.data);
         MessageBox("success", "Vibe created successfully");
-        setIsCreateVibeOpen(false); // Close the create vibe modal
       }
+
+
     } catch (error) {
       handleError(error);
       //   MessageBox("error", "Failed to create vibe. Please try again.");
@@ -75,16 +87,15 @@ export default function VibeContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-      console.log(response.data);
-      return response.data;
+      setVibes(prev => ([...prev, ...response.data?.posts || []]))
     } catch (error) {
       handleError(error);
     } finally {
-      setLoadings((prev) => ({ ...prev, reactVibe: false }));
+      setLoadings((prev) => ({ ...prev, getVibe: false }));
     }
   };
 
-  const deleteVibe = async (vibeId = '') => {
+  const deleteVibe = async (vibeId) => {
     try {
       setLoadings(prev => ({ ...prev, deleteVibe: true }))
       const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}`,
@@ -106,10 +117,9 @@ export default function VibeContextProvider({ children }) {
     }
   }
 
-  const discardVibe = async (vibeId = '') => {
+  const archiveVibe = async (id = '66f34a4536049e10646e09f9') => {
     try {
-      setLoadings(prev => ({ ...prev, deleteVibe: true }))
-      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}/discard`,
+      const res = await axios.put(`${ROOT_URL_FEED}/posts/${id}/archive`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -117,7 +127,28 @@ export default function VibeContextProvider({ children }) {
         }
       )
       if (res.data.success) {
-        setVibes(prevPosts => prevPosts.filter(post => post._id !== vibeId));
+        console.log("Success")
+      }   
+      return res.data
+    } catch (err) {
+      handleError(err)
+    } finally {
+      //
+    }
+  }
+
+  const discardVibe = async (postId = '') => {
+    try {
+      setLoadings(prev => ({ ...prev, deleteVibe: true }))
+      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/discard`,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      if (res.data.success) {
+        setVibes(prevPosts => prevPosts.filter(vibe => vibe._id !== vibeId));
       }   
       return res.data
     } catch (err) {
@@ -136,7 +167,8 @@ export default function VibeContextProvider({ children }) {
         createVibe,
         getVibes,
         discardVibe, 
-        deleteVibe
+        deleteVibe,
+        archiveVibe
       }}
     >
       {children}
