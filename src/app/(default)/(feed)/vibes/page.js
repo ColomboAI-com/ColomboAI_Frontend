@@ -35,26 +35,7 @@ export default function Vibes() {
     getVibes();
   }, []);
 
-  const [blobUrl, setBlobUrl] = useState(null);
-
-  // useEffect(() => {
-  //   if (vibes.length > 0) {
-  //     // fetch(vibes[0].media)
-  //     // .then((response) => response.blob())
-  //     // .then((blob) => {
-  //     //   const objectURL = URL.createObjectURL(blob);
-  //     //   setBlobUrl(objectURL);
-  //     // });
-  //     const objectURL = URL.createObjectURL(vibes[0].media);
-  //     setBlobUrl(objectURL);
-  //   }
-  // }, []);
-
   console.log(vibes)
-  if (vibes.length > 0) {
-    console.log(vibes[0].media)
-  }
-  console.log(blobUrl)
 
   return (
     <div className="border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">

@@ -3,7 +3,9 @@ import { getCookie } from "@/utlils/cookies";
 import { handleError } from "@/utlils/handleError";
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { GlobalContext } from "./GlobalContext";
 
 const VibeContext = createContext();
 
@@ -16,6 +18,8 @@ export default function VibeContextProvider({ children }) {
     createVibe: false,
     deleteVibe: false,
   });
+  const { setIsCreateVibeOpen } = useContext(GlobalContext);
+  const router = useRouter();
 
   const createVibe = async ({
     type,
@@ -27,7 +31,7 @@ export default function VibeContextProvider({ children }) {
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content, songId);
+    // console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -37,11 +41,11 @@ export default function VibeContextProvider({ children }) {
       formData.append("text", text || "");
       formData.append("textColor", textColor || "");
       formData.append("content", content || "");
-      formData.append("trackId", trackId || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
+      formData.append("songId", songId || "");
+
       // fields to include:
-      // music
       // taggedPeople
       // tag: “DRAFT” if saving a post as draft
 
@@ -54,14 +58,19 @@ export default function VibeContextProvider({ children }) {
           },
         }
       );
-      // console.log(response.data)
-
+      
+      if(response.data.success === true) {
+        router.push('/vibes')
+        setIsCreateVibeOpen(false)
+      }
+      
       if (response.status === 201) {
         console.log("Hitting create vibe endpoint successfully");
         console.log("Response:", response.data);
         MessageBox("success", "Vibe created successfully");
-        setIsCreateVibeOpen(false); // Close the create vibe modal
       }
+
+
     } catch (error) {
       handleError(error);
       //   MessageBox("error", "Failed to create vibe. Please try again.");
@@ -78,7 +87,6 @@ export default function VibeContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-      // console.log(response.data);
       setVibes(prev => ([...prev, ...response.data?.posts || []]))
     } catch (error) {
       handleError(error);
@@ -108,10 +116,6 @@ export default function VibeContextProvider({ children }) {
       setLoadings(prev => ({ ...prev, deletePost: false }))
     }
   }
-
-  // const deleteVibe = (vibeId) => {
-  //   console.log(vibeId);
-  // }
 
   const archiveVibe = async (id = '66f34a4536049e10646e09f9') => {
     try {
