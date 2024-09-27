@@ -78,13 +78,14 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
     <div className="w-full max-w-md mx-auto p-4">
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
-      <div className={buttonClass}>
-        <button onClick={handleClick}>
-          {selectedUsers.length > 0 ? "Tagged" : "Tag People"}
-        </button>
-      </div>
+      <div className={buttonClass} style={{ position: 'absolute', top: '700px', left: '250px' }}>
+  <button onClick={handleClick}>
+    {selectedUsers.length > 0 ? "Tagged" : "Tag People"}
+  </button>
+</div>
+
       {showUsers && (
-        <div className="absolute top-[820px] w-[470px] bg-gray-200 text-black p-4 rounded-md shadow-lg max-h-[300px] overflow-y-auto z-50">
+        <div className="absolute top-[710px] left-[365px] w-[470px] bg-gray-200 text-black p-4 rounded-md shadow-lg max-h-[300px] overflow-y-auto z-50 border-[1px] border-blue-500">
           <p className="mb-4 flex justify-center">Tag people</p>
 
           <input
