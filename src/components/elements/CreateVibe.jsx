@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import {
   BackButtonIcon,
   CloseDocumentIcon,
@@ -249,6 +249,20 @@ const CreateVibe = ({
     // call this method whenever there is error while creating a vibe
     setShowError(!showError);
   };
+  const imgRef = useRef(null);
+  const [imageWidth, setImageWidth] = useState(null);
+
+  const handleImageLoad = () => {
+    if (imgRef.current) {
+      setImageWidth(imgRef.current.clientWidth); // Set width when image is fully loaded
+    }
+  };
+
+  useEffect(() => {
+    if (imgRef.current) {
+      setImageWidth(imgRef.current.clientWidth); 
+    }
+  }, [mediaUrl]);
 
   return (
     <main className={plusJakartaSans.className}>
@@ -334,24 +348,27 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative h-[32rem]">
+          <div className="relative max-h-[32rem] overflow-hidden">
             <img
               key={mediaUrl}
+              ref={imgRef} 
               src={mediaUrl}
               alt="File Preview"
-              className="w-full h-full object-contain rounded-[0.9rem]"
+              className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
               onClick={handleTextClick}
+              onLoad={handleImageLoad}
             />
             {isTrimming ? (
               <Image
                 src={tmp_trim}
                 alt="none"
                 className="absolute bottom-0 rounded-b-[0.9rem]"
+                style={{width: imageWidth ? `${imageWidth}px` : `auto`}}
               />
             ) : isDropdownVisible ? (
               <div className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10" onClick={toggleDropdown}>
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} />
+                  <MusicDropdown setSongId={setSongId} width={imageWidth}/>
                 </div>
               </div>
             ) : !nextStep ? (
@@ -359,6 +376,7 @@ const CreateVibe = ({
                 <CaptionBox
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
+                  width={imageWidth}
                 />
               </div>
             ) : (
@@ -456,14 +474,6 @@ const CreateVibe = ({
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
-
-          {/* {isDropdownVisible && (
-            <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
-              <div onClick={(e) => e.stopPropagation()}>
-                <MusicDropdown setSongId={setSongId} />
-              </div>
-            </div>
-          )} */}
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
@@ -568,18 +578,6 @@ const CreateVibe = ({
                 />
               )}
 
-              {isTrimming && (
-                <VideoEditor
-                  videoUrl={mediaUrl}
-                  onTrim={handleTrimVideo}
-                  onClose={() => setIsTrimming(false)}
-                />
-              )}
-
-              {/* {isDropdownVisible && (
-                <MusicDropdown onClose={() => setDropdownVisible(false)} />
-              )} */}
-
               {/* {isDropdownVisible && (
                 <MusicDropdown onClose={() => setDropdownVisible(false)} />
               )} */}
@@ -602,17 +600,6 @@ const CreateVibe = ({
           )}
         </>
       )}
-      {/* {isSelectedFromComputer ? <CaptionBox
-          captionInput={captionInput}
-          setCaptionInput={setCaptionInput}
-        /> : null}
-        {isSelectedFromComputer ? <div className="w-full flex flex-row justify-center pb-3"><Button
-          title={"Share Reel"}
-          onClick={handleCreateVibe}
-          className={
-            "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
-          }
-        /></div> : null} */}
     </main>
   );
 };
