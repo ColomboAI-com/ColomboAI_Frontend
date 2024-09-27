@@ -33,15 +33,15 @@ const MusicDropDown = ({ onSongSelect }) => {
         response.on('end', () => {
           try {
             const parsedData = JSON.parse(data);
-            console.log('API response:', parsedData);
+            // console.log('API response:', parsedData);
             resolve(parsedData.results);
           } catch (error) {
-            console.error('Error parsing JSON:', error);
+            // console.error('Error parsing JSON:', error);
             reject(error);
           }
         });
       }).on('error', (error) => {
-        console.error('Error fetching music:', error);
+        // console.error('Error fetching music:', error);
         reject(error);
       });
     });
