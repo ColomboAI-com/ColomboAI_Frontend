@@ -217,7 +217,7 @@ const CreateVibe = ({
       text: postInput,
       textColor,
       content: captionInput,
-      songId
+      songId,
     });
     if (res) {
       MessageBox("success", res.message);
@@ -225,6 +225,8 @@ const CreateVibe = ({
       vibeData.unshift(res.data?.vibe);
       setVibes(vibeData);
       setIsCreateVibeOpen(false);
+      setIsSelectedFromComputer(false);
+      onReset();
     }
   };
 
@@ -316,8 +318,9 @@ const CreateVibe = ({
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 pb-8 ${isSelectedTextIcon ? "opacity-50" : ""
-            } flex flex-row w-full justify-center`}
+          className={`relative my-8 pb-8 ${
+            isSelectedTextIcon ? "opacity-50" : ""
+          } flex flex-row w-full justify-center`}
         >
           <div>
             <button onClick={(e) => onReset()} className="mr-6">
@@ -371,7 +374,7 @@ const CreateVibe = ({
                 }}
               />
             )}
-            {isColorPickerVisible ?
+            {isColorPickerVisible ? (
               <div draggable={true}>
                 <textarea
                   type="text"
@@ -381,12 +384,16 @@ const CreateVibe = ({
                   onChange={(e) => setPostInput(e.target.value)}
                   className="bg-transparent text-black text-center text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
                   autoFocus
+                  style={{ color: textColor }}
                 />
               </div>
-              : null}
+            ) : null}
           </div>
           <div className="flex flex-col">
-            <div className="ml-4" onClick={e => console.log(isSelectedFromComputer)}>
+            <div
+              className="ml-4"
+              onClick={(e) => console.log(isSelectedFromComputer)}
+            >
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -561,6 +568,13 @@ const CreateVibe = ({
                 />
               )}
 
+              {isTrimming && (
+                <VideoEditor
+                  videoUrl={mediaUrl}
+                  onTrim={handleTrimVideo}
+                  onClose={() => setIsTrimming(false)}
+                />
+              )}
 
               {/* {isDropdownVisible && (
                 <MusicDropdown onClose={() => setDropdownVisible(false)} />

@@ -225,9 +225,25 @@ const DefaultLayout = ({ children }) => {
                 <RightSidebar />
               </div>
             </div> :
-              <div className="bg-[#333333] w-full h-full">
-                <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
-              </div>}
+              // <div className="bg-[#333333] w-full h-full">
+              //   <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
+              // </div>
+              (
+                 isCreateVibeOpen && (
+                  <div className="bg-[#333333] w-full h-full">
+                    <CreateVibe
+                      uploadedFile={uploadedFile}
+                      onFileUpload={handleFileUpload}
+                      uploadedPostType={uploadedPostType}
+                      uploadedMediaUrl={uploadedMediaUrl}
+                      uploadedNextStep={uploadedNextStep}
+                      onReset={handleReset}
+                    />
+                  </div>
+                )
+              )
+            
+              }
 
             {/* <CommentSection /> */}
           </div>
