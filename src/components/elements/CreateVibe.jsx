@@ -1,9 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-
-import { useContext, useState, useEffect } from "react";
-
 import { useContext, useState, useEffect, useRef } from "react";
-
 import {
   BackButtonIcon,
   CloseDocumentIcon,
@@ -22,7 +18,6 @@ import { MessageBox } from "../MessageBox";
 import { ThreeDots } from "react-loader-spinner";
 import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
-import MusicOverlay from "./MusicOverlay";
 import { VideoEditor } from "./VideoEditor";
 import next from "next";
 import CaptionBox from "./CaptionBox";
@@ -70,8 +65,6 @@ const CreateVibe = ({
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedSong, setSelectedSong] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [text, setText] = useState("");
   // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
@@ -98,19 +91,6 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
-
-  const toggleDropdown = () => {
-    setDropdownVisible(!isDropdownVisible);
-  };
-  const handleSongSelect = (song) => {
-    setSelectedSong(song);
-    setDropdownVisible(false);
-    setIsPlaying(true);
-  };
-
-  const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -148,7 +128,6 @@ const CreateVibe = ({
         <button className="w-10 h-10 rounded-full bg-gray-300" >
           <MusicNotePlusIcon />
         </button>
-
 
       </div>
     );
@@ -426,17 +405,6 @@ const CreateVibe = ({
                   style={{ color: textColor }}
                 />
               </div>
-
-              : null}
-
-              {selectedSong && (
-                 <MusicOverlay
-                   song={selectedSong}
-                   isPlaying={isPlaying}
-                   onPlayPause={handlePlayPause}
-                   onClose={() => setSelectedSong(null)}
-                 />
-               )}
             ) : null}
           </div>
           <div className="flex flex-col">
@@ -507,15 +475,6 @@ const CreateVibe = ({
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
 
-    
-          {isDropdownVisible && (
-        <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <MusicDropdown onSongSelect={handleSongSelect}/>
-          </div>
-        </div>
-      )}
-
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
               {/* <Button
@@ -566,7 +525,6 @@ const CreateVibe = ({
             >
               <p className="text-xl my-4">Drag photos and videos here</p>
 
-
               <div className="pt-3 text-center">
                 {file ? (
                   <>
@@ -612,7 +570,6 @@ const CreateVibe = ({
                 />
               </div>
 
-
               {isTrimming && (
                 <VideoEditor
                   videoUrl={mediaUrl}
@@ -621,15 +578,11 @@ const CreateVibe = ({
                 />
               )}
 
-
-                {/* <span onClick={handleFileInputClick}>
-
               {/* {isDropdownVisible && (
                 <MusicDropdown onClose={() => setDropdownVisible(false)} />
               )} */}
 
               {/* <span onClick={handleFileInputClick}>
-
                   <input
                     className="hidden"
                     type="file"
