@@ -4,13 +4,18 @@ import "../../app/globals.css"
 
 const https = require("https");
 
+
+const MusicDropDown = ({ onSongSelect }) => {
+  const [searchTerm, setSearchTerm] = useState('');
 const MusicSearch = ({ setSongId, width }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [songs, setSongs] = useState([]);
   const [playing, setPlaying] = useState(null);
   const audioRef = useRef(new Audio());
 
-  const CLIENT_ID = "de0269ba"; // client ID
+
+  const CLIENT_ID = 'de0269ba'; 
+
 
   const genres = [
     { name: "Pop", image: "/api/placeholder/100/100" },
@@ -24,6 +29,22 @@ const MusicSearch = ({ setSongId, width }) => {
   const getMusicUrl = (type) => {
     return new Promise((resolve, reject) => {
       const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&format=json&limit=16&search=${type}&include=musicinfo`;
+
+
+        response.on('end', () => {
+          try {
+            const parsedData = JSON.parse(data);
+            // console.log('API response:', parsedData);
+            resolve(parsedData.results);
+          } catch (error) {
+            // console.error('Error parsing JSON:', error);
+            reject(error);
+          }
+        });
+      }).on('error', (error) => {
+        // console.error('Error fetching music:', error);
+        reject(error);
+      });
 
       https
         .get(url, (response) => {
@@ -47,6 +68,7 @@ const MusicSearch = ({ setSongId, width }) => {
           console.error("Error fetching music:", error);
           reject(error);
         });
+
     });
   };
 
@@ -83,6 +105,13 @@ const MusicSearch = ({ setSongId, width }) => {
       audioRef.current.play();
       setPlaying(song.id);
     }
+  };
+  const handleSongSelect = (song) => {
+    if (playing) {
+      audioRef.current.pause();
+      setPlaying(null);
+    }
+    onSongSelect(song);
   };
 
   const handSelectSong = (songId) => {
@@ -123,6 +152,11 @@ const MusicSearch = ({ setSongId, width }) => {
       <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
       <div className="flex flex-col space-y-4">
         {songs.slice(0, 7).map((song) => (
+
+          <div key={song.id} className="flex items-center">
+            <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3" />
+            <div className="flex-grow" onClick={() => handleSongSelect(song)}>
+
           <div key={song.id} className="flex items-center" onClick={() => handSelectSong(song.id)}>
             <img
               src={song.image}
@@ -130,6 +164,7 @@ const MusicSearch = ({ setSongId, width }) => {
               className="w-10 h-10 rounded-full object-cover mr-3"
             />
             <div className="flex-grow">
+
               <p className="font-medium text-sm">{song.name}</p>
               <p className="text-xs opacity-80">by {song.artist_name}</p>
             </div>
@@ -154,4 +189,5 @@ const MusicSearch = ({ setSongId, width }) => {
   );
 };
 
-export default MusicSearch;
+
+export default MusicDropDown;
