@@ -18,6 +18,7 @@ import { MessageBox } from "../MessageBox";
 import { ThreeDots } from "react-loader-spinner";
 import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
+import MusicOverlay from "./MusicOverlay";
 import { VideoEditor } from "./VideoEditor";
 import next from "next";
 import CaptionBox from "./CaptionBox";
