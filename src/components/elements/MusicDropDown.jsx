@@ -148,4 +148,3 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
     </div>
   );
 };
-export default MusicDropDown;
