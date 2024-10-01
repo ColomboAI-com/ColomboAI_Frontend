@@ -18,7 +18,6 @@ import { MessageBox } from "../MessageBox";
 import { ThreeDots } from "react-loader-spinner";
 import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
-import MusicOverlay from "./MusicOverlay";
 import { VideoEditor } from "./VideoEditor";
 import next from "next";
 import CaptionBox from "./CaptionBox";
@@ -66,8 +65,6 @@ const CreateVibe = ({
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedSong, setSelectedSong] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [text, setText] = useState("");
   // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
