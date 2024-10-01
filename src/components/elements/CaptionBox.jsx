@@ -15,7 +15,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
 });
 
-const CaptionBox = ({ captionInput, setCaptionInput }) => {
+const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
   // const [captionInput, setCaptionInput] = useState("");
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
@@ -73,8 +73,8 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
   const handleGenerateVibe = async () => {
     const result = await generatePost(promptInput);
     if (result?.response_type !== "text") {
-      setMediaUrl(result?.text);
-      setPostType(result?.response_type);
+      // setMediaUrl(result?.text);
+      // setPostType(result?.response_type);
     } else if (result?.response_type === "text") {
       setCaptionInput(result?.text);
       handleCharCount(result?.text);
@@ -84,7 +84,7 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
 
 
   return (
-    <div className={`w-[19.5rem] mx-auto flex flex-col ${plusJakartaSans.className}`}>
+    <div className={`mx-auto flex flex-col ${plusJakartaSans.className}`} style={{width: width ? `${width}px` : `auto`}}>
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
       <div className={`flex text-white w-[105px] rounded-tr-lg h-[22px] items-center ${selectedUsers.length > 0 ? "bg-blue-500" : "bg-gray-500"
