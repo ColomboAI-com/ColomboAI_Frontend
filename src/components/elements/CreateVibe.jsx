@@ -212,7 +212,7 @@ const CreateVibe = ({
 
   const handleCreateVibe = async () => {
     const res = await createVibe({
-      file: mediaUrl,
+      file: file,
       type: postType,
       text: postInput,
       textColor,
