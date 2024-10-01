@@ -91,6 +91,16 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
+
+  const handleSongSelect = (song) => {
+    setSelectedSong(song);
+    setDropdownVisible(false);
+    setIsPlaying(true);
+  };
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -368,7 +378,7 @@ const CreateVibe = ({
             ) : isDropdownVisible ? (
               <div className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10" onClick={toggleDropdown}>
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} width={imageWidth}/>
+                  <MusicDropdown setSongId={setSongId} width={imageWidth}  onSongSelect={handleSongSelect}/>
                 </div>
               </div>
             ) : !nextStep ? (
@@ -405,7 +415,17 @@ const CreateVibe = ({
                   style={{ color: textColor }}
                 />
               </div>
-            ) : null}
+
+            ): null}
+
+              {selectedSong && (
+                 <MusicOverlay
+                   song={selectedSong}
+                   isPlaying={isPlaying}
+                   onPlayPause={handlePlayPause}
+                   onClose={() => setSelectedSong(null)}
+                 />
+               )}
           </div>
           <div className="flex flex-col">
             <div
@@ -474,6 +494,15 @@ const CreateVibe = ({
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
+
+    
+          {/* {isDropdownVisible && (
+        <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <MusicDropdown onSongSelect={handleSongSelect}/>
+          </div>
+        </div>
+      )} */}
 
           {nextStep && !isMagicPenOpen && (
             <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
