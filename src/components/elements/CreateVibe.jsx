@@ -94,7 +94,6 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
-
   const handleSongSelect = (song) => {
     setSelectedSong(song);
     setDropdownVisible(false);
@@ -111,10 +110,11 @@ const CreateVibe = ({
           onClick={() => {
             toogleMagicPen();
           }}
-          className={`p-2 rounded-full ${isMagicPenOpen
-            ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-            : "bg-white"
-            } outline-none focus:ring-offset-0 focus:ring-0`}
+          className={`p-2 rounded-full ${
+            isMagicPenOpen
+              ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+              : "bg-white"
+          } outline-none focus:ring-offset-0 focus:ring-0`}
         >
           <CreateMagicPenIcon
             w={25}
@@ -138,10 +138,9 @@ const CreateVibe = ({
         >
           <TextShadowIcon />
         </button>
-        <button className="w-10 h-10 rounded-full bg-gray-300" >
+        <button className="w-10 h-10 rounded-full bg-gray-300">
           <MusicNotePlusIcon />
         </button>
-
       </div>
     );
   };
@@ -152,28 +151,28 @@ const CreateVibe = ({
 
   const toggleDropdown = () => {
     setIsMagicPenOpen(false);
-    setIsTrimming(false)
-    setIsColorPickerVisible(false)
+    setIsTrimming(false);
+    setIsColorPickerVisible(false);
     setDropdownVisible(!isDropdownVisible);
   };
 
   function toggleColorPickerVisible() {
     setIsMagicPenOpen(false);
-    setDropdownVisible(false)
-    setIsTrimming(false)
+    setDropdownVisible(false);
+    setIsTrimming(false);
     setIsColorPickerVisible(!isColorPickerVisible);
   }
 
   function toggleTrimming() {
     setIsMagicPenOpen(false);
-    setDropdownVisible(false)
+    setDropdownVisible(false);
     setIsColorPickerVisible(false);
-    setIsTrimming(!isTrimming)
+    setIsTrimming(!isTrimming);
   }
 
   function toogleMagicPen() {
-    setIsTrimming(false)
-    setIsColorPickerVisible(false)
+    setIsTrimming(false);
+    setIsColorPickerVisible(false);
     setDropdownVisible(false);
     setIsMagicPenOpen(!isMagicPenOpen);
   }
@@ -273,10 +272,10 @@ const CreateVibe = ({
 
   useEffect(() => {
     if (imgRef.current) {
-      setImageWidth(imgRef.current.clientWidth); 
+      setImageWidth(imgRef.current.clientWidth);
     }
   }, [mediaUrl]);
-
+  
   return (
     <main className={plusJakartaSans.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
@@ -364,7 +363,7 @@ const CreateVibe = ({
           <div className="relative max-h-[32rem] overflow-hidden">
             <img
               key={mediaUrl}
-              ref={imgRef} 
+              ref={imgRef}
               src={mediaUrl}
               alt="File Preview"
               className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
@@ -376,12 +375,19 @@ const CreateVibe = ({
                 src={tmp_trim}
                 alt="none"
                 className="absolute bottom-0 rounded-b-[0.9rem]"
-                style={{width: imageWidth ? `${imageWidth}px` : `auto`}}
+                style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
               />
             ) : isDropdownVisible ? (
-              <div className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10" onClick={toggleDropdown}>
+              <div
+                className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
+                onClick={toggleDropdown}
+              >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} width={imageWidth}  onSongSelect={handleSongSelect}/>
+                  <MusicDropdown
+                    setSongId={setSongId}
+                    width={imageWidth}
+                    onSongSelect={handleSongSelect}
+                  />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -418,17 +424,16 @@ const CreateVibe = ({
                   style={{ color: textColor }}
                 />
               </div>
+            ) : null}
 
-            ): null}
-
-              {selectedSong && (
-                 <MusicOverlay
-                   song={selectedSong}
-                   isPlaying={isPlaying}
-                   onPlayPause={handlePlayPause}
-                   onClose={() => setSelectedSong(null)}
-                 />
-               )}
+            {selectedSong && (
+              <MusicOverlay
+                song={selectedSong}
+                isPlaying={isPlaying}
+                onPlayPause={handlePlayPause}
+                onClose={() => setSelectedSong(null)}
+              />
+            )}
           </div>
           <div className="flex flex-col">
             <div
@@ -443,10 +448,11 @@ const CreateVibe = ({
                   toogleMagicPen();
                   // setIsColorPickerVisible(!isColorPickerVisible);
                 }}
-                className={`p-2 rounded-full self-start ${isMagicPenOpen
-                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                  : "bg-white"
-                  } outline-none focus:ring-offset-0 focus:ring-0`}
+                className={`p-2 rounded-full self-start ${
+                  isMagicPenOpen
+                    ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                    : "bg-white"
+                } outline-none focus:ring-offset-0 focus:ring-0`}
               >
                 <CreateMagicPenIcon
                   w={25}
@@ -460,15 +466,17 @@ const CreateVibe = ({
               </button>
               <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
                 <button
-                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${isTrimming && `rounded-full bg-[#245FDF]`
-                    }`}
+                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
+                    isTrimming && `rounded-full bg-[#245FDF]`
+                  }`}
                   onClick={(e) => toggleTrimming()}
                 >
                   <VideoEditIcon />
                 </button>
                 <button
-                  className={`w-10 h-10 flex flex-row justify-center items-center ${isColorPickerVisible && `rounded-full bg-[#245FDF]`
-                    }`}
+                  className={`w-10 h-10 flex flex-row justify-center items-center ${
+                    isColorPickerVisible && `rounded-full bg-[#245FDF]`
+                  }`}
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleColorPickerVisible();
@@ -476,8 +484,12 @@ const CreateVibe = ({
                 >
                   <TextShadowIcon />
                 </button>
-                <button className={`w-10 h-10 flex flex-row justify-center items-center ${isDropdownVisible && `rounded-full bg-[#245FDF]`
-                  }`} onClick={toggleDropdown}>
+                <button
+                  className={`w-10 h-10 flex flex-row justify-center items-center ${
+                    isDropdownVisible && `rounded-full bg-[#245FDF]`
+                  }`}
+                  onClick={toggleDropdown}
+                >
                   <MusicNotePlusIcon />
                 </button>
               </div>
@@ -498,7 +510,6 @@ const CreateVibe = ({
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
 
-    
           {/* {isDropdownVisible && (
         <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
           <div onClick={(e) => e.stopPropagation()}>
