@@ -31,6 +31,7 @@ import axios from "axios";
 import { getCookie } from "@/utlils/cookies";
 import { MessageBox } from "@/components/MessageBox";
 import CreateVibe from "@/components/elements/CreateVibe";
+import CreateStory from "@/components/elements/CreateStory";
 import Image from "next/image";
 import genai_pen from "../../../public/images/icons/genai_pen.svg"
 import { Plus_Jakarta_Sans } from "@next/font/google";
@@ -68,8 +69,15 @@ const DefaultLayout = ({ children }) => {
     isCreateVibeOpen,
     setIsCreateVibeOpen,
     isSelectedFromComputer,
-    setIsSelectedFromComputer
+    setIsSelectedFromComputer,
+    storyMediaURL,
+    storyMediaType
   } = useContext(GlobalContext);
+
+  useEffect(() => {
+    console.log(storyMediaURL)
+    console.log(storyMediaType)
+}, [storyMediaURL])
   const [uploadedFile, setUploadedFile] = useState(null);
   const defaultPostType = "thought";
   const [uploadedPostType, setUploadedPostType] = useState(defaultPostType);
@@ -139,13 +147,13 @@ const DefaultLayout = ({ children }) => {
 
   useEffect(() => {
     const re = window.sessionStorage.getItem("redirect");
-    
+
     if (!re) {
       window.sessionStorage.setItem("redirect", "false");
       window.location = "https://colomboai.com/genai-search";
     }
 
-  },[]);
+  }, []);
 
   return (
     <FeedContextProvider>
@@ -170,7 +178,7 @@ const DefaultLayout = ({ children }) => {
               isShowChatMenu={isShowChatMenu}
             />
 
-            {!isSelectedFromComputer ? <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400">
+            {!isSelectedFromComputer && <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400">
               {isCreatePostOpen && (
                 <Modal
                   isOpen={isCreatePostOpen}
@@ -234,12 +242,8 @@ const DefaultLayout = ({ children }) => {
               <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
                 <RightSidebar />
               </div>
-            </div> :
-              // <div className="bg-[#333333] w-full h-full">
-              //   <CreateVibe uploadedFile={uploadedFile} onFileUpload={handleFileUpload} uploadedPostType={uploadedPostType} uploadedMediaUrl={uploadedMediaUrl} uploadedNextStep={uploadedNextStep} onReset={handleReset} />
-              // </div>
-              (
-                 isCreateVibeOpen && (
+            </div>}
+                {(isCreateVibeOpen && isSelectedFromComputer) && (
                   <div className="bg-[#333333] w-full h-full">
                     <CreateVibe
                       uploadedFile={uploadedFile}
@@ -250,11 +254,13 @@ const DefaultLayout = ({ children }) => {
                       onReset={handleReset}
                     />
                   </div>
-                )
-              )
-            
-              }
-
+                )}
+                {(storyMediaURL != "" && isSelectedFromComputer) && (
+                  <div className="bg-[#333333] w-full h-full">
+                    <CreateStory
+                    />
+                  </div>
+                )}
             {/* <CommentSection /> */}
           </div>
         </div>
@@ -271,7 +277,7 @@ const DefaultLayout = ({ children }) => {
                       h="30"
                       fill={pathname === "/gen-ai-icon" ? "#1E71F2" : "#8E8E93"}
                     /> */}
-                    <Image src={genai_pen} alt="colombo"/>
+                    <Image src={genai_pen} alt="colombo" />
                   </div>
                   <p
                     className={`${pathname === "/gen-search"

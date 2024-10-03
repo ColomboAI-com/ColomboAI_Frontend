@@ -14,6 +14,8 @@ export default function GlobalContextProvider({ children }) {
   let [posts, setPosts] = useState()
   let [isCreateVibeOpen, setIsCreateVibeOpen] = useState(false);
   let [isSelectedFromComputer, setIsSelectedFromComputer] = useState(false);
+  let [storyMediaURL, setStoryMediaURL] = useState("")
+  let [storyMediaType, setStoryMediaType] = useState("")
 
 
   return (
@@ -36,7 +38,11 @@ export default function GlobalContextProvider({ children }) {
         setIsCreateVibeOpen,
         isCreateVibeOpen,
         isSelectedFromComputer, 
-        setIsSelectedFromComputer
+        setIsSelectedFromComputer,
+        setStoryMediaURL,
+        storyMediaURL,
+        setStoryMediaType,
+        storyMediaType
       }}
     >
       {children}

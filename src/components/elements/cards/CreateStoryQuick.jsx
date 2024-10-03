@@ -4,9 +4,10 @@ import Modal from "../Modal";
 
 
 import { StoryContext } from "@/context/StoryContext"
+import { GlobalContext } from "@/context/GlobalContext";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 
-const CreateStory = ({reFetchingStory}) => {
+const CreateStoryQuick = ({reFetchingStory}) => {
     const [isCreateStoryOpen,setIsCreateStoryOpen] = useState(false);
 
     const handleOpen = (e) => {
@@ -41,4 +42,4 @@ const CreateStory = ({reFetchingStory}) => {
     );
 }
 
-export default CreateStory;
+export default CreateStoryQuick;

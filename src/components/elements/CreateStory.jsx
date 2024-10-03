@@ -1,0 +1,190 @@
+import React from 'react'
+import { GlobalContext } from '@/context/GlobalContext';
+import {
+    BackButtonIcon,
+    CreateMagicPenIcon,
+    MusicNotePlusIcon,
+    TextShadowIcon,
+} from "../Icons";
+import ThreeDotMenuStory from './ThreeDotMenuStory';
+
+import { useContext, useEffect, useState, useRef } from "react";
+import { Plus_Jakarta_Sans } from "@next/font/google";
+import MusicDropDown from './MusicDropDown';
+import MusicOverlay from './MusicOverlay';
+import Image from 'next/image';
+import center_aligned_icon from "../../../public/images/icons/center_aligned_icon.svg"
+import { CirclePicker } from 'react-color';
+import Draggable from 'react-draggable';
+
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+    weight: ["400", "500", "600", "700"],
+    style: ["normal"],
+    subsets: ["latin"],
+});
+
+const CreateStory = ({ }) => {
+    const {
+        storyMediaURL,
+        setStoryMediaURL,
+        setStoryMediaType,
+        setIsSelectedFromComputer,
+        storyMediaType
+    } = useContext(GlobalContext);
+    const imgRef = useRef(null);
+    const [createText, setCreateText] = useState(false);
+    const [addMusic, setAddMusic] = useState(false)
+    useEffect(() => {
+        console.log(storyMediaURL)
+        console.log(storyMediaType)
+    }, [storyMediaURL])
+    const toggleText = () => {
+        setCreateText(!createText)
+        setAddMusic(false)
+    }
+    const toggleMusic = () => {
+        setCreateText(false)
+        setAddMusic(!addMusic)
+    }
+    const [songId, setSongId] = useState("");
+    const [imageWidth, setImageWidth] = useState(null);
+
+    const handleImageLoad = () => {
+        if (imgRef.current) {
+            setImageWidth(imgRef.current.clientWidth); // Set width when image is fully loaded
+        }
+    };
+
+    useEffect(() => {
+        if (imgRef.current) {
+            setImageWidth(imgRef.current.clientWidth);
+        }
+    }, [storyMediaURL]);
+    const [selectedSong, setSelectedSong] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const handlePlayPause = () => {
+        setIsPlaying(!isPlaying);
+    };
+    const handleSongSelect = (song) => {
+        setSelectedSong(song);
+        setAddMusic(false);
+        setIsPlaying(true);
+    };
+    const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
+    const [postInput, setPostInput] = useState("");
+    const [textColor, setTextColor] = useState("#000000");
+    const handleChangeComplete = (color) => {
+        setTextColor(color.hex);
+        console.log(textColor)
+      };
+
+    return (
+        <div
+            className={`flex flex-row w-full justify-center py-[3.5rem] ${plusJakartaSans.className}`}
+        >
+            <div>
+                <button
+                    onClick={(e) => (setStoryMediaType(""), setStoryMediaURL(""), setIsSelectedFromComputer(false))}
+                    className="mr-6">
+                    <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+                </button>
+            </div>
+            <div className="relative max-h-[32rem] overflow-hidden">
+                <img
+                    key={storyMediaURL}
+                    ref={imgRef}
+                    src={storyMediaURL}
+                    alt="File Preview"
+                    className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
+                    //   onClick={handleTextClick}
+                    onLoad={handleImageLoad}
+                />
+                {addMusic &&
+                    <div className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10" onClick={toggleMusic}>
+                        <div onClick={(e) => e.stopPropagation()}>
+                            <MusicDropDown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
+                        </div>
+                    </div>}
+                {selectedSong && (
+                    <MusicOverlay
+                        song={selectedSong}
+                        isPlaying={isPlaying}
+                        onPlayPause={handlePlayPause}
+                        onClose={() => setSelectedSong(null)}
+                    />
+                )}
+                {(createText || postInput != "") && (
+                    <Draggable bounds="parent">
+                    <textarea
+                        type="text"
+                        placeholder="Dancing gracefully through life's rhythms"
+                        value={postInput}
+                        rows={4}
+                        onChange={(e) => setPostInput(e.target.value)}
+                        className="bg-transparent text-start text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
+                        style={{ color: textColor, resize: "none" }}
+                    />
+                </Draggable>)}
+                {createText && (
+                    <div className='absolute bottom-0 flex justify-center items-center w-full'>
+                    <CirclePicker
+                    color={ textColor }
+                    onChangeComplete={color => handleChangeComplete(color)}
+                    />
+                    </div>
+                )}
+            </div>
+            <div className="flex flex-col">
+                <div
+                    className="ml-4"
+                //   onClick={(e) => console.log(isSelectedFromComputer)}
+                >
+                    <ThreeDotMenuStory />
+                </div>
+                <div className="flex flex-col items-center h-full justify-center ml-4 gap-3">
+                    <button
+                        // onClick={() => {
+                        //     toogleMagicPen();
+                        //     // setIsColorPickerVisible(!isColorPickerVisible);
+                        // }}
+                        className={`p-2 rounded-full self-start ${isMagicPenOpen
+                            ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                            : "bg-white"
+                            } outline-none focus:ring-offset-0 focus:ring-0`}                    >
+                        <CreateMagicPenIcon
+                            w={25}
+                            h={25}
+                            fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
+                            fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
+                            fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
+                            fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
+                            fill5={isMagicPenOpen ? "#fff" : "#58268B"}
+                        />
+                    </button>
+                    <div className="flex flex-col items-center rounded-full bg-gray-400 py-5">
+                        <button
+                            className={`w-10 h-10 flex flex-row justify-center items-center pl-0.5 ${createText && `rounded-full bg-[#245FDF]`}`}
+                            onClick={(e) => toggleText()}
+                        >
+                            <TextShadowIcon />
+                        </button>
+                        <button
+                            className={`w-10 h-10 flex flex-row justify-center items-center ${addMusic && `rounded-full bg-[#245FDF]`}`}
+                            onClick={e => toggleMusic()}
+                        >
+                            <MusicNotePlusIcon />
+                        </button>
+                    </div>
+                    <button
+                        className={`p-2 w-10 h-10 rounded-full flex flex-row justify-center items-center bg-gray-400 outline-none`}
+                    >
+                        <Image alt='colombo' src={center_aligned_icon} />
+                    </button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CreateStory

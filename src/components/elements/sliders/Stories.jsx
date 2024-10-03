@@ -1,9 +1,9 @@
 'use client'
 import Slider from "react-slick";
-import CreateStory from "../cards/CreateStory";
 import ViewStory from "../cards/ViewStory";
 import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
+import CreateStoryQuick from "../cards/CreateStoryQuick";
 
 var settings = {
   dots: false,
@@ -65,7 +65,7 @@ const Stories = () => {
   return (
     <div className="my-8" id="create_story_slider_id">
       <Slider {...settings}>
-        <CreateStory reFetchingStory={reFetchingStory}/>
+        <CreateStoryQuick reFetchingStory={reFetchingStory}/>
 
         {
           allStories.map((story, index) => {
