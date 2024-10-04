@@ -16,6 +16,7 @@ import Image from 'next/image';
 import center_aligned_icon from "../../../public/images/icons/center_aligned_icon.svg"
 import { CirclePicker } from 'react-color';
 import Draggable from 'react-draggable';
+import StoryMagicText from './StoryMagicText';
 
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -30,21 +31,20 @@ const CreateStory = ({ }) => {
         setStoryMediaURL,
         setStoryMediaType,
         setIsSelectedFromComputer,
-        storyMediaType
+        storyMediaType,
+        storyCaptionBool
     } = useContext(GlobalContext);
     const imgRef = useRef(null);
     const [createText, setCreateText] = useState(false);
     const [addMusic, setAddMusic] = useState(false)
-    useEffect(() => {
-        console.log(storyMediaURL)
-        console.log(storyMediaType)
-    }, [storyMediaURL])
     const toggleText = () => {
-        setCreateText(!createText)
+        setIsMagicPenOpen(false)
         setAddMusic(false)
+        setCreateText(!createText)
     }
     const toggleMusic = () => {
         setCreateText(false)
+        setIsMagicPenOpen(false)
         setAddMusic(!addMusic)
     }
     const [songId, setSongId] = useState("");
@@ -76,8 +76,13 @@ const CreateStory = ({ }) => {
     const [textColor, setTextColor] = useState("#000000");
     const handleChangeComplete = (color) => {
         setTextColor(color.hex);
-        console.log(textColor)
-      };
+    };
+    const toggleMagicPen = () => {
+        setCreateText(false)
+        setAddMusic(false)
+        setIsMagicPenOpen(!isMagicPenOpen)
+    }
+    const [captionInput, setCaptionInput] = useState("");
 
     return (
         <div
@@ -116,38 +121,46 @@ const CreateStory = ({ }) => {
                 )}
                 {(createText || postInput != "") && (
                     <Draggable bounds="parent">
-                    <textarea
-                        type="text"
-                        placeholder="Dancing gracefully through life's rhythms"
-                        value={postInput}
-                        rows={4}
-                        onChange={(e) => setPostInput(e.target.value)}
-                        className="bg-transparent text-start text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
-                        style={{ color: textColor, resize: "none" }}
-                    />
-                </Draggable>)}
+                        <textarea
+                            type="text"
+                            placeholder="Dancing gracefully through life's rhythms"
+                            value={postInput}
+                            rows={4}
+                            onChange={(e) => setPostInput(e.target.value)}
+                            className="bg-transparent text-start text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
+                            style={{ color: textColor, resize: "none" }}
+                        />
+                    </Draggable>)}
+                {(isMagicPenOpen || storyCaptionBool) &&
+                    <Draggable bounds="parent">
+                        <div className='absolute bottom-0'>
+                        <StoryMagicText
+                            captionInput={captionInput}
+                            setCaptionInput={setCaptionInput}
+                            width={imageWidth}
+                        />
+                        </div>
+                    </Draggable>}
                 {createText && (
                     <div className='absolute bottom-0 flex justify-center items-center w-full'>
-                    <CirclePicker
-                    color={ textColor }
-                    onChangeComplete={color => handleChangeComplete(color)}
-                    />
+                        <CirclePicker
+                            color={textColor}
+                            onChangeComplete={color => handleChangeComplete(color)}
+                        />
                     </div>
                 )}
             </div>
             <div className="flex flex-col">
                 <div
                     className="ml-4"
-                //   onClick={(e) => console.log(isSelectedFromComputer)}
                 >
                     <ThreeDotMenuStory />
                 </div>
                 <div className="flex flex-col items-center h-full justify-center ml-4 gap-3">
                     <button
-                        // onClick={() => {
-                        //     toogleMagicPen();
-                        //     // setIsColorPickerVisible(!isColorPickerVisible);
-                        // }}
+                        onClick={() => {
+                            toggleMagicPen();
+                        }}
                         className={`p-2 rounded-full self-start ${isMagicPenOpen
                             ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
                             : "bg-white"

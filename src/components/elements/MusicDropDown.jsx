@@ -78,12 +78,12 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       audioRef.current.src = song.audio;
       audioRef.current.play();
       setPlaying(song.id);
+      handleSongSelect(song)
     }
   };
 
   const handleSongSelect = (song) => {
     if (playing) {
-      audioRef.current.pause();
       setPlaying(null);
     }
     onSongSelect(song);
@@ -125,7 +125,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
       <div className="flex flex-col space-y-4">
         {songs.slice(0, 7).map((song) => (
-          <div key={song.id} className="flex items-center" onClick={() => handleSongSelect(song)}>
+          <div key={song.id} className="flex items-center">
             <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3"/>
             <div className="flex-grow">
               <p className="font-medium text-sm">{song.name}</p>
