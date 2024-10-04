@@ -280,7 +280,7 @@ const CreateVibe = ({
     <main className={plusJakartaSans.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
-        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto">
+        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[20vh] no-scrollbar overflow-y-auto">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
               {nextStep && (
@@ -402,8 +402,7 @@ const CreateVibe = ({
               <Button
                 title={"NEXT"}
                 className={
-                  "absolute bottom-4 right-[2.5rem] w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
-                }
+                   "absolute bottom-4 left-1/2 transform -translate-x-1/2 w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"                }
                 loading={loadings?.createVibe}
                 onClick={() => {
                   setNextStep(false);
