@@ -95,7 +95,10 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   
 
   return (
-    <div className="max-h-[20rem] overflow-y-scroll bg-blue-600 hide-scrollbar rounded-t-[15.22px] rounded-b-[0.9rem] flex flex-col p-6 text-white" style={{width: width ? `${width}px` : `auto`}}>
+    <div
+      className="max-h-[20rem] overflow-y-scroll bg-blue-600 hide-scrollbar rounded-t-[15.22px] rounded-b-[0.9rem] flex flex-col p-6 text-white shadow-lg"
+      style={{ width: width ? `${width}px` : `auto` }}
+    >
       <h1 className="text-2xl font-bold mb-4 text-center">Add Music</h1>
       <div className="relative mb-6">
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -104,7 +107,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
           placeholder="Search music and artists"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-3 rounded-full bg-white text-black focus:outline-none"
+          className="w-full pl-12 pr-4 py-3 rounded-full bg-gray-100 text-black focus:outline-none"
         />
       </div>
       <div className="border-b border-white mb-4"></div>
@@ -112,7 +115,10 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       <h2 className="text-xl font-semibold mb-3">Genres</h2>
       <div className="flex justify-between mb-6">
         {genres.map((genre) => (
-          <div key={genre.name} className="relative w-[65px] h-[65px] rounded-xl overflow-hidden">
+          <div
+            key={genre.name}
+            className="relative w-[65px] h-[65px] rounded-xl overflow-hidden transition-transform duration-200 transform hover:scale-105"
+          >
             <img src={genre.image} alt={genre.name} className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
               <p className="text-white text-xs font-medium">{genre.name}</p>
@@ -125,13 +131,17 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
       <div className="flex flex-col space-y-4">
         {songs.slice(0, 7).map((song) => (
-          <div key={song.id} className="flex items-center" onClick={() => {handleSongSelect(song); handSelectSongId(song.id)}}>
+          <div
+            key={song.id}
+            className="flex items-center p-2 hover:bg-blue-500 rounded-lg cursor-pointer"
+            onClick={() => { handleSongSelect(song); handSelectSongId(song.id); }}
+          >
             <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3"/>
             <div className="flex-grow">
               <p className="font-medium text-sm">{song.name}</p>
               <p className="text-xs opacity-80">by {song.artist_name}</p>
             </div>
-            <button onClick={(e) => togglePlay(song, e)} className="p-2 bg-white rounded-full">
+            <button onClick={(e) => togglePlay(song, e)} className="p-2 bg-gray-200 rounded-full">
               {playing === song.id ? (
                 <Pause className="text-blue-600 w-4 h-4" />
               ) : (
@@ -148,4 +158,5 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
     </div>
   );
 };
+
 export default MusicDropDown;
