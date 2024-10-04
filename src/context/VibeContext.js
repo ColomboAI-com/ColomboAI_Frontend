@@ -6,6 +6,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "./GlobalContext";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
+const https = require("https");
 
 const VibeContext = createContext();
 
@@ -31,7 +33,7 @@ export default function VibeContextProvider({ children }) {
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    // console.log(type, file, text, textColor, content, songId);
+    console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -158,6 +160,32 @@ export default function VibeContextProvider({ children }) {
     }
   }
 
+  const fetchSongById = (songId) => {
+    const CLIENT_ID = 'de0269ba'; 
+
+    return new Promise((resolve, reject) => {
+      const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&id=${songId}&format=json`;
+
+      https.get(url, (response) => {
+        let data = "";
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+        response.on('end', () => {
+          try {
+            const parsedData = JSON.parse(data);
+            resolve(parsedData.results);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }).on('error', (error) => {
+        reject(error);
+      });
+    });
+  };
+
+
   return (
     <VibeContext.Provider
       value={{
@@ -168,7 +196,8 @@ export default function VibeContextProvider({ children }) {
         getVibes,
         discardVibe, 
         deleteVibe,
-        archiveVibe
+        archiveVibe, 
+        fetchSongById
       }}
     >
       {children}
