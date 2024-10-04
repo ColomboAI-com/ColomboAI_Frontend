@@ -35,7 +35,7 @@ export default function Vibes() {
     getVibes();
   }, []);
 
-  console.log(vibes)
+  // console.log(vibes)
 
   return (
     <div className="border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
