@@ -275,7 +275,7 @@ const CreateVibe = ({
       setImageWidth(imgRef.current.clientWidth);
     }
   }, [mediaUrl]);
-  
+
   return (
     <main className={plusJakartaSans.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
@@ -534,25 +534,212 @@ const CreateVibe = ({
           )}
         </div>
       ) : mediaUrl !== "" && postType.includes("video") ? (
-        <div className="relative my-8">
-          <video
-            key={mediaUrl}
-            autoPlay
-            loop
-            controls
-            className="w-full aspect-video"
-          >
-            <source src={mediaUrl} />
-          </video>
-          <div className="absolute top-3 right-7">
-            <div className="flex flex-row items-center justify-center">
-              <span onClick={clearFileHandler} className="px-2 pointer">
-                <CloseDocumentIcon />
-              </span>
-            </div>
+        //           <video
+        //             key={mediaUrl}
+        //             autoPlay
+        //             loop
+        //             controls
+        //             className="w-full aspect-video"
+        //           >
+        //             <source src={mediaUrl} />
+        //           </video>
 
-            {iconButtons()}
+        <div
+          className={`relative my-8 pb-8 ${
+            isSelectedTextIcon ? "opacity-50" : ""
+          } flex flex-row w-full justify-center`}
+        >
+          <div>
+            <button onClick={(e) => onReset()} className="mr-6">
+              <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+            </button>
           </div>
+          {/* <img
+            key={mediaUrl}
+            src={mediaUrl}
+            alt="File Preview"
+            className={`h-[32rem] object-contain rounded-[0.9rem]`}
+            onClick={handleTextClick}
+          /> */}
+          <div className="relative max-h-[32rem] overflow-hidden">
+            <video
+              key={mediaUrl}
+              ref={imgRef}
+              src={mediaUrl}
+              alt="File Preview"
+              className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
+              onClick={handleTextClick}
+              onLoad={handleImageLoad}
+              autoPlay
+              loop
+              controls
+            >
+              <source src={mediaUrl} />
+            </video>
+
+            {isTrimming ? (
+              <Image
+                src={tmp_trim}
+                alt="none"
+                className="absolute bottom-0 rounded-b-[0.9rem]"
+                style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
+              />
+            ) : isDropdownVisible ? (
+              <div
+                className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
+                onClick={toggleDropdown}
+              >
+                <div onClick={(e) => e.stopPropagation()}>
+                  <MusicDropdown
+                    setSongId={setSongId}
+                    width={imageWidth}
+                    onSongSelect={handleSongSelect}
+                  />
+                </div>
+              </div>
+            ) : !nextStep ? (
+              <div className="absolute bottom-0">
+                <CaptionBox
+                  captionInput={captionInput}
+                  setCaptionInput={setCaptionInput}
+                  width={imageWidth}
+                />
+              </div>
+            ) : (
+              <Button
+                title={"NEXT"}
+                className={
+                  "absolute bottom-4 right-[2.5rem] w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
+                }
+                loading={loadings?.createVibe}
+                onClick={() => {
+                  setNextStep(false);
+                  setIsMagicPenOpen(false);
+                }}
+              />
+            )}
+            {isColorPickerVisible ? (
+              <div draggable={true}>
+                <textarea
+                  type="text"
+                  placeholder="Dancing gracefully through life's rhythms"
+                  value={postInput}
+                  rows={4}
+                  onChange={(e) => setPostInput(e.target.value)}
+                  className="bg-transparent text-black text-center text-base focus:outline-none absolute bottom-[6rem] right-[1rem] text-wrap whitespace-normal w-[60%] h-auto"
+                  autoFocus
+                  style={{ color: textColor }}
+                />
+              </div>
+            ) : null}
+
+            {selectedSong && (
+              <MusicOverlay
+                song={selectedSong}
+                isPlaying={isPlaying}
+                onPlayPause={handlePlayPause}
+                onClose={() => setSelectedSong(null)}
+              />
+            )}
+          </div>
+          <div className="flex flex-col">
+            <div
+              className="ml-4"
+              onClick={(e) => console.log(isSelectedFromComputer)}
+            >
+              <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
+            </div>
+            <div className="flex flex-col h-full justify-center ml-4 gap-3">
+              <button
+                onClick={() => {
+                  toogleMagicPen();
+                  // setIsColorPickerVisible(!isColorPickerVisible);
+                }}
+                className={`p-2 rounded-full self-start ${
+                  isMagicPenOpen
+                    ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                    : "bg-white"
+                } outline-none focus:ring-offset-0 focus:ring-0`}
+              >
+                <CreateMagicPenIcon
+                  w={25}
+                  h={25}
+                  fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
+                  fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
+                  fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
+                  fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
+                  fill5={isMagicPenOpen ? "#fff" : "#58268B"}
+                />
+              </button>
+              <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
+                <button
+                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
+                    isTrimming && `rounded-full bg-[#245FDF]`
+                  }`}
+                  onClick={(e) => toggleTrimming()}
+                >
+                  <VideoEditIcon />
+                </button>
+                <button
+                  className={`w-10 h-10 flex flex-row justify-center items-center ${
+                    isColorPickerVisible && `rounded-full bg-[#245FDF]`
+                  }`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleColorPickerVisible();
+                  }}
+                >
+                  <TextShadowIcon />
+                </button>
+                <button
+                  className={`w-10 h-10 flex flex-row justify-center items-center ${
+                    isDropdownVisible && `rounded-full bg-[#245FDF]`
+                  }`}
+                  onClick={toggleDropdown}
+                >
+                  <MusicNotePlusIcon />
+                </button>
+              </div>
+              {/* {isEditingText && (
+                <input
+                  type="text"
+                  placeholder="text created manually"
+                  value={text}
+                  onChange={handleTextChange}
+                  className="w-full bg-transparent text-black text-center text-lg focus:outline-none"
+                  autoFocus
+                  style={{ color: textColor }}
+                />
+              )} */}
+            </div>
+          </div>
+          {(isMagicPenOpen || isColorPickerVisible) && (
+            <ColorPicker textColor={textColor} setTextColor={setTextColor} />
+          )}
+
+          {/* {isDropdownVisible && (
+        <div className=" inset-0 flex items-center justify-center z-50" onClick={toggleDropdown}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <MusicDropdown onSongSelect={handleSongSelect}/>
+          </div>
+        </div>
+      )} */}
+
+          {nextStep && !isMagicPenOpen && (
+            <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20">
+              {/* <Button
+                title={"NEXT"}
+                className={
+                  "w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 "
+                }
+                loading={loadings?.createVibe}
+                onClick={() => {
+                  setNextStep(false);
+                  setIsMagicPenOpen(false);
+                }}
+              /> */}
+            </div>
+          )}
         </div>
       ) : (
         ""

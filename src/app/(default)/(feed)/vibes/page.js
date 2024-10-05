@@ -29,13 +29,26 @@ export default function Vibes() {
   const handleShare = () => {
     setShare(!showShare);
   };
-  const { vibes, getVibes } = useContext(VibeContext);
+  const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
+  const [song, setSong] = useState({});
 
   useEffect(() => {
     getVibes();
+
+    const fetchSong = async () => {
+      try {
+        const result = await fetchSongById('1129600');
+        setSong(result[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSong();
+
   }, []);
 
-  console.log(vibes)
+  // console.log(vibes)
+  console.log(song);
 
   return (
     <div className="border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
@@ -77,7 +90,7 @@ export default function Vibes() {
               {vibes.length > 0 && <p>{vibes[0].content}</p>}
               <div className="flex gap-2 my-1">
                 <IoIosMusicalNotes className="w-[20px] h-[20px]" />
-                <p>Madness - by Moonbin and Sanha</p>
+                <p>{song.name} - by {song.artist_name}</p>
               </div>
             </div>
 
