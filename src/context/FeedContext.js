@@ -48,16 +48,16 @@ export default function FeedContextProvider({ children }) {
     }
   }
 
-  const createPost = async ({ type, file, content, isHideLikes = false, isHideComments = false }) => {
+  const createPost = async ({ type, files, content, isHideLikes = false, isHideComments = false }) => {
     try {
       setLoadings(prev => ({ ...prev, createPost: true }))
       const formData = new FormData()
       formData.append('type', type)
-      formData.append('file', file || '')
-       /*Append all files to the FormData
-       Multiple Files
-     for (let i = 0; i < files.length; i++) {
-      formData.append('files', files[i])}*/
+      
+      for (const file of files) {
+        formData.append("files", file);
+      }
+      
       formData.append('content', content)
       formData.append('hideLikes', isHideLikes)
       formData.append('isCommentOff', isHideComments)
@@ -70,11 +70,11 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      
+
       setPosts(prev => ([res.data?.post, ...prev]));
       return res.data
-      
-      
+
+
     } catch (err) {
       handleError(err)
     } finally {
@@ -92,12 +92,12 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      
+
       if (res.data.success) {
         //Remove the deleted post from the posts array
         setPosts(prevPosts => prevPosts.filter(post => post._id !== postId));
-        
-      }   
+
+      }
       return res.data
     } catch (err) {
       handleError(err)
@@ -188,7 +188,7 @@ export default function FeedContextProvider({ children }) {
           }
         }
       )
-      if (res.data) {        
+      if (res.data) {
         setPosts(prevPosts => [res.data, ...prevPosts])
       }
       return res.data
@@ -269,8 +269,8 @@ export default function FeedContextProvider({ children }) {
       // Assuming posts are returned in res.data.posts
       setPosts(res.data.posts || []);
       return res.data;
-      
-      
+
+
     } catch (err) {
       handleError(err)
     } finally {
@@ -280,14 +280,14 @@ export default function FeedContextProvider({ children }) {
 
   const searchUsers = async (query = '') => {
     try {
-      
+
       setLoadings((prev) => ({ ...prev, searchUser: true }));
       const res = await axios.get(`${ROOT_URL_AUTH}/user/search?q=${query}`,
-      {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
       setSearchUsersDetails(res?.data?.results)
       return res;
     } catch (err) {
@@ -299,14 +299,14 @@ export default function FeedContextProvider({ children }) {
 
   const topUsers = async () => {
     try {
-      
+
       setLoadings((prev) => ({ ...prev, topUser: true }));
       const res = await axios.get(`${ROOT_URL_AUTH}/user/top`,
-      {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
       setTopUsersDetails(res?.data?.results)
     } catch (err) {
       handleError(err);

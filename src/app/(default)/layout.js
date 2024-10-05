@@ -137,15 +137,15 @@ const DefaultLayout = ({ children }) => {
     requestPermission();
   }, [isShowChatMenu]);
 
-  useEffect(() => {
-    const re = window.sessionStorage.getItem("redirect");
+  // useEffect(() => {
+  //   const re = window.sessionStorage.getItem("redirect");
     
-    if (!re) {
-      window.sessionStorage.setItem("redirect", "false");
-      window.location = "https://colomboai.com/genai-search";
-    }
+  //   if (!re) {
+  //     window.sessionStorage.setItem("redirect", "false");
+  //     window.location = "https://colomboai.com/genai-search";
+  //   }
 
-  },[]);
+  // },[]);
 
   return (
     <FeedContextProvider>
