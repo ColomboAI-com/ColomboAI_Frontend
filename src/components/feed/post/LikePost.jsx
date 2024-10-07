@@ -16,7 +16,7 @@ export default function LikePost({ post }) {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 gap-1">
       <div onClick={onLikePost}><LikeIcon fill={isLiked && '#E95050'} /></div>
       <p className={`font-sans text-[14px] ${isLiked ? 'text-brandprimary' : 'text-sidebarlabel'}`}>
         {likeCounts}
