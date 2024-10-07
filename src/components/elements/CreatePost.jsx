@@ -60,16 +60,16 @@ const CreatePost = () => {
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
     if (selectedFiles.length > 0) {
-      
-      const selectedFile = selectedFiles[0];
-      setFile([selectedFile, ...file]);
-      
-      const fileType = selectedFile.type.split("/")[0];
-      setPostType(fileType);
+      setFile(selectedFiles);
 
-      const fileUrl = URL.createObjectURL(selectedFile);
-      setMediaUrl([fileUrl, ...mediaUrl]);
-      
+      for (let i = 0; i < selectedFiles.length; i++) {
+        const fileType = selectedFiles[i].type.split("/")[0];
+        setPostType(fileType);
+
+        const fileUrl = URL.createObjectURL(selectedFiles[i]);
+        setMediaUrl([fileUrl, ...mediaUrl]);
+      }
+
       setNextStep(true);
     }
   };
@@ -93,7 +93,7 @@ const CreatePost = () => {
   };
 
   const handleCreatePost = async () => {
-    const res = await createPost({ type: postType, file: file[0], content: postInput });
+    const res = await createPost({ type: postType, files: file, content: postInput });
     console.log(res)
     if (res) {
       MessageBox('success', res.message);

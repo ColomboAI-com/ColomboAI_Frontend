@@ -5,7 +5,7 @@ import { GlobalContext } from '@/context/GlobalContext';
 import Modal from "./Modal";
 import UploadStoryModal from '../story/UploadStoryModal';
 
-export default function CreateDropdown({ w, h, fill }) {
+export default function CreateDropdown({ w, h, filyl }) {
 
   const { setIsCreatePostOpen } = useContext(GlobalContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
