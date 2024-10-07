@@ -45,7 +45,7 @@ jobs:
           fi
 
           # Navigate to the QA directory
-          cd /var/www/html/adfjrgjf/QA
+          cd /var/www/html/adfjrgjf/DEV
 
           # Pull the latest changes from the GitHub repository
           git pull origin dev
