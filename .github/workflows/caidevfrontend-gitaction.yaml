@@ -47,8 +47,14 @@ jobs:
           # Navigate to the QA directory
           cd /var/www/html/adfjrgjf/DEV
 
+          # Stash local changes to avoid conflicts
+          git stash
+
           # Pull the latest changes from the GitHub repository
           git pull origin dev
+
+          # Apply stashed changes, if any
+          git stash pop || echo "No stashed changes to apply."
 
           # Install project dependencies
           npm install
@@ -56,7 +62,12 @@ jobs:
           # Rebuild the project (optional)
           npm run build
 
-           pm2 restart all
-
-         
+          # Install PM2 if it's not installed
+          if ! command -v pm2 &> /dev/null; then
+            echo "PM2 is not installed. Installing..."
+            sudo npm install -g pm2
+          fi
+          # Restart the application using PM2
+          pm2 restart all
+                  
         EOF
