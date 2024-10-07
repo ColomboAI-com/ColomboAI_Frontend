@@ -266,7 +266,7 @@ const CreateVibe = ({
 
   const handleImageLoad = () => {
     if (imgRef.current) {
-      setImageWidth(imgRef.current.clientWidth); // Set width when image is fully loaded
+      setImageWidth(imgRef.current.clientWidth); 
     }
   };
 

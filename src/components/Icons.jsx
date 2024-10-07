@@ -1265,7 +1265,7 @@ export const LikeIcon = ({ w = 36, h = 37, fill }) => {
       <g clipPath="url(#clip0_4774_37412)">
         <path
           d="M16 28C16 28 3 21 3 12.75C3 10.9598 3.71116 9.2429 4.97703 7.97703C6.2429 6.71116 7.95979 6 9.75 6C12.5738 6 14.9925 7.53875 16 10C17.0075 7.53875 19.4262 6 22.25 6C24.0402 6 25.7571 6.71116 27.023 7.97703C28.2888 9.2429 29 10.9598 29 12.75C29 21 16 28 16 28Z"
-          stroke={fill || "#ACACAC"}
+          stroke={fill || "#646464"}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -1293,7 +1293,7 @@ export const RePostIcon = ({ w = 32, h = 33, fill }) => {
       <g clipPath="url(#clip0_4774_37418)">
         <path
           d="M25 11L28 8L25 5"
-          stroke={fill || "#ACACAC"}
+          stroke={fill || "#646464"}
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
