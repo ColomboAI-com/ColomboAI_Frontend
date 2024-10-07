@@ -36,7 +36,7 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
           set -e
-          cd /var/www/html/adfjrgjf/DEV
+          cd /var/www/html/adfjrgjf/QA
           git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
           
         ENDSSH
