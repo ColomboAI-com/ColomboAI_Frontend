@@ -266,7 +266,7 @@ const CreateVibe = ({
 
   const handleImageLoad = () => {
     if (imgRef.current) {
-      setImageWidth(imgRef.current.clientWidth); 
+      setImageWidth(imgRef.current.clientWidth);
     }
   };
 
@@ -402,7 +402,8 @@ const CreateVibe = ({
               <Button
                 title={"NEXT"}
                 className={
-                   "absolute bottom-4 left-1/2 transform -translate-x-1/2 w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"                }
+                  "absolute bottom-4 left-1/2 transform -translate-x-1/2 w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
+                }
                 loading={loadings?.createVibe}
                 onClick={() => {
                   setNextStep(false);
@@ -827,6 +828,15 @@ const CreateVibe = ({
                 </span> */}
             </div>
           )}
+
+          <Button
+            title={"Share Vibe"}
+            onClick={handleCreateVibe}
+            className={
+              "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+            }
+            // onClick={()=>handleVibeValidation()}
+          />
         </>
       )}
     </main>
