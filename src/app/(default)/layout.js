@@ -34,9 +34,9 @@ import CreateVibe from "@/components/elements/CreateVibe";
 import CreateStory from "@/components/elements/CreateStory";
 import Image from "next/image";
 import genai_pen from "../../../public/images/icons/genai_pen.svg"
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -157,7 +157,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <FeedContextProvider>
-      <div className={`min-w-screen border-yellow-400 relative ${plusJakartaSans.className}`}>
+      <div className={`min-w-screen border-yellow-400 relative ${font.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
           <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />

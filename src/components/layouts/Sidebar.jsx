@@ -8,11 +8,11 @@ import InputBar from "./InputBar";
 import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useEffect, useState } from "react";
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import Image from "next/image";
 import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -41,7 +41,7 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className={`xl:w-[100%]  lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${plusJakartaSans.className}`}>
+            <div className={`xl:w-[100%]  lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${font.className}`}>
                 <div className="lg:mb-[46px] md:mt-[6rem] md:mb-[46px] xl:mt-[6rem] lg:mt-[6rem] relative">
 
                     <Dropdown

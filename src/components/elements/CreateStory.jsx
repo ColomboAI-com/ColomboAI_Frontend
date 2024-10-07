@@ -4,7 +4,7 @@ import { BackButtonIcon, CreateMagicPenIcon, MusicNotePlusIcon, TextShadowIcon }
 import ThreeDotMenuStory from "./ThreeDotMenuStory";
 
 import { useContext, useEffect, useState, useRef } from "react";
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import MusicDropDown from "./MusicDropDown";
 import MusicOverlay from "./MusicOverlay";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import StoryMagicText from "./StoryMagicText";
 import music_check from "../../../public/images/icons/music_check.svg";
 import musicIcon from "../../../public/images/icons/musicIcon.svg";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -81,7 +81,7 @@ const CreateStory = ({}) => {
     setIsMagicPenOpen(!isMagicPenOpen);
   };
   return (
-    <div className={`flex flex-row w-full justify-center py-[3.5rem] ${plusJakartaSans.className}`}>
+    <div className={`flex flex-row w-full justify-center py-[3.5rem] ${font.className}`}>
       <div>
         <button
           onClick={(e) => (setStoryMediaType(""), setStoryMediaURL(""), setIsSelectedFromComputer(false))}

@@ -7,9 +7,9 @@ import Search from "../../../public/images/icons/Search.svg"
 import blue_x from "../../../public/images/icons/blue_x.svg"
 import Image from "next/image";
 import "../../app/globals.css"
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -84,7 +84,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
 
 
   return (
-    <div className={`mx-auto flex flex-col ${plusJakartaSans.className}`} style={{width: width ? `${width}px` : `auto`}}>
+    <div className={`mx-auto flex flex-col ${font.className}`} style={{width: width ? `${width}px` : `auto`}}>
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
       <div className={`flex text-white w-[105px] rounded-tr-lg h-[22px] items-center ${selectedUsers.length > 0 ? "bg-blue-500" : "bg-gray-500"
