@@ -56,5 +56,7 @@ jobs:
           # Rebuild the project (optional)
           npm run build
 
+           pm2 restart all
+
          
         EOF
