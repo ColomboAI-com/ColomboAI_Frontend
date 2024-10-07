@@ -75,12 +75,12 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       audioRef.current.src = song.audio;
       audioRef.current.play();
       setPlaying(song.id);
+      handleSongSelect(song)
     }
   };
 
   const handleSongSelect = (song) => {
     if (playing) {
-      audioRef.current.pause();
       setPlaying(null);
     }
     onSongSelect(song);

@@ -9,6 +9,8 @@ import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useEffect, useState } from "react";
 import { Plus_Jakarta_Sans } from "@next/font/google";
+import Image from "next/image";
+import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
@@ -64,11 +66,10 @@ const Sidebar = () => {
                             <p className={`${pathname === '/genai-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Gen AI</p>
                         </div>
                     </Link>
-
-                    <Link href="/task-bot">
+                    <Link href="/vibes">
                         <div className="mb-[34px] flex flex-col items-center">
-                            <TaskBotIcon w="24" h="24" fill={pathname === '/task-bot' ? "#1E71F2" : "#8E8E93"} />
-                            <p className={`${pathname === '/task-bot' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Task bot</p>
+                            <Image src={vibes_icon} alt="colombo"/>
+                            <p className={`${pathname === '/vibes' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Vibes</p>
                         </div>
                     </Link>
 
