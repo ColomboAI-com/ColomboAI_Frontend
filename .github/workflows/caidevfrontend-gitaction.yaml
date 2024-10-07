@@ -47,8 +47,14 @@ jobs:
           # Navigate to the QA directory
           cd /var/www/html/adfjrgjf/DEV
 
+          # Stash local changes to avoid conflicts
+          git stash
+
           # Pull the latest changes from the GitHub repository
           git pull origin dev
+
+          # Apply stashed changes, if any
+          git stash pop || echo "No stashed changes to apply."
 
           # Install project dependencies
           npm install
