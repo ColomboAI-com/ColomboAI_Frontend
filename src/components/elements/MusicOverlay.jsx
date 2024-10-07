@@ -1,17 +1,59 @@
-import React, { useEffect, useRef } from 'react';
-import { Play, Pause } from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback} from 'react';
+import { Play, Pause} from 'lucide-react';
 import WaveSurfer from 'wavesurfer.js';
+import axios from 'axios';
 
-const MusicOverlay = ({ song, isPlaying, onPlayPause, onClose }) => {
+const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
+  const [song, setSong] = useState(null);
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
   const audioRef = useRef(new Audio());
+  const isMounted = useRef(true);
+
+  const destroyWavesurfer = useCallback(() => {
+    if (wavesurfer.current) {
+      wavesurfer.current.destroy();
+      wavesurfer.current = null;
+    }
+  }, []);
+ 
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+      destroyWavesurfer();
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = '';
+      }
+    };
+  }, [destroyWavesurfer]);
+
+  useEffect(() => {
+    const fetchSong = async () => {
+      try {
+        const response = await axios.get(`https://api.jamendo.com/v3.0/tracks/`, {
+          params: {
+            client_id: 'de0269ba',
+            id: song_id,
+            format: 'json'
+          }
+        });
+        if (isMounted.current && response.data.results && response.data.results.length > 0) {
+          setSong(response.data.results[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching song:", error);
+      }
+    };
+
+    if (song_id) {
+      fetchSong();
+    }
+  }, [song_id]);
 
   useEffect(() => {
     if (waveformRef.current && song) {
-      if (wavesurfer.current) {
-        wavesurfer.current.destroy();
-      }
+      destroyWavesurfer();
 
       wavesurfer.current = WaveSurfer.create({
         container: waveformRef.current,
@@ -30,43 +72,42 @@ const MusicOverlay = ({ song, isPlaying, onPlayPause, onClose }) => {
       wavesurfer.current.load(song.audio);
 
       wavesurfer.current.on('ready', () => {
-        if (isPlaying) {
-          wavesurfer.current.play();
-          audioRef.current.play();
+        if (isMounted.current && isPlaying) {
+          wavesurfer.current.play().catch(err => console.error("Wavesurfer play error:", err));
         }
       });
 
       wavesurfer.current.on('finish', () => {
-        onPlayPause(false);
+        if (isMounted.current) {
+          onPlayPause(false);
+        }
       });
+
+      return () => {
+        destroyWavesurfer();
+      };
     }
-
-    audioRef.current.src = song.audio;
-    audioRef.current.addEventListener('ended', () => onPlayPause(false));
-
-    return () => {
-      if (wavesurfer.current) {
-        wavesurfer.current.destroy();
-      }
-      audioRef.current.removeEventListener('ended', () => onPlayPause(false));
-    };
-  }, [song, onPlayPause]);
+  }, [song, onPlayPause, isPlaying, destroyWavesurfer]);
 
   useEffect(() => {
     if (wavesurfer.current && audioRef.current) {
-      if (isPlaying) {
-        wavesurfer.current.play();
-        audioRef.current.play();
-      } else {
-        wavesurfer.current.pause();
-        audioRef.current.pause();
+      try {
+        if (isPlaying) {
+          Promise.all([
+            wavesurfer.current.play(),
+            audioRef.current.play()
+          ]).catch(err => console.error("Play error:", err));
+        } else {
+          wavesurfer.current.pause();
+          audioRef.current.pause();
+        }
+      } catch (error) {
+        console.error("Playback control error:", error);
       }
     }
   }, [isPlaying]);
 
-  const togglePlay = () => {
-    onPlayPause(!isPlaying);
-  };
+  if (!song) return null;
 
   return (
     <div className="absolute inset-0 flex flex-col justify-between p-4 text-black bg-opacity-90">

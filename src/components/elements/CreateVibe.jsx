@@ -73,7 +73,7 @@ const CreateVibe = ({
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [captionInput, setCaptionInput] = useState("");
   const [showError, setShowError] = useState(false);
-  const [songId, setSongId] = useState("");
+  const [song_id, setSongId] = useState("");
 
   useEffect(() => {
     return () => {
@@ -90,15 +90,19 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
+ const handSelectSongId = (id) => {
+    setSongId(id.toString()); 
+  };
   const handleSongSelect = (song) => {
     setSelectedSong(song);
     setDropdownVisible(false);
     setIsPlaying(true);
+    handSelectSongId(song.id);
   };
-
-  const handlePlayPause = () => {
+    const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
+
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -225,7 +229,7 @@ const CreateVibe = ({
       text: postInput,
       textColor,
       content: captionInput,
-      songId,
+      song_id,
     });
     if (res) {
       MessageBox("success", res.message);
@@ -414,7 +418,8 @@ const CreateVibe = ({
 
             {selectedSong && (
               <MusicOverlay
-                song={selectedSong}
+                // song={selectedSong}
+                song_id={song_id}
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onClose={() => setSelectedSong(null)}

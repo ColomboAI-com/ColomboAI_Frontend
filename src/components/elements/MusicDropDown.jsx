@@ -1,47 +1,44 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Play, Pause, ChevronDown } from "lucide-react";
 import "../../app/globals.css";
+import axios from "axios";
 
-const https = require("https");
+// const https = require("https");
 
 const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [songs, setSongs] = useState([]);
+  const [displayCount, setDisplayCount] = useState(10); 
   const [playing, setPlaying] = useState(null);
   const audioRef = useRef(new Audio());
 
   const CLIENT_ID = 'de0269ba'; 
 
   const genres = [
-    { name: "Pop", image: "/api/placeholder/100/100" },
-    { name: "Rock", image: "/api/placeholder/100/100" },
-    { name: "Hip-hop", image: "/api/placeholder/100/100" },
-    { name: "Jazz", image: "/api/placeholder/100/100" },
-    { name: "R&B", image: "/api/placeholder/100/100" },
-    { name: "Classical", image: "/api/placeholder/100/100" },
+    { name: "Pop", image: "../../../images/music/pop.png" },
+    { name: "Rock", image: "../../../images/music/rock.png" },
+    { name: "Hip-hop", image: "../../../images/music/hip-hop.png" },
+    { name: "Jazz", image: "../../../images/music/jazz.png" },
+    { name: "R&B", image: "../../../images/music/r&b.png" },
+    { name: "Classical", image: "../../../images/music/classical.png" },
   ];
 
-  const getMusicUrl = (type) => {
-    return new Promise((resolve, reject) => {
-      const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&format=json&limit=16&search=${type}&include=musicinfo`;
-
-      https.get(url, (response) => {
-        let data = "";
-        response.on("data", (chunk) => {
-          data += chunk;
-        });
-        response.on('end', () => {
-          try {
-            const parsedData = JSON.parse(data);
-            resolve(parsedData.results);
-          } catch (error) {
-            reject(error);
-          }
-        });
-      }).on('error', (error) => {
-        reject(error);
+  const getMusicUrl = async (type) => {
+    try {
+      const response = await axios.get(`https://api.jamendo.com/v3.0/tracks/`, {
+        params: {
+          client_id: CLIENT_ID,
+          format: 'json',
+          limit: 50,
+          search: type,
+          include: 'musicinfo'
+        }
       });
-    });
+      return response.data.results;
+    } catch (error) {
+      console.error("Error fetching music:", error);
+      return [];
+    }
   };
 
   useEffect(() => {
@@ -87,11 +84,16 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       setPlaying(null);
     }
     onSongSelect(song);
+    setSongId(song.id.toString()); 
   };
 
-  const handSelectSongId = (songId) => {
-    setSongId(songId)
-  }
+  const handSelectSongId = (song_id) => {
+    setSongId(song_id.toString()); 
+  };
+
+  const loadMore = () => {
+    setDisplayCount(prevCount => prevCount + 10);
+  };
   
 
   return (
@@ -119,7 +121,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
             key={genre.name}
             className="relative w-[65px] h-[65px] rounded-xl overflow-hidden transition-transform duration-200 transform hover:scale-105"
           >
-            <img src={genre.image} alt={genre.name} className="w-full h-full object-cover" />
+            <img src={genre.image}  className="w-full h-full object-cover" />
             <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
               <p className="text-white text-xs font-medium">{genre.name}</p>
             </div>
@@ -130,8 +132,12 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
 
       <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
       <div className="flex flex-col space-y-4">
-        {songs.slice(0, 7).map((song) => (
-          <div key={song.id} className="flex items-center">
+        {songs.slice(0, displayCount).map((song) => (
+          <div
+            key={song.id}
+            className="flex items-center p-2 hover:bg-blue-500 rounded-lg cursor-pointer"
+            onClick={() => { handleSongSelect(song); handSelectSongId(song.id); }}
+          >
             <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3"/>
             <div className="flex-grow">
               <p className="font-medium text-sm">{song.name}</p>
@@ -147,10 +153,15 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
           </div>
         ))}
       </div>
-      <button className="mt-4 text-center text-sm flex items-center justify-center">
-        <span className="mr-1">more</span>
-        <ChevronDown className="w-4 h-4" />
-      </button>
+      {displayCount < songs.length && (
+        <button 
+          onClick={loadMore} 
+          className="mt-4 text-center text-sm flex items-center justify-center hover:bg-blue-700 p-2 rounded"
+        >
+          <span className="mr-1">more</span>
+          <ChevronDown className="w-4 h-4" />
+        </button>
+      )}
     </div>
   );
 };
