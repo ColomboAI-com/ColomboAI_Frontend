@@ -54,13 +54,9 @@ const CreateVibe = ({
   const defaultPostType = "thought";
   const [postType, setPostType] = useState(uploadedPostType);
   const [nextStep, setNextStep] = useState(uploadedNextStep);
-  const { generatePost, createPost, loadings, posts, setPosts } =
-    useContext(FeedContext);
-  const {
-    setIsCreateVibeOpen,
-    isSelectedFromComputer,
-    setIsSelectedFromComputer,
-  } = useContext(GlobalContext);
+  const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
+  const { setIsCreateVibeOpen, isSelectedFromComputer, setIsSelectedFromComputer } =
+    useContext(GlobalContext);
   const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
@@ -77,7 +73,7 @@ const CreateVibe = ({
   const [isSelectedTextIcon, setIsSelectedTextIcon] = useState(false);
   const [captionInput, setCaptionInput] = useState("");
   const [showError, setShowError] = useState(false);
-  const [songId, setSongId] = useState("");
+  const [song_id, setSongId] = useState("");
 
   useEffect(() => {
     return () => {
@@ -94,15 +90,19 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
+ const handSelectSongId = (id) => {
+    setSongId(id.toString()); 
+  };
   const handleSongSelect = (song) => {
     setSelectedSong(song);
     setDropdownVisible(false);
     setIsPlaying(true);
+    handSelectSongId(song.id);
   };
-
-  const handlePlayPause = () => {
+    const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
+
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -185,7 +185,7 @@ const CreateVibe = ({
 
   const handleGenerateVibe = async () => {
     const result = await generatePost(promptInput);
-    if (result?.response_type !== "text") {
+    if (result?.response_type === "image") {
       setMediaUrl(result?.text);
       setPostType(result?.response_type);
     } else if (result?.response_type === "text") {
@@ -229,7 +229,7 @@ const CreateVibe = ({
       text: postInput,
       textColor,
       content: captionInput,
-      songId,
+      song_id,
     });
     if (res) {
       MessageBox("success", res.message);
@@ -295,9 +295,7 @@ const CreateVibe = ({
               )}
             </div>
             <div className="flex-grow flex justify-center">
-              <p className="pl-[17px]  text-2xl  tracking-wider ">
-                Create new Vibes
-              </p>
+              <p className="pl-[17px]  text-2xl  tracking-wider ">Create new Vibes</p>
             </div>
             <button onClick={() => setIsCreateVibeOpen(false)}>
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
@@ -334,11 +332,7 @@ const CreateVibe = ({
               wrapperClass=""
             />
           ) : (
-            <SendIcon
-              w={32}
-              h={32}
-              fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"}
-            />
+            <SendIcon w={32} h={32} fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"} />
           )}
         </button>
       </div>
@@ -383,11 +377,7 @@ const CreateVibe = ({
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown
-                    setSongId={setSongId}
-                    width={imageWidth}
-                    onSongSelect={handleSongSelect}
-                  />
+                  <MusicDropdown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -428,7 +418,8 @@ const CreateVibe = ({
 
             {selectedSong && (
               <MusicOverlay
-                song={selectedSong}
+                // song={selectedSong}
+                song_id={song_id}
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onClose={() => setSelectedSong(null)}
@@ -436,10 +427,7 @@ const CreateVibe = ({
             )}
           </div>
           <div className="flex flex-col">
-            <div
-              className="ml-4"
-              onClick={(e) => console.log(isSelectedFromComputer)}
-            >
+            <div className="ml-4" onClick={(e) => console.log(isSelectedFromComputer)}>
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -591,11 +579,7 @@ const CreateVibe = ({
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown
-                    setSongId={setSongId}
-                    width={imageWidth}
-                    onSongSelect={handleSongSelect}
-                  />
+                  <MusicDropdown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -644,10 +628,7 @@ const CreateVibe = ({
             )}
           </div>
           <div className="flex flex-col">
-            <div
-              className="ml-4"
-              onClick={(e) => console.log(isSelectedFromComputer)}
-            >
+            <div className="ml-4" onClick={(e) => console.log(isSelectedFromComputer)}>
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -758,16 +739,9 @@ const CreateVibe = ({
               <div className="pt-3 text-center">
                 {file ? (
                   <>
-                    <img
-                      src={mediaUrl}
-                      alt="media"
-                      className="object-contain w-48 h-48"
-                    />
+                    <img src={mediaUrl} alt="media" className="object-contain w-48 h-48" />
                     <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
-                      <button
-                        onClick={clearFileHandler}
-                        className="text-red-500"
-                      >
+                      <button onClick={clearFileHandler} className="text-red-500">
                         <CloseDocumentIcon w={20} h={20} />
                       </button>
                       <button
