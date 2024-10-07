@@ -4,9 +4,10 @@ import Modal from "../Modal";
 
 
 import { StoryContext } from "@/context/StoryContext"
+import { GlobalContext } from "@/context/GlobalContext";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 
-const CreateStory = ({reFetchingStory}) => {
+const CreateStoryQuick = ({reFetchingStory}) => {
     const [isCreateStoryOpen,setIsCreateStoryOpen] = useState(false);
 
     const handleOpen = (e) => {
@@ -18,15 +19,15 @@ const CreateStory = ({reFetchingStory}) => {
     return (
         <>
         {/* <div className="bg-[url('/images/home/create-story.svg')] bg-[length:100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}> */}
-        <div className="relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}>
-            <img src={getCookie('profilePic')} className="h-[167px] object-cover rounded-[10px]" />
+        <div className="relative h-[167px] w-[88px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}>
+            <img src={getCookie('profilePic')} className="h-[167px] w-full object-cover rounded-[10px]" />
             <div className="absolute w-full bottom-0 h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
             <div className="absolute bottom-14 w-full">
                 <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
                 <img src="/images/home/add-new-story.svg" />
                 </div>
                 <h6 className="text-[12px] font-[450px] font-sans text-white text-center relative top-9">
-                Create New Story
+                New Story
                 
                 </h6>
             </div>
@@ -41,4 +42,4 @@ const CreateStory = ({reFetchingStory}) => {
     );
 }
 
-export default CreateStory;
+export default CreateStoryQuick;

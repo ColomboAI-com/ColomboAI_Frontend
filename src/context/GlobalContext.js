@@ -10,10 +10,13 @@ export default function GlobalContextProvider({ children }) {
   let [isCommentOpen, setIsCommentOpen] = useState(false);
   let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
   let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
-  let [specificPostId, setSpecificPostId] = useState()
-  let [posts, setPosts] = useState()
+  let [specificPostId, setSpecificPostId] = useState();
+  let [posts, setPosts] = useState();
   let [isCreateVibeOpen, setIsCreateVibeOpen] = useState(false);
   let [isSelectedFromComputer, setIsSelectedFromComputer] = useState(false);
+  let [storyMediaURL, setStoryMediaURL] = useState("");
+  let [storyMediaType, setStoryMediaType] = useState("");
+  let [storyCaptionBool, setStoryCaptionBool] = useState(false);
 
 
   return (
@@ -36,7 +39,13 @@ export default function GlobalContextProvider({ children }) {
         setIsCreateVibeOpen,
         isCreateVibeOpen,
         isSelectedFromComputer, 
-        setIsSelectedFromComputer
+        setIsSelectedFromComputer,
+        setStoryMediaURL,
+        storyMediaURL,
+        setStoryMediaType,
+        storyMediaType,
+        storyCaptionBool,
+        setStoryCaptionBool
       }}
     >
       {children}

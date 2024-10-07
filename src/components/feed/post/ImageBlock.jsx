@@ -9,6 +9,6 @@ export default function ImageBlock({ image = ['/images/home/feed-banner-img.png'
 
 function Img({ src }) {
   return (
-     <img src={src} alt="post_image" className="w-full h-full aspect-video object-contain bg-gray-100" />
+     <img src={src} alt="post_image" className="w-full h-full aspect-video object-fill bg-gray-100" />
   )
 }
