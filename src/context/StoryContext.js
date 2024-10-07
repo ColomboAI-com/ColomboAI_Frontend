@@ -25,10 +25,10 @@ export default function StoryContextProvider({ children }) {
             setLoadings(prev => ({ ...prev, createStory: true }))
             const formData = new FormData()
             formData.append('type', fileType)
-            formData.append('file', file[0])
-            formData.append('text', content)
-            formData.append('hideLikes', isHideLikes)
-            formData.append('isCommentOff', isHideComments)
+            formData.append('file', file)
+            formData.append('content', content)
+            // formData.append('hideLikes', isHideLikes)
+            // formData.append('isCommentOff', isHideComments)
             const res = await axios.post(`${ROOT_URL_FEED}/stories/create`,
                 formData,
                 {
