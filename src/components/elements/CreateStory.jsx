@@ -17,6 +17,8 @@ import center_aligned_icon from "../../../public/images/icons/center_aligned_ico
 import { CirclePicker } from 'react-color';
 import Draggable from 'react-draggable';
 import StoryMagicText from './StoryMagicText';
+import music_check from "../../../public/images/icons/music_check.svg"
+import musicIcon from "../../../public/images/icons/musicIcon.svg"
 
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -37,6 +39,15 @@ const CreateStory = ({ }) => {
     const imgRef = useRef(null);
     const [createText, setCreateText] = useState(false);
     const [addMusic, setAddMusic] = useState(false)
+    const [songId, setSongId] = useState("");
+    const [imageWidth, setImageWidth] = useState(null);
+    const [selectedSong, setSelectedSong] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
+    const [postInput, setPostInput] = useState("");
+    const [textColor, setTextColor] = useState("#000000");
+    const [captionInput, setCaptionInput] = useState("");
+    const [confirmSong, setConfirmSong] = useState(false)
     const toggleText = () => {
         setIsMagicPenOpen(false)
         setAddMusic(false)
@@ -47,8 +58,6 @@ const CreateStory = ({ }) => {
         setIsMagicPenOpen(false)
         setAddMusic(!addMusic)
     }
-    const [songId, setSongId] = useState("");
-    const [imageWidth, setImageWidth] = useState(null);
 
     const handleImageLoad = () => {
         if (imgRef.current) {
@@ -61,19 +70,14 @@ const CreateStory = ({ }) => {
             setImageWidth(imgRef.current.clientWidth);
         }
     }, [storyMediaURL]);
-    const [selectedSong, setSelectedSong] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
     const handlePlayPause = () => {
         setIsPlaying(!isPlaying);
     };
     const handleSongSelect = (song) => {
         setSelectedSong(song);
-        setAddMusic(false);
+        // setAddMusic(false);
         setIsPlaying(true);
     };
-    const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
-    const [postInput, setPostInput] = useState("");
-    const [textColor, setTextColor] = useState("#000000");
     const handleChangeComplete = (color) => {
         setTextColor(color.hex);
     };
@@ -82,8 +86,6 @@ const CreateStory = ({ }) => {
         setAddMusic(false)
         setIsMagicPenOpen(!isMagicPenOpen)
     }
-    const [captionInput, setCaptionInput] = useState("");
-
     return (
         <div
             className={`flex flex-row w-full justify-center py-[3.5rem] ${plusJakartaSans.className}`}
@@ -111,13 +113,24 @@ const CreateStory = ({ }) => {
                             <MusicDropDown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
                         </div>
                     </div>}
-                {selectedSong && (
+                {(selectedSong && !confirmSong) && (
                     <MusicOverlay
                         song={selectedSong}
                         isPlaying={isPlaying}
                         onPlayPause={handlePlayPause}
                         onClose={() => setSelectedSong(null)}
                     />
+                )}
+                {(selectedSong && confirmSong) && (
+                    <div className='w-full flex flex-row items-center justify-center'>
+                        <div className='absolute bottom-[3rem] gap-4 flex flex-row items-center justify-center z-1 bg-[#1E71F2] p-4 rounded-md'>
+                            <Image src={musicIcon} alt='colombo'/>
+                            <div className='flex flex-col justify-cener'>
+                                <p className='text-white font-medium text-sm text-wrap'>{selectedSong.name}</p>
+                                <p className='text-white text-xs text-wrap'>by {selectedSong.artist_name}</p>
+                            </div>
+                        </div>
+                    </div>
                 )}
                 {(createText || postInput != "") && (
                     <Draggable bounds="parent">
@@ -134,11 +147,11 @@ const CreateStory = ({ }) => {
                 {(isMagicPenOpen || storyCaptionBool) &&
                     <Draggable bounds="parent">
                         <div className='absolute bottom-0'>
-                        <StoryMagicText
-                            captionInput={captionInput}
-                            setCaptionInput={setCaptionInput}
-                            width={imageWidth}
-                        />
+                            <StoryMagicText
+                                captionInput={captionInput}
+                                setCaptionInput={setCaptionInput}
+                                width={imageWidth}
+                            />
                         </div>
                     </Draggable>}
                 {createText && (
@@ -175,6 +188,7 @@ const CreateStory = ({ }) => {
                             fill5={isMagicPenOpen ? "#fff" : "#58268B"}
                         />
                     </button>
+                    {(selectedSong && !confirmSong) && <Image onClick={e => setConfirmSong(!confirmSong)} src={music_check} alt='colombo' className='w-8 cursor-pointer' />}
                     <div className="flex flex-col items-center rounded-full bg-gray-400 py-5">
                         <button
                             className={`w-10 h-10 flex flex-row justify-center items-center pl-0.5 ${createText && `rounded-full bg-[#245FDF]`}`}
