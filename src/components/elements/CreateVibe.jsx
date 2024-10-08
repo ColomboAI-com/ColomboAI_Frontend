@@ -278,6 +278,15 @@ const CreateVibe = ({
 
   return (
     <main className={plusJakartaSans.className}>
+      {/* The Share Vibe button is placed here for testing purposes; will be move the the right place in the vibe creation process */}
+      <Button
+        title={"Share Vibe"}
+        onClick={handleCreateVibe}
+        className={
+          "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+        }
+        // onClick={()=>handleVibeValidation()}
+      />
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[20vh] no-scrollbar overflow-y-auto">
@@ -371,13 +380,18 @@ const CreateVibe = ({
               onLoad={handleImageLoad}
             />
             {isTrimming ? (
-              <Image
-                src={tmp_trim}
-                alt="none"
-                className="absolute bottom-0 rounded-b-[0.9rem]"
-                style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
+              <VideoEditor
+                videoUrl={mediaUrl}
+                onTrim={handleTrimVideo}
+                onClose={() => setIsTrimming(false)}
               />
-            ) : isDropdownVisible ? (
+            ) : // <Image
+            //   src={tmp_trim}
+            //   alt="none"
+            //   className="absolute bottom-0 rounded-b-[0.9rem]"
+            //   style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
+            // />
+            isDropdownVisible ? (
               <div
                 className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
                 onClick={toggleDropdown}
@@ -800,14 +814,6 @@ const CreateVibe = ({
                 />
               </div>
 
-              {isTrimming && (
-                <VideoEditor
-                  videoUrl={mediaUrl}
-                  onTrim={handleTrimVideo}
-                  onClose={() => setIsTrimming(false)}
-                />
-              )}
-
               {/* {isDropdownVisible && (
                 <MusicDropdown onClose={() => setDropdownVisible(false)} />
               )} */}
@@ -828,15 +834,6 @@ const CreateVibe = ({
                 </span> */}
             </div>
           )}
-
-          <Button
-            title={"Share Vibe"}
-            onClick={handleCreateVibe}
-            className={
-              "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
-            }
-            // onClick={()=>handleVibeValidation()}
-          />
         </>
       )}
     </main>
