@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { Plus_Jakarta_Sans } from "@next/font/google";
 import Image from "next/image";
 import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
+import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
+
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
@@ -68,7 +70,7 @@ const Sidebar = () => {
                     </Link>
                     <Link href="/vibes">
                         <div className="mb-[34px] flex flex-col items-center">
-                            <Image src={vibes_icon} alt="colombo"/>
+                            {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo"/> : <Image src={vibes_icon} alt="colombo"/>}
                             <p className={`${pathname === '/vibes' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Vibes</p>
                         </div>
                     </Link>
