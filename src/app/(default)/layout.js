@@ -35,6 +35,7 @@ import CreateStory from "@/components/elements/CreateStory";
 import Image from "next/image";
 import genai_pen from "../../../public/images/icons/genai_pen.svg"
 import { Plus_Jakarta_Sans } from "@next/font/google";
+import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
@@ -293,7 +294,7 @@ const DefaultLayout = ({ children }) => {
               <Link href="/vibes">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                  <Image src={vibes_icon} alt="colombo"/>
+                  {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo"/> : <Image src={vibes_icon} alt="colombo"/>}
                   </div>
                   <p
                     className={`${pathname === "/vibes"
