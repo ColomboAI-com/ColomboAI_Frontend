@@ -24,7 +24,7 @@ import {
 import NotificationBar from "@/components/notifications/NotificationBar";
 import { messaging } from "@/utlils/firebaseConfig";
 import { getToken } from "firebase/messaging";
-
+import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
 // import { ROOT_URL_NOTIFICATION } from "@/utlils/rootURL"
 import { handleError } from "@/utlils/handleError";
 import axios from "axios";
@@ -293,19 +293,15 @@ const DefaultLayout = ({ children }) => {
               <Link href="/vibes">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <TaskBotIcon
-                      w="30"
-                      h="30"
-                      fill={pathname === "/task-bot" ? "#1E71F2" : "#8E8E93"}
-                    />
+                  <Image src={vibes_icon} alt="colombo"/>
                   </div>
                   <p
-                    className={`${pathname === "/task-bot"
+                    className={`${pathname === "/vibes"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
                       } text-center text-[14px] mt-3`}
                   >
-                    Task bot
+                    Vibes
                   </p>
                 </div>
               </Link>
