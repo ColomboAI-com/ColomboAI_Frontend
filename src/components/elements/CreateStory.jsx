@@ -100,6 +100,7 @@ const CreateStory = ({}) => {
           //   onClick={handleTextClick}
           onLoad={handleImageLoad}
         />
+        <button className="absolute bottom-0 rounded-lg p-3 text-black bg-white">Temp Share button</button>
         {addMusic && (
           <div
             className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
