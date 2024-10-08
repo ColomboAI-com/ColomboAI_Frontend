@@ -56,7 +56,19 @@ export default function RenderFeed({ filter }) {
           posts.map((i, index) => (
             <Fragment key={index}>
             <Post post={i} />
-          {(index + 1) % 4 === 0 && <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5"><FooterAdComponent divid={`feed-ad-${index}`}/></div>}
+          {(index + 1) % 4 === 0 && 
+          // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
+          //   <FooterAdComponent divid={`feed-ad-${index}`}/>
+          // </div>
+          <div className="overflow-x-hidden border-[1px] border-brandprimary rounded-[10px] mt-5">
+        <div className="flex lg:flex-row md:flex-row flex-col border border-red-400 items-center justify-between px-[16px] py-[12px]">
+        Sponsored Ad
+      </div>
+      <div className="border border-yellow-400 max-w-[100%] overflow-hidden ">
+            <FooterAdComponent divid={`feed-ad-${index}`}/>
+           </div>
+      </div>
+          }
           </Fragment>
           ))
           : <NoDataFound className={'mt-5'} />
