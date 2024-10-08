@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
+import axios from "axios";
+import {ROOT_URL_AUTH } from "@/utlils/rootURL"
 
 const CaptionBox = ({ captionInput, setCaptionInput }) => {
   // const [captionInput, setCaptionInput] = useState("");
@@ -15,6 +17,9 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [searchUsersDetails, setSearchUsersDetails] = useState([]);  
+  const [loading, setLoading] = useState(false); 
+  
 
   const handleCharCount = (text) => {
     const count = text.length;
@@ -24,33 +29,60 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
     // setTextColor(remainingChars < 0 ? "#FF0000" : "#D1D1D1");
   };
 
-  const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
-  useEffect(() => {
-    // Filter users based on search input
-    setFilteredUsers(
-      allUsers.filter((user) =>
-        user.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search]);
+  // const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
+  // useEffect(() => {
+  //   // Filter users based on search input
+  //   setFilteredUsers(
+  //     allUsers.filter((user) =>
+  //       user.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   );
+  // }, [search]);
 
-  const handleClick = () => {
-    setShowUsers((prevShowUsers) => !prevShowUsers);
+  // const handleClick = () => {
+  //   setShowUsers((prevShowUsers) => !prevShowUsers);
+  // };
+  const searchUsers = async () => {
+    setLoading(true);  // Set loading to true when starting the request
+    try {
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?limit=5`);  // Adjust the query if needed
+      setSearchUsersDetails(res?.data?.results);  // Store fetched users
+      setShowUsers(true);  // Show users once they are fetched
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    } finally {
+      setLoading(false);  // Set loading to false after the request finishes
+    }
   };
 
+  // Handle the button click to fetch and display users
+  const handleTagUsers = () => {
+    if (selectedUsers.length === 0) {
+      searchUsers();  // Fetch users if no users are tagged
+    } else {
+      setSelectedUsers([]);  // Clear selected users (untagging)
+      setShowUsers(false);   // Hide users
+    }
+  };
+
+  // Handle user selection
   const handleUserClick = (user) => {
-    setSelectedUsers((prevSelectedUsers) => {
-      if (prevSelectedUsers.includes(user)) {
-        // Remove user if already selected
-        return prevSelectedUsers.filter(
-          (selectedUser) => selectedUser !== user
-        );
-      } else {
-        // Add user if not selected
-        return [...prevSelectedUsers, user];
-      }
-    });
+    // Add/remove users from the selectedUsers state (your existing logic)
   };
+
+  // const handleUserClick = (user) => {
+  //   setSelectedUsers((prevSelectedUsers) => {
+  //     if (prevSelectedUsers.includes(user)) {
+  //       // Remove user if already selected
+  //       return prevSelectedUsers.filter(
+  //         (selectedUser) => selectedUser !== user
+  //       );
+  //     } else {
+  //       // Add user if not selected
+  //       return [...prevSelectedUsers, user];
+  //     }
+  //   });
+  // };
 
   const handlePostInputChange = (e) => {
     const newText = e.target.value;
@@ -79,7 +111,7 @@ const CaptionBox = ({ captionInput, setCaptionInput }) => {
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
       <div className={buttonClass} style={{ position: 'absolute', top: '700px', left: '250px' }}>
-  <button onClick={handleClick}>
+  <button onClick={handleTagUsers}>
     {selectedUsers.length > 0 ? "Tagged" : "Tag People"}
   </button>
 </div>

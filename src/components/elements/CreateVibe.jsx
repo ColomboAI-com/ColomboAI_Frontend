@@ -341,6 +341,17 @@
                 }}
               />
             )}
+             {isDropdownVisible && (
+                <div className="absolute top-12 right-4 bg-white shadow-lg p-4 rounded z-20">
+                    {/* Your music dropdown content goes here */}
+                    <h3>Your Music Dropdown</h3>
+                    <ul>
+                        <li>Music Item 1</li>
+                        <li>Music Item 2</li>
+                        <li>Music Item 3</li>
+                    </ul>
+                </div>
+            )}
             {isColorPickerVisible ?
               <div draggable={true}>
                 <textarea
@@ -397,7 +408,11 @@
                 >
                   <TextShadowIcon />
                 </button>
-                <button className="w-10 h-10 flex flex-row justify-center items-center">
+                <button className="w-10 h-10 flex flex-row justify-center items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDropdownVisible(!isDropdownVisible); // Toggle dropdown visibility
+              }}>
                   <MusicNotePlusIcon />
                 </button>
               </div>
