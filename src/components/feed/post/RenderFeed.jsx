@@ -32,7 +32,7 @@ export default function RenderFeed({ filter }) {
     return <Loader className={'mt-5'} />
 
   return (
-    <div>
+    <div className="sm:px-2 md:px-0">
       {
         posts.length ?
           posts.map((i, index) =>
