@@ -71,15 +71,7 @@ const Stories = () => {
           allStories.map((story, index) => {
             return <ViewStory data={story} key={index} />
           })
-        }
-        {/* <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/> */}
+        } 
       </Slider>
     </div>
   );

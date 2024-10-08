@@ -28,15 +28,43 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.GCP_SSH_KEY }}
-      
+
     - name: Deploy to GCP Instance
       env:
         GCP_INSTANCE_IP: ${{ secrets.GCP_INSTANCE_IP }}
         GCP_USERNAME: ${{ secrets.GCP_USERNAME }}
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_INSTANCE_IP << 'ENDSSH'
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $GCP_USERNAME@$GCP_INSTANCE_IP << 'EOF'
           set -e
+
+          # Install Node.js if it's not available
+          if ! command -v node &> /dev/null; then
+            echo "Node.js is not installed. Installing..."
+            curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+            sudo apt-get install -y nodejs
+          fi
+
+          # Navigate to the QA directory
           cd /var/www/html/adfjrgjf/DEV
-          git config --global url.https://${{ secrets.GH_TOKEN }}@github.com/.insteadOf https://github.com/
-          
-        ENDSSH
+
+          # Stash local changes to avoid conflicts
+          git stash
+
+          # Pull the latest changes from the GitHub repository
+          git pull origin dev
+
+          # Install project dependencies
+          npm install
+
+          # Rebuild the project (optional)
+          npm run build
+
+          # Install PM2 if it's not installed
+          if ! command -v pm2 &> /dev/null; then
+            echo "PM2 is not installed. Installing..."
+            sudo npm install -g pm2
+          fi
+          # Restart the application using PM2
+          pm2 restart all
+                  
+        EOF
