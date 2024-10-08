@@ -63,7 +63,7 @@ const FooterAdComponent = ({divid}) => {
 
       </Head>
    
-    <div id={divid} style={{ minWidth: '88px', minHeight: '20px' }}>
+    <div id={divid} >
    
     </div> 
    
