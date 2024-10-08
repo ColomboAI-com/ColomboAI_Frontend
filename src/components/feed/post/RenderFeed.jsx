@@ -50,13 +50,13 @@ export default function RenderFeed({ filter }) {
     return <Loader className={'mt-5'} />
 
   return (
-    <div>
+    <div className="">
       {
         posts.length ?
           posts.map((i, index) => (
             <Fragment key={index}>
             <Post post={i} />
-          {(index + 1) % 4 === 0 && <div className="border border-red-400 mt-5"><FooterAdComponent divid={`feed-ad-${index}`}/></div>}
+          {(index + 1) % 4 === 0 && <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5"><FooterAdComponent divid={`feed-ad-${index}`}/></div>}
           </Fragment>
           ))
           : <NoDataFound className={'mt-5'} />
