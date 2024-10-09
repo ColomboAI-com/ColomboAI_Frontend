@@ -39,10 +39,11 @@ const CommentSection = ({ specificPostId, posts }) => {
     const fetchComments = async () => {
       try {
         const res = await getComments(specificPostId, page);
-         if (res && res.comments) {
-            setComments((prevComments) => [...prevComments, ...res.comments]);
-            setHasMore(res.currentPage < res.totalPages);}
-        
+        if (res && res.comments) {
+          setComments((prevComments) => [...prevComments, ...res.comments]);
+          setHasMore(res.currentPage < res.totalPages);
+        }
+
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -183,8 +184,32 @@ const CommentSection = ({ specificPostId, posts }) => {
   }, [pickerRef]);
 
   return (
-    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] xl:overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
-      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
+    <div className="bg-[black] py-20 xl:flex w-full xl:overflow-hidden lg:flex-row lg:h-full  md:flex-col md:overflow-auto sm:flex-col sm:overflow-auto">
+      <div className="h-full w-full">
+
+        {posts?.type === "image" && (
+          <img
+            src={posts?.media[0]}
+            className="w-full h-full aspect-video object-contain"
+          />
+        )}
+        {posts?.type === "video" && (
+          <video
+            className="inset-0 w-full h-full aspect-video"
+            src={posts?.media[0]}
+            controls
+          >
+            Your browser does not support the video tag.
+          </video>
+        )}
+        {posts?.type === "" && (
+          <img
+            src="/images/home/feed-banner-img.png"
+            className="w-full h-full aspect-video"
+          />
+        )}
+      </div>
+      {/* <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
           <button
             onClick={() => setIsCommentOpen(false)}
@@ -193,31 +218,8 @@ const CommentSection = ({ specificPostId, posts }) => {
             <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
           </button>
         </div>
-        <div className="h-[90%]  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
 
-          {posts?.type === "image" && (
-            <img
-              src={posts?.media}
-              className="w-full h-full aspect-video h-[-webkit-fill-available] object-contain"
-            />
-          )}
-          {posts?.type === "video" && (
-            <video
-              className="inset-0 w-full h-full aspect-video h-[-webkit-fill-available]"
-              src={posts?.media}
-              controls
-            >
-              Your browser does not support the video tag.
-            </video>
-          )}
-          {posts?.type === "" && (
-            <img
-              src="/images/home/feed-banner-img.png"
-              className="w-full h-full aspect-video h-[-webkit-fill-available]"
-            />
-          )}
-        </div>
-      </div>
+      </div> */}
       <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[85vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a
