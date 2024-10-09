@@ -14,6 +14,7 @@ import Draggable from "react-draggable";
 import StoryMagicText from "./StoryMagicText";
 import music_check from "../../../public/images/icons/music_check.svg";
 import musicIcon from "../../../public/images/icons/musicIcon.svg";
+import { StoryContext } from "@/context/StoryContext";
 
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
@@ -29,6 +30,7 @@ const CreateStory = ({}) => {
     setIsSelectedFromComputer,
     storyMediaType,
     storyCaptionBool,
+    storyFile,
   } = useContext(GlobalContext);
   const imgRef = useRef(null);
   const [createText, setCreateText] = useState(false);
@@ -42,6 +44,9 @@ const CreateStory = ({}) => {
   const [textColor, setTextColor] = useState("#000000");
   const [captionInput, setCaptionInput] = useState("");
   const [confirmSong, setConfirmSong] = useState(false);
+
+  const { createStory } = useContext(StoryContext);
+
   const toggleText = () => {
     setIsMagicPenOpen(false);
     setAddMusic(false);
@@ -80,6 +85,19 @@ const CreateStory = ({}) => {
     setAddMusic(false);
     setIsMagicPenOpen(!isMagicPenOpen);
   };
+
+  const handleCreateStory = async () => {
+    const res = await createStory({
+      fileType: storyFile.type.split("/")[0],
+      file: storyFile,
+      content: "Default Content",
+    });
+    console.log(res);
+    if (res.success) {
+      window.location.reload();
+    }
+  };
+
   return (
     <div className={`flex flex-row w-full justify-center py-[3.5rem] ${font.className}`}>
       <div>
@@ -100,7 +118,9 @@ const CreateStory = ({}) => {
           //   onClick={handleTextClick}
           onLoad={handleImageLoad}
         />
-        <button className="absolute bottom-0 rounded-lg p-3 text-black bg-white">Temp Share button</button>
+        <button className="absolute bottom-0 rounded-lg p-3 text-black bg-white" onClick={handleCreateStory}>
+          Temp Share button
+        </button>
         {addMusic && (
           <div
             className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
