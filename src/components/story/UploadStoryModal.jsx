@@ -87,7 +87,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           </div>
           <div>
             <p className="text-2xl font-sans tracking-wider">
-              Create new story
+              Create New Story
             </p>
           </div>
           <div className="flex items-center gap-6">

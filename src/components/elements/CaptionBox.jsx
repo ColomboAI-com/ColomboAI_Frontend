@@ -87,12 +87,16 @@ const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
     <div className={`mx-auto flex flex-col ${font.className}`} style={{width: width ? `${width}px` : `auto`}}>
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
-      <div className={`flex text-white w-[105px] rounded-tr-lg h-[22px] items-center ${selectedUsers.length > 0 ? "bg-blue-500" : "bg-gray-500"
-        }`}>
+      <div
+  className={`flex text-white w-[120px] rounded-tr-lg h-[22px] items-center transition-shadow duration-3000 ease-in-out ${selectedUsers.length > 0 ? "bg-blue-500 hover:shadow-[0_0_15px_5px_rgba(0,150,255,0.5)]" : "bg-gray-500 hover:shadow-[0_0_15px_5px_rgba(100,100,100,0.5)]"
+  }`}
+>
+
+
         <button onClick={handleClick}>
           <div className="flex flex-row items-center gap-1">
             <Image src={tag} alt="colombo" />
-            <p>{selectedUsers.length > 0 ? "Tagged" : "Tag People"}</p>
+            <p>{selectedUsers.length > 0 ? "Tagged "+selectedUsers.length: "Tag People"}</p>
           </div>
         </button>
       </div>
@@ -100,7 +104,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
         {showUsers ?
           <div className=" bg-brandprimary text-black p-4 rounded-lg shadow-lg flex flex-col items-center max-h-[197px] hide-scrollbar overflow-y-auto">
               <hr className="border-t-[3px] rounded-full w-[2rem] border-white mb-1" />
-            <p className="mb-4 flex justify-center text-white text-sm font-[600]">Tag people</p>
+            <p className="mb-4 flex justify-center text-white text-sm font-[600]">Tag People</p>
             <div className="flex flex-col bg-white rounded-lg w-full">
               <div className="flex flex-row justify-between items-center border-b-[1px] border-gray-300 p-2">
                 <div className="flex flex-row items-center gap-1">
