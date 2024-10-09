@@ -246,7 +246,7 @@ const DefaultLayout = ({ children }) => {
               </div>
             </div>}
                 {(isCreateVibeOpen && isSelectedFromComputer) && (
-                  <div className="bg-[#333333] w-full h-full">
+                  <div className="bg-[#e0d5d5] w-full h-50">
                     <CreateVibe
                       uploadedFile={uploadedFile}
                       onFileUpload={handleFileUpload}
