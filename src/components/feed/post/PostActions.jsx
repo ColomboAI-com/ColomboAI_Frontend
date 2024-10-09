@@ -41,6 +41,10 @@ export default function PostActions({ post }) {
         <button onClick={() => handleShare(post._id)} className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 gap-1">
           <Image src={reply_icon} alt="colombo" />
         </button>
+        <button onClick={() => handleShare(post._id)} className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 gap-1">
+          {/* <RePostIcon fill={'#646464'}/> */}
+          <RePost/>
+        </button>
       </div>
       <div className="flex items-center lg:gap-[19px] md:gap-[19px] gap-[10px]">
         <MagicPenIcon />
