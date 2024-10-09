@@ -303,7 +303,7 @@ const CreateVibe = ({
               )}
             </div>
             <div className="flex-grow flex justify-center">
-              <p className="pl-[17px]  text-2xl  tracking-wider ">Create new Vibes</p>
+              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">Create New Vibes</p>
             </div>
             <button onClick={() => setIsCreateVibeOpen(false)}>
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
@@ -333,7 +333,7 @@ const CreateVibe = ({
               visible={true}
               height="25"
               width="25"
-              color="#1E71F2"
+              color="##141212"
               radius="9"
               ariaLabel="three-dots-loading"
               wrapperStyle={{}}
@@ -352,7 +352,7 @@ const CreateVibe = ({
         >
           <div>
             <button onClick={(e) => onReset()} className="mr-6">
-              <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+              <BackButtonIcon w={20} h={20} fill={"#141212"} />
             </button>
           </div>
           {/* <img

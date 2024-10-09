@@ -123,7 +123,7 @@ const CreatePost = () => {
             )}
           </div>
           <div className="flex items-center">
-            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create new Post</p>
+            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create New Post</p>
           </div>
           <div className="flex items-center gap-6">
             <button
