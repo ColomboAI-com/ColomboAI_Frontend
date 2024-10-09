@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { Plus_Jakarta_Sans } from "@next/font/google";
 import Image from "next/image";
 import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
+import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
+
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
@@ -41,8 +43,8 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className={`xl:w-[100%] lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${plusJakartaSans.className}`}>
-                <div className="lg:mb-[46px] xl:mt-[20px] lg:mt-[6rem] relative">
+            <div className={`xl:w-[100%]  lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${plusJakartaSans.className}`}>
+                <div className="lg:mb-[46px] md:mt-[6rem] md:mb-[46px] xl:mt-[6rem] lg:mt-[6rem] relative">
 
                     <Dropdown
                         offset={[0, 10]}
@@ -68,7 +70,7 @@ const Sidebar = () => {
                     </Link>
                     <Link href="/vibes">
                         <div className="mb-[34px] flex flex-col items-center">
-                            <Image src={vibes_icon} alt="colombo"/>
+                            {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo"/> : <Image src={vibes_icon} alt="colombo"/>}
                             <p className={`${pathname === '/vibes' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Vibes</p>
                         </div>
                     </Link>

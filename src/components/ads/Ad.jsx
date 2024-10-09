@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-const FooterAdComponent = () => {
+const FooterAdComponent = ({divid}) => {
     useEffect(() => {
         const loadGPTScript = () => {
           return new Promise((resolve, reject) => {
@@ -22,11 +22,11 @@ const FooterAdComponent = () => {
                   console.log('Defining ad slot...');
                  
                   window.googletag.defineSlot('/23102803892/Genai_728v_footer', [[728, 90], [320, 50], [168, 42], [88, 31], [120, 20], [216, 36], [120, 90], [234, 60], [120, 60], [120, 30], [300, 50], [216, 54], [468, 60], [300, 75], [168, 28]],
-                     'div-gpt-ad-1726060291570-0')
+                    divid)
                   .addService(window.googletag.pubads());
                   
-                //   console.log('Enabling single request mode...');
-                //   window.googletag.pubads().enableSingleRequest();
+                  // console.log('Enabling single request mode...');
+                  // window.googletag.pubads().enableSingleRequest();
                   
                   console.log('Collapsing empty divs...');
                   window.googletag.pubads().collapseEmptyDivs();
@@ -37,7 +37,7 @@ const FooterAdComponent = () => {
                   console.log('Displaying ad...');
                   
 
-                  window.googletag.display('div-gpt-ad-1726060291570-0');
+                  window.googletag.display(divid);
                   
                 } catch (error) {
                   console.error('Error setting up Google Publisher Tag:', error);
@@ -63,7 +63,7 @@ const FooterAdComponent = () => {
 
       </Head>
    
-    <div id='div-gpt-ad-1726060291570-0' style={{ minWidth: '88px', minHeight: '20px' }}>
+    <div id={divid} >
    
     </div> 
    

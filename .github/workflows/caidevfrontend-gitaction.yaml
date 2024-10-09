@@ -53,9 +53,6 @@ jobs:
           # Pull the latest changes from the GitHub repository
           git pull origin dev
 
-          # Apply stashed changes, if any
-          git stash pop || echo "No stashed changes to apply."
-
           # Install project dependencies
           npm install
 
