@@ -39,7 +39,7 @@ const Post = ({ post }) => {
             <p className="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">
               {formatTimeAgo(post?.createdAt)}
             </p>
-            <Dropdown
+            {/* <Dropdown
               offset={[0, 10]}
               placement="bottom-start"
               btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
@@ -48,7 +48,7 @@ const Post = ({ post }) => {
               <ul className="rounded bg-white shadow-md">
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleDeletePost}>Delete Post</li>
               </ul>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
 

@@ -66,7 +66,8 @@ export default function FeedContextProvider({ children }) {
         },
       });
 
-      setPosts((prev) => [res.data?.post, ...prev]);
+      //setPosts((prev) => [res.data, ...prev]);
+      window.location.reload();
       return res.data;
     } catch (err) {
       handleError(err);
