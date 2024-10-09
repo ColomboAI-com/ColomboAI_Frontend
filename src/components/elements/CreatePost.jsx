@@ -6,6 +6,7 @@ import { GlobalContext } from "@/context/GlobalContext";
 import { ThreeDots } from "react-loader-spinner";
 import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
+import { constructFrom } from "date-fns";
 
 const CreatePost = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -53,6 +54,7 @@ const CreatePost = () => {
 
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
+
     if (selectedFiles.length > 0) {
       setFile(selectedFiles);
 
@@ -87,7 +89,7 @@ const CreatePost = () => {
   };
 
   const handleCreatePost = async () => {
-    const res = await createPost({ type: postType, files: file, content: postInput });
+    const res = await createPost({ type: postType, files: file, mediaUrl, content: postInput });
     console.log(res);
     if (res) {
       MessageBox("success", res.message);

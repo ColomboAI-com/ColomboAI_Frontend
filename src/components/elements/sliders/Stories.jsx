@@ -46,7 +46,7 @@ const Stories = () => {
   const gerRecentStory = async () => {
     const res = await getRecentStories()
     if (res) {
-      SetAllStories(res?.data?.recentStories)
+      SetAllStories(res?.data)
     }
   }
 
@@ -67,8 +67,7 @@ const Stories = () => {
       <Slider {...settings}>
         <CreateStoryQuick reFetchingStory={reFetchingStory}/>
 
-        {
-          allStories.map((story, index) => {
+        {allStories && allStories.map((story, index) => {
             return <ViewStory data={story} key={index} />
           })
         } 

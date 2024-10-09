@@ -20,19 +20,18 @@ import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
 import MusicOverlay from "./MusicOverlay";
 import { VideoEditor } from "./VideoEditor";
-import next from "next";
 import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import tmp_trim from "../../../public/images/vibes/tmp_trim.png";
 import Image from "next/image";
 import { set } from "date-fns";
 import { VibeContext } from "@/context/VibeContext";
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -277,7 +276,7 @@ const CreateVibe = ({
   }, [mediaUrl]);
 
   return (
-    <main className={plusJakartaSans.className}>
+    <main className={font.className}>
       {/* The Share Vibe button is placed here for testing purposes; will be move the the right place in the vibe creation process */}
       <Button
         title={"Share Vibe"}
