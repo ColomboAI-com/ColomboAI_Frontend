@@ -43,14 +43,14 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className={`xl:w-[100%]  lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${font.className}`}>
-                <div className="lg:mb-[46px] md:mt-[6rem] md:mb-[46px] xl:mt-[6rem] lg:mt-[6rem] relative">
+            <div className={`xl:w-[100%]  lg:w-[3.5rem]  ${font.className}`}>
+                <div className="lg:mb-[40px] md:mt-[1.5rem] md:mb-[46px] xl:mt-[1.5rem] lg:mt-[1.5rem] relative">
 
                     <Dropdown
                         offset={[0, 10]}
                         placement="bottom-start"
                         btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-                        button={<ProfilePicture image={profilePic} />}
+                        button={<ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] " image={profilePic} />}
                     >
                         <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                             <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li></Link>
@@ -70,7 +70,7 @@ const Sidebar = () => {
                     </Link>
                     <Link href="/vibes">
                         <div className="mb-[34px] flex flex-col items-center">
-                            {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo"/> : <Image src={vibes_icon} alt="colombo"/>}
+                            {pathname === '/vibes' ? <Image src={blue_vibes_icon} width={24} height={24} alt="colombo"/> : <Image width={24} height={24} src={vibes_icon} alt="colombo"/>}
                             <p className={`${pathname === '/vibes' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Vibes</p>
                         </div>
                     </Link>
