@@ -22,7 +22,7 @@ const Trending = () => {
         //     </div>
         // </div>
 
-        <div className="relative max-w-xl mx-2 mt-2 border-[0.25px] border-brandprimary rounded-lg shadow-[1px_1px_2px_0px_#0000004D">
+        <div className="relative max-w-xl mx-2 mt-2 border-[0.25px] border-brandprimary rounded-[0.96rem] shadow-[1px_1px_2px_0px_#0000004D">
             <img className="h- w-full object-cover rounded-l" src="/images/home/reel-img.svg" alt="Random image"/>
             <div className="absolute inset-0 rounded-l  bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
             <div className="flex items-center pl-2 absolute bottom-2">

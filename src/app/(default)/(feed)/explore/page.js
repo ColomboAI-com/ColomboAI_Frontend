@@ -4,7 +4,7 @@ import Suggetions from "@/components/explorer/Suggetions"
 
 const Explore = () => {
     return (
-        <div className="sm:px-2 md:px-0">
+        <div className="sm:mx-[1rem] md:mx-[2.5rem] xl:mx-[0rem]">
             <SearchProfile />
             <Suggetions />
         </div>
