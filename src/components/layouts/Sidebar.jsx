@@ -44,7 +44,7 @@ const Sidebar = () => {
         <>
             {/* Desktop View */}
             <div className={`xl:w-[100%]  lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${plusJakartaSans.className}`}>
-                <div className="lg:mb-[46px] md:mt-[6rem] md:mb-[46px] xl:mt-[6rem] lg:mt-[6rem] relative">
+                <div className="lg:mb-[46px] md:mt-[1.5rem] md:mb-[46px] xl:mt-[1.5rem] lg:mt-[1.5rem] relative">
 
                     <Dropdown
                         offset={[0, 10]}
