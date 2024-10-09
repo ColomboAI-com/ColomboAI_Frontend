@@ -87,3 +87,167 @@
 //         </div>
 //     );
 // }
+
+
+
+
+
+
+
+
+
+import React, { useState } from 'react';
+// import './NotificationComponent.css'; // Assuming you have this file for additional styling
+
+const NotificationBar = () => {
+  const [activeTab, setActiveTab] = useState('mentions');
+
+  // Generate unique IDs for each notification item
+  const generateUniqueId = () => `id-${Math.random().toString(36).substr(2, 9)}`;
+
+  const [notifications, setNotifications] = useState({
+    Activities: [
+        { id: generateUniqueId(), username: 'johnDoe', action: 'liked your post', time: '1h' },
+        { id: generateUniqueId(), username: 'janeDoe', action: 'commented on your post', time: '2h' },
+        { id: generateUniqueId(), username: 'johnDoe', action: 'liked your post', time: '1h' },
+        { id: generateUniqueId(), username: 'janeDoe', action: 'commented on your post', time: '2h' },
+        { id: generateUniqueId(), username: 'janeDoe', action: 'started following you', time: '2h' },
+        { id: generateUniqueId(), username: 'johnDoe', action: 'started following you', time: '1h' },
+        { id: generateUniqueId(), username: 'janeDoe', action: 'started following you', time: '2h' },
+        { id: generateUniqueId(), username: 'johnDoe', action: 'liked your post', time: '1h' },
+        { id: generateUniqueId(), username: 'janeDoe', action: 'commented on your post', time: '2h' },
+        { id: generateUniqueId(), username: 'janeDoe', action: 'commented on your post', time: '2h' },
+    ],
+    mentions: [
+     
+      { id: generateUniqueId(), username: 'johnDoe', action: 'mentioned you in a post', time: '1h' },
+      { id: generateUniqueId(), username: 'janeDoe', action: 'mentioned you in a comment', time: '2h' },
+      { id: generateUniqueId(), username: 'johnDoe', action: 'mentioned you in a post', time: '1h' },
+      { id: generateUniqueId(), username: 'janeDoe', action: 'mentioned you in a comment', time: '2h' },
+      { id: generateUniqueId(), username: 'johnDoe', action: 'mentioned you in a post', time: '1h' },
+      { id: generateUniqueId(), username: 'janeDoe', action: 'mentioned you in a comment', time: '2h' },
+      { id: generateUniqueId(), username: 'johnDoe', action: 'mentioned you in a post', time: '1h' },
+      { id: generateUniqueId(), username: 'janeDoe', action: 'replied on your comment', time: '2h' },
+      { id: generateUniqueId(), username: 'janeDoe', action: 'tagged in post', time: '2h' },
+      { id: generateUniqueId(), username: 'johnDoe', action: 'mentioned you in a post', time: '1h' },
+      { id: generateUniqueId(), username: 'janeDoe', action: 'mentioned you in a comment', time: '2h' },
+
+    ],
+    notices: [
+        { id: generateUniqueId(), username: 'System', action: 'Exciting news! New chat features rolling out soon. Stay tuned for more updates!', time: '1h' },
+        { id: generateUniqueId(), username: 'System', action: 'Reminder: App maintenance scheduled for tomorrow at 10 AM GMT. Please plan accordingly. Thank you!', time: '2h' },
+        { id: generateUniqueId(), username: 'System', action: 'Have you tried our latest filters? Spice up your post with fun effects now!', time: '3h' },
+        { id: generateUniqueId(), username: 'System', action: 'Exciting news! New chat features rolling out soon. Stay tuned for more updates!', time: '4h' },
+        { id: generateUniqueId(), username: 'System', action: 'Reminder: App maintenance scheduled for tomorrow at 10 AM GMT. Please plan accordingly. Thank you!', time: '5h' },
+        { id: generateUniqueId(), username: 'System', action: 'Have you tried our latest filters? Spice up your post with fun effects now!', time: '6h' },
+        { id: generateUniqueId(), username: 'System', action: 'Exciting news! New chat features rolling out soon. Stay tuned for more updates!', time: '7h' },
+        { id: generateUniqueId(), username: 'System', action: 'Reminder: App maintenance scheduled for tomorrow at 10 AM GMT. Please plan accordingly. Thank you!', time: '8h' },
+      ],
+  });
+
+  const containerStyle = {
+    border: '1px solid #e2e8f0',
+    borderRadius: '8px',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    maxWidth: '400px',
+    margin: '0 auto',
+    padding: '0',
+    backgroundColor: '#ffffff',
+  };
+
+  const headerStyle = {
+    padding: '16px',
+    borderBottom: '1px solid #e5e7eb',
+    position: 'sticky',
+    top: '0',
+    backgroundColor: '#ffffff',
+    zIndex: '10',
+  };
+
+  const tabButtonStyle = (isActive) => ({
+    padding: '8px 16px',
+    fontWeight: isActive ? 'bold' : 'normal',
+    cursor: 'pointer',
+    borderBottom: isActive ? '2px solid #3b82f6' : 'none',
+    color: isActive ? '#3b82f6' : '#4b5563',
+  });
+
+  const notificationListStyle = {
+    maxHeight: '300px',
+    overflowY: 'auto',
+    padding: '16px',
+  };
+
+  const handleFollowBack = (username) => {
+    console.log(`Follow Back ${username}`);
+    // Implement follow back functionality here
+  };
+
+  return (
+    <div style={containerStyle}>
+      {/* Sticky Header */}
+      <div style={headerStyle} className="header">
+        <div className="flex justify-between items-center mb-4">
+          <h2 style={{ fontSize: '18px', fontWeight: 'bold' }}>Notifications</h2>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+          <button
+            style={tabButtonStyle(activeTab === 'Activities')}
+            onClick={() => setActiveTab('Activities')}
+          >
+            Activities
+          </button>
+          <button
+            style={tabButtonStyle(activeTab === 'mentions')}
+            onClick={() => setActiveTab('mentions')}
+          >
+            Mentions
+          </button>
+          <button
+            style={tabButtonStyle(activeTab === 'notices')}
+            onClick={() => setActiveTab('notices')}
+          >
+            Notices
+          </button>
+        </div>
+      </div>
+
+      {/* Notification List */}
+      <div style={notificationListStyle}>
+        <ul>
+          {notifications[activeTab].map((notification) => (
+            <li key={notification.id} style={{ padding: '12px 0', borderBottom: '1px solid #e5e7eb' }}>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <img
+                  src={`https://via.placeholder.com/40?text=${notification.username}`}
+                  alt={notification.username}
+                  style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '12px' }}
+                />
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '4px' }}>
+                    {notification.username}
+                  </p>
+                  <p style={{ fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
+                    {notification.action}
+                  </p>
+                  <p style={{ fontSize: '10px', color: '#9ca3af' }}>{notification.time}</p>
+                </div>
+                {/* Conditionally render follow back button */}
+                {notification.action === 'started following you' && (
+                  <button
+                    onClick={() => handleFollowBack(notification.username)}
+                    style={{ padding: '4px 8px', cursor: 'pointer', backgroundColor: '#3b82f6', color: '#ffffff', borderRadius: '4px', border: 'none' }}
+                  >
+                    Follow Back
+                  </button>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default NotificationBar;
