@@ -17,6 +17,7 @@ export default function GlobalContextProvider({ children }) {
   let [storyMediaType, setStoryMediaType] = useState("");
   let [storyCaptionBool, setStoryCaptionBool] = useState(false);
   let [storyFile, setStoryFile] = useState(null);
+  let [openMagicPenWithIcon, setOpenMagicPenWithIcon] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -47,6 +48,8 @@ export default function GlobalContextProvider({ children }) {
         setStoryCaptionBool,
         storyFile,
         setStoryFile,
+        openMagicPenWithIcon,
+        setOpenMagicPenWithIcon,
       }}
     >
       {children}
