@@ -33,7 +33,7 @@ export default function VibeContextProvider({ children }) {
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content, songId);
+    // console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -89,7 +89,6 @@ export default function VibeContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-      console.log(response.data.vibes)
       setVibes(prev => ([...prev, ...response.data?.vibes || []]))
     } catch (error) {
       handleError(error);
@@ -186,6 +185,11 @@ export default function VibeContextProvider({ children }) {
     });
   };
 
+  const resetFeedValues = () => {
+    setVibes([]);
+    setPage(1);
+  };
+
 
   return (
     <VibeContext.Provider
@@ -198,7 +202,8 @@ export default function VibeContextProvider({ children }) {
         discardVibe, 
         deleteVibe,
         archiveVibe, 
-        fetchSongById
+        fetchSongById,
+        resetFeedValues
       }}
     >
       {children}

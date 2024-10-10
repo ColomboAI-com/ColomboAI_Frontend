@@ -15,12 +15,13 @@ import RenderFeed from "@/components/feed/post/RenderFeed";
 import { IoIosMusicalNotes } from "react-icons/io";
 import RepostVibe from "@/components/feed/vibes/Repost";
 import ShareVibe from "@/components/feed/vibes/Share";
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import BannerAdComponent from "@/components/feed/vibes/BannerAd";
 import SponsoredAdComponent from "@/components/feed/vibes/SponsoredAd";
 import { VibeContext } from "@/context/VibeContext";
+import Post from "@/components/elements/cards/Post";
 
-export default function Vibes() {
+export default function Vibes({ filter }) {
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
   const handleRepost = () => {
@@ -29,7 +30,7 @@ export default function Vibes() {
   const handleShare = () => {
     setShare(!showShare);
   };
-  const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
+  const { vibes, getVibes, loadings, page, resetFeedValues, fetchSongById } = useContext(VibeContext);
   const [song, setSong] = useState({});
 
   useEffect(() => {
@@ -46,8 +47,28 @@ export default function Vibes() {
     fetchSong();
   }, []);
 
+  useEffect(() => {
+    getVibes(filter)
+    return () => resetFeedValues()
+  }, [filter])
+
+  const handleFeedScroll = () => {
+    const feedSection = document.getElementById('feed_section')
+    if (
+      feedSection && !loadings.getPost &&
+      Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight
+    ) getPosts(filter, page)
+  }
+
+  useEffect(() => {
+    const feedSection = document.getElementById('feed_section')
+    feedSection?.addEventListener('scroll', handleFeedScroll)
+    return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
+  }, [page, loadings.getPost])
+
   // console.log(vibes);
   // console.log(song);
+
 
   return (
     <div className="border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
@@ -75,6 +96,15 @@ export default function Vibes() {
               alt="vibes_content"
             />
           )}
+
+          {/* {
+            vibes.length &&
+              vibes.map((i, index) => {
+                <Fragment key={index}>
+                  <Post post={i}/>
+                </Fragment>
+              })
+          } */}
 
           <div className=" absolute bottom-0 left-0">
             {/* whenever there is sponsored ad uncomment and call this component */}
