@@ -21,7 +21,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
   const handleAllStoriesEnd = async () => {
     const res = await viewStoryoFUser(data[0]._id);
     if (res) {
-      await setIsCreateStorySignleOpen(false)
+      await setIsCreateStorySignleOpen(false);
     }
   };
 
@@ -29,20 +29,23 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
     <div className="bg-[#1a1a1af0] p-4 grid grid-cols-3">
       {/* Left Section */}
       <div className="flex justify-end p-4 text-3xl">
-        <MdOutlineArrowBack onClick={() => setIsCreateStorySignleOpen(false)} style={{ color: '#fff', cursor: "pointer" }} />
+        <MdOutlineArrowBack
+          onClick={() => setIsCreateStorySignleOpen(false)}
+          style={{ color: "#fff", cursor: "pointer" }}
+        />
       </div>
 
       {/* Middle Section */}
       <div className="relative  m-auto">
         <div className="h-3/4 w-full rounded-[5px] justify-center story-detail-box">
-          <div className="absolute top-10 left-0 right-0 p-5 z-[9999]	">
-            <Link className="flex items-start" href={`/profile/${userData?.user_name || ''}`} target="_blank">
+          <div className="absolute top-10 left-0 right-0 p-5 z-[9999]	w-20">
+            <Link className="flex items-start" href={`/profile/${userData?.user_name || ""}`} target="_blank">
               <ProfilePicture image={userData?.profile_picture} />
-              <Username username={userData?.user_name} color={'text-[#fff]'} />
+              <Username username={userData?.user_name} color={"text-[#fff]"} />
             </Link>
           </div>
           <Stories
-            stories={data.map((story) => story.media)}
+            stories={data.map((story) => story.media[0])}
             defaultInterval={5000}
             width={432}
             height={768}
@@ -54,7 +57,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
         </div>
         <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
           <div className="relative text-white">
-            test here...
+            {/* test here... */}
             {/* <input
               type="search"
               id="search-dropdown"
@@ -125,7 +128,6 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
     </div>
   );
 }
-
 
 // "use client";
 // import { useRef } from "react";

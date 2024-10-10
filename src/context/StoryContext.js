@@ -46,7 +46,7 @@ export default function StoryContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-      return res.data.stories;
+      return res.data;
     } catch (err) {
       handleError(err);
     } finally {
