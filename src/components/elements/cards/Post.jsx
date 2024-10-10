@@ -29,14 +29,14 @@ const Post = ({ post }) => {
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
-      <div className="overflow-x-hidden border-[0.5px] border-brandprimary rounded-[10px] mt-5">
-        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[12px]">
+      <div className="overflow-x-hidden border-[0.5px] border-brandprimary sm:rounded-none md:rounded-[10px] mt-5">
+        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <Link className="flex items-center justify-start w-full md:w-fit lg:w-fit" href={`/profile/${post?.creator?.user_name || ''}`} target="_blank">
-            <ProfilePicture image={post?.creator?.profile_picture} />
-            <Username username={post?.creator?.user_name} />
+            <ProfilePicture image={post?.creator?.profile_picture} size={'w-[2rem]'}/>
+            <Username username={post?.creator?.user_name} className="text-[12px]"/>
           </Link>
           <div className="flex items-center gap-4 justify-between pl-2 lg:w-fit md:w-fit w-full">
-            <p className="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">
+            <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">
               {formatTimeAgo(post?.createdAt)}
             </p>
             {/* <Dropdown
@@ -55,7 +55,7 @@ const Post = ({ post }) => {
         {post?.type === 'image' && <ImageBlock image={post.media} />}
         {post?.type === 'video' && <VideoBlock video={post.media} />}
         {post?.content && <ContentBlock content={post.content} />}
-        <div className="px-[16px] py-[12px]">
+        <div className="px-[12px] py-[2px]">
           {post &&
             <>
               <PostActions post={post} />

@@ -3,7 +3,7 @@ import Suggested from "../cards/Suggested";
 
 var settings = {
   dots: false,
-  arrow: true,
+  arrow: false,
   infinite: true,
   speed: 500,
   slidesToShow: 5,

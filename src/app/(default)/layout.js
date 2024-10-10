@@ -36,6 +36,7 @@ import Image from "next/image";
 import genai_pen from "../../../public/images/icons/genai_pen.svg"
 import { Montserrat } from "@next/font/google";
 import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
+import path from "path";
 
 
 const font = Montserrat({
@@ -241,9 +242,9 @@ const DefaultLayout = ({ children }) => {
                 {children}
               </div>
               {/* // </> */}
-              <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
+              {(pathname === "/shop" || pathname === '/news')  ? null : <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
                 <RightSidebar />
-              </div>
+              </div>}
             </div>}
                 {(isCreateVibeOpen && isSelectedFromComputer) && (
                   <div className="bg-[#333333] w-full h-full">

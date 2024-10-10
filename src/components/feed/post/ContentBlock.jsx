@@ -7,8 +7,8 @@ export default function ContentBlock({ content }) {
   const words = content.split(/(\s+)/)
 
   return (
-    <div className="py-[12px] px-[16px]">
-      <p className="text-[#515151] tex-[24px] font-sans font-[450]">
+    <div className="py-[4px] px-[16px]">
+      <p className="text-[#515151] text-[16px] font-sans font-[450]">
         <Linkify options={{ target: '_blank', className: '' }}>
           {
             words.map((i, index) => {
