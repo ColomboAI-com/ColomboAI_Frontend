@@ -12,14 +12,18 @@ import Image from "next/image"
 
 export default function PostActions({ post }) {
 
-  const { setIsShareOpen, setIsCommentOpen, setSpecificPostId, setPosts } = useContext(GlobalContext)
+  const { setIsShareOpen, setIsCommentOpen, setSpecificPostId, setPosts, setIsRepostOpen } = useContext(GlobalContext)
 
   const handleShare = (postId) => {
     setIsShareOpen(true)
     setSpecificPostId(postId)
     setPosts(post)
   }
-
+  const handleRepost = (postId) => {
+    setIsRepostOpen(true)
+    setSpecificPostId(postId)
+    setPosts(post)
+  }
   const handleComments = (postId) => {
     setSpecificPostId(postId)
     setPosts(post)
@@ -42,7 +46,7 @@ export default function PostActions({ post }) {
           <button onClick={() => handleShare(post._id)} className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 gap-1">
             <Image src={reply_icon} alt="colombo" />
           </button>
-          <button onClick={() => handleShare(post._id)} className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 gap-1">
+          <button onClick={() => handleRepost(post._id)} className="flex items-center xl:gap-4 lg:gap-4 md:gap-4 gap-1">
             {/* <RePostIcon fill={'#646464'}/> */}
             <RePost post={post} />
           </button>

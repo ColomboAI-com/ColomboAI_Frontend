@@ -1,6 +1,6 @@
 "use client"
 import ProfilePicture from "@/components/elements/ProfilePicture"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { RePostIcon, PlusIcon ,FacebookIcon, SendIconCopy, 
   InstagramIcon, WhatsAppIcon, EmailIcon, SMSIcon,
   XIcon,
@@ -18,6 +18,26 @@ export default function ShareVibe(currentState){
     const handleVisibility =() =>{
         setIsVisible(!isVisible)
     }
+    const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dialogRef.current && !dialogRef.current.contains(event.target)) {
+        handleVisibility();
+      }
+    };
+
+    if (isVisible) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isVisible, handleVisibility]);
+
     const copyToClipboard = (param1)=>{
       navigator.clipboard.writeText(param1).then(()=>{
        
@@ -30,7 +50,9 @@ export default function ShareVibe(currentState){
         {isVisible &&
         <div className="fixed top-0 left-0 w-full h-full z-50 flex justify-center items-center ">
           <div className="bg-[#1E71F2]    
- rounded-[20px] h-[440px] w-[430px]  border border-white ">
+ rounded-[20px] h-[440px] w-[430px]  border border-white "
+ ref={dialogRef}
+ >
             
             <div className="mt-[9px]">
               <div className="flex justify-center cursor-pointer" onClick={() => handleVisibility()}>
