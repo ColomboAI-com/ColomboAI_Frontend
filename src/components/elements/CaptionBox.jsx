@@ -15,7 +15,7 @@ const font = Montserrat({
   subsets: ["latin"],
 });
 
-const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
+const CaptionBox = ({ captionInput, setCaptionInput, width  }) => {
   // const [captionInput, setCaptionInput] = useState("");
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
@@ -36,33 +36,49 @@ const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
     // setTextColor(remainingChars < 0 ? "#FF0000" : "#D1D1D1");
   };
 
-  const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
-  useEffect(() => {
-    // Filter users based on search input
-    setFilteredUsers(
-      allUsers.filter((user) =>
-        user.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search]);
+  // const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
+  // useEffect(() => {
+  //   // Filter users based on search input
+  //   setFilteredUsers(
+  //     allUsers.filter((user) =>
+  //       user.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   );
+  // }, [search]);
+  const searchUsers = async () => {
+    setLoading(true);  // Set loading to true when starting the request
+    try {
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?limit=5`);  // Adjust the query if needed
+      setSearchUsersDetails(res?.data?.results);  // Store fetched users
+      setShowUsers(true);  // Show users once they are fetched
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    } finally {
+      setLoading(false);  // Set loading to false after the request finishes
+    }
+  };
+
+  // Handle the button click to fetch and display users
+  const handleTagUsers = () => {
+    if (selectedUsers.length === 0) {
+      searchUsers();  // Fetch users if no users are tagged
+    } else {
+      setSelectedUsers([]);  // Clear selected users (untagging)
+      setShowUsers(false);   // Hide users
+    }
+  };
+
+  // Handle user selection
+  const handleUserClick = (user) => {
+    // Add/remove users from the selectedUsers state (your existing logic)
+  };
+
 
   const handleClick = () => {
     setShowUsers((prevShowUsers) => !prevShowUsers);
   };
 
-  const handleUserClick = (user) => {
-    setSelectedUsers((prevSelectedUsers) => {
-      if (prevSelectedUsers.includes(user)) {
-        // Remove user if already selected
-        return prevSelectedUsers.filter(
-          (selectedUser) => selectedUser !== user
-        );
-      } else {
-        // Add user if not selected
-        return [...prevSelectedUsers, user];
-      }
-    });
-  };
+  
 
   const handlePostInputChange = (e) => {
     const newText = e.target.value;

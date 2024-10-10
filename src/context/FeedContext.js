@@ -55,7 +55,7 @@ export default function FeedContextProvider({ children }) {
         formData.append("files", file);
       }
 
-      formData.append("content", content);
+      formData.append("content", content || "");
       formData.append("mediaUrl", mediaUrl);
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);

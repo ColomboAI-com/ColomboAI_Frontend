@@ -1,13 +1,14 @@
-'use client'
+"use client";
 import Slider from "react-slick";
 import ViewStory from "../cards/ViewStory";
 import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
 import CreateStoryQuick from "../cards/CreateStoryQuick";
+import { maxlength } from "caniuse-lite/data/features";
 
 var settings = {
   dots: false,
-  arrow: true,
+  arrows: false,
   infinite: false,
   speed: 500,
   slidesToShow: 6,
@@ -18,62 +19,60 @@ var settings = {
       settings: {
         slidesToShow: 5,
         slidesToScroll: 1,
-      }
+      },
     },
     {
       breakpoint: 600,
       settings: {
         slidesToShow: 2,
         slidesToScroll: 2,
-        initialSlide: 2
-      }
+        initialSlide: 2,
+      },
     },
     {
       breakpoint: 480,
       settings: {
         slidesToShow: 4,
-        slidesToScroll: 1
-      }
-    }
-  ]
+        slidesToScroll: 1,
+      },
+    },
+  ],
 };
 
 const Stories = () => {
-
   const { getRecentStories, loadings } = useContext(StoryContext);
   const [allStories, SetAllStories] = useState([]);
 
   const gerRecentStory = async () => {
-    const res = await getRecentStories()
+    const res = await getRecentStories();
     if (res) {
-      SetAllStories(res?.data)
+      SetAllStories(res.stories);
     }
-  }
+  };
 
   useEffect(() => {
-    gerRecentStory()
-  }, [])
+    gerRecentStory();
+  }, []);
 
   const reFetchingStory = () => {
-    gerRecentStory()
-  }
+    gerRecentStory();
+  };
 
   if (loadings.reactStory && !allStories?.length) {
-    return null
+    return null;
   }
 
   return (
-    <div className="my-8" id="create_story_slider_id">
+    <div className="my-8 w-full" id="create_story_slider_id">
       <Slider {...settings}>
-        <CreateStoryQuick reFetchingStory={reFetchingStory}/>
+        <CreateStoryQuick reFetchingStory={reFetchingStory} />
 
-        {allStories && allStories.map((story, index) => {
-            return <ViewStory data={story} key={index} />
-          })
-        } 
+        {allStories.length !== 0
+          ? allStories.map((story, index) => <ViewStory data={story} key={index} />)
+          : null}
       </Slider>
     </div>
   );
-}
+};
 
 export default Stories;

@@ -281,7 +281,6 @@ const CreateVibe = ({
 
   return (
     <main className={font.className}>
-      {/* The Share Vibe button is placed here for testing purposes; will be move the the right place in the vibe creation process */}
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[20vh] no-scrollbar overflow-y-auto">
