@@ -19,6 +19,8 @@ const CreatePost = () => {
   const [nextStep, setNextStep] = useState(false);
   const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
   const { setIsCreatePostOpen } = useContext(GlobalContext);
+  // Open Magic Pen if it came from drop down
+  const { openMagicPenWithIcon } = useContext(GlobalContext);
 
   const InputFile = useRef(null);
 
@@ -101,6 +103,9 @@ const CreatePost = () => {
   };
 
   useEffect(() => {
+    if (openMagicPenWithIcon) {
+      toggleMagicPen();
+    }
     return () => {
       mediaUrl.forEach((url) => URL.revokeObjectURL(url));
     };
@@ -118,7 +123,7 @@ const CreatePost = () => {
             )}
           </div>
           <div className="flex items-center">
-            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create new Post</p>
+            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create New Post</p>
           </div>
           <div className="flex items-center gap-6">
             <button

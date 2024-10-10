@@ -1,10 +1,9 @@
-'use client'
-import { createContext, useState } from "react"
+"use client";
+import { createContext, useState } from "react";
 
-const GlobalContext = createContext()
+const GlobalContext = createContext();
 
 export default function GlobalContextProvider({ children }) {
-
   let [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
   let [isShareOpen, setIsShareOpen] = useState(false);
   let [isCommentOpen, setIsCommentOpen] = useState(false);
@@ -17,7 +16,8 @@ export default function GlobalContextProvider({ children }) {
   let [storyMediaURL, setStoryMediaURL] = useState("");
   let [storyMediaType, setStoryMediaType] = useState("");
   let [storyCaptionBool, setStoryCaptionBool] = useState(false);
-
+  let [storyFile, setStoryFile] = useState(null);
+  let [openMagicPenWithIcon, setOpenMagicPenWithIcon] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -38,14 +38,18 @@ export default function GlobalContextProvider({ children }) {
         setPosts,
         setIsCreateVibeOpen,
         isCreateVibeOpen,
-        isSelectedFromComputer, 
+        isSelectedFromComputer,
         setIsSelectedFromComputer,
         setStoryMediaURL,
         storyMediaURL,
         setStoryMediaType,
         storyMediaType,
         storyCaptionBool,
-        setStoryCaptionBool
+        setStoryCaptionBool,
+        storyFile,
+        setStoryFile,
+        openMagicPenWithIcon,
+        setOpenMagicPenWithIcon,
       }}
     >
       {children}
