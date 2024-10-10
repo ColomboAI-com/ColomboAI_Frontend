@@ -4,10 +4,11 @@ import ViewStory from "../cards/ViewStory";
 import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
 import CreateStoryQuick from "../cards/CreateStoryQuick";
+import { maxlength } from "caniuse-lite/data/features";
 
 var settings = {
   dots: false,
-  arrow: true,
+  arrows: false,
   infinite: false,
   speed: 500,
   slidesToShow: 6,
@@ -63,7 +64,7 @@ const Stories = () => {
   }
 
   return (
-    <div className="my-8" id="create_story_slider_id">
+    <div className="my-8 w-full" id="create_story_slider_id">
       <Slider {...settings}>
         <CreateStoryQuick reFetchingStory={reFetchingStory}/>
 

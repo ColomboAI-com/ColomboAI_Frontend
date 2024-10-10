@@ -15,19 +15,19 @@ export default function RenderFeed({ filter }) {
     return () => resetFeedValues()
   }, [filter])
 
-  const handleFeedScroll = () => {
-    const feedSection = document.getElementById('feed_section')
-    if (
-      feedSection && !loadings.getPost &&
-      Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight
-    ) getPosts(filter, page)
-  }
+  // const handleFeedScroll = () => {
+  //   const feedSection = document.getElementById('feed_section')
+  //   if (
+  //     feedSection && !loadings.getPost &&
+  //     Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight
+  //   ) getPosts(filter, page)
+  // }
 
-  useEffect(() => {
-    const feedSection = document.getElementById('feed_section')
-    feedSection?.addEventListener('scroll', handleFeedScroll)
-    return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
-  }, [page, loadings.getPost])
+  // useEffect(() => {
+  //   const feedSection = document.getElementById('feed_section')
+  //   feedSection?.addEventListener('scroll', handleFeedScroll)
+  //   return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
+  // }, [page, loadings.getPost])
 
   useEffect(() => {
     // Your existing useEffect logic here
@@ -50,7 +50,7 @@ export default function RenderFeed({ filter }) {
     return <Loader className={'mt-5'} />
 
   return (
-    <div className="sm:px-2 md:px-0">
+    <div className="sm:px-0 md:px-0">
       {
         posts.length ?
           posts.map((i, index) => (

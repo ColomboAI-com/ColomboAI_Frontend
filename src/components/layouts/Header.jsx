@@ -14,13 +14,16 @@ import { GlobalContext } from "@/context/GlobalContext";
 import Share from "../Share";
 // import InputGenAiSearch from "../gen-ai/InputGenAiSearch";
 import GenSearch from "@/app/gen-search/layout";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { getCookie } from "cookies-next";
 import { Montserrat } from "@next/font/google";
+import ProfilePicture from "../elements/ProfilePicture";
+
 
 const font = Montserrat({
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
+    weight: ["400", "500", "600", "700"],
+    style: ["normal"],
+    subsets: ["latin"],
 });
 
 const Header = () => {
@@ -31,13 +34,18 @@ const Header = () => {
     const [showChat, setShowChat] = useState(false);
     const [initialMessage, setInitialMessage] = useState('');
     const [initialFile, setInitialFile] = useState(null);
-  
+    const [profilePic, SetprofilePic] = useState();
+    useEffect(() => {
+        SetprofilePic(getCookie('profilePic'));
+    }, [])
+
+
     const handleStartChat = useCallback((message, file) => {
-      const newChatId = Date.now().toString();
-      setChatId(newChatId);
-      setShowChat(true);
-      setInitialMessage(message);
-      setInitialFile(file);
+        const newChatId = Date.now().toString();
+        setChatId(newChatId);
+        setShowChat(true);
+        setInitialMessage(message);
+        setInitialFile(file);
     }, []);
 
     return (
@@ -64,14 +72,14 @@ const Header = () => {
 
             <div className="shadow-[0px_2px_4px_0px_#0000001A]">
                 <div className=" hidden md:flex items-center justify-between">
-                    <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
+                    <div className="w-[100%] lg:w-[70%] px-5 lg:px-28 border-">
                         {/* <InputBar/> */}
                         {pathname === '/gen-search' ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
 
                     </div>
                     <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
                         <SearchIcon w={35} h={35} fill={'#646464'} />
-                        <CreateDropdown/>
+                        {pathname != "/shop" && <CreateDropdown />}
                         <NotificationIcon w={35} h={35} fill={'#646464'} />
                         <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
                     </div>
@@ -84,17 +92,17 @@ const Header = () => {
                 <div className="sm:mx-3 block md:hidden">
                     <div className="flex justify-between">
                         <div className="flex items-center sm:gap-2">
-                            <img src="/images/home/profile-img.png" alt="profile-image" className="w-[58px] mx-auto sm:rounded-full" />
+                            <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[3rem]" image={profilePic} />
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
                         <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
-                            <CreateDropdown/>
+                            <CreateDropdown />
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
                             <ChatBubbleIcon w={35} h={35} fill={'#646464'} />
                         </div>
                     </div>
                     <div className="w-full">
-                        <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile}/>
+                        <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
                     </div>
                 </div>
             </div>
