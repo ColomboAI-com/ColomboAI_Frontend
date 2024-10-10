@@ -8,6 +8,9 @@ import ProfilePicture from "../elements/ProfilePicture";
 import ImageBlock from "../feed/post/ImageBlock";
 import VideoBlock from "../feed/post/VideoBlock";
 import Picker from "emoji-picker-react";
+import Image from "next/image";
+import comment_x_button from "../../../public/images/icons/comment_x_button.svg"
+
 const CommentSection = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
@@ -184,7 +187,8 @@ const CommentSection = ({ specificPostId, posts }) => {
   }, [pickerRef]);
 
   return (
-    <div className="flex flex-row justify-center">
+    <div className="flex flex-row justify-center relative">
+      <Image src={comment_x_button} alt="colombo" onClick={e=> setIsCommentOpen(false)} className="absolute xl:top-2 xl:left-2 sm:top-10 right-3 cursor-pointer"/>
       <div className="bg-[black] sm:h-[0rem] xl:h-[40rem] xl:flex sm:w-[0rem] xl:w-full xl:overflow-hidden ">
         <div className="h-full w-full">
 
