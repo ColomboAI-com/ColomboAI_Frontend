@@ -514,7 +514,19 @@ const CreateVibe = ({
                 />
               )} */}
             </div>
+
+           
           </div>
+
+          <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2">
+  <Button
+    title={"Share Vibe"}
+    onClick={handleCreateVibe}
+    className="w-fit sm2:text-xl text-white shadow-lg rounded-full bg-brandprimary py-2 px-8 hover:bg-green-500 transition duration-300"
+  />
+</div>
+
+  
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
@@ -831,17 +843,7 @@ const CreateVibe = ({
           )}
         </>
       )}
-      <Button
-        title={"Share Vibe"}
-        onClick={() => {
-          handleCreateVibe();
-          console.log("clicking");
-        }}
-        className={
-          "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] absolute rounded-full bg-brandprimary py-4 px-14"
-        }
-        // onClick={()=>handleVibeValidation()}
-      />
+      
     </main>
   );
 };
