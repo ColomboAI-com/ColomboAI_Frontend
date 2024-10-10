@@ -1,9 +1,9 @@
 'use client'
 import Slider from "react-slick";
-import CreateStory from "../cards/CreateStory";
 import ViewStory from "../cards/ViewStory";
 import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
+import CreateStoryQuick from "../cards/CreateStoryQuick";
 
 var settings = {
   dots: false,
@@ -46,7 +46,7 @@ const Stories = () => {
   const gerRecentStory = async () => {
     const res = await getRecentStories()
     if (res) {
-      SetAllStories(res?.data?.recentStories)
+      SetAllStories(res?.data)
     }
   }
 
@@ -65,21 +65,12 @@ const Stories = () => {
   return (
     <div className="my-8" id="create_story_slider_id">
       <Slider {...settings}>
-        <CreateStory reFetchingStory={reFetchingStory}/>
+        <CreateStoryQuick reFetchingStory={reFetchingStory}/>
 
-        {
-          allStories.map((story, index) => {
+        {allStories && allStories.map((story, index) => {
             return <ViewStory data={story} key={index} />
           })
-        }
-        {/* <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/> */}
+        } 
       </Slider>
     </div>
   );

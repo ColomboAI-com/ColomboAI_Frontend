@@ -8,13 +8,14 @@ import blue_x from "../../../public/images/icons/blue_x.svg"
 import Image from "next/image";
 import "../../app/globals.css"
 import { Montserrat } from "@next/font/google";
+
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
 });
 
-const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
+const CaptionBox = ({ captionInput, setCaptionInput, width  }) => {
   // const [captionInput, setCaptionInput] = useState("");
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);

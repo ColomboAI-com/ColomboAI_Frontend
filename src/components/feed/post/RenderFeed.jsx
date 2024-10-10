@@ -1,9 +1,10 @@
 'use client'
+import FooterAdComponent from "@/components/ads/Ad"
 import Post from "@/components/elements/cards/Post"
 import Loader from "@/components/Loader"
 import NoDataFound from "@/components/NoDataFound"
 import { feed, FeedContext } from "@/context/FeedContext"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect,Fragment } from "react"
 
 export default function RenderFeed({ filter }) {
 
@@ -28,16 +29,48 @@ export default function RenderFeed({ filter }) {
     return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
   }, [page, loadings.getPost])
 
+  useEffect(() => {
+    // Your existing useEffect logic here
+
+    return () => {
+      // Cleanup function to destroy ad slots
+      posts.forEach((_, index) => {
+        if ((index + 1) % 4 === 0) {
+          const adSlotId = `feed-ad-${index}`;
+          const adSlot = window.googletag.pubads().getSlots().find(slot => slot.getSlotElementId() === adSlotId);
+          if (adSlot) {
+            window.googletag.destroySlots([adSlot]);
+          }
+        }
+      });
+    };
+  }, [page, loadings.getPost, posts]);
+  
   if (loadings.getPost && !posts.length)
     return <Loader className={'mt-5'} />
 
   return (
-    <div>
+    <div className="sm:px-2 md:px-0">
       {
         posts.length ?
-          posts.map((i, index) =>
-            <Post post={i} key={index} />
-          )
+          posts.map((i, index) => (
+            <Fragment key={index}>
+            <Post post={i} />
+          {(index + 1) % 4 === 0 && 
+          // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
+          //   <FooterAdComponent divid={`feed-ad-${index}`}/>
+          // </div>
+          <div className="overflow-x-hidden border-[1px] border-brandprimary rounded-[10px] mt-5">
+        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[12px]">
+        Sponsored Ad
+      </div>
+      <div className=" max-w-[100%] overflow-hidden ">
+            <FooterAdComponent divid={`feed-ad-${index}`}/>
+           </div>
+      </div>
+          }
+          </Fragment>
+          ))
           : <NoDataFound className={'mt-5'} />
       }
     </div>

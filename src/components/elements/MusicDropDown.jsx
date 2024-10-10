@@ -1,46 +1,169 @@
-import React, { useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from "react";
+import { Search, Play, Pause, ChevronDown } from "lucide-react";
+import "../../app/globals.css";
+import axios from "axios";
 
-const MusicDropdown = () => {
+// const https = require("https");
+
+const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [songs, setSongs] = useState([]);
+  const [displayCount, setDisplayCount] = useState(10); 
+  const [playing, setPlaying] = useState(null);
+  const audioRef = useRef(new Audio());
 
-  const songs = [
-    { title: 'Song 1', artist: 'Artist 1', thumbnail: 'https://via.placeholder.com/50' },
-    { title: 'Song 2', artist: 'Artist 2', thumbnail: 'https://via.placeholder.com/50' },
-    { title: 'Song 3', artist: 'Artist 3', thumbnail: 'https://via.placeholder.com/50' },
-    { title: 'Song 4', artist: 'Artist 4', thumbnail: 'https://via.placeholder.com/50' },
+  const CLIENT_ID = 'de0269ba'; 
+
+  const genres = [
+    { name: "Pop", image: "../../../images/music/pop.png" },
+    { name: "Rock", image: "../../../images/music/rock.png" },
+    { name: "Hip-hop", image: "../../../images/music/hip-hop.png" },
+    { name: "Jazz", image: "../../../images/music/jazz.png" },
+    { name: "R&B", image: "../../../images/music/r&b.png" },
+    { name: "Classical", image: "../../../images/music/classical.png" },
   ];
 
-  const filteredSongs = songs.filter(song =>
-    song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    song.artist.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const getMusicUrl = async (type) => {
+    try {
+      const response = await axios.get(`https://api.jamendo.com/v3.0/tracks/`, {
+        params: {
+          client_id: CLIENT_ID,
+          format: 'json',
+          limit: 50,
+          search: type,
+          include: 'musicinfo'
+        }
+      });
+      return response.data.results;
+    } catch (error) {
+      console.error("Error fetching music:", error);
+      return [];
+    }
+  };
+
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const results = await getMusicUrl(searchTerm || "popular");
+        setSongs(results);
+      } catch (error) {
+        console.error("Error in fetchSongs:", error);
+        setSongs([]);
+      }
+    };
+
+    fetchSongs();
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const handleAudioEnd = () => setPlaying(null);
+    audioRef.current.addEventListener("ended", handleAudioEnd);
+    return () => {
+      audioRef.current.removeEventListener("ended", handleAudioEnd);
+    };
+  }, []);
+
+  const togglePlay = (song, event) => {
+    event.stopPropagation();
+    if (playing === song.id) {
+      audioRef.current.pause();
+      setPlaying(null);
+    } else {
+      if (playing) {
+        audioRef.current.pause();
+      }
+      audioRef.current.src = song.audio;
+      audioRef.current.play();
+      setPlaying(song.id);
+      handleSongSelect(song)
+    }
+  };
+
+  const handleSongSelect = (song) => {
+    if (playing) {
+      setPlaying(null);
+    }
+    onSongSelect(song);
+    setSongId(song.id.toString()); 
+  };
+
+  const handSelectSongId = (song_id) => {
+    setSongId(song_id.toString()); 
+  };
+
+  const loadMore = () => {
+    setDisplayCount(prevCount => prevCount + 10);
+  };
+  
 
   return (
-    <div className="fixed top-[360px] left-[525px] w-[468px] h-[624px] bg-white rounded-t-[15.22px] border-[0.76px] opacity-0 flex flex-col shadow-md">
-      <div className="flex items-center p-4 border-b">
-        <FaSearch className="text-gray-400 mr-2" />
+    <div
+      className="max-h-[20rem] overflow-y-scroll bg-blue-600 hide-scrollbar rounded-t-[15.22px] rounded-b-[0.9rem] flex flex-col p-6 text-white shadow-lg"
+      style={{ width: width ? `${width}px` : `auto` }}
+    >
+      <h1 className="text-2xl font-bold mb-4 text-center">Add Music</h1>
+      <div className="relative mb-6">
+        <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
         <input
           type="text"
-          placeholder="Search music..."
+          placeholder="Search music and artists"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full p-2 border rounded focus:outline-none"
+          className="w-full pl-12 pr-4 py-3 rounded-full bg-gray-100 text-black focus:outline-none"
         />
       </div>
-      <div className="flex flex-col overflow-y-auto">
-        {filteredSongs.map((song, index) => (
-          <div key={index} className="flex items-center p-4 hover:bg-gray-100 cursor-pointer">
-            <img src={song.thumbnail} alt={song.title} className="w-12 h-12 rounded mr-4" />
-            <div className="flex flex-col">
-              <span className="font-medium">{song.title}</span>
-              <span className="text-gray-500 text-sm">{song.artist}</span>
+      <div className="border-b border-white mb-4"></div>
+
+      <h2 className="text-xl font-semibold mb-3">Genres</h2>
+      <div className="flex justify-between mb-6">
+        {genres.map((genre) => (
+          <div
+            key={genre.name}
+            className="relative w-[65px] h-[65px] rounded-xl overflow-hidden transition-transform duration-200 transform hover:scale-105"
+          >
+            <img src={genre.image}  className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+              <p className="text-white text-xs font-medium">{genre.name}</p>
             </div>
           </div>
         ))}
       </div>
+      <div className="border-b border-white mb-4"></div>
+
+      <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
+      <div className="flex flex-col space-y-4">
+        {songs.slice(0, displayCount).map((song) => (
+          <div
+            key={song.id}
+            className="flex items-center p-2 hover:bg-blue-500 rounded-lg cursor-pointer"
+            onClick={() => { handleSongSelect(song); handSelectSongId(song.id); }}
+          >
+            <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3"/>
+            <div className="flex-grow">
+              <p className="font-medium text-sm">{song.name}</p>
+              <p className="text-xs opacity-80">by {song.artist_name}</p>
+            </div>
+            <button onClick={(e) => togglePlay(song, e)} className="p-2 bg-gray-200 rounded-full">
+              {playing === song.id ? (
+                <Pause className="text-blue-600 w-4 h-4" />
+              ) : (
+                <Play className="text-blue-600 w-4 h-4" />
+              )}
+            </button>
+          </div>
+        ))}
+      </div>
+      {displayCount < songs.length && (
+        <button 
+          onClick={loadMore} 
+          className="mt-4 text-center text-sm flex items-center justify-center hover:bg-blue-700 p-2 rounded"
+        >
+          <span className="mr-1">more</span>
+          <ChevronDown className="w-4 h-4" />
+        </button>
+      )}
     </div>
   );
 };
 
-export default MusicDropdown;
+export default MusicDropDown;

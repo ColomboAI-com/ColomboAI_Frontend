@@ -15,7 +15,13 @@ import Share from "../Share";
 // import InputGenAiSearch from "../gen-ai/InputGenAiSearch";
 import GenSearch from "@/app/gen-search/layout";
 import { useState, useCallback } from "react";
+import { Montserrat } from "@next/font/google";
 
+const font = Montserrat({
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 
 const Header = () => {
 
@@ -35,7 +41,7 @@ const Header = () => {
     }, []);
 
     return (
-        <div className=" bg-white sticky top-14 z-40">
+        <div className={`bg-white sticky top-14 z-40 ${font.className}`}>
             {/* Desktop view */}
 
             {/* <div className=" hidden lg:flex items-center justify-between shadow-[0px_2px_4px_0px_#0000001A] lg:py-9">
@@ -60,7 +66,7 @@ const Header = () => {
                 <div className=" hidden md:flex items-center justify-between">
                     <div className="w-[100%] lg:w-[70%] px-5 lg:px-20 border-">
                         {/* <InputBar/> */}
-                        {pathname === '/gen-search' ? <GenSearch /> : <InputBar />}
+                        {pathname === '/gen-search' ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
 
                     </div>
                     <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
@@ -74,14 +80,14 @@ const Header = () => {
 
             {/* mobile view */}
 
-            <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-                <div className=" block md:hidden">
+            <div className="lg:shadow-[0px_2px_4px_0px_#0000001A]">
+                <div className="sm:mx-3 block md:hidden">
                     <div className="flex justify-between">
-                        <div className="flex items-center">
-                            <img src="/images/home/profile-img.png" alt="profile-image" className="w-[58px] mx-auto" />
+                        <div className="flex items-center sm:gap-2">
+                            <img src="/images/home/profile-img.png" alt="profile-image" className="w-[58px] mx-auto sm:rounded-full" />
                             <SearchIcon w={35} h={35} fill={'#646464'} />
                         </div>
-                        <div className="flex items-center gap-4 lg:gap-8 mx-9 ">
+                        <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
                             <CreateDropdown/>
                             <NotificationIcon w={35} h={35} fill={'#646464'} />
                             <ChatBubbleIcon w={35} h={35} fill={'#646464'} />

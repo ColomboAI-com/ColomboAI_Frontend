@@ -27,7 +27,7 @@ export default function RePost({ post }) {
         if (isReposted) return
         setIsRepostOpen(true)
       }}>
-        <RePostIcon fill={isReposted && '#0AA853'} />
+        <RePostIcon fill={'#646464'} />
       </div>
       <p className={`font-sans text-[14px] ${isReposted ? 'text-brandprimary' : 'text-sidebarlabel'}`}>
         {repostCounts}

@@ -59,18 +59,9 @@ import InputBar from "../../components/layouts/InputBar.jsx";
 import RightSideIcons from "../../components/gen-ai/RightSideIcons.jsx";
 import Chat from "../../components/MassageInputActions/Chat.jsx";
 import HistoryChat from "@/components/MassageInputActions/HistoryChat.jsx";
-import { Plus_Jakarta_Sans } from "@next/font/google";
-import { UploadIcon } from "../../components/Icons.jsx";
-import FooterAdComponent from "@/components/ads/Ad.jsx";
 import SideTopAdComponent from "@/components/ads/SideTopAd.jsx";
 import { v4 as uuidv4 } from "uuid"; // Importing UUID to generate unique identifiers
 import SideAdComponent from "@/components/ads/SideAd.jsx";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  weight: ["400", "500", "600", "700"],
-  style: ["normal"],
-  subsets: ["latin"],
-});
 
 function GenSearch() {
   const [messages, setMessages] = useState([]);

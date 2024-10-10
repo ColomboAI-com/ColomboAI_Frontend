@@ -3,7 +3,11 @@ import { getCookie } from "@/utlils/cookies";
 import { handleError } from "@/utlils/handleError";
 import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { GlobalContext } from "./GlobalContext";
+import { fetchSignInMethodsForEmail } from "firebase/auth";
+const https = require("https");
 
 const VibeContext = createContext();
 
@@ -11,10 +15,13 @@ export default function VibeContextProvider({ children }) {
   const [vibes, setVibes] = useState([]);
   const [page, setPage] = useState(1);
   const [loadings, setLoadings] = useState({
+    getVibe: true,
     getUserVibe: false,
     createVibe: false,
     deleteVibe: false,
   });
+  const { setIsCreateVibeOpen } = useContext(GlobalContext);
+  const router = useRouter();
 
   const createVibe = async ({
     type,
@@ -22,10 +29,11 @@ export default function VibeContextProvider({ children }) {
     text,
     textColor,
     content,
+    songId,
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content);
+    console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -37,8 +45,9 @@ export default function VibeContextProvider({ children }) {
       formData.append("content", content || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
+      formData.append("song_id", songId || "");
+
       // fields to include:
-      // music
       // taggedPeople
       // tag: “DRAFT” if saving a post as draft
 
@@ -51,14 +60,19 @@ export default function VibeContextProvider({ children }) {
           },
         }
       );
-      // console.log(response.data)
-
+      
+      if(response.data.success === true) {
+        router.push('/vibes')
+        setIsCreateVibeOpen(false)
+      }
+      
       if (response.status === 201) {
         console.log("Hitting create vibe endpoint successfully");
         console.log("Response:", response.data);
         MessageBox("success", "Vibe created successfully");
-        setIsCreateVibeOpen(false); // Close the create vibe modal
       }
+
+
     } catch (error) {
       handleError(error);
       //   MessageBox("error", "Failed to create vibe. Please try again.");
@@ -67,24 +81,24 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const getVibes = async () => {
+  const getVibes = async (type, page = 1, limit = 10) => {
     try {
-      setLoadings((prev) => ({ ...prev, reactVibe: true }));
+      setLoadings((prev) => ({ ...prev, getVibe: true }));
       const response = await axios.get(`${ROOT_URL_FEED}/vibes/feed`, {
         headers: {
           Authorization: getCookie("token"),
         },
       });
-      console.log(response.data);
-      return response.data;
+      console.log(response.data.vibes)
+      setVibes(prev => ([...prev, ...response.data?.vibes || []]))
     } catch (error) {
       handleError(error);
     } finally {
-      setLoadings((prev) => ({ ...prev, reactVibe: false }));
+      setLoadings((prev) => ({ ...prev, getVibe: false }));
     }
   };
 
-  const deleteVibe = async (vibeId = '') => {
+  const deleteVibe = async (vibeId) => {
     try {
       setLoadings(prev => ({ ...prev, deleteVibe: true }))
       const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}`,
@@ -106,10 +120,9 @@ export default function VibeContextProvider({ children }) {
     }
   }
 
-  const discardVibe = async (vibeId = '') => {
+  const archiveVibe = async (id = '66f34a4536049e10646e09f9') => {
     try {
-      setLoadings(prev => ({ ...prev, deleteVibe: true }))
-      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${vibeId}/discard`,
+      const res = await axios.put(`${ROOT_URL_FEED}/posts/${id}/archive`,
         {
           headers: {
             Authorization: getCookie('token')
@@ -117,7 +130,28 @@ export default function VibeContextProvider({ children }) {
         }
       )
       if (res.data.success) {
-        setVibes(prevPosts => prevPosts.filter(post => post._id !== vibeId));
+        console.log("Success")
+      }   
+      return res.data
+    } catch (err) {
+      handleError(err)
+    } finally {
+      //
+    }
+  }
+
+  const discardVibe = async (postId = '') => {
+    try {
+      setLoadings(prev => ({ ...prev, deleteVibe: true }))
+      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/discard`,
+        {
+          headers: {
+            Authorization: getCookie('token')
+          }
+        }
+      )
+      if (res.data.success) {
+        setVibes(prevPosts => prevPosts.filter(vibe => vibe._id !== vibeId));
       }   
       return res.data
     } catch (err) {
@@ -126,6 +160,32 @@ export default function VibeContextProvider({ children }) {
       setLoadings(prev => ({ ...prev, deletePost: false }))
     }
   }
+
+  const fetchSongById = (songId) => {
+    const CLIENT_ID = 'de0269ba'; 
+
+    return new Promise((resolve, reject) => {
+      const url = `https://api.jamendo.com/v3.0/tracks/?client_id=${CLIENT_ID}&id=${songId}&format=json`;
+
+      https.get(url, (response) => {
+        let data = "";
+        response.on("data", (chunk) => {
+          data += chunk;
+        });
+        response.on('end', () => {
+          try {
+            const parsedData = JSON.parse(data);
+            resolve(parsedData.results);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }).on('error', (error) => {
+        reject(error);
+      });
+    });
+  };
+
 
   return (
     <VibeContext.Provider
@@ -136,7 +196,9 @@ export default function VibeContextProvider({ children }) {
         createVibe,
         getVibes,
         discardVibe, 
-        deleteVibe
+        deleteVibe,
+        archiveVibe, 
+        fetchSongById
       }}
     >
       {children}

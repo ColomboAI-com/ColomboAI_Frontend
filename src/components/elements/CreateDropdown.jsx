@@ -1,21 +1,30 @@
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useContext, useEffect, useRef, useState } from 'react'
-import { CreateIcon, CreateMagicPenIcon, CreatePostIcon, CreateStoryIcon, CreateThoughtIcon, CreateVibeIcon } from '../Icons';
-import { GlobalContext } from '@/context/GlobalContext';
+import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
+import {
+  CreateIcon,
+  CreateMagicPenIcon,
+  CreatePostIcon,
+  CreateStoryIcon,
+  CreateThoughtIcon,
+  CreateVibeIcon,
+} from "../Icons";
+import { GlobalContext } from "@/context/GlobalContext";
 import Modal from "./Modal";
-import UploadStoryModal from '../story/UploadStoryModal';
+import UploadStoryModal from "../story/UploadStoryModal";
 
-export default function CreateDropdown({ w, h, fill }) {
-
+export default function CreateDropdown({ w, h, filyl }) {
   const { setIsCreatePostOpen } = useContext(GlobalContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
   const { isCreateVibeOpen } = useContext(GlobalContext);
 
   const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
 
+  // Set Magic pen to open in global context
+  const { setOpenMagicPenWithIcon } = useContext(GlobalContext);
+
   const handleOpen = (e) => {
-    setIsCreateStoryOpen(!isCreateStoryOpen)
-  }
+    setIsCreateStoryOpen(!isCreateStoryOpen);
+  };
 
   return (
     <div>
@@ -23,13 +32,13 @@ export default function CreateDropdown({ w, h, fill }) {
         {({ open }) => (
           <>
             <div>
-              <Menu.Button >
+              <Menu.Button>
                 {/* Optiouns
               <ChevronDownIcon
                 className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
                 aria-hidden="true"
               /> */}
-                <CreateIcon w={30} h={30} fill={open ? '#1E71F2' : '#646464'} />
+                <CreateIcon w={30} h={30} fill={open ? "#1E71F2" : "#646464"} />
               </Menu.Button>
             </div>
             <Transition
@@ -47,11 +56,12 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         onClick={() => setIsCreatePostOpen(true)}
-                        className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px] font-sans font-[500]`}
+                        className={`${
+                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                        } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Post
-                        <CreatePostIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
+                        <CreatePostIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
                       </button>
                     )}
                   </Menu.Item>
@@ -61,11 +71,12 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         onClick={() => setIsCreateStoryOpen(true)}
-                        className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
+                        className={`${
+                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                        } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Story
-                        <CreateStoryIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
+                        <CreateStoryIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
                       </button>
                     )}
                   </Menu.Item>
@@ -75,14 +86,14 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         onClick={() => {
-                          setIsCreateVibeOpen(true)
-                        }
-                        }
-                        className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
+                          setIsCreateVibeOpen(true);
+                        }}
+                        className={`${
+                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                        } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Vibe
-                        <CreateVibeIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
+                        <CreateVibeIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
                       </button>
                     )}
                   </Menu.Item>
@@ -92,11 +103,12 @@ export default function CreateDropdown({ w, h, fill }) {
                     {({ active }) => (
                       <button
                         onClick={() => setIsCreatePostOpen(true)}
-                        className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
+                        className={`${
+                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                        } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Thought
-                        <CreateThoughtIcon w={25} h={25} fill={active ? '#fff' : '#1E71F2'} />
+                        <CreateThoughtIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
                       </button>
                     )}
                   </Menu.Item>
@@ -105,17 +117,25 @@ export default function CreateDropdown({ w, h, fill }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => setIsCreatePostOpen(true)}
-                        className={`${active ? 'bg-brandprimary text-white' : 'text-brandprimary'
-                          } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px] font-sans font-[500]`}
+                        onClick={() => {
+                          setIsCreatePostOpen(true);
+                          setOpenMagicPenWithIcon(true);
+                        }}
+                        className={`${
+                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                        } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
-                        <p>Magic Pen <span className='text-xs'>(Generative AI)</span></p>
-                        <CreateMagicPenIcon w={25} h={25}
-                          fill1={active ? '#fff' : '#FF0049'}
-                          fill2={active ? '#fff' : '#FFBE3B'}
-                          fill3={active ? '#fff' : '#00BB5C'}
-                          fill4={active ? '#fff' : '#187DC4'}
-                          fill5={active ? '#fff' : '#58268B'}
+                        <p>
+                          Magic Pen <span className="text-xs">(Generative AI)</span>
+                        </p>
+                        <CreateMagicPenIcon
+                          w={25}
+                          h={25}
+                          fill1={active ? "#fff" : "#FF0049"}
+                          fill2={active ? "#fff" : "#FFBE3B"}
+                          fill3={active ? "#fff" : "#00BB5C"}
+                          fill4={active ? "#fff" : "#187DC4"}
+                          fill5={active ? "#fff" : "#58268B"}
                         />
                       </button>
                     )}
@@ -124,17 +144,18 @@ export default function CreateDropdown({ w, h, fill }) {
               </Menu.Items>
             </Transition>
 
-            {
-              isCreateStoryOpen &&
-              <Modal isOpen={isCreateStoryOpen} setIsOpen={setIsCreateStoryOpen} className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all">
+            {isCreateStoryOpen && (
+              <Modal
+                isOpen={isCreateStoryOpen}
+                setIsOpen={setIsCreateStoryOpen}
+                className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
+              >
                 <UploadStoryModal setIsCreateStoryOpen={setIsCreateStoryOpen} />
               </Modal>
-            }
-
+            )}
           </>
         )}
-
       </Menu>
     </div>
-  )
+  );
 }
