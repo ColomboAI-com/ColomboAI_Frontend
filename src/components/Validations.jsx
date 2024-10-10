@@ -39,18 +39,19 @@ export function EmailValidation({ value }) {
   )
 }
 
-export function PhoneValidation({ value }) {
-  return (
-    <div className="text-error">
-      {value ? <p>Inalid phone number</p> : <p>Phone number is mandatory</p>}
-    </div>
-  )
-}
 
 export function OTPValidation({ value }) {
   return (
     <div className="text-error">
       {value ? <p>Invalid OTP</p> : <p>OTP is mandatory</p>}
+    </div>
+  )
+}
+
+export function AgeValidation({ value }) {
+  return (
+    <div className="text-error">
+      {value ? (Number(value) < 0 || Number(value) > 120 ? 'Please enter a valid age between 0 and 120.' : 'Invalid age') : 'Age is mandatory'}
     </div>
   )
 }

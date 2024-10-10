@@ -1,11 +1,11 @@
-import CommentSection from "@/components/comment/CommentSection";
+import App from "@/CommingSoon/taskbot";
 
 const TaskBot = () => {
     return (
-        <div>
-            {/* Task Bot Page Content */}
-            <CommentSection/>
-        </div>
+        <App/>
+        // <p className="text-center mt-5">
+        //     Coming Soon
+        // </p>
     );
 }
 

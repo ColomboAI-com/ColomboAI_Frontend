@@ -1,6 +1,9 @@
 import ProviderComponent from "@/components/provider-component"
 import "./globals.css"
 import GlobalContextProvider from "@/context/GlobalContext"
+import FeedContextProvider from "@/context/FeedContext"
+import StoryContextProvider from "@/context/StoryContext"
+import VibeContextProvider from "@/context/VibeContext"
 
 export const metadata = {
   title: "ColomboAI",
@@ -10,10 +13,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/favicon.svg" />
+      </head>
       <body suppressHydrationWarning={true}>
         <ProviderComponent>
           <GlobalContextProvider>
-            {children}
+            <FeedContextProvider>
+              <StoryContextProvider>
+                <VibeContextProvider>
+                  {children}
+                </VibeContextProvider>
+              </StoryContextProvider>
+            </FeedContextProvider>
           </GlobalContextProvider>
         </ProviderComponent>
       </body>

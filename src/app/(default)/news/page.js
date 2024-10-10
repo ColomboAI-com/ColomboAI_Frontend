@@ -1,8 +1,11 @@
+import App from "@/CommingSoon/news";
+
 const News = () => {
     return (
-        <div>
-            News Page Content
-        </div>
+        <App/>
+        // <p className="text-center mt-5">
+        //     Coming Soon
+        // </p>
     );
 }
 

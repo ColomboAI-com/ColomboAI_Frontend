@@ -22,7 +22,7 @@ const FeedFilter = (props) => {
         <span key={index}>
           <Link
             href={nav.link}
-            className={`text-[20px] ${pathname === nav.link ? "text-brandprimary" : "text-sidebaricon"} hover:text-brandprimary font-sans`}
+            className={`xl:text-[18px] lg:text-[30px] sm:text-[12px] ${pathname === nav.link ? "text-brandprimary" : "text-sidebaricon"} hover:text-brandprimary font-sans`}
           >
             {nav.name}
           </Link>

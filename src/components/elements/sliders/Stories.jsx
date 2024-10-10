@@ -1,52 +1,78 @@
+"use client";
 import Slider from "react-slick";
-import CreateStory from "../cards/CreateStory";
 import ViewStory from "../cards/ViewStory";
+import { useContext, useState, useEffect } from "react";
+import { StoryContext } from "@/context/StoryContext";
+import CreateStoryQuick from "../cards/CreateStoryQuick";
+import { maxlength } from "caniuse-lite/data/features";
 
 var settings = {
-    dots: false,
-    arrow: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    responsive: [
-        {
-        breakpoint: 1200,
-        setting: {
-            slidesToShow: 5,
-        },
-        },
-        {
-        breakpoint: 1000,
-        setting: {
-            slidesToShow: 2,
-        },
-        },
-        {
-        breakpoint: 650,
-        setting: {
-            slidesToShow: 2,
-        },
-        },
-    ],
+  dots: false,
+  arrows: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+      },
+    },
+  ],
 };
 
 const Stories = () => {
-    return (
-        <div className="my-8">
-            <Slider {...settings}>
-                <CreateStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-                <ViewStory/>
-            </Slider>
-        </div>
-    );
-}
+  const { getRecentStories, loadings } = useContext(StoryContext);
+  const [allStories, SetAllStories] = useState([]);
+
+  const gerRecentStory = async () => {
+    const res = await getRecentStories();
+    if (res) {
+      SetAllStories(res.stories);
+    }
+  };
+
+  useEffect(() => {
+    gerRecentStory();
+  }, []);
+
+  const reFetchingStory = () => {
+    gerRecentStory();
+  };
+
+  if (loadings.reactStory && !allStories?.length) {
+    return null;
+  }
+
+  return (
+    <div className="my-8 w-full" id="create_story_slider_id">
+      <Slider {...settings}>
+        <CreateStoryQuick reFetchingStory={reFetchingStory} />
+
+        {allStories.length !== 0
+          ? allStories.map((story, index) => <ViewStory data={story} key={index} />)
+          : null}
+      </Slider>
+    </div>
+  );
+};
 
 export default Stories;

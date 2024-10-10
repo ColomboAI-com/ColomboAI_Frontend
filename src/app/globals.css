@@ -7,7 +7,8 @@ body {
   font-family: '';
 }
 
-.slick-next, .slick-prev {
+.slick-next,
+.slick-prev {
   font-size: 0;
   line-height: 0;
   top: 50%;
@@ -20,19 +21,28 @@ body {
   color: #333333;
   border: none;
   outline: 0;
-  background: transparent!important;
+  background: transparent !important;
 }
-.slick-next:focus, .slick-next:hover, .slick-prev:focus, .slick-prev:hover {
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.slick-next:focus,
+.slick-next:hover,
+.slick-prev:focus,
+.slick-prev:hover {
   color: #333333;
   outline: 0;
-  background: transparent!important;
+  background: transparent !important;
 }
-.slick-prev:before, .slick-next:before {
+
+.slick-prev:before,
+.slick-next:before {
   font-family: 'slick';
   font-size: 20px;
   line-height: 1;
   opacity: .75;
-  color: #E3E3E3!important;
+  color: #E3E3E3 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: transparent;
@@ -43,13 +53,57 @@ body {
 }
 
 @layer utilities {
+
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  .wider-scrollbar::-webkit-scrollbar {
+    width: 8px;
   }
+
+  .wider-scrollbar {
+    /* -ms-overflow-style: none; */
+    /* IE and Edge */
+    scrollbar-width: 8px;
+    /* Firefox */
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+#create_story_slider_id .slick-track {
+  margin-left: 0;
+}
+
+.story-detail-box div > div {
+  justify-content: center !important;
 }

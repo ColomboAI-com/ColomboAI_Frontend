@@ -7,17 +7,12 @@ export const setUserCookies = (user) => {
   setCookie('name', user.name)
   setCookie('profilePic', user.profile_picture)
   setCookie("userid", user._id)
+  setCookie("username", user.user_name)
 }
 
 export const getShortEmail = (email) => {
   if (!email) return ''
   return email.substr(0, 2) + "****" + email.substr(email.indexOf("@"))
-}
-
-export const getShortPhone = (phone, coutryCode) => {
-  if (!phone) return ''
-  if (coutryCode) return coutryCode + " " + "****" + phone.substr(-4)
-  else return "****" + phone.substr(-4)
 }
 
 export const getShortUsername = (username) => {

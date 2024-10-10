@@ -14,7 +14,7 @@ module.exports = {
       },
       colors: {
         'brandprimary': '#1E71F2',
-        'brandplaceholder': '#8B8B8B',
+        'brandplaceholder': '#BDBDBD',
         'error': '#ff4949',
         'sidebaricon': '#8E8E93',
         'navbaraction': '#646464',
@@ -26,6 +26,7 @@ module.exports = {
       // => @media (min-width: 640px and max-width: 767px) { ... }
 
       // 'sm2': {'min':'600px', 'max': '767px'},
+      'nsm': {'min': '640px'},
 
       'md': {'min': '768px'},
       // // => @media (min-width: 768px and max-width: 1023px) { ... }

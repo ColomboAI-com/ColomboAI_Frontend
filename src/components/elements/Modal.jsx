@@ -1,12 +1,17 @@
+'use client'
 import { FeedContext } from '@/context/FeedContext'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useContext, useState } from 'react'
 import Post from './cards/Post';
+import { GlobalContext } from "@/context/GlobalContext";
 
 export default function Modal({isOpen, setIsOpen, className, children}) {
 
+  const { isSelectedFromComputer, setIsSelectedFromComputer } = useContext(GlobalContext);
+  
   function closeModal() {
-    setIsOpen(false)
+    setIsOpen(false);
+    setIsSelectedFromComputer(false);
   }
 
   return (
