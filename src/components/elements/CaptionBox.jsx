@@ -38,15 +38,15 @@ const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
     // setTextColor(remainingChars < 0 ? "#FF0000" : "#D1D1D1");
   };
 
-  const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
-  useEffect(() => {
-    // Filter users based on search input
-    setFilteredUsers(
-      allUsers.filter((user) =>
-        user.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search]);
+  // const allUsers = ["@Alice", "@Bob", "@Charlie", "@David", "@Eve"];
+  // useEffect(() => {
+  //   // Filter users based on search input
+  //   setFilteredUsers(
+  //     allUsers.filter((user) =>
+  //       user.toLowerCase().includes(search.toLowerCase())
+  //     )
+  //   );
+  // }, [search]);
   const searchUsers = async () => {
     setLoading(true);  // Set loading to true when starting the request
     try {
