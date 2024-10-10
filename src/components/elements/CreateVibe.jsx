@@ -278,14 +278,14 @@ const CreateVibe = ({
   return (
     <main className={font.className}>
       {/* The Share Vibe button is placed here for testing purposes; will be move the the right place in the vibe creation process */}
-      <Button
+      {/* <Button
         title={"Share Vibe"}
         onClick={handleCreateVibe}
         className={
           "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] absolute rounded-full bg-brandprimary py-4 px-14"
         }
         // onClick={()=>handleVibeValidation()}
-      />
+      /> */}
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[20vh] no-scrollbar overflow-y-auto">

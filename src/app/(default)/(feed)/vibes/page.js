@@ -104,7 +104,7 @@ export default function Vibes() {
               </div>
             </div>
 
-            <BannerAdComponent />
+            {/* <BannerAdComponent /> */}
           </div>
         </div>
 
