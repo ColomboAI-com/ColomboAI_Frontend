@@ -4,7 +4,7 @@ import { ChatBubbleIcon, NewChatIcon, NotificationIcon, SearchIcon } from "../Ic
 import CreateDropdown from "../elements/CreateDropdown";
 import { usePathname } from "next/navigation";
 import { GlobalContext } from "@/context/GlobalContext";
-import SearchAll from './searchall'; // Import your SearchAll component
+//import SearchAll from './searchall'; // Import your SearchAll component
 
 const MessageHeader = () => {
   const { setIsNewMessageOpen } = useContext(GlobalContext);
@@ -45,7 +45,9 @@ const MessageHeader = () => {
       {/* Conditionally render the SearchAll component based on the showSearchPage state */}
       {showSearchPage && (
         <div className="mt-4">
-          <SearchAll />
+          {
+            //<SearchAll />
+          }
         </div>
       )}
     </div>
