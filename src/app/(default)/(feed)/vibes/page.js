@@ -37,18 +37,17 @@ export default function Vibes() {
 
     const fetchSong = async () => {
       try {
-        const result = await fetchSongById('1129600');
+        const result = await fetchSongById("1129600");
         setSong(result[0]);
       } catch (error) {
         console.log(error);
       }
     };
     fetchSong();
-
   }, []);
 
-  // console.log(vibes)
-  console.log(song);
+  // console.log(vibes);
+  // console.log(song);
 
   return (
     <div className="border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
@@ -60,10 +59,19 @@ export default function Vibes() {
         {/* to view the repostvibe dialog box uncomment this component */}
 
         <div className=" relative border- border-green-400  max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16]">
-          {vibes.length > 0 && (
+          {vibes.length > 0 && vibes[0].type === "video" ? (
+            <video
+              src={vibes[0].media[0]}
+              className="w-full h-full"
+              controls
+              autoPlay
+              loop
+            />
+          ) : (
             <img
-              // src={`/images/home/vibes.png`}
-              className=" w-full h-full"
+              // Fallback to image in case the type isn't video
+              src={`/images/home/vibes.png`}
+              className="w-full h-full"
               alt="vibes_content"
             />
           )}
@@ -90,7 +98,9 @@ export default function Vibes() {
               {vibes.length > 0 && <p>{vibes[0].content}</p>}
               <div className="flex gap-2 my-1">
                 <IoIosMusicalNotes className="w-[20px] h-[20px]" />
-                <p>{song.name} - by {song.artist_name}</p>
+                <p>
+                  {song.name} - by {song.artist_name}
+                </p>
               </div>
             </div>
 
