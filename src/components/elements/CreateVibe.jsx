@@ -282,7 +282,7 @@ const CreateVibe = ({
         title={"Share Vibe"}
         onClick={handleCreateVibe}
         className={
-          "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+          "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] absolute rounded-full bg-brandprimary py-4 px-14"
         }
         // onClick={()=>handleVibeValidation()}
       />
@@ -346,7 +346,7 @@ const CreateVibe = ({
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 pb-8 ${
+          className={`relative my-6 pb-8 ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -362,13 +362,13 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative max-h-[32rem] overflow-hidden">
+          <div className="relative max-h-[35rem] overflow-hidden">
             <img
               key={mediaUrl}
               ref={imgRef}
               src={mediaUrl}
               alt="File Preview"
-              className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
+              className="w-full h-full object-contain max-h-[35rem] rounded-[1rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
             />
@@ -547,7 +547,7 @@ const CreateVibe = ({
         //           </video>
 
         <div
-          className={`relative my-8 pb-8 ${
+          className={`relative my-6 pb-8 ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -563,13 +563,13 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative max-h-[32rem] overflow-hidden">
+          <div className="relative max-h-[34rem] overflow-hidden">
             <video
               key={mediaUrl}
               ref={imgRef}
               src={mediaUrl}
               alt="File Preview"
-              className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
+              className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
               autoPlay
