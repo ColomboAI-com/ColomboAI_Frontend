@@ -81,15 +81,16 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const getVibes = async () => {
+  const getVibes = async (type, page = 1, limit = 10) => {
     try {
-      setLoadings((prev) => ({ ...prev, reactVibe: true }));
+      setLoadings((prev) => ({ ...prev, getVibe: true }));
       const response = await axios.get(`${ROOT_URL_FEED}/vibes/feed`, {
         headers: {
           Authorization: getCookie("token"),
         },
       });
-      setVibes(prev => ([...prev, ...response.data?.posts || []]))
+      console.log(response.data.vibes)
+      setVibes(prev => ([...prev, ...response.data?.vibes || []]))
     } catch (error) {
       handleError(error);
     } finally {
