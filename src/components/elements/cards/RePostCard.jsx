@@ -46,8 +46,8 @@ const RePostCard = ({ post, index }) => {
             <div className="flex flex-col border-[0.5px] border-brandprimary mt-5 md:rounded-[10px] sm:rounded-none p-3">
                 <div className="flex flex-row justify-between px-[16px] pb-[16px]">
                     <div className="flex flex-row items-center gap-1">
-                        <ProfilePicture image={post?.creator?.profile_picture} size={"w-[2rem]"} />
-                        <Username username={post?.creator?.user_name} className="text-[12px]" />
+                        <ProfilePicture image={post?.repostBy?.profile_picture} size={"w-[2rem]"} />
+                        <Username username={post?.repostBy?.user_name} className="text-[12px]" />
                         <p className="text-[#333333]/[0.7] font-[450] ml-2">reposted this</p>
                     </div>
                     <div className="flex flex-row items-center gap-4">

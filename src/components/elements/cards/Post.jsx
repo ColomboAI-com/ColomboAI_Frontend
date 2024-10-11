@@ -1,28 +1,28 @@
-import { useContext } from "react";
-import RecentComments from "@/components/feed/post/RecentComments";
-import ImageBlock from "@/components/feed/post/ImageBlock";
-import PostActions from "@/components/feed/post/PostActions";
-import ProfilePicture from "../ProfilePicture";
-import Username from "../Username";
-import { formatTimeAgo } from "@/utlils/commonFunctions";
-import ContentBlock from "@/components/feed/post/ContentBlock";
-import VideoBlock from "@/components/feed/post/VideoBlock";
-import Link from "next/link";
-import {
-  ExclamationIcon,
-  PostMoreOptionsIcon,
-  ReportIcon,
-  RestrictUserIcon,
-  UserProfileIcon,
-} from "@/components/Icons";
-import Dropdown from "@/components/messages/Dropdown";
-import { FeedContext } from "@/context/FeedContext";
-import { UserProfileContext } from "@/context/UserProfileContext";
-import { getCookie } from "@/utlils/cookies";
-import ThreeDotMenu from "../ThreeDotMenu";
-import { useEffect } from "react";
-import { InfoIcon, SaveIcon } from "lucide-react";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+// import { useContext } from "react";
+// import RecentComments from "@/components/feed/post/RecentComments";
+// import ImageBlock from "@/components/feed/post/ImageBlock";
+// import PostActions from "@/components/feed/post/PostActions";
+// import ProfilePicture from "../ProfilePicture";
+// import Username from "../Username";
+// import { formatTimeAgo } from "@/utlils/commonFunctions";
+// import ContentBlock from "@/components/feed/post/ContentBlock";
+// import VideoBlock from "@/components/feed/post/VideoBlock";
+// import Link from "next/link";
+// import {
+//   ExclamationIcon,
+//   PostMoreOptionsIcon,
+//   ReportIcon,
+//   RestrictUserIcon,
+//   UserProfileIcon,
+// } from "@/components/Icons";
+// import Dropdown from "@/components/messages/Dropdown";
+// import { FeedContext } from "@/context/FeedContext";
+// import { UserProfileContext } from "@/context/UserProfileContext";
+// import { getCookie } from "@/utlils/cookies";
+// import ThreeDotMenu from "../ThreeDotMenu";
+// import { useEffect } from "react";
+// import { InfoIcon, SaveIcon } from "lucide-react";
+// import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import PostCard from "./PostCard";
 import RePostCard from "./RePostCard";
 
@@ -41,7 +41,7 @@ const Post = ({ post, index }) => {
 
   return (
     <>
-      {index == 0 ? <RePostCard post={post}/> : <PostCard post={post}/>}
+      {!(post.repostBy) ? <PostCard post={post}/> : <RePostCard post={post}/> }
       {/* <div className="flex items-center">
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
