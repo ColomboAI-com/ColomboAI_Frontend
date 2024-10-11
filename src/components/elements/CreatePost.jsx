@@ -96,7 +96,7 @@ const CreatePost = () => {
     if (res) {
       MessageBox("success", res.message);
       let postData = [...posts];
-      postData.unshift(res.data?.post);
+      postData.unshift(res.data);
       setPosts(postData);
       setIsCreatePostOpen(false);
     }
