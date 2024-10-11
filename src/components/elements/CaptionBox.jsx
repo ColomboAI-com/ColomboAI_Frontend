@@ -15,7 +15,7 @@ const font = Montserrat({
   subsets: ["latin"],
 });
 
-const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
+const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) => {
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
@@ -208,7 +208,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width }) => {
       <div className="flex justify-center mt-4">
         <button
           className="bg-brandprimary text-white font-semibold py-2 px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
-          onClick={() => alert("Vibe Shared!")}
+          onClick={handleCreateVibe}
         >
           Share Vibe
         </button>
