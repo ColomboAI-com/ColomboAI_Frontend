@@ -114,8 +114,6 @@
 //   );
 // };
 
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import { VideoPlayIcon, VideoForwardIcon, VideoPreviousIcon } from "../Icons";
 import dynamic from 'next/dynamic';
@@ -126,12 +124,16 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
   const [ffmpeg, setFfmpeg] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(0);
+  const [trimStart, setTrimStart] = useState(0);
+  const [trimEnd, setTrimEnd] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isDragging, setIsDragging] = useState(null);
+  const [thumbnailCount, setThumbnailCount] = useState(5);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     const loadFFmpeg = async () => {
@@ -143,22 +145,45 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.addEventListener('loadedmetadata', () => {
-        setDuration(videoRef.current.duration);
-        setEnd(videoRef.current.duration);
+      const video = videoRef.current;
+      video.addEventListener('loadedmetadata', () => {
+        setDuration(video.duration);
+        setTrimEnd(video.duration);
         generateThumbnails();
       });
-      videoRef.current.addEventListener('timeupdate', () => {
-        setCurrentTime(videoRef.current.currentTime);
-      });
+      video.addEventListener('timeupdate', handleTimeUpdate);
     }
-  }, [videoRef]);
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+      }
+    };
+  }, [videoRef, trimEnd, thumbnailCount]);
+
+  useEffect(() => {
+    document.addEventListener('mousemove', handleTrimmerDrag);
+    document.addEventListener('mouseup', handleTrimmerDragEnd);
+    return () => {
+      document.removeEventListener('mousemove', handleTrimmerDrag);
+      document.removeEventListener('mouseup', handleTrimmerDragEnd);
+    };
+  }, [isDragging, duration, trimStart, trimEnd]);
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    setCurrentTime(video.currentTime);
+    if (video.currentTime >= trimEnd) {
+      video.pause();
+      video.currentTime = trimStart;
+      setIsPlaying(false);
+    }
+  };
 
   const generateThumbnails = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    const thumbnailCount = 5;
     const thumbnailWidth = 120;
     const thumbnailHeight = 68;
 
@@ -188,8 +213,8 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
       ffmpeg.FS('writeFile', 'input.mp4', new Uint8Array(data));
       await ffmpeg.run(
         '-i', 'input.mp4',
-        '-ss', `${start}`,
-        '-to', `${end}`,
+        '-ss', `${trimStart}`,
+        '-to', `${trimEnd}`,
         '-c', 'copy',
         'output.mp4'
       );
@@ -204,69 +229,164 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
   };
 
   const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const handleSeek = (e) => {
-    const seekTime = (e.nativeEvent.offsetX / e.target.offsetWidth) * duration;
-    videoRef.current.currentTime = seekTime;
+  const handleTrimmerDragStart = (e, handle) => {
+    e.preventDefault();
+    setIsDragging(handle);
+  };
+
+  const handleTrimmerDrag = (e) => {
+    if (!isDragging || !timelineRef.current) return;
+    const rect = timelineRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+    const time = (x / rect.width) * duration;
+
+    if (isDragging === 'start') {
+      setTrimStart(Math.min(time, trimEnd - 1));
+    } else if (isDragging === 'end') {
+      setTrimEnd(Math.max(time, trimStart + 1));
+    }
+  };
+
+  const handleTrimmerDragEnd = () => {
+    setIsDragging(null);
+  };
+
+  const togglePlayPause = () => {
+    const video = videoRef.current;
+    if (isPlaying) {
+      video.pause();
+    } else {
+      video.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleForward = () => {
+    videoRef.current.currentTime = Math.min(videoRef.current.currentTime + 5, trimEnd);
+  };
+
+  const handleBackward = () => {
+    videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 5, trimStart);
+  };
+
+  const handleThumbnailCountChange = (e) => {
+    const count = parseInt(e.target.value, 10);
+    setThumbnailCount(count);
+    generateThumbnails();
+  };
+
+  const handleTimelineClick = (e) => {
+    if (!timelineRef.current) return;
+    const rect = timelineRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const clickedTime = (x / rect.width) * duration;
+    videoRef.current.currentTime = clickedTime;
+    setCurrentTime(clickedTime);
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg overflow-hidden w-[600px]">
-        <video ref={videoRef} src={videoUrl} className="w-full aspect-video object-cover" controls />
+    <div className="fixed inset-0 flex items-center justify-center">
+      <div className="bg-[#2563EB] rounded-lg overflow-hidden w-[600px]">
+        <video 
+          ref={videoRef} 
+          src={videoUrl} 
+          className="w-full aspect-video object-cover" 
+          onClick={togglePlayPause}
+          // style={{ display: 'none' }} // Hide the video player
+        />
         <canvas ref={canvasRef} style={{ display: 'none' }} width="120" height="68" />
         
-        <div className="bg-blue-600 p-4 text-white">
-        <div className="flex justify-center items-center mb-4">
-            <div className="flex rounded-full p-1">
-              <button className="p-1"><VideoPreviousIcon /></button>
-              <button className="p-1"><VideoPlayIcon /></button>
-              <button className="p-1"><VideoForwardIcon /></button>
+        <div className="p-4 text-white">
+          <div className="flex justify-center items-center mb-4 space-x-6">
+            <button className="p-1" onClick={handleBackward}><VideoPreviousIcon /></button>
+            <button className="p-1" onClick={togglePlayPause}>
+              <VideoPlayIcon />
+            </button>
+            <button className="p-1" onClick={handleForward}><VideoForwardIcon /></button>
+          </div>
+          
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-lg">{formatTime(currentTime)} / {formatTime(duration)}</span>
+            <div className="flex items-center space-x-3">
+              <button className="text-white text-2xl font-bold">+</button>
+              <button className="text-white text-2xl font-bold">-</button>
+              <button className="text-white text-2xl">↔️</button>
             </div>
           </div>
           
-          <div className="flex items-center justify-between mb-2">
-            <span>{formatTime(currentTime)} / {formatTime(duration)}</span>
-            <div>
-              <button className="ml-2 px-2 py-1 rounded">+</button>
-              <button className="ml-2 px-2 py-1 rounded">-</button>
-              <button className="ml-2 px-2 py-1 rounded">↔️</button>
-            </div>
-          </div>
-          
-          <div className="relative h-16 bg-blue-800 rounded cursor-pointer" onClick={handleSeek}>
-            <div className="absolute left-0 top-0 h-full bg-blue-400" style={{width: `${(currentTime / duration) * 100}%`}}></div>
-            <div className="absolute bottom-0 left-0 right-0 h-12 flex items-end overflow-hidden">
+          <div 
+            className="relative h-20 bg-[#1E40AF] rounded-lg cursor-pointer overflow-hidden" 
+            ref={timelineRef}
+            onClick={handleTimelineClick}
+          >
+            <div className="absolute top-0 left-0 right-0 bottom-0 flex">
               {thumbnails.map((thumb, index) => (
-                <img key={index} src={thumb} className="h-full w-1/5 object-cover" alt={`Thumbnail ${index}`} />
+                <img key={index} src={thumb} className="h-full" style={{width: `${100 / thumbnailCount}%`}} alt={`Thumbnail ${index}`} />
               ))}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 flex justify-between text-xs px-1">
-              {[0, 0.2, 0.4, 0.6, 0.8, 1].map((fraction) => (
-                <span key={fraction}>{formatTime(duration * fraction)}</span>
-              ))}
+            <div className="absolute top-0 left-0 right-0 bottom-0 bg-black opacity-50"></div>
+            <div 
+              className="absolute top-0 bottom-0 bg-transparent border-2 border-white"
+              style={{
+                left: `${(trimStart / duration) * 100}%`,
+                right: `${100 - (trimEnd / duration) * 100}%`
+              }}
+            ></div>
+            <div 
+              className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+              style={{left: `${(trimStart / duration) * 100}%`}}
+              onMouseDown={(e) => handleTrimmerDragStart(e, 'start')}
+            >
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-3 h-8 bg-white rounded-sm"></div>
             </div>
+            <div 
+              className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
+              style={{right: `${100 - (trimEnd / duration) * 100}%`}}
+              onMouseDown={(e) => handleTrimmerDragStart(e, 'end')}
+            >
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-8 bg-white rounded-sm"></div>
+            </div>
+            <div 
+              className="absolute top-0 bottom-0 w-0.5 bg-white"
+              style={{left: `${(currentTime / duration) * 100}%`}}
+            ></div>
           </div>
-          
-          <div className="flex justify-between mt-2">
-            <button className="p-1 bg-blue-500 rounded" onClick={() => setStart(currentTime)}>Set Start: {formatTime(start)}</button>
-            <button className="p-1 bg-blue-500 rounded" onClick={() => setEnd(currentTime)}>Set End: {formatTime(end)}</button>
-          </div>
+{/*           
+          <div className="mt-4 flex justify-between items-center">
+            <span className="text-sm">Trim: {formatTime(trimStart)} - {formatTime(trimEnd)}</span>
+            <input
+              type="range"
+              min="0"
+              max={duration}
+              value={currentTime}
+              onChange={(e) => {
+                const newTime = parseFloat(e.target.value);
+                setCurrentTime(newTime);
+                videoRef.current.currentTime = newTime;
+              }}
+              className="w-full"
+            />
+          </div> */}
         </div>
         
-        <div className="flex justify-between p-4">
-          <button 
+        <div className="p-4 flex justify-between">
+          {/* <button 
             onClick={handleTrim} 
-            className="bg-blue-500 text-white py-2 px-4 rounded" 
+            className="bg-green-500 text-white py-2 px-4 rounded"
             disabled={isLoading}
           >
             {isLoading ? 'Processing...' : 'Trim Video'}
-          </button>
-          <button onClick={onClose} className="bg-gray-500 text-white py-2 px-4 rounded">
+          </button> */}
+          <button 
+            onClick={onClose}
+            className="bg-white text-black py-2 px-4 rounded"
+          >
             Cancel
           </button>
         </div>
