@@ -23,31 +23,27 @@ import ThreeDotMenu from "../ThreeDotMenu";
 import { useEffect } from "react";
 import { InfoIcon, SaveIcon } from "lucide-react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
-import PostCard from "./PostCard";
-import RePostCard from "./RePostCard";
 
-const Post = ({ post, index }) => {
-  // const { deletePost } = useContext(FeedContext);
+const PostCard = ({ post }) => {
+  const { deletePost } = useContext(FeedContext);
 
-  // const { userDetails } = useContext(UserProfileContext);
+  const { userDetails } = useContext(UserProfileContext);
 
-  // const handleDeletePost = async () => {
-  //   try {
-  //     const response = await deletePost(post._id);
-  //   } catch (error) {
-  //     console.error("Failed to delete post:", error);
-  //   }
-  // };
+  const handleDeletePost = async () => {
+    try {
+      const response = await deletePost(post._id);
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
+  };
 
   return (
     <>
-      {index == 0 ? <RePostCard post={post}/> : <PostCard post={post}/>}
       {/* <div className="flex items-center">
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
-
-      {/* <div className={`overflow-x-hidden border-[0.5px] ${index == 0 ? `border-black` : `border-brandprimary`} sm:rounded-none md:rounded-[10px] mt-5`}>
+      <div className={`overflow-x-hidden border-[0.5px] border-brandprimary sm:rounded-none md:rounded-[10px] mt-5`}>
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <Link
             className="flex items-center justify-start w-full md:w-fit lg:w-fit"
@@ -124,9 +120,9 @@ const Post = ({ post, index }) => {
             </>
           )}
         </div>
-      </div> */}
+      </div>
     </>
   );
 };
 
-export default Post;
+export default PostCard;

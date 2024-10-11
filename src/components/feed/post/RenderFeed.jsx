@@ -65,7 +65,7 @@ export default function RenderFeed({ filter }) {
       {posts.length ? (
         posts.map((i, index) => (
           <Fragment key={index}>
-            <Post post={i} />
+            <Post post={i} index={index}/>
             {(index + 1) % 4 === 0 && (
               // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
               //   <FooterAdComponent divid={`feed-ad-${index}`}/>
