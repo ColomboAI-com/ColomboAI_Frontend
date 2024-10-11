@@ -10,6 +10,9 @@ import {
   VibesViewIcon,
 } from "@/components/Icons";
 import FollowButton from "@/components/elements/FollowButton";
+const walletIcon = "/images/icons/wallet_icon.svg";
+
+
 import ThreeDotMenuViewOthers from "@/components/elements/ThreeDotMenuViewOthers";
 import RenderFeed from "@/components/feed/post/RenderFeed";
 import { IoIosMusicalNotes } from "react-icons/io";
@@ -170,9 +173,10 @@ export default function Vibes({ filter }) {
               <p>121.5k</p>
             </div>
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesSaveIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
+              <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
+              <p>856</p>
             </div>
+
             <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
               <GenAiIcon w={30} h={30} fill={"#ffffff"} />
             </div>
