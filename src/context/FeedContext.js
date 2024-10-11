@@ -65,9 +65,6 @@ export default function FeedContextProvider({ children }) {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      //setPosts((prev) => [res.data, ...prev]);
-      window.location.reload();
       return res.data;
     } catch (err) {
       handleError(err);

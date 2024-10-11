@@ -92,11 +92,10 @@ const CreatePost = () => {
 
   const handleCreatePost = async () => {
     const res = await createPost({ type: postType, files: file, mediaUrl, content: postInput });
-    console.log(res);
     if (res) {
       MessageBox("success", res.message);
       let postData = [...posts];
-      postData.unshift(res.data?.post);
+      postData.unshift(res.data);
       setPosts(postData);
       setIsCreatePostOpen(false);
     }
