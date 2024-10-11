@@ -22,7 +22,7 @@ export default function RePost({ post }) {
     }
   }  
   return (  
-    <div className="flex items-center gap-4">
+    <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
       <div onClick={() => {
         if (isReposted) return
         setIsRepostOpen(true)
