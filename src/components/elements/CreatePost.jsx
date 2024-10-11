@@ -201,7 +201,7 @@ const CreatePost = () => {
                       <img
                         src={url}
                         alt={`File Preview${index + 1}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     ) : postType.includes("video") ? (
                       <video src={url} autoPlay loop controls className="w-full aspect-video">
