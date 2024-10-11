@@ -1175,7 +1175,7 @@ export const SettingIcon = ({ w = 26, h = 26, fill }) => {
   );
 };
 
-export const LikeIcon = ({ w = 36, h = 37, fill }) => {
+export const LikeIcon = ({ w = 32, h = 33, fill }) => {
   return (
     <svg
       width={w}
@@ -1203,7 +1203,7 @@ export const LikeIcon = ({ w = 36, h = 37, fill }) => {
   );
 };
 
-export const RePostIcon = ({ w = 32, h = 33, fill }) => {
+export const RePostIcon = ({ w = 28, h = 33, fill }) => {
   return (
     <svg
       width={w}
