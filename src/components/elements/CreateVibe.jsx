@@ -518,14 +518,14 @@ const CreateVibe = ({
            
           </div>
 
-        {!nextStep && (  <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 ">
+        {/* {!nextStep && (  <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 ">
   <Button
     title={"Share Vibe"}
     onClick={handleCreateVibe}
     className="w-fit sm2:text-xl text-white shadow-lg rounded-full bg-brandprimary py-2 px-8 hover:bg-green-500 transition duration-300"
   />
 </div>
-        )}
+        )} */}
 
   
           {(isMagicPenOpen || isColorPickerVisible) && (
