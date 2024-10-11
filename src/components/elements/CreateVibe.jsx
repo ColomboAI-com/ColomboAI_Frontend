@@ -404,6 +404,7 @@ const CreateVibe = ({
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
                   width={imageWidth}
+                  handleCreateVibe={handleCreateVibe}
                 />
               </div>
             ) : (
@@ -626,6 +627,7 @@ const CreateVibe = ({
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
                   width={imageWidth}
+                  handleCreateVibe={handleCreateVibe}
                 />
               </div>
             ) : (

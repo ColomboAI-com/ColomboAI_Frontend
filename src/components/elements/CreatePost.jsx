@@ -204,7 +204,7 @@ const CreatePost = () => {
                         className="w-full h-full object-cover"
                       />
                     ) : postType.includes("video") ? (
-                      <video src={url} autoPlay loop controls className="w-full aspect-video">
+                      <video src={url} autoPlay loop controls className="w-full h-full object-cover">
                         <source src={url} />
                       </video>
                     ) : null}
