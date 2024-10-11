@@ -1818,3 +1818,22 @@ export const MusicNotePlusIcon = () => (
     />
   </svg>
 );
+export const InfoIcon = ({ w = 25, h = 25, fill = "#242424" }) => {
+  return (
+    <svg width={w} height={h} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipPath="url(#clip0_3869_88404)">
+        <path
+          d="M13 17.9517C13.5832 17.9517 14.055 17.479 14.055 16.8958C14.055 16.3126 13.5832 15.8398 13 15.8398C12.4168 15.8398 12 16.3126 12 16.8958C12 17.479 12.4168 17.9517 13 17.9517Z"
+          fill={fill} // Fill the dot of the "i"
+        />
+        <path d="M12 7.39258H14V14.7842H12V7.39258Z" fill={fill} /> // The vertical line of "i"
+      </g>
+      <circle cx="13" cy="13" r="10" stroke={fill} strokeWidth="2" /> // Circle outline
+      <defs>
+        <clipPath id="clip0_3869_88404">
+          <rect width="25.3426" height="25.3426" fill="white" transform="translate(0.34375)" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
