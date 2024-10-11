@@ -8,7 +8,7 @@ import { maxlength } from "caniuse-lite/data/features";
 
 var settings = {
   dots: false,
-  arrows: false,
+  arrows: true,
   infinite: false,
   speed: 500,
   slidesToShow: 6,
@@ -21,10 +21,11 @@ var settings = {
         slidesToScroll: 1,
       },
     },
+    
     {
-      breakpoint: 600,
+      breakpoint: 800,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 4,
         slidesToScroll: 2,
         initialSlide: 2,
       },
@@ -32,7 +33,7 @@ var settings = {
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 1,
       },
     },
@@ -63,7 +64,8 @@ const Stories = () => {
   }
 
   return (
-    <div className="my-8 w-full" id="create_story_slider_id">
+    <div className="flex justify-center mx-8 xl:mx-0 md:mx-0 lg:mx-0">
+    <div className="my-8 w-full " id="create_story_slider_id">
       <Slider {...settings}>
         <CreateStoryQuick reFetchingStory={reFetchingStory} />
 
@@ -71,6 +73,7 @@ const Stories = () => {
           ? allStories.map((story, index) => <ViewStory data={story} key={index} />)
           : null}
       </Slider>
+    </div>
     </div>
   );
 };
