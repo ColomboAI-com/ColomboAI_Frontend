@@ -4,7 +4,7 @@ import Post from "@/components/elements/cards/Post";
 import Loader from "@/components/Loader";
 import NoDataFound from "@/components/NoDataFound";
 import { feed, FeedContext } from "@/context/FeedContext";
-import { useContext, useEffect, Fragment, use } from "react";
+import { useContext, useEffect, Fragment, useRef } from "react";
 import { getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
 
@@ -12,6 +12,10 @@ export default function RenderFeed({ filter }) {
   const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
 
   const { getUserDetails } = useContext(UserProfileContext);
+
+  // const [isFetchingMore, setIsFetchingMore] = useState(false);
+  // This reference is attached to the 'Load More' button
+  const loadMoreRef = useRef(null);
 
   const userName = getCookie("username");
 
@@ -25,21 +29,66 @@ export default function RenderFeed({ filter }) {
     return () => resetFeedValues();
   }, [userName]);
   // const handleFeedScroll = () => {
-  //   const feedSection = document.getElementById('feed_section')
+  //   const feedSection = document.getElementById("feed_section");
+  //   console.log("SCROLL TRIGGERD");
   //   if (
-  //     feedSection && !loadings.getPost &&
+  //     feedSection &&
+  //     !loadings.getPost &&
   //     Math.ceil(feedSection.scrollTop + feedSection.clientHeight) === feedSection.scrollHeight
-  //   ) getPosts(filter, page)
-  // }
+  //   )
+  //     getPosts(filter, page);
+  // };
 
   // useEffect(() => {
-  //   const feedSection = document.getElementById('feed_section')
-  //   feedSection?.addEventListener('scroll', handleFeedScroll)
-  //   return () => { feedSection?.removeEventListener('scroll', handleFeedScroll) }
-  // }, [page, loadings.getPost])
+  //   const feedSection = document.getElementById("feed_section");
+  //   console.log("POST INFY", feedSection);
+  //   feedSection?.addEventListener("scroll", handleFeedScroll);
+  //   return () => {
+  //     feedSection?.removeEventListener("scroll", handleFeedScroll);
+  //   };
+  // }, [page, loadings.getPost]);
+
+  // INFINTIE SCROLLING NEW CODE - START
+  const handleLoadMore = () => {
+    if (!loadings.getPost) {
+      getPosts(filter, page);
+    }
+  };
+
+  useEffect(() => {
+    // Intersection Observer to automatically call handleLoadMore when the button is in view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          handleLoadMore(); // Automatically trigger the function when the button is visible
+        }
+      },
+      {
+        root: null, // Uses the browser viewport as the default
+        rootMargin: "0px",
+        threshold: 1.0, // Trigger when 100% of the button is visible
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    // Cleanup the observer when the component unmounts or if button changes
+    return () => {
+      if (loadMoreRef.current) {
+        observer.unobserve(loadMoreRef.current);
+      }
+    };
+  }, [page, loadings.getPost]);
+
+  // INFINTIE SCROLLING NEW CODE - END
 
   useEffect(() => {
     // Your existing useEffect logic here
+
+    // const feedSection = document.getElementById("posts_container_infy_scroll");
 
     return () => {
       // Cleanup function to destroy ad slots
@@ -61,11 +110,11 @@ export default function RenderFeed({ filter }) {
   if (loadings.getPost && !posts.length) return <Loader className={"mt-5"} />;
 
   return (
-    <div className="sm:px-0 md:px-0">
+    <div className="sm:px-0 md:px-0" id="posts_container_infy_scroll">
       {posts.length ? (
         posts.map((i, index) => (
           <Fragment key={index}>
-            <Post post={i} index={index}/>
+            <Post post={i} index={index} />
             {(index + 1) % 4 === 0 && (
               // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
               //   <FooterAdComponent divid={`feed-ad-${index}`}/>
@@ -84,6 +133,10 @@ export default function RenderFeed({ filter }) {
       ) : (
         <NoDataFound className={"mt-5"} />
       )}
+      {/* Invisible Load More Button */}
+      <div ref={loadMoreRef} style={{ height: "1px" }}></div>
+      <div style={{ color: "transparent" }}>Hello</div>
+      {/* KEEP THIS DIV WITH HELLO SO THAT THE BUTTON APPEARS IN THE WINDOW FOR INFINITE SCROLL TO WORK */}
     </div>
   );
 }
