@@ -48,10 +48,10 @@ const RePostCard = ({ post, index }) => {
                     <div className="flex flex-row items-center gap-1">
                         <ProfilePicture image={post?.repostBy?.profile_picture} size={"w-[2rem]"} />
                         <Username username={post?.repostBy?.user_name} className="text-[12px]" />
-                        <p className="text-[#333333]/[0.7] font-[450] ml-2 sm:text-[11px] md:text-[12px] lg:text-[12px]">reposted this</p>
+                        <p className="text-[#333333]/[0.7] font-[450] ml-1 md:text-[14px] sm:text-[10px] lg:text-[14px]">reposted this</p>
                     </div>
-                    <div className="flex flex-row items-center sm:gap-2 md:gap-4 lg:gap-4 xl:gap-4 gap-4">
-                    <p className="font-sans text-sidebarlabel text-[10px] sm:text-[12px] md:text-[12px] xl:text-[12px] lg:text-[12px] text-[#8B8B8B]">
+                    <div className="flex flex-row items-center gap-4 sm:gap-2 md:gap-4 lg:gap-4 ">
+                    <p className="font-sans text-sidebarlabel text-[11px] md:text-[12px] lg:text-[12px] text-[#8B8B8B]">
                         {formatTimeAgo(post?.createdAt)}
                     </p>
                     <Dropdown
