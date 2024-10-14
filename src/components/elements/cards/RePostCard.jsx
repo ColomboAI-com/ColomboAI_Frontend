@@ -43,15 +43,15 @@ const RePostCard = ({ post, index }) => {
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
-            <div className="flex flex-col border-[0.5px] border-brandprimary mt-5 md:rounded-[10px] sm:rounded-none p-3">
+            <div className="flex flex-col border-[0.5px] md:w-[700px] sm:w-[375px] xl:w-[700px] lg:w-[700px] border-brandprimary mt-5 md:rounded-[10px] sm:rounded-none p-3">
                 <div className="flex flex-row justify-between px-[16px] pb-[16px]">
                     <div className="flex flex-row items-center gap-1">
                         <ProfilePicture image={post?.repostBy?.profile_picture} size={"w-[2rem]"} />
                         <Username username={post?.repostBy?.user_name} className="text-[12px]" />
-                        <p className="text-[#333333]/[0.7] font-[450] ml-2">reposted this</p>
+                        <p className="text-[#333333]/[0.7] font-[450] ml-2 sm:text-[11px] md:text-[12px] lg:text-[12px]">reposted this</p>
                     </div>
-                    <div className="flex flex-row items-center gap-4">
-                    <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">
+                    <div className="flex flex-row items-center sm:gap-2 md:gap-4 lg:gap-4 xl:gap-4 gap-4">
+                    <p className="font-sans text-sidebarlabel text-[10px] sm:text-[12px] md:text-[12px] xl:text-[12px] lg:text-[12px] text-[#8B8B8B]">
                         {formatTimeAgo(post?.createdAt)}
                     </p>
                     <Dropdown

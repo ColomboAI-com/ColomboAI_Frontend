@@ -37,8 +37,9 @@ const Feed = () => {
        <Sugeested />
        <SectionHeading title="You might like these" />
        <LikeThis /> */}
-
+        <div className="flex justify-center">
         <RenderFeed />
+        </div>
         {/* <SectionHeading title="Suggested Vibes For You" /> */}
         {/* <Sugeested /> */}
         {/* <SectionHeading title="You might like these" /> */}

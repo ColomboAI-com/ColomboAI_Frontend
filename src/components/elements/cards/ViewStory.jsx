@@ -20,7 +20,7 @@ const ViewStory = (data) => {
 
   return (
     <div
-      className="relative w-[120px] h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer"
+      className="relative w-[120px] sm:w-[98px]  md:w-[120px] lg:w-[120px] h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer"
       style={{
         backgroundImage: `url(${data?.data?.media[0]})`,
         backgroundSize: "100% 100%",
