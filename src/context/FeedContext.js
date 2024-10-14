@@ -177,7 +177,7 @@ export default function FeedContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setPosts((prevPosts) => [res.data, ...prevPosts]);
+        setPosts((prevPosts) => [res.data.data, ...prevPosts]);
       }
       return res.data;
     } catch (err) {
