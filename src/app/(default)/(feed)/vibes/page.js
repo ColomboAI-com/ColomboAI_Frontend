@@ -15,7 +15,7 @@ import {
 import FollowButton from "@/components/elements/FollowButton";
 import ThreeDotMenuViewOthers from "@/components/elements/ThreeDotMenuViewOthers";
 import RenderFeed from "@/components/feed/post/RenderFeed";
-import post_stats from '../../../../../public/images/icons/post_stats.svg'
+import post_stats from "../../../../../public/images/icons/post_stats.svg";
 import Image from "next/image";
 import { IoIosMusicalNotes } from "react-icons/io";
 import RepostVibe from "@/components/feed/vibes/Repost";
@@ -25,6 +25,7 @@ import BannerAdComponent from "@/components/feed/vibes/BannerAd";
 import SponsoredAdComponent from "@/components/feed/vibes/SponsoredAd";
 import { VibeContext } from "@/context/VibeContext";
 import Post from "@/components/elements/cards/Post";
+import LikeVibe from "@/components/feed/vibes/LikeVibe";
 
 export default function Vibes({ filter }) {
   const [showRepost, setRepost] = useState(false);
@@ -164,27 +165,23 @@ export default function Vibes({ filter }) {
 
         {/* Side Options */}
         <div className="relative w-[45px] flex flex-col justify-center text-[12px] ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]">
-        <div className="flex flex-col">
-          <ThreeDotMenuViewOthers />
+          <div className="flex flex-col">
+            <ThreeDotMenuViewOthers />
           </div>
 
-      
-                <div className="flex flex-col">
-                <div className="flex flex-col items-center gap-[2px] md:gap-1">
+          <div className="flex flex-col">
+            <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <VibesViewIcon w={25} h={25} fill={"#ffffff"} />
               <p className="text-[10px]">121.5k</p>
             </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesLikesIcon w={25} h={25} fill={"#ffffff"} />
-              <p className="text-[10px]">121.5k</p>
-            </div>
+            <LikeVibe />
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <VibesCommentIcon w={25} h={25} fill={"#ffffff"} />
               <p className="text-[10px]">121.5k</p>
             </div>
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
-              <StatsIcon/>
+              <StatsIcon />
               <p className="text-[10px]">120</p>
             </div>
             <div
@@ -196,14 +193,14 @@ export default function Vibes({ filter }) {
             </div>
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
-              <WalletIcon/>
+              <WalletIcon />
               <p className="text-[10px]">$20</p>
             </div>
             {/* <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full"> */}
-              {/* <GenAiIcon w={30} h={25} fill={"#ffffff"} /> */}
-              <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <GenAIPen/>
-              </div>
+            {/* <GenAiIcon w={30} h={25} fill={"#ffffff"} /> */}
+            <div className="flex flex-col items-center gap-[2px] md:gap-1">
+              <GenAIPen />
+            </div>
             {/* </div> */}
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <img
@@ -212,7 +209,7 @@ export default function Vibes({ filter }) {
                 className="w-[35px] rounded-full"
               />
             </div>
-                </div>
+          </div>
           {/* <div className=" absolute bottom-0 lg:bottom-8 flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
