@@ -119,7 +119,7 @@ export default function RenderFeed({ filter }) {
               // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
               //   <FooterAdComponent divid={`feed-ad-${index}`}/>
               // </div>
-              <div className="overflow-x-hidden border-[1px] md:w-[700px] sm:w-[375px] xl:w-[700px] lg:w-[700px] border-brandprimary rounded-[10px] mt-5">
+              <div className="overflow-x-hidden border-[1px] border-brandprimary rounded-[10px] mt-5">
                 <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[12px]">
                   Sponsored Ad
                 </div>

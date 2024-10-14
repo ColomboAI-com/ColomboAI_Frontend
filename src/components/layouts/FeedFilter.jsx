@@ -17,7 +17,7 @@ const FeedFilter = (props) => {
   const pathname = usePathname()
 
   return (
-    <div {...props}>
+    <div  {...props}>
       {navigation.map((nav, index) => (
         <span key={index}>
           <Link

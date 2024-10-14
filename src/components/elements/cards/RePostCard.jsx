@@ -43,7 +43,7 @@ const RePostCard = ({ post, index }) => {
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
-            <div className="flex flex-col border-[0.5px] md:w-[700px] sm:w-[375px] xl:w-[700px] lg:w-[700px] border-brandprimary mt-5 md:rounded-[10px] sm:rounded-none p-3">
+            <div className="flex flex-col border-[0.5px]  border-brandprimary mt-5 md:rounded-[10px] sm:rounded-none p-3">
                 <div className="flex flex-row justify-between px-[16px] pb-[16px]">
                     <div className="flex flex-row items-center gap-1">
                         <ProfilePicture image={post?.repostBy?.profile_picture} size={"w-[2rem]"} />

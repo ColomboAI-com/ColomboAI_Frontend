@@ -11,7 +11,7 @@ var settings = {
   arrows: true,
   infinite: false,
   speed: 500,
-  slidesToShow: 6,
+  slidesToShow: 5,
   slidesToScroll: 1,
   responsive: [
     {
@@ -25,7 +25,7 @@ var settings = {
     {
       breakpoint: 800,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 2,
         initialSlide: 2,
       },
@@ -64,8 +64,8 @@ const Stories = () => {
   }
 
   return (
-    <div className="flex justify-center mx-8 xl:mx-0 md:mx-0 lg:mx-0">
-    <div className="my-8 w-full " id="create_story_slider_id">
+    <div className=" mx-6 xl:mx-0 md:mx-0 lg:mx-0">
+    <div className="my-8 flex flex-col justify-evenly" id="create_story_slider_id">
       <Slider {...settings}>
         <CreateStoryQuick reFetchingStory={reFetchingStory} />
 
