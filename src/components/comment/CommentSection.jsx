@@ -9,7 +9,7 @@ import ImageBlock from "../feed/post/ImageBlock";
 import VideoBlock from "../feed/post/VideoBlock";
 import Picker from "emoji-picker-react";
 import Image from "next/image";
-import comment_x_button from "../../../public/images/icons/comment_x_button.svg"
+import comment_x_button from "../../../public/images/icons/comment_x_button.svg";
 
 const CommentSection = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
@@ -20,7 +20,7 @@ const CommentSection = ({ specificPostId, posts }) => {
     generateComment: generateCommentContext,
     getComments,
   } = useContext(FeedContext);
-  const { setIsCommentOpen } = useContext(GlobalContext);
+  const { setIsCommentOpen, openMagicPenWithIcon, setOpenMagicPenWithIcon } = useContext(GlobalContext);
   const [commentData, setCommentData] = useState("");
   const [generateCommentData, setGenerateCommentData] = useState();
   const [isClick, setIsClick] = useState(false);
@@ -39,6 +39,9 @@ const CommentSection = ({ specificPostId, posts }) => {
   const userid = getCookie("userid");
 
   useEffect(() => {
+    if (openMagicPenWithIcon) {
+      handleMegicPen();
+    }
     const fetchComments = async () => {
       try {
         const res = await getComments(specificPostId, page);
@@ -46,12 +49,14 @@ const CommentSection = ({ specificPostId, posts }) => {
           setComments((prevComments) => [...prevComments, ...res.comments]);
           setHasMore(res.currentPage < res.totalPages);
         }
-
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
     };
     fetchComments();
+    return () => {
+      setOpenMagicPenWithIcon(false);
+    };
   }, [specificPostId, page]);
 
   const myCommentLength = comments.length;
@@ -119,9 +124,7 @@ const CommentSection = ({ specificPostId, posts }) => {
   const handleDeleteComment = async (postId, commentId) => {
     try {
       await deleteCommentContext({ postId, commentId });
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment._id !== commentId)
-      );
+      setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -179,39 +182,33 @@ const CommentSection = ({ specificPostId, posts }) => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [pickerRef]);
 
   return (
     <div className="flex flex-row justify-center relative">
-      <Image src={comment_x_button} alt="colombo" onClick={e=> setIsCommentOpen(false)} className="absolute xl:top-2 xl:left-2 sm:top-10 right-3 cursor-pointer"/>
+      <Image
+        src={comment_x_button}
+        alt="colombo"
+        onClick={(e) => setIsCommentOpen(false)}
+        className="absolute xl:top-2 xl:left-2 sm:top-10 right-3 cursor-pointer"
+      />
       <div className="bg-[black] sm:h-[0rem] xl:h-[40rem] xl:flex sm:w-[0rem] xl:w-full xl:overflow-hidden ">
         <div className="h-full w-full">
-
           {posts?.type === "image" && (
-            <img
-              src={posts?.media[0]}
-              className="w-full h-full aspect-video object-contain"
-            />
+            <img src={posts?.media[0]} className="w-full h-full aspect-video object-contain" />
           )}
           {posts?.type === "video" && (
-            <video
-              className="inset-0 w-full h-full aspect-video"
-              src={posts?.media[0]}
-              controls
-            >
+            <video className="inset-0 w-full h-full aspect-video" src={posts?.media[0]} controls>
               Your browser does not support the video tag.
             </video>
           )}
           {posts?.type === "" && (
-            <img
-              src="/images/home/feed-banner-img.png"
-              className="w-full h-full aspect-video"
-            />
+            <img src="/images/home/feed-banner-img.png" className="w-full h-full aspect-video" />
           )}
         </div>
         {/* <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
@@ -225,16 +222,11 @@ const CommentSection = ({ specificPostId, posts }) => {
         </div>
 
       </div> */}
-
       </div>
       <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
-          <a
-            class="flex items-center"
-            target="_blank"
-            href={`/profile/${posts?.creator?.user_name}`}
-          >
-            <ProfilePicture image={posts?.creator?.profile_picture} size={'w-[2rem]'}/>
+          <a class="flex items-center" target="_blank" href={`/profile/${posts?.creator?.user_name}`}>
+            <ProfilePicture image={posts?.creator?.profile_picture} size={"w-[2rem]"} />
             <p class="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">
               {posts?.creator?.user_name}
             </p>
@@ -246,14 +238,10 @@ const CommentSection = ({ specificPostId, posts }) => {
           </div>
         </div>
         <div className="border-b-[1px] border-[#E3E3E3]">
-          <p className="text-[#515151] text-[16px] font-sans text-left">
-            {posts?.content}
-          </p>
+          <p className="text-[#515151] text-[16px] font-sans text-left">{posts?.content}</p>
         </div>
         <div className="flex mt-2 items-center justify-center">
-          <h4 className="text-[15px] color-[#333333] font-sans font-[700]">
-            Comments
-          </h4>
+          <h4 className="text-[15px] color-[#333333] font-sans font-[700]">Comments</h4>
           <div></div>
         </div>
         <div
@@ -262,19 +250,14 @@ const CommentSection = ({ specificPostId, posts }) => {
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">
-              <p className="text-[#515151] text-[16px] font-sans text-center">
-                No Comments Found
-              </p>
+              <p className="text-[#515151] text-[16px] font-sans text-center">No Comments Found</p>
             </div>
           )}
           {comments.map((comment) => (
             <div key={comment._id}>
               <div className="flex items-start justify-start gap-2 my-4">
                 <div className="w-[36px] h-[36px]">
-                  <img
-                    src={comment.creator.profile_picture}
-                    className="w-[36px] h-[36px] rounded-[50%]"
-                  />
+                  <img src={comment.creator.profile_picture} className="w-[36px] h-[36px] rounded-[50%]" />
                 </div>
                 <div className="w-[85%] text-left">
                   <div className="flex items-center justify-between">
@@ -285,9 +268,7 @@ const CommentSection = ({ specificPostId, posts }) => {
                       <div className="flex items-center gap-[20px] right-0">
                         <div
                           className="text-[#212121] text-[14px] font-sans font-[450] leading-[21px] cursor-pointer right-0"
-                          onClick={() =>
-                            handleDeleteComment(specificPostId, comment._id)
-                          }
+                          onClick={() => handleDeleteComment(specificPostId, comment._id)}
                         >
                           Delete
                         </div>

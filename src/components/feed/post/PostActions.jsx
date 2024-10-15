@@ -1,70 +1,85 @@
-import { GlobalContext } from "@/context/GlobalContext"
-import { useContext } from "react"
-import LikePost from "./LikePost"
-import RePost from "./RePost"
-import SavePost from "./SavePost"
-import { MagicPenIcon } from "@/components/Icons"
-import post_comment from "../../../../public/images/icons/post_comment.svg"
-import post_stats from "../../../../public/images/icons/post_stats.svg"
-import reply_icon from "../../../../public/images/icons/reply_icon.svg"
-import wallet_icon from "../../../../public/images/icons/wallet_icon.svg"
-import Image from "next/image"
+import { GlobalContext } from "@/context/GlobalContext";
+import { useContext } from "react";
+import LikePost from "./LikePost";
+import RePost from "./RePost";
+import SavePost from "./SavePost";
+import { MagicPenIcon } from "@/components/Icons";
+import post_comment from "../../../../public/images/icons/post_comment.svg";
+import post_stats from "../../../../public/images/icons/post_stats.svg";
+import reply_icon from "../../../../public/images/icons/reply_icon.svg";
+import wallet_icon from "../../../../public/images/icons/wallet_icon.svg";
+import Image from "next/image";
 
 export default function PostActions({ post }) {
-
-  const { setIsShareOpen, setIsCommentOpen, setSpecificPostId, setPosts, setIsRepostOpen } = useContext(GlobalContext)
+  const {
+    setIsShareOpen,
+    setIsCommentOpen,
+    setSpecificPostId,
+    setPosts,
+    setIsRepostOpen,
+    setOpenMagicPenWithIcon,
+  } = useContext(GlobalContext);
 
   const handleShare = (postId) => {
-    setIsShareOpen(true)
-    setSpecificPostId(postId)
-    setPosts(post)
-  }
+    setIsShareOpen(true);
+    setSpecificPostId(postId);
+    setPosts(post);
+  };
   const handleRepost = (postId) => {
-    setIsRepostOpen(true)
-    setSpecificPostId(postId)
-    setPosts(post)
-  }
+    setIsRepostOpen(true);
+    setSpecificPostId(postId);
+    setPosts(post);
+  };
   const handleComments = (postId) => {
-    setSpecificPostId(postId)
-    setPosts(post)
-    setIsCommentOpen(true)
-  }
+    setSpecificPostId(postId);
+    setPosts(post);
+    setIsCommentOpen(true);
+  };
+
+  const handleMagicPen = (postId) => {
+    setOpenMagicPenWithIcon(true);
+    handleComments(postId);
+  };
 
   return (
     <>
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]"> 
-        
-        <LikePost post={post} />
-        <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]">
+          <LikePost post={post} />
+          <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
             <button onClick={() => handleComments(post._id)}>
               <Image src={post_comment} alt="colombo" />
             </button>
             <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
           </div>
           <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-          <Image src={post_stats} alt="colombo" />
+            <Image src={post_stats} alt="colombo" />
             <p className="text-sidebarlabel font-sans text-[14px]">400</p>
           </div>
-          <button onClick={() => handleShare(post._id)} className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+          <button
+            onClick={() => handleShare(post._id)}
+            className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1"
+          >
             <Image src={reply_icon} alt="colombo" />
           </button>
           <button onClick={() => handleRepost(post._id)} className="">
             {/* <RePostIcon fill={'#646464'}/> */}
             <RePost post={post} />
           </button>
-      </div>
-      <div className="flex items-center lg:gap-[19px] md:gap-[19px] gap-[10px]">
-        <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-          <MagicPenIcon />
         </div>
-        <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-          <Image src={wallet_icon} alt="colombo" width={28} height={27}/>
-          <p className="text-sidebarlabel font-sans text-[14px]">$20</p>
+        <div className="flex items-center lg:gap-[19px] md:gap-[19px] gap-[10px]">
+          <div
+            className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1"
+            onClick={() => handleMagicPen(post._id)}
+          >
+            <MagicPenIcon />
+          </div>
+          <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+            <Image src={wallet_icon} alt="colombo" width={28} height={27} />
+            <p className="text-sidebarlabel font-sans text-[14px]">$20</p>
+          </div>
         </div>
       </div>
-    </div>
     </>
-  )
+  );
 }
-
