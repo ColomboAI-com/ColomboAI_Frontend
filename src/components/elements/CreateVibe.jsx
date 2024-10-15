@@ -106,11 +106,6 @@ const CreateVibe = ({
     setIsPlaying(!isPlaying);
   };
 
-  const handleTrimComplete = (trimmedUrl) => {
-    setMediaUrl(trimmedUrl);
-    setIsTrimming(false);
-  };
-
   const iconButtons = () => {
     return (
       <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
@@ -212,9 +207,6 @@ const CreateVibe = ({
       const fileUrl = URL.createObjectURL(selectedFile);
       setMediaUrl(fileUrl);
       setNextStep(true);
-      if (fileType === "video") {
-        setIsTrimming(true);
-      }
     }
   };
 
@@ -610,17 +602,12 @@ const CreateVibe = ({
             </video>
 
             {isTrimming ? (
-              // <Image
-              //   src={tmp_trim}
-              //   alt="none"
-              //   className="absolute bottom-0 rounded-b-[0.9rem]"
-              //   style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
-              // />
-              <VideoEditor
-              videoUrl={mediaUrl}
-              onTrimComplete={handleTrimComplete}
-              onClose={() => setIsTrimming(false)}
-            />
+              <Image
+                src={tmp_trim}
+                alt="none"
+                className="absolute bottom-0 rounded-b-[0.9rem]"
+                style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
+              />
             ) : isDropdownVisible ? (
               <div
                 className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
