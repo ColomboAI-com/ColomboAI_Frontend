@@ -101,7 +101,8 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
       </div>
 
       {/* Main Content */}
-      <div className={`bg-white rounded-b-lg shadow-md ${!showUsers ? `p-4` : `pt-4`}`}>
+      <div className={`bg-white rounded-b-lg shadow-md ${!showUsers ? `p-0 h-18` : `pt-0`}`}>
+
         {showUsers ? (
           <div className="bg-brandprimary text-black p-4 rounded-lg shadow-lg flex flex-col items-center max-h-[197px] hide-scrollbar overflow-y-auto">
             <hr className="border-t-[3px] rounded-full w-[2rem] border-white mb-1" />
