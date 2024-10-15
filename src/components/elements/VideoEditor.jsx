@@ -131,6 +131,7 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isDragging, setIsDragging] = useState(null);
   const [thumbnailCount, setThumbnailCount] = useState(5);
+  const [zoomLevel, setZoomLevel] = useState(1);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const timelineRef = useRef(null);
@@ -244,7 +245,7 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
     if (!isDragging || !timelineRef.current) return;
     const rect = timelineRef.current.getBoundingClientRect();
     const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-    const time = (x / rect.width) * duration;
+    const time = (x / rect.width) * duration / zoomLevel;
 
     if (isDragging === 'start') {
       setTrimStart(Math.min(time, trimEnd - 1));
@@ -275,19 +276,30 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
     videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 5, trimStart);
   };
 
-  const handleThumbnailCountChange = (e) => {
-    const count = parseInt(e.target.value, 10);
-    setThumbnailCount(count);
-    generateThumbnails();
-  };
-
   const handleTimelineClick = (e) => {
     if (!timelineRef.current) return;
     const rect = timelineRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
-    const clickedTime = (x / rect.width) * duration;
+    const clickedTime = (x / rect.width) * duration / zoomLevel;
     videoRef.current.currentTime = clickedTime;
     setCurrentTime(clickedTime);
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel(prevZoom => Math.min(prevZoom * 1.5, 4));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prevZoom => Math.max(prevZoom / 1.5, 1));
+  };
+
+  const handleResetZoom = () => {
+    setZoomLevel(1);
+  };
+
+  const timelineStyle = {
+    width: `${100 * zoomLevel}%`,
+    transform: `translateX(${-(currentTime / duration) * 100 * (zoomLevel - 1)}%)`,
   };
 
   return (
@@ -298,7 +310,6 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
           src={videoUrl} 
           className="w-full aspect-video object-cover" 
           onClick={togglePlayPause}
-          // style={{ display: 'none' }} // Hide the video player
         />
         <canvas ref={canvasRef} style={{ display: 'none' }} width="120" height="68" />
         
@@ -314,9 +325,9 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
           <div className="flex items-center justify-between mb-4">
             <span className="text-lg">{formatTime(currentTime)} / {formatTime(duration)}</span>
             <div className="flex items-center space-x-3">
-              <button className="text-white text-2xl font-bold">+</button>
-              <button className="text-white text-2xl font-bold">-</button>
-              <button className="text-white text-2xl">↔️</button>
+              <button className="text-white text-2xl font-bold" onClick={handleZoomIn}>+</button>
+              <button className="text-white text-2xl font-bold" onClick={handleZoomOut}>-</button>
+              <button className="text-white text-2xl" onClick={handleResetZoom}>↔️</button>
             </div>
           </div>
           
@@ -325,7 +336,7 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
             ref={timelineRef}
             onClick={handleTimelineClick}
           >
-            <div className="absolute top-0 left-0 right-0 bottom-0 flex">
+            <div className="absolute top-0 left-0 right-0 bottom-0 flex" style={timelineStyle}>
               {thumbnails.map((thumb, index) => (
                 <img key={index} src={thumb} className="h-full" style={{width: `${100 / thumbnailCount}%`}} alt={`Thumbnail ${index}`} />
               ))}
@@ -334,45 +345,29 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
             <div 
               className="absolute top-0 bottom-0 bg-transparent border-2 border-white"
               style={{
-                left: `${(trimStart / duration) * 100}%`,
-                right: `${100 - (trimEnd / duration) * 100}%`
+                left: `${(trimStart / duration) * 100 * zoomLevel}%`,
+                right: `${100 - (trimEnd / duration) * 100 * zoomLevel}%`
               }}
             ></div>
             <div 
               className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
-              style={{left: `${(trimStart / duration) * 100}%`}}
+              style={{left: `${(trimStart / duration) * 100 * zoomLevel}%`}}
               onMouseDown={(e) => handleTrimmerDragStart(e, 'start')}
             >
               <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-3 h-8 bg-white rounded-sm"></div>
             </div>
             <div 
               className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize"
-              style={{right: `${100 - (trimEnd / duration) * 100}%`}}
+              style={{right: `${100 - (trimEnd / duration) * 100 * zoomLevel}%`}}
               onMouseDown={(e) => handleTrimmerDragStart(e, 'end')}
             >
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-3 h-8 bg-white rounded-sm"></div>
             </div>
             <div 
               className="absolute top-0 bottom-0 w-0.5 bg-white"
-              style={{left: `${(currentTime / duration) * 100}%`}}
+              style={{left: `${(currentTime / duration) * 100 * zoomLevel}%`}}
             ></div>
           </div>
-{/*           
-          <div className="mt-4 flex justify-between items-center">
-            <span className="text-sm">Trim: {formatTime(trimStart)} - {formatTime(trimEnd)}</span>
-            <input
-              type="range"
-              min="0"
-              max={duration}
-              value={currentTime}
-              onChange={(e) => {
-                const newTime = parseFloat(e.target.value);
-                setCurrentTime(newTime);
-                videoRef.current.currentTime = newTime;
-              }}
-              className="w-full"
-            />
-          </div> */}
         </div>
         
         <div className="p-4 flex justify-between">
