@@ -1,6 +1,7 @@
 import { LikeIcon } from "@/components/Icons"
 import { FeedContext } from "@/context/FeedContext"
 import { useContext, useState } from "react"
+import { useMediaQuery } from "react-responsive"
 
 export default function LikePost({ post }) {
 
@@ -15,9 +16,21 @@ export default function LikePost({ post }) {
     await likePost(post?._id)
   }
 
+  const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' });
+  const isMediumScreen = useMediaQuery({ query: '(min-width: 768px) and (max-width: 1023px)' });
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 1025px)' });
+
+  let iconWidth;
+  if (isSmallScreen) {
+    iconWidth = 20; 
+  } else if (isMediumScreen) {
+    iconWidth = 50; 
+  } else if (isLargeScreen) {
+    iconWidth = 50; 
+  }
   return (
     <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-      <div onClick={onLikePost}><LikeIcon fill={isLiked && '#E95050'} /></div>
+      <div onClick={onLikePost}><LikeIcon fill={isLiked && '#E95050'} w={iconWidth}/></div>
       <p className={`font-sans text-[14px] ${isLiked ? 'text-brandprimary' : 'text-sidebarlabel'}`}>
         {likeCounts}
       </p>

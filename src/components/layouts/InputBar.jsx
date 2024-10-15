@@ -98,9 +98,9 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
 
     <div className="relative">
       {!isUploading ? (
-        <form onSubmit={handleSubmit} className="lg:pb-[21px] sm:pb-0 pt-[21px]">
+        <form onSubmit={handleSubmit} className="lg:pb-[21px] sm:pb-0 pt-[21px] flex flex-row w-full justify-center">
           <div
-            className="relative w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px]"
+            className="relative sm:w-[20rem] md:w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px]"
             style={borderStyle}
           >
             <input
@@ -109,7 +109,7 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
               onChange={(e) => setMessage(e.target.value)}
               //   placeholder={file ? '' : "Ask or create anything..."}
               placeholder="Ask or create anything..."
-              className="w-full max-w-[45rem] h-full py-[17px] px-[35px]  text-[#1E71F2] text-[16px] tracking-[0.1rem] font-sans overflow-hidden text-ellipsis whitespace-nowrap bg-transparent focus:outline-none"
+              className="w-full max-w-[45rem] sm: h-full py-[17px] px-[35px]  text-[#1E71F2] text-[16px] tracking-[0.1rem] font-sans overflow-hidden text-ellipsis whitespace-nowrap bg-transparent focus:outline-none"
             />
             <div className="absolute top-0 right-0 h-full flex items-center pr-[25px]">
               <button

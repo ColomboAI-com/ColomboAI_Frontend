@@ -35,19 +35,19 @@ export default function PostActions({ post }) {
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]"> 
         
-        <LikePost post={post} />
+        <LikePost post={post}/>
         <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
             <button onClick={() => handleComments(post._id)}>
-              <Image src={post_comment} alt="colombo" />
+              <Image src={post_comment} alt="colombo" className="md:w-full sm:w-[1.2rem]"/>
             </button>
             <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
           </div>
           <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-          <Image src={post_stats} alt="colombo" />
+          <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]"/>
             <p className="text-sidebarlabel font-sans text-[14px]">400</p>
           </div>
           <button onClick={() => handleShare(post._id)} className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-            <Image src={reply_icon} alt="colombo" />
+            <Image src={reply_icon} alt="colombo" className="md:w-full sm:w-[1.2rem]"/>
           </button>
           <button onClick={() => handleRepost(post._id)} className="">
             {/* <RePostIcon fill={'#646464'}/> */}
