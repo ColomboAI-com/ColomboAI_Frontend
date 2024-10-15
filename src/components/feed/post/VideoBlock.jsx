@@ -5,7 +5,7 @@ export default function VideoBlock({ video = ['https://www.youtube.com/embed/b1d
   const { setPopupVideo } = useContext(GlobalContext);
   return (
     <div onClick={e => setPopupVideo(video[0])} id="video" className="sm:col-span-3">
-      <div className="object-cover md:h-[24rem] sm:h-[10rem]">
+      <div className="object-cover md:h-[30rem] sm:h-[20rem]">
         {typeof(video) === "object" ? video.map((src) => <Video src={src} />) : <Video src={video} />}
       </div>
     </div>
