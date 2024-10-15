@@ -1,7 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
+import { useContext } from "react"
+import { GlobalContext } from "@/context/GlobalContext"
+
 export default function ImageBlock({ image = ['/images/home/feed-banner-img.png'] }) {
+  const { setPopupImage } = useContext(GlobalContext);
   return (
-    <div className="flex">
+    <div onClick={e => setPopupImage(image[0])} className={`flex ${image[0] ? `md:h-[24rem] sm:h-[10rem]` : `h-[0rem]`}`}>
       {typeof(image) === "object" ? image.map((src) => <Img src={src} />) : <Img src={image}/> }
     </div>
   )
@@ -9,6 +13,6 @@ export default function ImageBlock({ image = ['/images/home/feed-banner-img.png'
 
 function Img({ src }) {
   return (
-     <img src={src} alt="post_image" className="w-full h-full aspect-video object-fill bg-gray-100" />
+     <img src={src} alt="post_image" className="w-full h-full object-contain bg-white" />
   )
 }

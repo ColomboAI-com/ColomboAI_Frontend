@@ -3,11 +3,11 @@ import { ThreeDots } from "react-loader-spinner";
 import { SendIcon } from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
 import "../../app/globals.css"
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import Draggable from "react-draggable";
 import { GlobalContext } from "@/context/GlobalContext";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -86,7 +86,7 @@ const StoryMagicText = ({ captionInput, setCaptionInput, width }) => {
 
 
   return (
-    <div className={`mx-auto h-full flex flex-col ${plusJakartaSans.className}`} style={{width: width ? `${width}px` : `auto`}}>
+    <div className={`mx-auto h-full flex flex-col ${font.className}`} style={{width: width ? `${width}px` : `auto`}}>
       {/* Needed to comment out the below (related to selecting a user) in order for the program to run; it was causing issues */}
 
       {/* <div className={`flex text-white w-[105px] rounded-tr-lg h-[22px] items-center ${selectedUsers.length > 0 ? "bg-blue-500" : "bg-gray-500"

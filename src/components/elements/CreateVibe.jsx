@@ -20,19 +20,18 @@ import ColorPicker from "./ColorPicker";
 import MusicDropdown from "./MusicDropDown";
 import MusicOverlay from "./MusicOverlay";
 import { VideoEditor } from "./VideoEditor";
-import next from "next";
 import CaptionBox from "./CaptionBox";
 import ThreeDotMenu from "./ThreeDotMenu";
 import EditCover from "./EditCover";
 import axios from "axios";
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import tmp_trim from "../../../public/images/vibes/tmp_trim.png";
 import Image from "next/image";
 import { set } from "date-fns";
 import { VibeContext } from "@/context/VibeContext";
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -54,9 +53,13 @@ const CreateVibe = ({
   const defaultPostType = "thought";
   const [postType, setPostType] = useState(uploadedPostType);
   const [nextStep, setNextStep] = useState(uploadedNextStep);
-  const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
-  const { setIsCreateVibeOpen, isSelectedFromComputer, setIsSelectedFromComputer } =
-    useContext(GlobalContext);
+  const { generatePost, createPost, loadings, posts, setPosts } =
+    useContext(FeedContext);
+  const {
+    setIsCreateVibeOpen,
+    isSelectedFromComputer,
+    setIsSelectedFromComputer,
+  } = useContext(GlobalContext);
   const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false); // Trimming state
@@ -90,8 +93,8 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
- const handSelectSongId = (id) => {
-    setSongId(id.toString()); 
+  const handSelectSongId = (id) => {
+    setSongId(id.toString());
   };
   const handleSongSelect = (song) => {
     setSelectedSong(song);
@@ -99,7 +102,7 @@ const CreateVibe = ({
     setIsPlaying(true);
     handSelectSongId(song.id);
   };
-    const handlePlayPause = () => {
+  const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
 
@@ -285,16 +288,7 @@ const CreateVibe = ({
   }, [mediaUrl]);
 
   return (
-    <main className={plusJakartaSans.className}>
-      {/* The Share Vibe button is placed here for testing purposes; will be move the the right place in the vibe creation process */}
-      <Button
-        title={"Share Vibe"}
-        onClick={handleCreateVibe}
-        className={
-          "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
-        }
-        // onClick={()=>handleVibeValidation()}
-      />
+    <main className={font.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[20vh] no-scrollbar overflow-y-auto">
@@ -312,7 +306,9 @@ const CreateVibe = ({
               )}
             </div>
             <div className="flex-grow flex justify-center">
-              <p className="pl-[17px]  text-2xl  tracking-wider ">Create new Vibes</p>
+              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
+                Create New Vibes
+              </p>
             </div>
             <button onClick={() => setIsCreateVibeOpen(false)}>
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
@@ -342,26 +338,30 @@ const CreateVibe = ({
               visible={true}
               height="25"
               width="25"
-              color="#1E71F2"
+              color="##141212"
               radius="9"
               ariaLabel="three-dots-loading"
               wrapperStyle={{}}
               wrapperClass=""
             />
           ) : (
-            <SendIcon w={32} h={32} fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"} />
+            <SendIcon
+              w={32}
+              h={32}
+              fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"}
+            />
           )}
         </button>
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-8 pb-8 ${
+          className={`relative my-6 pb-8 ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
           <div>
             <button onClick={(e) => onReset()} className="mr-6">
-              <BackButtonIcon w={20} h={20} fill={"#F2F2F7"} />
+              <BackButtonIcon w={20} h={20} fill={"#141212"} />
             </button>
           </div>
           {/* <img
@@ -371,13 +371,13 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative max-h-[32rem] overflow-hidden">
+          <div className="relative max-h-[35rem] overflow-hidden">
             <img
               key={mediaUrl}
               ref={imgRef}
               src={mediaUrl}
               alt="File Preview"
-              className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
+              className="w-full h-full object-contain max-h-[35rem] rounded-[1rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
             />
@@ -399,7 +399,11 @@ const CreateVibe = ({
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
+                  <MusicDropdown
+                    setSongId={setSongId}
+                    width={imageWidth}
+                    onSongSelect={handleSongSelect}
+                  />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -408,6 +412,7 @@ const CreateVibe = ({
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
                   width={imageWidth}
+                  handleCreateVibe={handleCreateVibe}
                 />
               </div>
             ) : (
@@ -449,7 +454,10 @@ const CreateVibe = ({
             )}
           </div>
           <div className="flex flex-col">
-            <div className="ml-4" onClick={(e) => console.log(isSelectedFromComputer)}>
+            <div
+              className="ml-4"
+              onClick={(e) => console.log(isSelectedFromComputer)}
+            >
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -515,7 +523,20 @@ const CreateVibe = ({
                 />
               )} */}
             </div>
+
+           
           </div>
+
+        {/* {!nextStep && (  <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 ">
+  <Button
+    title={"Share Vibe"}
+    onClick={handleCreateVibe}
+    className="w-fit sm2:text-xl text-white shadow-lg rounded-full bg-brandprimary py-2 px-8 hover:bg-green-500 transition duration-300"
+  />
+</div>
+        )} */}
+
+  
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
@@ -556,7 +577,7 @@ const CreateVibe = ({
         //           </video>
 
         <div
-          className={`relative my-8 pb-8 ${
+          className={`relative my-6 pb-8 ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -572,13 +593,13 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative max-h-[32rem] overflow-hidden">
+          <div className="relative max-h-[34rem] overflow-hidden">
             <video
               key={mediaUrl}
               ref={imgRef}
               src={mediaUrl}
               alt="File Preview"
-              className="w-full h-full object-contain max-h-[32rem] rounded-[0.9rem]"
+              className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
               autoPlay
@@ -606,7 +627,11 @@ const CreateVibe = ({
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
+                  <MusicDropdown
+                    setSongId={setSongId}
+                    width={imageWidth}
+                    onSongSelect={handleSongSelect}
+                  />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -615,6 +640,7 @@ const CreateVibe = ({
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
                   width={imageWidth}
+                  handleCreateVibe={handleCreateVibe}
                 />
               </div>
             ) : (
@@ -655,7 +681,10 @@ const CreateVibe = ({
             )}
           </div>
           <div className="flex flex-col">
-            <div className="ml-4" onClick={(e) => console.log(isSelectedFromComputer)}>
+            <div
+              className="ml-4"
+              onClick={(e) => console.log(isSelectedFromComputer)}
+            >
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -766,9 +795,16 @@ const CreateVibe = ({
               <div className="pt-3 text-center">
                 {file ? (
                   <>
-                    <img src={mediaUrl} alt="media" className="object-contain w-48 h-48" />
+                    <img
+                      src={mediaUrl}
+                      alt="media"
+                      className="object-contain w-48 h-48"
+                    />
                     <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
-                      <button onClick={clearFileHandler} className="text-red-500">
+                      <button
+                        onClick={clearFileHandler}
+                        className="text-red-500"
+                      >
                         <CloseDocumentIcon w={20} h={20} />
                       </button>
                       <button
@@ -823,6 +859,7 @@ const CreateVibe = ({
           )}
         </>
       )}
+      
     </main>
   );
 };

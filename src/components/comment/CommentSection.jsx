@@ -8,6 +8,9 @@ import ProfilePicture from "../elements/ProfilePicture";
 import ImageBlock from "../feed/post/ImageBlock";
 import VideoBlock from "../feed/post/VideoBlock";
 import Picker from "emoji-picker-react";
+import Image from "next/image";
+import comment_x_button from "../../../public/images/icons/comment_x_button.svg"
+
 const CommentSection = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
@@ -39,10 +42,11 @@ const CommentSection = ({ specificPostId, posts }) => {
     const fetchComments = async () => {
       try {
         const res = await getComments(specificPostId, page);
-         if (res && res.comments) {
-            setComments((prevComments) => [...prevComments, ...res.comments]);
-            setHasMore(res.currentPage < res.totalPages);}
-        
+        if (res && res.comments) {
+          setComments((prevComments) => [...prevComments, ...res.comments]);
+          setHasMore(res.currentPage < res.totalPages);
+        }
+
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -183,28 +187,21 @@ const CommentSection = ({ specificPostId, posts }) => {
   }, [pickerRef]);
 
   return (
-    <div className="bg-[black] xl:flex w-full max-h-[calc((100vh-192.28px)-155px)] xl:overflow-hidden lg:flex-row lg:h-full md:max-h-[calc(100vh-88px)] md:flex-col md:overflow-auto md:border-[0.2px] md:border[#1E71F2] md:my-[30px] md:mx-[17px] md:rounded-tl-[10px] md:rounded-tr-[10px] sm:flex-col sm:overflow-auto">
-      <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
-        <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
-          <button
-            onClick={() => setIsCommentOpen(false)}
-            className="bg-white w-9 h-9 rounded-full relative top-[0] mt-[25px] ml-[14px] flex items-center"
-          >
-            <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
-          </button>
-        </div>
-        <div className="h-[90%]  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
+    <div className="flex flex-row justify-center relative">
+      <Image src={comment_x_button} alt="colombo" onClick={e=> setIsCommentOpen(false)} className="absolute xl:top-2 xl:left-2 sm:top-10 right-3 cursor-pointer"/>
+      <div className="bg-[black] sm:h-[0rem] xl:h-[40rem] xl:flex sm:w-[0rem] xl:w-full xl:overflow-hidden ">
+        <div className="h-full w-full">
 
           {posts?.type === "image" && (
             <img
-              src={posts?.media}
-              className="w-full h-full aspect-video h-[-webkit-fill-available] object-contain"
+              src={posts?.media[0]}
+              className="w-full h-full aspect-video object-contain"
             />
           )}
           {posts?.type === "video" && (
             <video
-              className="inset-0 w-full h-full aspect-video h-[-webkit-fill-available]"
-              src={posts?.media}
+              className="inset-0 w-full h-full aspect-video"
+              src={posts?.media[0]}
               controls
             >
               Your browser does not support the video tag.
@@ -213,19 +210,31 @@ const CommentSection = ({ specificPostId, posts }) => {
           {posts?.type === "" && (
             <img
               src="/images/home/feed-banner-img.png"
-              className="w-full h-full aspect-video h-[-webkit-fill-available]"
+              className="w-full h-full aspect-video"
             />
           )}
         </div>
+        {/* <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
+        <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
+          <button
+            onClick={() => setIsCommentOpen(false)}
+            className="bg-white w-9 h-9 rounded-full relative top-[0] mt-[25px] ml-[14px] flex items-center"
+          >
+            <img src="/images/icons/cross-icon.svg" className="p-[12px]" />
+          </button>
+        </div>
+
+      </div> */}
+
       </div>
-      <div className="lg:w-[40%] bg-white px-4 xl:w-[40%] xl:sm:z-[0] xl:relative xl:h-[85vh] md:w-full md:left-[0] sm:w-full sm:absolute sm:z-[99] sm:left-0 sm:top-auto sm:bottom-0 md:h-[70vh] md:top-auto md:bottom-0">
+      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4">
         <div class="flex items-center justify-between px-[16px] py-[12px]">
           <a
             class="flex items-center"
             target="_blank"
             href={`/profile/${posts?.creator?.user_name}`}
           >
-            <ProfilePicture image={posts?.creator?.profile_picture} />
+            <ProfilePicture image={posts?.creator?.profile_picture} size={'w-[2rem]'}/>
             <p class="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">
               {posts?.creator?.user_name}
             </p>
@@ -241,8 +250,8 @@ const CommentSection = ({ specificPostId, posts }) => {
             {posts?.content}
           </p>
         </div>
-        <div className="flex h-[10%] items-center justify-center">
-          <h4 className="text-[21px] color-[#333333] font-sans font-[700]">
+        <div className="flex mt-2 items-center justify-center">
+          <h4 className="text-[15px] color-[#333333] font-sans font-[700]">
             Comments
           </h4>
           <div></div>

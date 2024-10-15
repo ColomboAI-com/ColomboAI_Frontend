@@ -6,6 +6,7 @@ import { GlobalContext } from "@/context/GlobalContext";
 import { ThreeDots } from "react-loader-spinner";
 import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
+import { constructFrom } from "date-fns";
 
 const CreatePost = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -18,6 +19,8 @@ const CreatePost = () => {
   const [nextStep, setNextStep] = useState(false);
   const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
   const { setIsCreatePostOpen } = useContext(GlobalContext);
+  // Open Magic Pen if it came from drop down
+  const { openMagicPenWithIcon } = useContext(GlobalContext);
 
   const InputFile = useRef(null);
 
@@ -53,6 +56,7 @@ const CreatePost = () => {
 
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
+
     if (selectedFiles.length > 0) {
       setFile(selectedFiles);
 
@@ -87,18 +91,21 @@ const CreatePost = () => {
   };
 
   const handleCreatePost = async () => {
-    const res = await createPost({ type: postType, files: file, content: postInput });
+    const res = await createPost({ type: postType, files: file, mediaUrl, content: postInput });
     console.log(res);
     if (res) {
       MessageBox("success", res.message);
       let postData = [...posts];
-      postData.unshift(res.data?.post);
+      postData.unshift(res.data);
       setPosts(postData);
       setIsCreatePostOpen(false);
     }
   };
 
   useEffect(() => {
+    if (openMagicPenWithIcon) {
+      toggleMagicPen();
+    }
     return () => {
       mediaUrl.forEach((url) => URL.revokeObjectURL(url));
     };
@@ -116,7 +123,7 @@ const CreatePost = () => {
             )}
           </div>
           <div className="flex items-center">
-            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create new Post</p>
+            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create New Post</p>
           </div>
           <div className="flex items-center gap-6">
             <button
@@ -194,10 +201,10 @@ const CreatePost = () => {
                       <img
                         src={url}
                         alt={`File Preview${index + 1}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     ) : postType.includes("video") ? (
-                      <video src={url} autoPlay loop controls className="w-full aspect-video">
+                      <video src={url} autoPlay loop controls className="w-full h-full object-cover">
                         <source src={url} />
                       </video>
                     ) : null}

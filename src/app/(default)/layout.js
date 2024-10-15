@@ -34,11 +34,12 @@ import CreateVibe from "@/components/elements/CreateVibe";
 import CreateStory from "@/components/elements/CreateStory";
 import Image from "next/image";
 import genai_pen from "../../../public/images/icons/genai_pen.svg"
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
+import path from "path";
 
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -159,9 +160,9 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <FeedContextProvider>
-      <div className={`min-w-screen border-yellow-400 relative ${plusJakartaSans.className}`}>
+      <div className={`min-w-screen border-yellow-400 relative ${font.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
-          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen top-18 z-50 hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
@@ -241,12 +242,12 @@ const DefaultLayout = ({ children }) => {
                 {children}
               </div>
               {/* // </> */}
-              <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
+              {(pathname === "/shop" || pathname === '/news')  ? null : <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
                 <RightSidebar />
-              </div>
+              </div>}
             </div>}
                 {(isCreateVibeOpen && isSelectedFromComputer) && (
-                  <div className="bg-[#333333] w-full h-full">
+                  <div className="bg-[#e0d5d5] w-full h-50">
                     <CreateVibe
                       uploadedFile={uploadedFile}
                       onFileUpload={handleFileUpload}
@@ -270,8 +271,8 @@ const DefaultLayout = ({ children }) => {
         {/* Bottombar Mobile View */}
         <div className="md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-            <div className="py-4 flex flex-wrap items-center justify-evenly">
-              <Link href="/gen-search">
+            <div className="py-1 flex flex-wrap items-center justify-evenly">
+              <Link href="/genai-search">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
                     {/* <GenAiIcon
@@ -282,10 +283,10 @@ const DefaultLayout = ({ children }) => {
                     <Image src={genai_pen} alt="colombo" />
                   </div>
                   <p
-                    className={`${pathname === "/gen-search"
+                    className={`${pathname === "/genai-search"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3`}
+                      } text-center text-[14px] mt-2`}
                   >
                     Gen AI
                   </p>
@@ -301,7 +302,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/vibes"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3`}
+                      } text-center text-[14px] mt-2`}
                   >
                     Vibes
                   </p>
@@ -325,7 +326,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${feedSections.includes(`${pathname}`)
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3`}
+                      } text-center text-[14px] mt-2`}
                   >
                     Feed
                   </p>
@@ -345,7 +346,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/shop"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3`}
+                      } text-center text-[14px] mt-2`}
                   >
                     Shop
                   </p>
@@ -365,7 +366,7 @@ const DefaultLayout = ({ children }) => {
                     className={`${pathname === "/news"
                       ? "text-brandprimary"
                       : "text-sidebaricon"
-                      } text-center text-[14px] mt-3`}
+                      } text-center text-[14px] mt-2`}
                   >
                     News
                   </p>

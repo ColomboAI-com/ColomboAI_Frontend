@@ -4,7 +4,7 @@ import { BackButtonIcon, CreateMagicPenIcon, MusicNotePlusIcon, TextShadowIcon }
 import ThreeDotMenuStory from "./ThreeDotMenuStory";
 
 import { useContext, useEffect, useState, useRef } from "react";
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import MusicDropDown from "./MusicDropDown";
 import MusicOverlay from "./MusicOverlay";
 import Image from "next/image";
@@ -14,8 +14,9 @@ import Draggable from "react-draggable";
 import StoryMagicText from "./StoryMagicText";
 import music_check from "../../../public/images/icons/music_check.svg";
 import musicIcon from "../../../public/images/icons/musicIcon.svg";
+import { StoryContext } from "@/context/StoryContext";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -29,6 +30,7 @@ const CreateStory = ({}) => {
     setIsSelectedFromComputer,
     storyMediaType,
     storyCaptionBool,
+    storyFile,
   } = useContext(GlobalContext);
   const imgRef = useRef(null);
   const [createText, setCreateText] = useState(false);
@@ -42,6 +44,9 @@ const CreateStory = ({}) => {
   const [textColor, setTextColor] = useState("#000000");
   const [captionInput, setCaptionInput] = useState("");
   const [confirmSong, setConfirmSong] = useState(false);
+
+  const { createStory } = useContext(StoryContext);
+
   const toggleText = () => {
     setIsMagicPenOpen(false);
     setAddMusic(false);
@@ -80,8 +85,21 @@ const CreateStory = ({}) => {
     setAddMusic(false);
     setIsMagicPenOpen(!isMagicPenOpen);
   };
+
+  const handleCreateStory = async () => {
+    const res = await createStory({
+      fileType: storyFile.type.split("/")[0],
+      file: storyFile,
+      content: "Default Content",
+    });
+    console.log(res);
+    if (res.success) {
+      window.location.reload();
+    }
+  };
+
   return (
-    <div className={`flex flex-row w-full justify-center py-[3.5rem] ${plusJakartaSans.className}`}>
+    <div className={`flex flex-row w-full h-full justify-center py-[3.5rem] ${font.className}`}>
       <div>
         <button
           onClick={(e) => (setStoryMediaType(""), setStoryMediaURL(""), setIsSelectedFromComputer(false))}
@@ -100,7 +118,11 @@ const CreateStory = ({}) => {
           //   onClick={handleTextClick}
           onLoad={handleImageLoad}
         />
-        <button className="absolute bottom-0 rounded-lg p-3 text-black bg-white">Temp Share button</button>
+        <div className="flex justify-center">
+        <button className="absolute bottom-0 mb-2 p-3 w-full text-white bg-gray-400 bg-opacity-30 backdrop-filter backdrop-blur-md rounded-[100px]" onClick={handleCreateStory}>
+          Share Story
+        </button>
+        </div>
         {addMusic && (
           <div
             className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"

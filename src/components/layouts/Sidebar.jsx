@@ -8,13 +8,13 @@ import InputBar from "./InputBar";
 import Link from "next/link";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useEffect, useState } from "react";
-import { Plus_Jakarta_Sans } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import Image from "next/image";
 import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
 import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
 
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
   subsets: ["latin"],
@@ -43,14 +43,14 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className={`xl:w-[100%]  lg:w-[3.5rem] xl:mt-[0px] lg:mt-[5rem] ${plusJakartaSans.className}`}>
-                <div className="lg:mb-[46px] md:mt-[6rem] md:mb-[46px] xl:mt-[6rem] lg:mt-[6rem] relative">
+            <div className={`xl:w-[100%]  lg:w-[3.5rem]  ${font.className}`}>
+                <div className="lg:mb-[40px] md:mt-[1.5rem] md:mb-[46px] xl:mt-[1.5rem] lg:mt-[1.5rem] relative">
 
                     <Dropdown
                         offset={[0, 10]}
                         placement="bottom-start"
                         btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-                        button={<ProfilePicture image={profilePic} />}
+                        button={<ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] " image={profilePic} />}
                     >
                         <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                             <Link href="/profile"><li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li></Link>
@@ -62,7 +62,7 @@ const Sidebar = () => {
                     <img src={getCookie('profilePic')} alt="profile-image" className="w-[42px] mx-auto rounded-full" />
                 </div> */}
                 <div className="h-[75vh] overflow-auto flex flex-col items-center">
-                    <Link href="https://colomboai.com/genai-search/">
+                    <Link href="https://caidev.colomboai.com/genai-search/">
                         <div className="mb-[34px] flex flex-col items-center">
                             <GenAiIcon w="24" h="24" className="mx-auto" fill={pathname === '/gen-ai-icon' ? "#1E71F2" : "#8E8E93"} />
                             <p className={`${pathname === '/genai-search' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Gen AI</p>
@@ -70,7 +70,7 @@ const Sidebar = () => {
                     </Link>
                     <Link href="/vibes">
                         <div className="mb-[34px] flex flex-col items-center">
-                            {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo"/> : <Image src={vibes_icon} alt="colombo"/>}
+                            {pathname === '/vibes' ? <Image src={blue_vibes_icon} width={24} height={24} alt="colombo"/> : <Image width={24} height={24} src={vibes_icon} alt="colombo"/>}
                             <p className={`${pathname === '/vibes' ? "text-brandprimary" : "text-sidebaricon"} text-center text-[10px] mt-[5px] `}>Vibes</p>
                         </div>
                     </Link>

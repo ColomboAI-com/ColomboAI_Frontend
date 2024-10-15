@@ -33,7 +33,7 @@ export default function VibeContextProvider({ children }) {
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    console.log(type, file, text, textColor, content, songId);
+    // console.log(type, file, text, textColor, content, songId);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -81,15 +81,15 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const getVibes = async () => {
+  const getVibes = async (type, page = 1, limit = 10) => {
     try {
-      setLoadings((prev) => ({ ...prev, reactVibe: true }));
+      setLoadings((prev) => ({ ...prev, getVibe: true }));
       const response = await axios.get(`${ROOT_URL_FEED}/vibes/feed`, {
         headers: {
           Authorization: getCookie("token"),
         },
       });
-      setVibes(prev => ([...prev, ...response.data?.posts || []]))
+      setVibes(prev => ([...prev, ...response.data?.vibes || []]))
     } catch (error) {
       handleError(error);
     } finally {
@@ -185,6 +185,11 @@ export default function VibeContextProvider({ children }) {
     });
   };
 
+  const resetFeedValues = () => {
+    setVibes([]);
+    setPage(1);
+  };
+
 
   return (
     <VibeContext.Provider
@@ -197,7 +202,8 @@ export default function VibeContextProvider({ children }) {
         discardVibe, 
         deleteVibe,
         archiveVibe, 
-        fetchSongById
+        fetchSongById,
+        resetFeedValues
       }}
     >
       {children}

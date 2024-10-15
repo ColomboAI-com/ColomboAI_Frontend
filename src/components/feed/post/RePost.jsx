@@ -22,12 +22,12 @@ export default function RePost({ post }) {
     }
   }  
   return (  
-    <div className="flex items-center gap-4">
+    <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
       <div onClick={() => {
         if (isReposted) return
         setIsRepostOpen(true)
       }}>
-        <RePostIcon fill={isReposted && '#0AA853'} />
+        <RePostIcon fill={'#646464'} />
       </div>
       <p className={`font-sans text-[14px] ${isReposted ? 'text-brandprimary' : 'text-sidebarlabel'}`}>
         {repostCounts}

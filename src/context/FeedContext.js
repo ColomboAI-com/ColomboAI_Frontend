@@ -45,7 +45,14 @@ export default function FeedContextProvider({ children }) {
     }
   };
 
-  const createPost = async ({ type, files, content, isHideLikes = false, isHideComments = false }) => {
+  const createPost = async ({
+    type,
+    files,
+    mediaUrl,
+    content,
+    isHideLikes = false,
+    isHideComments = false,
+  }) => {
     try {
       setLoadings((prev) => ({ ...prev, createPost: true }));
       const formData = new FormData();
@@ -56,6 +63,7 @@ export default function FeedContextProvider({ children }) {
       }
 
       formData.append("content", content);
+      formData.append("mediaUrl", mediaUrl);
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
       const res = await axios.post(`${ROOT_URL_FEED}/post/create`, formData, {
@@ -65,7 +73,6 @@ export default function FeedContextProvider({ children }) {
         },
       });
 
-      setPosts((prev) => [res.data?.post, ...prev]);
       return res.data;
     } catch (err) {
       handleError(err);
@@ -170,7 +177,7 @@ export default function FeedContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setPosts((prevPosts) => [res.data, ...prevPosts]);
+        setPosts((prevPosts) => [res.data.data, ...prevPosts]);
       }
       return res.data;
     } catch (err) {
