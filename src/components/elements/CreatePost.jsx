@@ -68,7 +68,7 @@ const CreatePost = () => {
         setMediaUrl([fileUrl, ...mediaUrl]);
       }
 
-      setNextStep(true);
+      // setNextStep(true);
     }
   };
 
@@ -128,11 +128,10 @@ const CreatePost = () => {
           <div className="flex items-center gap-6">
             <button
               onClick={toggleMagicPen}
-              className={`p-2 rounded-full ${
-                isMagicPenOpen
-                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                  : "bg-white"
-              } outline-none focus:ring-offset-0 focus:ring-0`}
+              className={`p-2 rounded-full ${isMagicPenOpen
+                ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                : "bg-white"
+                } outline-none focus:ring-offset-0 focus:ring-0`}
             >
               <CreateMagicPenIcon
                 w={25}
@@ -187,24 +186,19 @@ const CreatePost = () => {
                   className="w-full p-3 pr-12 rounded-2xl m-[2px] min-h-[30vh] border-2 border-brandprimary text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm resize-none outline-none focus:ring-offset-0 focus:ring-0"
                 />
               </div>
-              {!nextStep && (
-                <button onClick={() => setNextStep(true)} className="text-brandprimary font-semibold mx-1">
-                  Next
-                </button>
-              )}
             </div>
             {mediaUrl.length > 0 && (
-              <div className="flex flex-wrap gap-4 mt-4">
+              <div className="flex flex-col flex-wrap my-2">
                 {mediaUrl.map((url, index) => (
-                  <div key={index} className="relative my-8">
+                  <div key={index} className="relative mt-4">
                     {postType.includes("image") ? (
                       <img
                         src={url}
                         alt={`File Preview${index + 1}`}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover rounded-xl"
                       />
                     ) : postType.includes("video") ? (
-                      <video src={url} autoPlay loop controls className="w-full h-full object-cover">
+                      <video src={url} autoPlay loop controls className="w-full h-full object-cover rounded-xl">
                         <source src={url} />
                       </video>
                     ) : null}
@@ -217,6 +211,11 @@ const CreatePost = () => {
                     </div>
                   </div>
                 ))}
+                {!nextStep && (
+                  <button onClick={() => setNextStep(true)} className="text-brandprimary w-full flex flex-row justify-end font-semibold mt-1">
+                    Next
+                  </button>
+                )}
               </div>
             )}
 
@@ -249,7 +248,7 @@ const CreatePost = () => {
             )}
 
             {nextStep && (
-              <div className="flex justify-center pb-[20px]">
+              <div className="flex justify-center pb-[20px] mt-2">
                 <Button
                   title="SHARE POST"
                   className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-24"
