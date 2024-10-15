@@ -14,6 +14,6 @@ export default function VideoBlock({ video = ['https://www.youtube.com/embed/b1d
 
 function Video({ src }) {
   return (
-    <video className="inset-0 object-contain w-full h-full" src={src} controls>Your browser does not support the video tag.</video>
+    <video className="inset-0 object-cover w-full h-full" src={src} controls>Your browser does not support the video tag.</video>
   )
 } 
