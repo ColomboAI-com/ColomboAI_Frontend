@@ -3,7 +3,7 @@ import Sponsored from "../cards/Sponsored";
 
 var settings = {
   dots: false,
-  arrows: true,
+  arrows: false,
   infinite: false,
   speed: 500,
   slidesToShow: 2,

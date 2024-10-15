@@ -96,7 +96,7 @@ const CreatePost = () => {
     if (res) {
       MessageBox("success", res.message);
       let postData = [...posts];
-      postData.unshift(res.data?.post);
+      postData.unshift(res.data);
       setPosts(postData);
       setIsCreatePostOpen(false);
     }
@@ -201,10 +201,10 @@ const CreatePost = () => {
                       <img
                         src={url}
                         alt={`File Preview${index + 1}`}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     ) : postType.includes("video") ? (
-                      <video src={url} autoPlay loop controls className="w-full aspect-video">
+                      <video src={url} autoPlay loop controls className="w-full h-full object-cover">
                         <source src={url} />
                       </video>
                     ) : null}

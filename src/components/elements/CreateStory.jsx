@@ -99,7 +99,7 @@ const CreateStory = ({}) => {
   };
 
   return (
-    <div className={`flex flex-row w-full justify-center py-[3.5rem] ${font.className}`}>
+    <div className={`flex flex-row w-full h-full justify-center py-[3.5rem] ${font.className}`}>
       <div>
         <button
           onClick={(e) => (setStoryMediaType(""), setStoryMediaURL(""), setIsSelectedFromComputer(false))}
@@ -118,9 +118,11 @@ const CreateStory = ({}) => {
           //   onClick={handleTextClick}
           onLoad={handleImageLoad}
         />
-        <button className="absolute bottom-0 rounded-lg p-3 text-black bg-white" onClick={handleCreateStory}>
-          Temp Share button
+        <div className="flex justify-center">
+        <button className="absolute bottom-0 mb-2 p-3 w-full text-white bg-gray-400 bg-opacity-30 backdrop-filter backdrop-blur-md rounded-[100px]" onClick={handleCreateStory}>
+          Share Story
         </button>
+        </div>
         {addMusic && (
           <div
             className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"

@@ -46,6 +46,9 @@ const ThreeDotMenuViewOthers = () => {
         console.log("Handling report.");
     };
 
+    const handleRepost = () =>{
+        
+    }
     const handleDelete = () => {
         console.log("Handling delete.");
         // Using the first vibe in the array for testing purposes
@@ -71,16 +74,17 @@ const ThreeDotMenuViewOthers = () => {
         "About this account": handleAboutThisAccount,
         Report: handleReport,
         Delete: handleDelete,
+
     };
 
     return (
         <div className="relative" ref={menuRef}>
             <button
                 onClick={toggleMenu}
-                className="p-2 rounded-full hover:bg-gray-200 focus:outline-none"
+                className="pb-2 rounded-full  focus:outline-none"
                 aria-label="More options"
             >
-                <DotsVerticalIcon className="h-10 w-10 text-gray-600" />
+                <DotsVerticalIcon className="h-8 w-10 text-white" />
             </button>
             {isMenuOpen && (
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-10">

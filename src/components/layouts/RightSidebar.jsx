@@ -53,7 +53,11 @@ const RightSidebar = () => {
                 </div>
             </div>
             <Trendings/>
-            <div className="px-[22px]">
+            <div className="xl:border-0 xl:rounded-none xl:mt-0 overflow-x-hidden border-[1px] border-brandprimary rounded-[10px] mt-5">
+        <div className="xl:hidden flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[12px]">
+        Sponsored Ad
+      </div>
+            <div className="px-[22px] overflow-hidden flex flex-col items-center">
               <SideTopAdComponent divid='maindsidetop'/>
               <SideAdComponent divid='mainsidemid'/>
               <SideTopAdComponent divid='mainsidebottom'/>
@@ -61,6 +65,8 @@ const RightSidebar = () => {
                 <Events/>
                 <Advertisement/> */}
             </div>
+            </div>
+            
         </div>
     );
 }
