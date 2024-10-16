@@ -1,13 +1,15 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { VideoPlayIcon, VideoForwardIcon, VideoPreviousIcon } from "../Icons";
 import dynamic from 'next/dynamic';
 
-// Dynamically import the ffmpeg library
 const DynamicFFmpeg = dynamic(() => import('@ffmpeg/ffmpeg').then(mod => mod.createFFmpeg), { ssr: false });
 
 export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
   const [ffmpeg, setFfmpeg] = useState(null);
-  const [start, setStart] = useState(0);
-  const [end, setEnd] = useState(30);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [trimStart, setTrimStart] = useState(0);
+  const [trimEnd, setTrimEnd] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [thumbnails, setThumbnails] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -15,8 +17,9 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
   const [thumbnailCount, setThumbnailCount] = useState(5);
   const [zoomLevel, setZoomLevel] = useState(1);
   const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  const timelineRef = useRef(null);
 
-  // Load ffmpeg when component mounts
   useEffect(() => {
     const loadFFmpeg = async () => {
       const ffmpegInstance = await DynamicFFmpeg();
@@ -25,7 +28,64 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
     loadFFmpeg();
   }, []);
 
-  // Handle video trimming
+  useEffect(() => {
+    if (videoRef.current) {
+      const video = videoRef.current;
+      video.addEventListener('loadedmetadata', () => {
+        setDuration(video.duration);
+        setTrimEnd(video.duration);
+        generateThumbnails();
+      });
+      video.addEventListener('timeupdate', handleTimeUpdate);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+      }
+    };
+  }, [videoRef, trimEnd, thumbnailCount]);
+
+  useEffect(() => {
+    document.addEventListener('mousemove', handleTrimmerDrag);
+    document.addEventListener('mouseup', handleTrimmerDragEnd);
+    return () => {
+      document.removeEventListener('mousemove', handleTrimmerDrag);
+      document.removeEventListener('mouseup', handleTrimmerDragEnd);
+    };
+  }, [isDragging, duration, trimStart, trimEnd]);
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    setCurrentTime(video.currentTime);
+    if (video.currentTime >= trimEnd) {
+      video.pause();
+      video.currentTime = trimStart;
+      setIsPlaying(false);
+    }
+  };
+
+  const generateThumbnails = async () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    const thumbnailWidth = 120;
+    const thumbnailHeight = 68;
+
+    let thumbs = [];
+    for (let i = 0; i < thumbnailCount; i++) {
+      video.currentTime = (duration / thumbnailCount) * i;
+      await new Promise(resolve => {
+        video.onseeked = () => {
+          context.drawImage(video, 0, 0, thumbnailWidth, thumbnailHeight);
+          thumbs.push(canvas.toDataURL());
+          resolve();
+        };
+      });
+    }
+    setThumbnails(thumbs);
+  };
+
   const handleTrim = async () => {
     if (!ffmpeg) {
       console.error('FFmpeg is not loaded');
@@ -36,18 +96,15 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
       const response = await fetch(videoUrl);
       const data = await response.arrayBuffer();
       ffmpeg.FS('writeFile', 'input.mp4', new Uint8Array(data));
-
       await ffmpeg.run(
         '-i', 'input.mp4',
-        '-ss', `${start}`,
-        '-to', `${end}`,
+        '-ss', `${trimStart}`,
+        '-to', `${trimEnd}`,
         '-c', 'copy',
         'output.mp4'
       );
-
       const trimmedData = ffmpeg.FS('readFile', 'output.mp4');
       const trimmedUrl = URL.createObjectURL(new Blob([trimmedData.buffer], { type: 'video/mp4' }));
-      setTrimmedUrl(trimmedUrl); // Update the state with the trimmed video URL
       onTrimComplete(trimmedUrl);
     } catch (error) {
       console.error('Error trimming video:', error);
@@ -196,26 +253,18 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
             ></div>
           </div>
         </div>
-
-        {/* Trimmed Video Player */}
-        {trimmedUrl && (
-          <div className="relative mb-4">
-            <video src={trimmedUrl} controls className="w-full" />
-          </div>
-        )}
-
-        {/* Buttons */}
-        <div className="flex flex-col items-center">
-          <button
-            onClick={handleTrim}
-            className="bg-blue-500 text-white py-2 px-4 rounded mb-2"
+        
+        <div className="p-4 flex justify-between">
+          {/* <button 
+            onClick={handleTrim} 
+            className="bg-green-500 text-white py-2 px-4 rounded"
             disabled={isLoading}
           >
             {isLoading ? 'Processing...' : 'Trim Video'}
-          </button>
-          <button
+          </button> */}
+          <button 
             onClick={onClose}
-            className="bg-gray-500 text-white py-2 px-4 rounded"
+            className="bg-white text-black py-2 px-4 rounded"
           >
             Cancel
           </button>
