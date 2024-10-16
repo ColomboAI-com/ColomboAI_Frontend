@@ -279,6 +279,8 @@ const CreateVibe = ({
     }
   }, [mediaUrl]);
 
+  console.log(file);
+  
   return (
     <main className={font.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
@@ -378,6 +380,7 @@ const CreateVibe = ({
                 videoUrl={mediaUrl}
                 onTrim={handleTrimVideo}
                 onClose={() => setIsTrimming(false)}
+                setFile={setFile}
               />
             ) : // <Image
             //   src={tmp_trim}
@@ -605,8 +608,7 @@ const CreateVibe = ({
               //   className="absolute bottom-0 rounded-b-[0.9rem]"
               //   style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
               // />
-              // insert video editor here
-              <VideoEditor
+              <VideoEditor // child component
                 videoUrl={mediaUrl}
                 onTrim={handleTrimVideo}
                 onClose={() => setIsTrimming(false)}
