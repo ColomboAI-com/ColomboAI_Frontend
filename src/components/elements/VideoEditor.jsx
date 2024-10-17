@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { VideoPlayIcon, VideoForwardIcon, VideoPreviousIcon } from "../Icons";
-import dynamic from 'next/dynamic';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { fetchFile, toBlobURL } from '@ffmpeg/util';
 
-const DynamicFFmpeg = dynamic(() => import('@ffmpeg/ffmpeg').then(mod => mod.createFFmpeg), { ssr: false });
-
-export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
+export const VideoEditor = ({ videoUrl, onClose, onTrim }) => {
   const [ffmpeg, setFfmpeg] = useState(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -22,7 +21,12 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
 
   useEffect(() => {
     const loadFFmpeg = async () => {
-      const ffmpegInstance = await DynamicFFmpeg();
+      const ffmpegInstance = new FFmpeg();
+      const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.2/dist/umd';
+      await ffmpegInstance.load({
+        coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+        wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+      });
       setFfmpeg(ffmpegInstance);
     };
     loadFFmpeg();
@@ -93,25 +97,28 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
     }
     setIsLoading(true);
     try {
-      const response = await fetch(videoUrl);
-      const data = await response.arrayBuffer();
-      ffmpeg.FS('writeFile', 'input.mp4', new Uint8Array(data));
-      await ffmpeg.run(
+      const inputData = await fetchFile(videoUrl);
+      await ffmpeg.writeFile('input.mp4', inputData);
+      
+      await ffmpeg.exec([
         '-i', 'input.mp4',
         '-ss', `${trimStart}`,
         '-to', `${trimEnd}`,
         '-c', 'copy',
         'output.mp4'
-      );
-      const trimmedData = ffmpeg.FS('readFile', 'output.mp4');
-      const trimmedUrl = URL.createObjectURL(new Blob([trimmedData.buffer], { type: 'video/mp4' }));
-      onTrimComplete(trimmedUrl);
+      ]);
+      
+      const data = await ffmpeg.readFile('output.mp4');
+      const trimmedBlob = new Blob([data.buffer], { type: 'video/mp4' });
+      const trimmedFile = new File([trimmedBlob], 'trimmed_video.mp4', { type: 'video/mp4' });
+      onTrim(trimmedFile);
     } catch (error) {
       console.error('Error trimming video:', error);
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const formatTime = (time) => {
     const hours = Math.floor(time / 3600);
@@ -185,6 +192,8 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
     width: `${100 * zoomLevel}%`,
     transform: `translateX(${-(currentTime / duration) * 100 * (zoomLevel - 1)}%)`,
   };
+
+  console.log(videoUrl);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center">
@@ -273,7 +282,6 @@ export const VideoEditor = ({ videoUrl, onTrimComplete, onClose }) => {
     </div>
   );
 };
-
 
 // import React, { useState, useEffect, useRef } from 'react';
 // import { VideoPlayIcon, VideoForwardIcon, VideoPreviousIcon } from "../Icons";

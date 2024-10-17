@@ -278,8 +278,6 @@ const CreateVibe = ({
       setImageWidth(imgRef.current.clientWidth);
     }
   }, [mediaUrl]);
-
-  console.log(file);
   
   return (
     <main className={font.className}>
