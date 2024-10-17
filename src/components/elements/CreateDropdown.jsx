@@ -22,9 +22,33 @@ export default function CreateDropdown({ w, h, filyl }) {
   // Set Magic pen to open in global context
   const { setOpenMagicPenWithIcon } = useContext(GlobalContext);
 
+  // Check Screen Size
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
   const handleOpen = (e) => {
     setIsCreateStoryOpen(!isCreateStoryOpen);
   };
+
+  useEffect(() => {
+    // Directly check the screen size on initial load
+    const checkScreenSize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 767) {
+        setIsSmallScreen(true);
+      } else {
+        setIsSmallScreen(false);
+      }
+    };
+
+    // Check the screen size when the component mounts
+    checkScreenSize();
+
+    // Optionally, you can add a resize listener if you want the component to adapt dynamically:
+    window.addEventListener("resize", checkScreenSize);
+
+    //  Cleanup the resize listener on unmount
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   return (
     <div>
@@ -50,7 +74,13 @@ export default function CreateDropdown({ w, h, filyl }) {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-[340px] origin-top-right divide-y divide-brandprimary rounded-lg border-[1px] border-brandprimary bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <Menu.Items
+                style={{
+                  left: isSmallScreen ? "0" : "auto",
+                  right: "0", // Always align to the right
+                }}
+                className="absolute right-0 max-w-[767px]:left-0 mt-2 w-[340px] origin-top-right divide-y divide-brandprimary rounded-lg border-[1px] border-brandprimary bg-white shadow-lg ring-1 ring-black/5 focus:outline-none"
+              >
                 <div className="">
                   <Menu.Item>
                     {({ active }) => (
