@@ -97,19 +97,24 @@ const Header = () => {
 
       <div className="lg:shadow-[0px_2px_4px_0px_#0000001A]">
         <div className="sm:mx-3 block md:hidden">
-          <div className="flex justify-between">
-            <div className="flex items-center sm:gap-2">
+          <div className="flex flex-row justify-between items-center">
+            <div className="flex  items-center sm:gap-2">
               <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[3rem]" image={profilePic} />
-              <SearchIcon w={35} h={35} fill={"#646464"} />
-            </div>
-            <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
               <CreateDropdown />
+            </div>
+            <img
+              src="/images/home/ColomboAI-logo.svg"
+              alt="logo-image"
+              className="mx-auto"
+            />
+            <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
               <NotificationIcon w={35} h={35} fill={"#646464"} />
               <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
             </div>
           </div>
-          <div className="w-full">
+          <div className="w-full flex flex-row justify-between items-center">
             <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
+            <div className="sm:pt-4 md:pt-0"><SearchIcon w={35} h={35} fill={"#646464"} /></div>
           </div>
         </div>
       </div>

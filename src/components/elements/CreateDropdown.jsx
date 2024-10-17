@@ -28,7 +28,7 @@ export default function CreateDropdown({ w, h, filyl }) {
 
   return (
     <div>
-      <Menu as="div" className="relative inline-block text-left z-50">
+      <Menu as="div" className="relative inline-block text-left z-50 sm:pt-3 md:pt-0">
         {({ open }) => (
           <>
             <div>

@@ -80,7 +80,7 @@ const DefaultLayout = ({ children }) => {
   useEffect(() => {
     console.log(storyMediaURL)
     console.log(storyMediaType)
-}, [storyMediaURL])
+  }, [storyMediaURL])
   const [uploadedFile, setUploadedFile] = useState(null);
   const defaultPostType = "thought";
   const [uploadedPostType, setUploadedPostType] = useState(defaultPostType);
@@ -150,14 +150,23 @@ const DefaultLayout = ({ children }) => {
 
   // useEffect(() => {
   //   const re = window.sessionStorage.getItem("redirect");
-    
+
   //   if (!re) {
   //     window.sessionStorage.setItem("redirect", "false");
   //     window.location = "https://colomboai.com/genai-search";
   //   }
 
   // },[]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 768); 
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <FeedContextProvider>
       <div className={`min-w-screen border-yellow-400 relative ${font.className}`}>
@@ -167,19 +176,22 @@ const DefaultLayout = ({ children }) => {
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
             <header className="sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
-              <div className="py-[14px]">
-                <img
+              <div className="sm:pt-[14px] md:py-[14px] bg-white">
+                {isSmallScreen ? <Header
+                  setIsShowChatMenu={setIsShowChatMenu}
+                  isShowChatMenu={isShowChatMenu}
+                /> : <img
                   src="/images/home/ColomboAI-logo.svg"
                   alt="logo-image"
                   className="mx-auto w-[174px]"
-                />
+                />}
                 {/* <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" /> */}
               </div>
             </header>
-            <Header
+            {!isSmallScreen && <Header
               setIsShowChatMenu={setIsShowChatMenu}
               isShowChatMenu={isShowChatMenu}
-            />
+            />}
 
             {!isSelectedFromComputer && <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400">
               {isCreatePostOpen && (
@@ -242,28 +254,28 @@ const DefaultLayout = ({ children }) => {
                 {children}
               </div>
               {/* // </> */}
-              {(pathname === "/shop" || pathname === '/news')  ? null : <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
+              {(pathname === "/shop" || pathname === '/news') ? null : <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
                 <RightSidebar />
               </div>}
             </div>}
-                {(isCreateVibeOpen && isSelectedFromComputer) && (
-                  <div className="bg-[#e0d5d5] w-full h-50">
-                    <CreateVibe
-                      uploadedFile={uploadedFile}
-                      onFileUpload={handleFileUpload}
-                      uploadedPostType={uploadedPostType}
-                      uploadedMediaUrl={uploadedMediaUrl}
-                      uploadedNextStep={uploadedNextStep}
-                      onReset={handleReset}
-                    />
-                  </div>
-                )}
-                {(storyMediaURL != "" && isSelectedFromComputer) && (
-                  <div className="bg-[#333333] w-full h-full">
-                    <CreateStory
-                    />
-                  </div>
-                )}
+            {(isCreateVibeOpen && isSelectedFromComputer) && (
+              <div className="bg-[#e0d5d5] w-full h-50">
+                <CreateVibe
+                  uploadedFile={uploadedFile}
+                  onFileUpload={handleFileUpload}
+                  uploadedPostType={uploadedPostType}
+                  uploadedMediaUrl={uploadedMediaUrl}
+                  uploadedNextStep={uploadedNextStep}
+                  onReset={handleReset}
+                />
+              </div>
+            )}
+            {(storyMediaURL != "" && isSelectedFromComputer) && (
+              <div className="bg-[#333333] w-full h-full">
+                <CreateStory
+                />
+              </div>
+            )}
             {/* <CommentSection /> */}
           </div>
         </div>
@@ -296,7 +308,7 @@ const DefaultLayout = ({ children }) => {
               <Link href="/vibes">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                  {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo"/> : <Image src={vibes_icon} alt="colombo"/>}
+                    {pathname === '/vibes' ? <Image src={blue_vibes_icon} alt="colombo" /> : <Image src={vibes_icon} alt="colombo" />}
                   </div>
                   <p
                     className={`${pathname === "/vibes"
