@@ -245,9 +245,12 @@ const CreateVibe = ({
     }
   };
 
-  const handleTrimVideo = (trimmedUrl) => {
-    setTrimmedVideoUrl(trimmedUrl);
-    setIsTrimming(false); // Close the trimming modal
+  const handleTrimVideo = (trimmedFile) => {
+    setFile(trimmedFile);
+    const fileUrl = URL.createObjectURL(trimmedFile);
+    setMediaUrl(fileUrl);
+    setIsTrimming(false);
+    onFileUpload(trimmedFile);
   };
 
   // Handlers to add text to vibe
