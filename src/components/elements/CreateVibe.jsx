@@ -245,9 +245,12 @@ const CreateVibe = ({
     }
   };
 
-  const handleTrimVideo = (trimmedUrl) => {
-    setTrimmedVideoUrl(trimmedUrl);
-    setIsTrimming(false); // Close the trimming modal
+  const handleTrimVideo = (trimmedFile) => {
+    setFile(trimmedFile);
+    const fileUrl = URL.createObjectURL(trimmedFile);
+    setMediaUrl(fileUrl);
+    setIsTrimming(false);
+    onFileUpload(trimmedFile);
   };
 
   // Handlers to add text to vibe
@@ -278,7 +281,7 @@ const CreateVibe = ({
       setImageWidth(imgRef.current.clientWidth);
     }
   }, [mediaUrl]);
-
+  
   return (
     <main className={font.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
@@ -378,6 +381,7 @@ const CreateVibe = ({
                 videoUrl={mediaUrl}
                 onTrim={handleTrimVideo}
                 onClose={() => setIsTrimming(false)}
+                setFile={setFile}
               />
             ) : // <Image
             //   src={tmp_trim}
@@ -605,8 +609,7 @@ const CreateVibe = ({
               //   className="absolute bottom-0 rounded-b-[0.9rem]"
               //   style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
               // />
-              // insert video editor here
-              <VideoEditor
+              <VideoEditor // child component
                 videoUrl={mediaUrl}
                 onTrim={handleTrimVideo}
                 onClose={() => setIsTrimming(false)}
