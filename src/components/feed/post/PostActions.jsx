@@ -49,7 +49,6 @@ export default function PostActions({ post }) {
   const handleFetchImpressions = async () => {
     const response = await getPostImpressions(post._id);
     if (response.success) {
-      console.log(response);
       setImpressions(response.impression.views);
     }
   };

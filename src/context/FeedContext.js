@@ -313,11 +313,15 @@ export default function FeedContextProvider({ children }) {
     try {
       setLoadings((prev) => ({ ...prev, incrementImpression: true }));
       // const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/increase-view-count`, {
-      const res = await axios.get(`http://localhost:8001/post/${postId}/increase-view-count`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const res = await axios.post(
+        `http://localhost:8001/post/${postId}/increase-view-count`,
+        {},
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       return res.data;
     } catch (err) {
       handleError(err);
