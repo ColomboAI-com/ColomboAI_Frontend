@@ -25,6 +25,8 @@ export default function FeedContextProvider({ children }) {
     getComments: false,
     searchUser: false,
     topUser: false,
+    getImpressions: false,
+    incrementImpression: false,
   });
 
   const getPosts = async (type, page = 1, limit = 10) => {
@@ -289,6 +291,41 @@ export default function FeedContextProvider({ children }) {
       setLoadings((prev) => ({ ...prev, topUser: false }));
     }
   };
+
+  const getPostImpressions = async (postId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, getImpressions: true }));
+      // const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/get-impressions`, {
+      const res = await axios.get(`http://localhost:8001/post/${postId}/get-impressions`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, getImpressions: false }));
+    }
+  };
+
+  const incrementPostImpressions = async (postId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, incrementImpression: true }));
+      // const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/get-impressions`, {
+      const res = await axios.get(`http://localhost:8001/post/${postId}/increase-view-count`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, incrementImpression: false }));
+    }
+  };
+
   const resetFeedValues = () => {
     setPosts([]);
     setPage(1);
@@ -320,6 +357,7 @@ export default function FeedContextProvider({ children }) {
         getComments,
         searchUsers,
         topUsers,
+        getPostImpressions,
       }}
     >
       {children}

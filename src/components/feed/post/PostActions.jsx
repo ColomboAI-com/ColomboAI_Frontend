@@ -1,5 +1,5 @@
 import { GlobalContext } from "@/context/GlobalContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import LikePost from "./LikePost";
 import RePost from "./RePost";
 import SavePost from "./SavePost";
@@ -9,6 +9,7 @@ import post_stats from "../../../../public/images/icons/post_stats.svg";
 import reply_icon from "../../../../public/images/icons/reply_icon.svg";
 import wallet_icon from "../../../../public/images/icons/wallet_icon.svg";
 import Image from "next/image";
+import { FeedContext } from "@/context/FeedContext";
 
 export default function PostActions({ post }) {
   const {
@@ -19,6 +20,10 @@ export default function PostActions({ post }) {
     setIsRepostOpen,
     setOpenMagicPenWithIcon,
   } = useContext(GlobalContext);
+
+  const { getPostImpressions } = useContext(FeedContext);
+
+  const [impressions, setImpressions] = useState(0);
 
   const handleShare = (postId) => {
     setIsShareOpen(true);
@@ -41,6 +46,20 @@ export default function PostActions({ post }) {
     handleComments(postId);
   };
 
+  const handleFetchImpressions = async () => {
+    const response = await getPostImpressions(post._id);
+    if (response.success) {
+      console.log(response);
+      setImpressions(response.impression.views);
+    }
+  };
+
+  const handleImpressions = async () => {};
+
+  useEffect(() => {
+    handleFetchImpressions();
+  }, []);
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -54,7 +73,7 @@ export default function PostActions({ post }) {
           </div>
           <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
             <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-            <p className="text-sidebarlabel font-sans text-[14px]">400</p>
+            <p className="text-sidebarlabel font-sans text-[14px]">{impressions}</p>
           </div>
           <button
             onClick={() => handleShare(post._id)}
