@@ -54,8 +54,6 @@ export default function PostActions({ post }) {
     }
   };
 
-  const handleImpressions = async () => {};
-
   useEffect(() => {
     handleFetchImpressions();
   }, []);

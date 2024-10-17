@@ -312,7 +312,7 @@ export default function FeedContextProvider({ children }) {
   const incrementPostImpressions = async (postId) => {
     try {
       setLoadings((prev) => ({ ...prev, incrementImpression: true }));
-      // const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/get-impressions`, {
+      // const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/increase-view-count`, {
       const res = await axios.get(`http://localhost:8001/post/${postId}/increase-view-count`, {
         headers: {
           Authorization: getCookie("token"),
@@ -358,6 +358,7 @@ export default function FeedContextProvider({ children }) {
         searchUsers,
         topUsers,
         getPostImpressions,
+        incrementPostImpressions,
       }}
     >
       {children}
