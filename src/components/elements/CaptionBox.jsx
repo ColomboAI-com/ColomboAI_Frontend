@@ -10,7 +10,8 @@ import "../../app/globals.css";
 import { Montserrat } from "@next/font/google";
 import axios from "axios"; 
 import { debounce } from "lodash";
-import { ROOT_URL_FEED} from "@/utlils/rootURL";
+import { ROOT_URL_FEED, ROOT_URL_AUTH } from "@/utlils/rootURL";
+import { getCookie } from "@/utlils/cookies";
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
@@ -37,7 +38,11 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
   const searchUsers = async (query) => {
     setLoading(true); // Start loading
     try {
-      const res = await axios.get(`${ROOT_URL_FEED}/users/search?q=${query}`); // Fetch users based on search query
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?q=${query}`,{
+        headers: {
+          Authorization: getCookie('token')
+        }
+      });
       setFilteredUsers(res?.data?.results || []); // Store fetched users
       setShowUsers(true); // Show users
     } catch (err) {
