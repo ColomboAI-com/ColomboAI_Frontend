@@ -14,6 +14,7 @@ export default function StoryContextProvider({ children }) {
     getUserStory: false,
     createStory: false,
     reactStory: true,
+    incrementImpression: false,
   });
 
   const createStory = async ({ fileType, file, content, isHideLikes = false, isHideComments = false }) => {
@@ -92,6 +93,27 @@ export default function StoryContextProvider({ children }) {
     }
   };
 
+  const incrementStoryImpressions = async (storyId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, incrementImpression: true }));
+      const res = await axios.post(
+        // `${ROOT_URL_FEED}/stories/${storyId}/increase-view-count`,
+        `http://localhost:8001/stories/${storyId}/increase-view-count`,
+        {},
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, incrementImpression: false }));
+    }
+  };
+
   return (
     <StoryContext.Provider
       value={{
@@ -102,6 +124,7 @@ export default function StoryContextProvider({ children }) {
         getRecentStories,
         getStoriesOfUser,
         viewStoryoFUser,
+        incrementStoryImpressions,
       }}
     >
       {children}

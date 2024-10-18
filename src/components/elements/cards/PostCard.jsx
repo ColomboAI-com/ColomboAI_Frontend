@@ -41,8 +41,7 @@ const PostCard = ({ post }) => {
 
   const handleIncreaseViewCount = async () => {
     try {
-      const resp = await incrementPostImpressions(post._id);
-      console.log(resp);
+      await incrementPostImpressions(post._id);
     } catch (error) {
       console.log(error);
     }

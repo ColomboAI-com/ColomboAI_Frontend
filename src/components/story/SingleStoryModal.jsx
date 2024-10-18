@@ -11,7 +11,7 @@ import ProfilePicture from "../elements/ProfilePicture";
 
 export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, userData }) {
   const storiesRef = useRef(null);
-  const { viewStoryoFUser } = useContext(StoryContext);
+  const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
   const storyStyles = {
     objectFit: "cover",
     borderRadius: "10px",
@@ -23,6 +23,12 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
     if (res) {
       await setIsCreateStorySignleOpen(false);
     }
+  };
+
+  const handleStoryStart = async (index, imageDetailes) => {
+    let story = data[index];
+
+    await incrementStoryImpressions(story._id);
   };
 
   return (
@@ -53,6 +59,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
             ref={storiesRef}
             //onAllStoriesEnd={handleAllStoriesEnd}
             storyStyles={storyStyles}
+            onStoryStart={(index, imageDetails) => handleStoryStart(index, imageDetails)}
           />
         </div>
         <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
