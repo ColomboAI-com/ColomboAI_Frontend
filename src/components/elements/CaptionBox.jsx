@@ -8,7 +8,9 @@ import blue_x from "../../../public/images/icons/blue_x.svg";
 import Image from "next/image";
 import "../../app/globals.css";
 import { Montserrat } from "@next/font/google";
-
+import axios from "axios"; 
+import { debounce } from "lodash";
+import { ROOT_URL_FEED} from "@/utlils/rootURL";
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
@@ -26,38 +28,35 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleCharCount = (text) => {
     const count = text.length;
     setCharCount(count);
   };
-
-  const searchUsers = async () => {
-    setLoading(true);
+  const searchUsers = async (query) => {
+    setLoading(true); // Start loading
     try {
-      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?limit=5`);
-      setSearchUsersDetails(res?.data?.results);
-      setShowUsers(true);
+      const res = await axios.get(`${ROOT_URL_FEED}/users/search?q=${query}`); // Fetch users based on search query
+      setFilteredUsers(res?.data?.results || []); // Store fetched users
+      setShowUsers(true); // Show users
     } catch (err) {
       console.error("Error fetching users:", err);
     } finally {
-      setLoading(false);
+      setLoading(false); // End loading
     }
   };
 
   const handleTagUsers = () => {
-    if (selectedUsers.length === 0) {
-      searchUsers();
-    } else {
-      setSelectedUsers([]);
-      setShowUsers(false);
-    }
+    setShowUsers((prevState) => !prevState); 
   };
 
-  const handleUserClick = (user) => {};
-
-  const handleClick = () => {
-    setShowUsers((prevShowUsers) => !prevShowUsers);
+  const handleUserClick = (user) => {
+    if (selectedUsers.includes(user)) {
+      setSelectedUsers(selectedUsers.filter((u) => u !== user)); // Remove user if already selected
+    } else {
+      setSelectedUsers([...selectedUsers, user]); // Add user to selected list
+    }
   };
 
   const handlePostInputChange = (e) => {
@@ -74,7 +73,15 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
     }
     setIsMagicPenInputVisible(false);
   };
-
+  const handleSearchChange = debounce((e) => {
+    const query = e.target.value;
+    setSearch(query);
+    if (query) {
+      searchUsers(query); // Fetch users with debounced query
+    } else {
+      setFilteredUsers([]); // Clear results when input is empty
+    }
+  }, 300); 
   return (
     <div
       className={`mx-auto flex flex-col ${font.className} p-6 rounded-xl bg-gray-100 shadow-lg`}
@@ -88,13 +95,11 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
             : "bg-gray-500 hover:shadow-[0_0_15px_5px_rgba(100,100,100,0.5)]"
         }`}
       >
-        <button onClick={handleClick}>
+        <button onClick={handleTagUsers}>
           <div className="flex flex-row items-center gap-1">
             <Image src={tag} alt="colombo" />
             <p>
-              {selectedUsers.length > 0
-                ? "Tagged " + selectedUsers.length
-                : "Tag People"}
+              {selectedUsers.length > 0 ? `Tagged ${selectedUsers.length}` : "Tag People"}
             </p>
           </div>
         </button>
@@ -116,14 +121,13 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
                   <input
                     type="text"
                     placeholder="Search..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
+                    onChange={(e)=>handleSearchChange(e)}
                     className="w-full rounded-t-lg focus:outline-none"
                   />
                 </div>
                 <Image
                   src={blue_x}
-                  onClick={(e) => setSearch("")}
+                  onClick={() => setSearch("")}
                   className="cursor-pointer"
                   alt="colombo"
                 />
