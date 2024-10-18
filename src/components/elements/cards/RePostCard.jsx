@@ -43,7 +43,7 @@ const RePostCard = ({ post, index }) => {
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
-            <div className="flex flex-col border-[0.5px]  border-brandprimary mt-5 md:rounded-[10px] sm:rounded-none p-3">
+            <div className="flex flex-col border-[0.5px]  border-brandprimary mt-5 md:rounded-[10px] sm:rounded-[10px] p-3">
                 <div className="flex flex-row justify-between px-[16px] pb-[16px]">
                     <div className="flex flex-row items-center gap-1">
                         <ProfilePicture image={post?.repostBy?.profile_picture} size={"w-[2rem]"} />
@@ -62,7 +62,7 @@ const RePostCard = ({ post, index }) => {
                     ></Dropdown>
                     </div>
                 </div>
-                <div className={`overflow-x-hidden border-[0.5px] border-[#A7A7A7] sm:rounded-none md:rounded-[10px]`}>
+                <div className={`overflow-x-hidden border-[0.5px] border-[#A7A7A7] sm:rounded-[10px] md:rounded-[10px]`}>
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
                         <Link
                             className="flex items-center justify-start w-full md:w-fit lg:w-fit"

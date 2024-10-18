@@ -29,11 +29,11 @@ export default function VibeContextProvider({ children }) {
     text,
     textColor,
     content,
-    songId,
+    song_id,
     isHideLikes = false,
     isHideComments = false,
   }) => {
-    // console.log(type, file, text, textColor, content, songId);
+    console.log(type, file, text, textColor, content, song_id);
 
     try {
       setLoadings((prev) => ({ ...prev, createVibe: true }));
@@ -45,7 +45,7 @@ export default function VibeContextProvider({ children }) {
       formData.append("content", content || "");
       formData.append("hideLikes", isHideLikes);
       formData.append("isCommentOff", isHideComments);
-      formData.append("song_id", songId || "");
+      formData.append("song_id", song_id || "");
 
       // fields to include:
       // taggedPeople
@@ -67,7 +67,6 @@ export default function VibeContextProvider({ children }) {
       }
       
       if (response.status === 201) {
-        console.log("Hitting create vibe endpoint successfully");
         console.log("Response:", response.data);
         MessageBox("success", "Vibe created successfully");
       }

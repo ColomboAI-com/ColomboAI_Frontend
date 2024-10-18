@@ -245,9 +245,12 @@ const CreateVibe = ({
     }
   };
 
-  const handleTrimVideo = (trimmedUrl) => {
-    setTrimmedVideoUrl(trimmedUrl);
-    setIsTrimming(false); // Close the trimming modal
+  const handleTrimVideo = (trimmedFile) => {
+    setFile(trimmedFile);
+    const fileUrl = URL.createObjectURL(trimmedFile);
+    setMediaUrl(fileUrl);
+    setIsTrimming(false);
+    onFileUpload(trimmedFile);
   };
 
   // Handlers to add text to vibe
@@ -278,7 +281,7 @@ const CreateVibe = ({
       setImageWidth(imgRef.current.clientWidth);
     }
   }, [mediaUrl]);
-
+  
   return (
     <main className={font.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
@@ -378,6 +381,7 @@ const CreateVibe = ({
                 videoUrl={mediaUrl}
                 onTrim={handleTrimVideo}
                 onClose={() => setIsTrimming(false)}
+                setFile={setFile}
               />
             ) : // <Image
             //   src={tmp_trim}
@@ -515,11 +519,9 @@ const CreateVibe = ({
                 />
               )} */}
             </div>
-
-           
           </div>
 
-        {/* {!nextStep && (  <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 ">
+          {/* {!nextStep && (  <div className="fixed bottom-2 left-1/2 transform -translate-x-1/2 ">
   <Button
     title={"Share Vibe"}
     onClick={handleCreateVibe}
@@ -528,7 +530,6 @@ const CreateVibe = ({
 </div>
         )} */}
 
-  
           {(isMagicPenOpen || isColorPickerVisible) && (
             <ColorPicker textColor={textColor} setTextColor={setTextColor} />
           )}
@@ -602,11 +603,16 @@ const CreateVibe = ({
             </video>
 
             {isTrimming ? (
-              <Image
-                src={tmp_trim}
-                alt="none"
-                className="absolute bottom-0 rounded-b-[0.9rem]"
-                style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
+              // <Image
+              //   src={tmp_trim}
+              //   alt="none"
+              //   className="absolute bottom-0 rounded-b-[0.9rem]"
+              //   style={{ width: imageWidth ? `${imageWidth}px` : `auto` }}
+              // />
+              <VideoEditor // child component
+                videoUrl={mediaUrl}
+                onTrim={handleTrimVideo}
+                onClose={() => setIsTrimming(false)}
               />
             ) : isDropdownVisible ? (
               <div
@@ -701,7 +707,9 @@ const CreateVibe = ({
                   className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
                     isTrimming && `rounded-full bg-[#245FDF]`
                   }`}
-                  onClick={(e) => toggleTrimming()}
+                  onClick={(e) => {
+                    toggleTrimming(); // This triggers video editor to display
+                  }}
                 >
                   <VideoEditIcon />
                 </button>
@@ -846,7 +854,6 @@ const CreateVibe = ({
           )}
         </>
       )}
-      
     </main>
   );
 };

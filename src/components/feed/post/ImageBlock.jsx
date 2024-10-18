@@ -13,6 +13,6 @@ export default function ImageBlock({ image = ['/images/home/feed-banner-img.png'
 
 function Img({ src }) {
   return (
-     <img src={src} alt="post_image" className="w-full h-full object-contain bg-white" />
+     <img src={src} alt="post_image" className="w-full h-full object-cover bg-white" />
   )
 }
