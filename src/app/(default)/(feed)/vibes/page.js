@@ -29,6 +29,14 @@ import SponsoredAdComponent from "@/components/feed/vibes/SponsoredAd";
 import { VibeContext } from "@/context/VibeContext";
 import Post from "@/components/elements/cards/Post";
 import LikeVibe from "@/components/feed/vibes/LikeVibe";
+import { useMediaQuery } from "react-responsive";
+import play from "../../../../../public/images/icons/vibes_mobile/play.svg"
+import comment from "../../../../../public/images/icons/vibes_mobile/ChatCircleDots.svg"
+import stats from "../../../../../public/images/icons/vibes_mobile/stats.svg"
+import share from "../../../../../public/images/icons/vibes_mobile/share.svg"
+import wallet from "../../../../../public/images/icons/vibes_mobile/wallet.svg"
+import pen from "../../../../../public/images/icons/vibes_mobile/pen.svg"
+
 
 export default function Vibes({ filter }) {
   const [showRepost, setRepost] = useState(false);
@@ -67,7 +75,7 @@ export default function Vibes({ filter }) {
 
 
   return (
-    <div className="border- border-green-400 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_247px)] max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className=" border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
       <div className=" flex items-center justify-center object-contain w-full bg-[#333333] ">
@@ -75,7 +83,7 @@ export default function Vibes({ filter }) {
 
         {/* to view the repostvibe dialog box uncomment this component */}
 
-        <div className=" relative border- border-green-400  max-h-[calc(100vh_-_380px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16] w-[470px]">
+        <div className=" relative overflow-hidden border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
           {/* {vibes.length > 0 && vibes[0].type === "video" && (
             <video
               src={vibes[0].media[0]}
@@ -89,7 +97,7 @@ export default function Vibes({ filter }) {
           {vibes.length > 0 && vibes[0].type === "video" ? (
             <video
               src={vibes[0].media[0]}
-              className="w-full h-full"
+              className="w-full h-full overflow-hidden"
               controls
               autoPlay
               loop
@@ -145,52 +153,50 @@ export default function Vibes({ filter }) {
 
             {/* <BannerAdComponent /> */}
           </div>
-        </div>
-
-        {/* Side Options */}
-        <div className="relative w-[45px] flex flex-col justify-center text-[12px] ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]">
+          <div className="absolute right-[1rem] top-2 md:w-[45px] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]">
           <div className="flex flex-col">
             <ThreeDotMenuViewOthers />
           </div>
 
           <div className="flex flex-col">
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesViewIcon w={25} h={25} fill={"#ffffff"} />
+              {useMediaQuery({ query: '(max-width: 767px)' }) ? <Image src={play} alt="colombo" className="w-[1rem]"/> : <VibesViewIcon w={25} h={25} fill={"#ffffff"} />}  
+              {/* const isSmallScreen = useMediaQuery({ query: '(max-width: 767px)' }); */}
               <p className="text-[10px]">121.5k</p>
             </div>
             <LikeVibe vibe={vibe} />
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesCommentIcon w={25} h={25} fill={"#ffffff"} />
+            {useMediaQuery({ query: '(max-width: 767px)' }) ? <Image src={comment} alt="colombo" className="w-[1rem]"/> : <VibesCommentIcon w={25} h={25} fill={"#ffffff"} />}
               <p className="text-[10px]">121.5k</p>
             </div>
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
-              <StatsIcon />
+              {useMediaQuery({ query: '(max-width: 767px)' }) ? <Image src={stats} alt="colombo" className="w-[1rem]"/> : <StatsIcon />}
               <p className="text-[10px]">120</p>
             </div>
             <div
               className="flex flex-col items-center gap-[2px] md:gap-1"
               onClick={() => handleShare()}
             >
-              <VibesShareIcon w={25} h={24} fill={"#ffffff"} />
+              {useMediaQuery({ query: '(max-width: 767px)' }) ? <Image src={share} alt="colombo" className="w-[1rem]"/> : <VibesShareIcon w={25} h={24} fill={"#ffffff"} />}
               <p className="text-[10px]">121.5k</p>
             </div>
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
-              <WalletIcon />
+              {useMediaQuery({ query: '(max-width: 767px)' }) ? <Image src={wallet} alt="colombo" className="w-[1rem]"/> : <WalletIcon />}
               <p className="text-[10px]">$20</p>
             </div>
             {/* <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full"> */}
             {/* <GenAiIcon w={30} h={25} fill={"#ffffff"} /> */}
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <GenAIPen />
+            {useMediaQuery({ query: '(max-width: 767px)' }) ? <Image src={pen} alt="colombo" className="w-[2rem]"/> : <GenAIPen/>}
             </div>
             {/* </div> */}
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <img
                 src="/images/vibes/vibes_music.jpeg"
                 alt="vibes-music"
-                className="w-[35px] rounded-full"
+                className="w-[2rem] md:w-[35px] rounded-full"
               />
             </div>
           </div>
@@ -238,6 +244,10 @@ export default function Vibes({ filter }) {
             </div> */}
           {/* </div> */}
         </div>
+        </div>
+
+        {/* Side Options */}
+       
       </div>
     </div>
   );
