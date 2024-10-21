@@ -149,7 +149,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
                         selectedUsers.includes(user) ? "bg-gray-300" : ""
                       }`}
                     >
-                      {user}
+                      {user.user_name}
                     </li>
                   ))
                 ) : (
