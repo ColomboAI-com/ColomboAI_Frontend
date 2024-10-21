@@ -97,8 +97,7 @@ export default function StoryContextProvider({ children }) {
     try {
       setLoadings((prev) => ({ ...prev, incrementImpression: true }));
       const res = await axios.post(
-        // `${ROOT_URL_FEED}/stories/${storyId}/increase-view-count`,
-        `http://localhost:8001/stories/${storyId}/increase-view-count`,
+        `${ROOT_URL_FEED}/stories/${storyId}/increase-view-count`,
         {},
         {
           headers: {
