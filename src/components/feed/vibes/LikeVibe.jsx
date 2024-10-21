@@ -1,19 +1,22 @@
 import { VibesLikesIcon } from "@/components/Icons";
 import { FeedContext } from "@/context/FeedContext";
+import { VibeContext } from "@/context/VibeContext";
 import React, { useContext, useState } from "react";
 
 const LikeVibe = ({ vibe }) => {
 
   const [likeCounts, setLikeCounts] = useState(vibe?.counts?.like || 0);
   const [isLiked, setIsLiked] = useState(vibe?.interactions?.isLiked);
-  const { likePost } = useContext(FeedContext);
+  const { likeVibe } = useContext(VibeContext);
 
   const onLikeVibe = async () => {
     setIsLiked(!isLiked)
     if (isLiked) setLikeCounts(prev => (prev - 1))
     else setLikeCounts(prev => (prev + 1))
-    await likePost(vibe?._id)
+    await likeVibe(vibe?._id)
   }
+
+  // console.log(vibe)
 
   return (
     <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={onLikeVibe}>

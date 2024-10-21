@@ -189,6 +189,19 @@ export default function VibeContextProvider({ children }) {
     setPage(1);
   };
 
+  const likeVibe = async (vibeId = '') => {
+    try {
+      const res = await axios.put(`${`${ROOT_URL_FEED}/vibes/${vibeId}/like`}`, null, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      })
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    }
+  }
+
 
   return (
     <VibeContext.Provider
@@ -202,7 +215,8 @@ export default function VibeContextProvider({ children }) {
         deleteVibe,
         archiveVibe, 
         fetchSongById,
-        resetFeedValues
+        resetFeedValues,
+        likeVibe
       }}
     >
       {children}
