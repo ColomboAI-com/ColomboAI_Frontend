@@ -2,6 +2,7 @@
 "use client";
 import Header from "@/components/layouts/Header";
 import RightSidebar from "@/components/layouts/RightSidebar";
+import SuggestedVibes from "@/components/layouts/SuggestedVibes";
 import Sidebar from "@/components/layouts/Sidebar";
 import FeedContextProvider from "@/context/FeedContext";
 import Modal from "@/components/elements/Modal";
@@ -249,13 +250,13 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  "w-[100%] lg:w-[100%] sm:max-h-[calc((100vh-175px))] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"
+                  "w-[100%] lg:w-[100%] sm:max-h-[calc((100vh-175px))] nsm:max-h-[calc((100vh-175px))] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"
                 }
               >
                 {children}
               </div>
               {/* // </> */}
-              {(pathname === "/shop" || pathname === '/news' ) ? null : <div className=" lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]">
+              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
                 <RightSidebar />
               </div>}
             </div>}
