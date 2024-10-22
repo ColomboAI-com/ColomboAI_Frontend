@@ -78,7 +78,7 @@ const Header = () => {
 
       <div className="shadow-[0px_2px_4px_0px_#0000001A]">
         <div className=" hidden md:flex items-center justify-between">
-          <div className="w-[100%] lg:w-[70%] px-5 lg:px-28 border-">
+          <div className="w-[100%] lg:w-[75%] px-5 lg:px-28 border-">
             {/* <InputBar/> */}
             {pathname === "/gen-search" ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
           </div>
