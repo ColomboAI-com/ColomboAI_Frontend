@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import RecentComments from "@/components/feed/post/RecentComments";
 import ImageBlock from "@/components/feed/post/ImageBlock";
 import PostActions from "@/components/feed/post/PostActions";
@@ -25,9 +25,11 @@ import { InfoIcon, SaveIcon } from "lucide-react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
 const PostCard = ({ post }) => {
-  const { deletePost } = useContext(FeedContext);
+  const { deletePost, incrementPostImpressions } = useContext(FeedContext);
 
   const { userDetails } = useContext(UserProfileContext);
+
+  const postViewedRef = useRef(null);
 
   const handleDeletePost = async () => {
     try {
@@ -37,13 +39,52 @@ const PostCard = ({ post }) => {
     }
   };
 
+  const handleIncreaseViewCount = async () => {
+    try {
+      await incrementPostImpressions(post._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // Intersection Observer to automatically call handleLoadMore when the button is in view
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          //  handleLoadMore();
+          handleIncreaseViewCount();
+        }
+      },
+      {
+        root: null, // Uses the browser viewport as the default
+        rootMargin: "0px",
+        threshold: 1.0, // Trigger when 100% of the button is visible
+      }
+    );
+
+    if (postViewedRef.current) {
+      observer.observe(postViewedRef.current);
+    }
+
+    // Cleanup the observer when the component unmounts or if button changes
+    return () => {
+      if (postViewedRef.current) {
+        observer.unobserve(postViewedRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
       {/* <div className="flex items-center">
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
-      <div className={`overflow-x-hidden border-[0.5px]  border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5`}>
+      <div
+        className={`overflow-x-hidden border-[0.5px]  border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5`}
+      >
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <Link
             className="flex items-center justify-start w-full md:w-fit lg:w-fit"
@@ -112,6 +153,7 @@ const PostCard = ({ post }) => {
         {post?.type === "image" && <ImageBlock image={post.media} />}
         {post?.type === "video" && <VideoBlock video={post.media} />}
         {post?.content && <ContentBlock content={post.content} />}
+        <div ref={postViewedRef} style={{ height: "1px" }}></div>
         <div className="px-[12px] py-[2px]">
           {post && (
             <>
