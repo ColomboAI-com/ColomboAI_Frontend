@@ -12,6 +12,7 @@ import axios from "axios";
 import { debounce } from "lodash";
 import { ROOT_URL_FEED, ROOT_URL_AUTH } from "@/utlils/rootURL";
 import { getCookie } from "@/utlils/cookies";
+
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
   style: ["normal"],
@@ -35,13 +36,14 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
     const count = text.length;
     setCharCount(count);
   };
+
   const searchUsers = async (query) => {
     setLoading(true); // Start loading
     try {
-      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?q=${query}`,{
+      const res = await axios.get(`${ROOT_URL_AUTH}/user/search?q=${query}`, {
         headers: {
-          Authorization: getCookie('token')
-        }
+          Authorization: getCookie("token"),
+        },
       });
       setFilteredUsers(res?.data?.results || []); // Store fetched users
       setShowUsers(true); // Show users
@@ -78,6 +80,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
     }
     setIsMagicPenInputVisible(false);
   };
+
   const handleSearchChange = debounce((e) => {
     const query = e.target.value;
     setSearch(query);
@@ -87,6 +90,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
       setFilteredUsers([]); // Clear results when input is empty
     }
   }, 300); 
+
   return (
     <div
       className={`mx-auto flex flex-col ${font.className} p-6 rounded-xl bg-gray-100 shadow-lg`}
@@ -102,7 +106,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
       >
         <button onClick={handleTagUsers}>
           <div className="flex flex-row items-center gap-1">
-            <Image src={tag} alt="colombo" />
+            <Image src={tag} alt="Tag People" />
             <p>
               {selectedUsers.length > 0 ? `Tagged ${selectedUsers.length}` : "Tag People"}
             </p>
@@ -122,11 +126,11 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
             <div className="flex flex-col bg-white rounded-lg w-full">
               <div className="flex flex-row justify-between items-center border-b-[1px] border-gray-300 p-2">
                 <div className="flex flex-row items-center gap-1">
-                  <Image src={Search} alt="colombo" />
+                  <Image src={Search} alt="Search" />
                   <input
                     type="text"
                     placeholder="Search..."
-                    onChange={(e)=>handleSearchChange(e)}
+                    onChange={(e) => handleSearchChange(e)}
                     className="w-full rounded-t-lg focus:outline-none"
                   />
                 </div>
@@ -134,7 +138,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
                   src={blue_x}
                   onClick={() => setSearch("")}
                   className="cursor-pointer"
-                  alt="colombo"
+                  alt="Clear search"
                 />
               </div>
 
@@ -149,19 +153,23 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
                         selectedUsers.includes(user) ? "bg-gray-300" : ""
                       }`}
                     >
-                      <div >
-                       {/* <Image
-                        src={user.profile_picture} 
-                        alt={`${user.user_name}'s profile`}
-                        width={40} 
-                        height={40}
-                        className="rounded-full mr-2" 
-                       /> */}
+                      <div className="flex items-center">
+                        {/* Profile Picture */}
+                        {user?.profile_picture ? (
+                         <img
+                           src={user.profile_picture}
+                           alt="suggested_image"
+                           className="rounded-full w-[30px] h-[30px] mr-3"
+                           />
+                           ) : (
+                             <div className="w-[30px] h-[30px] bg-gray-300 rounded-full mr-3" />
+                             )}
+                        {/* User Details */}
                         <div>
-                        <strong>@{user.user_name}</strong> {/* Bold username */}
-                        <div className="text-sm text-gray-500">{user.name}</div> {/* Name below the username */}
+                          <strong>@{user.user_name}</strong> {/* Bold username */}
+                          <div className="text-sm text-gray-500">{user.name}</div> {/* Name below the username */}
                         </div>
-                       </div>
+                      </div>
                     </li>
                   ))
                 ) : (
@@ -224,16 +232,6 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
             )}
           </div>
         )}
-      </div>
-
-      {/* Share Vibe Button */}
-      <div className="flex justify-center mt-4">
-        <button
-          className="bg-brandprimary text-white font-semibold py-2 px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
-          onClick={handleCreateVibe}
-        >
-          Share Vibe
-        </button>
       </div>
     </div>
   );
