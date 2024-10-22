@@ -62,13 +62,12 @@ const CreateVibe = ({
   } = useContext(GlobalContext);
   const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
 
-  const [isTrimming, setIsTrimming] = useState(false); // Trimming state
+  const [isTrimming, setIsTrimming] = useState(false);
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [selectedSong, setSelectedSong] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [text, setText] = useState("");
-  // const [imageText, setImageText] = useState("");
   const [isEditingText, setIsEditingText] = useState(false);
   const [isMemuOpen, setIsMenuOpen] = useState(false);
   const [textColor, setTextColor] = useState("#000000");
@@ -93,59 +92,20 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
-  const handSelectSongId = (id) => {
-    setSongId(id.toString());
-  };
   const handleSongSelect = (song) => {
+    console.log(song);
     setSelectedSong(song);
     setDropdownVisible(false);
     setIsPlaying(true);
-    handSelectSongId(song.id);
+    setSongId(song.id.toString());
   };
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
 
-  const iconButtons = () => {
-    return (
-      <div className="w-16 bg-gray-900 flex flex-col items-center py-4 space-y-4">
-        <button
-          onClick={() => {
-            toogleMagicPen();
-          }}
-          className={`p-2 rounded-full ${
-            isMagicPenOpen
-              ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-              : "bg-white"
-          } outline-none focus:ring-offset-0 focus:ring-0`}
-        >
-          <CreateMagicPenIcon
-            w={25}
-            h={25}
-            fill1={isMagicPenOpen ? "#fff" : "#FF0049"}
-            fill2={isMagicPenOpen ? "#fff" : "#FFBE3B"}
-            fill3={isMagicPenOpen ? "#fff" : "#00BB5C"}
-            fill4={isMagicPenOpen ? "#fff" : "#187DC4"}
-            fill5={isMagicPenOpen ? "#fff" : "#58268B"}
-          />
-        </button>
-        <button className="w-10 h-10 rounded-full bg-gray-300">
-          <VideoEditIcon />
-        </button>
-        <button
-          className="w-10 h-10 rounded-full bg-gray-300"
-          onClick={(e) => {
-            e.stopPropagation();
-            setIsColorPickerVisible(!isColorPickerVisible);
-          }}
-        >
-          <TextShadowIcon />
-        </button>
-        <button className="w-10 h-10 rounded-full bg-gray-300">
-          <MusicNotePlusIcon />
-        </button>
-      </div>
-    );
+  const handleMusicReset = () => {
+    setSelectedSong(null);
+    setIsPlaying(false);
   };
 
   const handleFileInputClick = () => {
@@ -157,6 +117,7 @@ const CreateVibe = ({
     setIsTrimming(false);
     setIsColorPickerVisible(false);
     setDropdownVisible(!isDropdownVisible);
+    handleMusicReset();
   };
 
   function toggleColorPickerVisible() {
@@ -281,6 +242,8 @@ const CreateVibe = ({
       setImageWidth(imgRef.current.clientWidth);
     }
   }, [mediaUrl]);
+
+  console.log(song_id)
   
   return (
     <main className={font.className}>
@@ -441,7 +404,7 @@ const CreateVibe = ({
 
             {selectedSong && (
               <MusicOverlay
-                // song={selectedSong}
+                song={selectedSong}
                 song_id={song_id}
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
