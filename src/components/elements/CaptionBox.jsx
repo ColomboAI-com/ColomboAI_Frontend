@@ -150,13 +150,13 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
                       }`}
                     >
                       <div >
-                       <Image
+                       {/* <Image
                         src={user.profile_picture} 
                         alt={`${user.user_name}'s profile`}
                         width={40} 
                         height={40}
                         className="rounded-full mr-2" 
-                       />
+                       /> */}
                         <div>
                         <strong>@{user.user_name}</strong> {/* Bold username */}
                         <div className="text-sm text-gray-500">{user.name}</div> {/* Name below the username */}
