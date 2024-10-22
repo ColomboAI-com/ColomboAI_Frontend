@@ -100,7 +100,8 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
       {!isUploading ? (
         <form onSubmit={handleSubmit} className="lg:pb-[21px] sm:pb-0 pt-[21px] flex flex-row w-full justify-center">
           <div
-            className="relative sm:w-[20rem] md:w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px]"
+           className="relative sm:w-[25rem] md:w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px] left-[10px]"
+
             style={borderStyle}
           >
             <input
