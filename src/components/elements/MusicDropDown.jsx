@@ -75,17 +75,21 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
       audioRef.current.src = song.audio;
       audioRef.current.play();
       setPlaying(song.id);
-      handleSongSelect(song)
+      // handleSongSelect(song)
+      console.log(playing)
     }
   };
 
-  // const handleSongSelect = (song) => { 
-    // if (playing) {
-    //   setPlaying(null);
-    // }
-    // onSongSelect(song);
+  const handleSongSelect = (song) => { 
+    console.log('clicking whole song')
+    console.log(playing)
+    if (playing === song.id) {
+      audioRef.current.pause();
+      setPlaying(null);
+    }
+    onSongSelect(song);
     // setSongId(song.id.toString()); 
-  // };
+  };
 
   const handSelectSongId = (song_id) => {
     setSongId(song_id.toString()); 
@@ -136,7 +140,8 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
           <div
             key={song.id}
             className="flex items-center p-2 hover:bg-blue-500 rounded-lg cursor-pointer"
-            onClick={() => { handleSongSelect(song); handSelectSongId(song.id); console.log('clicking whole song')}}
+            // onClick={() => { handleSongSelect(song); handSelectSongId(song.id); console.log('clicking whole song')}} // clicking whole song
+            onClick={() => handleSongSelect(song)}
           >
             <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3"/>
             <div className="flex-grow">

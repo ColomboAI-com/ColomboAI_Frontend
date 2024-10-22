@@ -93,14 +93,16 @@ const CreateVibe = ({
     }
   }, [file, setFile]);
 
-  const handSelectSongId = (id) => {
-    setSongId(id.toString());
-  };
+  // const handSelectSongId = (id) => {
+  //   setSongId(id.toString());
+  // };
+
   const handleSongSelect = (song) => {
-    // setSelectedSong(song);
-    // setDropdownVisible(false);
-    // setIsPlaying(true);
-    // handSelectSongId(song.id);
+    console.log(song)
+    setSelectedSong(song);
+    setDropdownVisible(false);
+    setIsPlaying(true);
+    setSongId(song.id.toString());
   };
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
