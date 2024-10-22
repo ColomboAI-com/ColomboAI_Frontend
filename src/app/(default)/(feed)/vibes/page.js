@@ -78,7 +78,7 @@ export default function Vibes({ filter }) {
     <div className=" border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
-      <div className=" flex items-center justify-center object-contain w-full bg-[#333333] ">
+      <div className=" flex items-center justify-center object-contain w-full bg-black ">
         {/* Main Content */}
 
         {/* to view the repostvibe dialog box uncomment this component */}
@@ -153,7 +153,7 @@ export default function Vibes({ filter }) {
 
             {/* <BannerAdComponent /> */}
           </div>
-          <div className="md:hidden absolute right-[1rem] top-2 md:w-[45px] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 h-[calc(100vh_-_250px)] md:h-[calc(100vh_-_246px)]">
+          <div className="md:hidden absolute right-[1rem] top-[4rem] md:w-[45px] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 h-[calc(100vh_-_250px)] md:h-[calc(100vh_-_246px)]">
             <div className="flex flex-col">
               <ThreeDotMenuViewOthers />
             </div>
@@ -206,7 +206,7 @@ export default function Vibes({ filter }) {
         </div>
 
         {/* Side Options */}
-        <div className="absolute sm:hidden md:block md:right-[9rem] md:top-[14rem] lg:right-[16rem] lg:bottom-0 lg:top-[17rem] xl:right-[35rem] xl:top-[20rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
+        <div className="absolute sm:hidden md:block md:right-[9rem] md:top-[14rem] lg:right-[16rem] lg:bottom-0 lg:top-[17rem] xl:right-[35rem] xl:top-[22rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
                 <p>121.5k</p>

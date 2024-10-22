@@ -173,7 +173,7 @@ const DefaultLayout = ({ children }) => {
     <FeedContextProvider>
       <div className={`min-w-screen border-yellow-400 md:relative  ${font.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
-          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen  z-[10000] hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
@@ -187,7 +187,6 @@ const DefaultLayout = ({ children }) => {
                   alt="logo-image"
                   className="mx-auto w-[174px]"
                 />}
-                {/* <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto w-[174px] h-[50px]" /> */}
               </div>
             </header>
             {!isSmallScreen && <Header
@@ -236,12 +235,6 @@ const DefaultLayout = ({ children }) => {
                   />
                 </Modal>
               )}
-
-              {/* // isCommentOpen
-                // ?
-                //   <CommentSection/>
-                // :
-                // <> */}
               {isShowChatMenu && (
                 <div className="border overflow-y-auto no-scrollbar relative h-full min-h-[100px] mx-2 max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
                   <NotificationBar />
@@ -250,13 +243,12 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  "w-[100%] lg:w-[100%] sm:max-h-[calc((100vh-175px))] nsm:max-h-[calc((100vh-175px))] md:max-h-[calc(100vh-192.28px)] no-scrollbar overflow-y-auto"
+                  `w-[100%] lg:w-[100%] sm:max-h-[calc((100vh-175px))] nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' ? `md:h-full` : `md:max-h-[calc(100vh-192.28px)]`} no-scrollbar overflow-y-auto`
                 }
               >
                 {children}
               </div>
-              {/* // </> */}
-              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar lg:block sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
+              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
                 <RightSidebar />
               </div>}
             </div>}

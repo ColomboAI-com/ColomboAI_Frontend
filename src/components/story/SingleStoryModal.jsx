@@ -43,13 +43,13 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
       {/* Middle Section */}
       <div className="relative  m-auto">
         <div className="h-3/4 w-full rounded-[5px] justify-center story-detail-box">
-        <div className="absolute top-6 left-4 p-1 text-lg z-[9999] md:hidden">
+        <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
         <MdOutlineArrowBack
           onClick={() => setIsCreateStorySignleOpen(false)}
           style={{ color: "#fff", cursor: "pointer" }}
         />
       </div>
-          <div className="absolute top-10 left-0 right-0 p-5 z-[9999]	w-20">
+          <div className="absolute top-10 left-0 right-0 p-5 z-[49]	w-20">
             <Link className="flex items-start" href={`/profile/${userData?.user_name || ""}`} target="_blank">
               <ProfilePicture image={userData?.profile_picture} />
               <Username username={userData?.user_name} color={"text-[#fff]"} />
@@ -67,7 +67,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
             onStoryStart={(index, imageDetails) => handleStoryStart(index, imageDetails)}
           />
         </div>
-        <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]	">
+        <div className="absolute bottom-10 left-0 right-0 p-5 z-[49]	">
           <div className="relative text-white">
             {/* test here... */}
             {/* <input
@@ -190,7 +190,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, data, use
 //             storyStyles={storyStyles}
 //           />
 //         </div>
-//         <div className="absolute bottom-10 left-0 right-0 p-5 z-[9999]  ">
+//         <div className="absolute bottom-10 left-0 right-0 p-5 z-[49]  ">
 //           <div className="relative text-white">
 //             test here...
 //             {/* <input
