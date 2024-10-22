@@ -97,10 +97,10 @@ const CreateVibe = ({
     setSongId(id.toString());
   };
   const handleSongSelect = (song) => {
-    setSelectedSong(song);
-    setDropdownVisible(false);
-    setIsPlaying(true);
-    handSelectSongId(song.id);
+    // setSelectedSong(song);
+    // setDropdownVisible(false);
+    // setIsPlaying(true);
+    // handSelectSongId(song.id);
   };
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -441,7 +441,7 @@ const CreateVibe = ({
 
             {selectedSong && (
               <MusicOverlay
-                // song={selectedSong}
+                song={selectedSong}
                 song_id={song_id}
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}

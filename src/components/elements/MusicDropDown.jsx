@@ -79,13 +79,13 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
     }
   };
 
-  const handleSongSelect = (song) => {
-    if (playing) {
-      setPlaying(null);
-    }
-    onSongSelect(song);
-    setSongId(song.id.toString()); 
-  };
+  // const handleSongSelect = (song) => { 
+    // if (playing) {
+    //   setPlaying(null);
+    // }
+    // onSongSelect(song);
+    // setSongId(song.id.toString()); 
+  // };
 
   const handSelectSongId = (song_id) => {
     setSongId(song_id.toString()); 
@@ -136,14 +136,14 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
           <div
             key={song.id}
             className="flex items-center p-2 hover:bg-blue-500 rounded-lg cursor-pointer"
-            onClick={() => { handleSongSelect(song); handSelectSongId(song.id); }}
+            onClick={() => { handleSongSelect(song); handSelectSongId(song.id); console.log('clicking whole song')}}
           >
             <img src={song.image} alt={song.name} className="w-10 h-10 rounded-full object-cover mr-3"/>
             <div className="flex-grow">
               <p className="font-medium text-sm">{song.name}</p>
               <p className="text-xs opacity-80">by {song.artist_name}</p>
             </div>
-            <button onClick={(e) => togglePlay(song, e)} className="p-2 bg-gray-200 rounded-full">
+            <button onClick={(e) => {togglePlay(song, e); console.log('click play/pause button')}} className="p-2 bg-gray-200 rounded-full">
               {playing === song.id ? (
                 <Pause className="text-blue-600 w-4 h-4" />
               ) : (
