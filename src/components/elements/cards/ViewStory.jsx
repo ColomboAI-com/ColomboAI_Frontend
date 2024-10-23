@@ -1,9 +1,10 @@
 import Modal from "../Modal";
 import SingleStoryModal from "@/components/story/SingleStoryModal";
+import StoryModal from "../StoryModal";
 import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
 
-const ViewStory = (data) => {
+const ViewStory = (data, index) => {
   const [isCreateStorySignleOpen, setIsCreateStorySignleOpen] = useState(false);
   const { getStoriesOfUser } = useContext(StoryContext);
   const [detailStory, SetdetailStory] = useState([]);
@@ -37,17 +38,18 @@ const ViewStory = (data) => {
         </h6>
       </div>
       {isCreateStorySignleOpen && (
-        <Modal
+        <StoryModal
           isOpen={isCreateStorySignleOpen}
           setIsOpen={setIsCreateStorySignleOpen}
           className="sm:w-full lg:w-[90%] transform overflow-hidden text-left align-middle shadow-xl transition-all"
         >
           <SingleStoryModal
             setIsCreateStorySignleOpen={setIsCreateStorySignleOpen}
-            data={detailStory}
-            userData={data?.data?.creator}
+            storyData={detailStory}
+            data_user={data?.data?.creator}
+            index={data}
           />
-        </Modal>
+        </StoryModal>
       )}
     </div>
   );

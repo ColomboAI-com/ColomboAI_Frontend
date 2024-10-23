@@ -70,7 +70,7 @@ const Stories = () => {
         <CreateStoryQuick reFetchingStory={reFetchingStory} />
 
         {allStories.length !== 0
-          ? allStories.map((story, index) => <ViewStory data={story} key={index} />)
+          ? allStories.map((story, index) => <ViewStory data={story} key={index} index={index}/>)
           : null}
       </Slider>
     </div>
