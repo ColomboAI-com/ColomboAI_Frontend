@@ -40,7 +40,7 @@ const ViewStory = (data) => {
         <Modal
           isOpen={isCreateStorySignleOpen}
           setIsOpen={setIsCreateStorySignleOpen}
-          className="w-full transform overflow-hidden text-left align-middle shadow-xl transition-all"
+          className="sm:w-full lg:w-[90%] transform overflow-hidden text-left align-middle shadow-xl transition-all"
         >
           <SingleStoryModal
             setIsCreateStorySignleOpen={setIsCreateStorySignleOpen}
