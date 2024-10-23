@@ -1,54 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import {
-  GenAiIcon,
-  GenAIPen,
-  StatsIcon,
-  VibesCommentIcon,
-  VibesLikesIcon,
-  VibesRepostIcon,
-  VibesSaveIcon,
-  VibesShareIcon,
-  VibesViewIcon,
-  WalletIcon,
-} from "@/components/Icons";
-import FollowButton from "@/components/elements/FollowButton";
-const walletIcon = "/images/icons/wallet_icon.svg";
 
-
-import ThreeDotMenuViewOthers from "@/components/elements/ThreeDotMenuViewOthers";
-import RenderFeed from "@/components/feed/post/RenderFeed";
-import post_stats from "../../../../../public/images/icons/post_stats.svg";
-import Image from "next/image";
-import { IoIosMusicalNotes } from "react-icons/io";
-import RepostVibe from "@/components/feed/vibes/Repost";
-import ShareVibe from "@/components/feed/vibes/Share";
-import { Fragment, useContext, useEffect, useState } from "react";
-import BannerAdComponent from "@/components/feed/vibes/BannerAd";
-import SponsoredAdComponent from "@/components/feed/vibes/SponsoredAd";
+import { useContext, useEffect, useState } from "react";
 import { VibeContext } from "@/context/VibeContext";
-import Post from "@/components/elements/cards/Post";
-import LikeVibe from "@/components/feed/vibes/LikeVibe";
-import { useMediaQuery } from "react-responsive";
-import play from "../../../../../public/images/icons/vibes_mobile/play.svg"
-import comment from "../../../../../public/images/icons/vibes_mobile/ChatCircleDots.svg"
-import stats from "../../../../../public/images/icons/vibes_mobile/stats.svg"
-import share from "../../../../../public/images/icons/vibes_mobile/share.svg"
-import wallet from "../../../../../public/images/icons/vibes_mobile/wallet.svg"
-import pen from "../../../../../public/images/icons/vibes_mobile/pen.svg"
-
+import Vibe from "@/components/feed/vibes/Vibe";
 
 export default function Vibes({ filter }) {
-  const [showRepost, setRepost] = useState(false);
-  const [showShare, setShare] = useState(false);
-  const handleRepost = () => {
-    setRepost(!showRepost);
-  };
-  const handleShare = () => {
-    setShare(!showShare);
-  };
-  const { vibes, getVibes, loadings, page, resetFeedValues, fetchSongById } =
-    useContext(VibeContext);
+  const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
   const [song, setSong] = useState({});
   const [vibe, setVibe] = useState({});
 
@@ -71,10 +29,15 @@ export default function Vibes({ filter }) {
     if (vibes) {
       setVibe(vibes[0]);
     }
-  })
-
+  });
 
   return (
+<<<<<<< HEAD
+    <div>
+      {vibes.map((vibe) => (
+        <Vibe vibe={vibe} key={vibe._id} />
+      ))}
+=======
     <div className=" border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
@@ -251,6 +214,7 @@ export default function Vibes({ filter }) {
             </div>
 
       </div>
+>>>>>>> dev
     </div>
   );
 }
