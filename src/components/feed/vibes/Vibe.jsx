@@ -112,12 +112,16 @@ export default function Vibe({ vibe }) {
 
         {/* to view the repostvibe dialog box uncomment this component */}
 
+        {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
         <div className=" relative overflow-hidden border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
           ></div>
+
+          {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
+
           {/* {vibes.length > 0 && vibes[0].type === "video" && (
             <video
               src={vibes[0].media[0]}
@@ -148,10 +152,6 @@ export default function Vibe({ vibe }) {
           } */}
 
           <div className=" absolute bottom-0 left-4">
-            {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-
-            {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-
             {/* whenever there is sponsored ad uncomment and call this component */}
 
             {/* <SponsoredAdComponent/> */}
