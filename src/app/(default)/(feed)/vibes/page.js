@@ -7,8 +7,6 @@ import Vibe from "@/components/feed/vibes/Vibe";
 
 export default function Vibes({ filter }) {
   const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
-  const [song, setSong] = useState({});
-  const [vibe, setVibe] = useState({});
   
   useEffect(() => {
     getVibes();
