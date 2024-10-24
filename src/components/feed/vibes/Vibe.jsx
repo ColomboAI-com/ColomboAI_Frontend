@@ -30,6 +30,7 @@ export default function Vibe({ vibe }) {
   const [impressions, setImpressions] = useState(0);
 
   const VibeViewedRef = useRef(null);
+  const audioRef = useRef(null);
   
   const handleRepost = () => {
     setRepost(!showRepost);
