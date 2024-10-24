@@ -165,7 +165,7 @@ export default function Vibe({ vibe }) {
                 />
                 <p>{vibe.creator.user_name}</p>
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
-                <FollowButton />
+                <FollowButton followeeId={vibe.creator._id} />
               </div>
             }
 
