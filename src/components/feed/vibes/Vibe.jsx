@@ -16,21 +16,14 @@ import stats from "../../../../public/images/icons/vibes_mobile/stats.svg";
 import share from "../../../../public/images/icons/vibes_mobile/share.svg";
 import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
-import {
-  GenAIPen,
-  StatsIcon,
-  VibesCommentIcon,
-  VibesShareIcon,
-  VibesViewIcon,
-} from "@/components/Icons";
+import { GenAIPen, StatsIcon, VibesCommentIcon, VibesShareIcon, VibesViewIcon } from "@/components/Icons";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
 export default function Vibe({ vibe }) {
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } =
-    useContext(VibeContext);
+  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
 
   const [song, setSong] = useState({});
   const [isVibeInView, setIsVibeInView] = useState(false);
@@ -118,9 +111,7 @@ export default function Vibe({ vibe }) {
   useEffect(() => {
     if (audioRef.current && song && song.audio) {
       audioRef.current.src = song.audio;
-      audioRef.current
-        .play()
-        .catch((error) => console.error("Error playing audio:", error));
+      audioRef.current.play().catch((error) => console.error("Error playing audio:", error));
     }
   }, [song]);
 
@@ -156,21 +147,11 @@ export default function Vibe({ vibe }) {
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
-                <video
-                  src={vibe.media[0]}
-                  className="w-full h-full overflow-hidden"
-                  controls
-                  autoPlay
-                  loop
-                />
+                <video src={vibe.media[0]} className="w-full h-full overflow-hidden" controls autoPlay loop />
               ) : null}
             </React.Fragment>
           ) : (
-            <img
-              src={vibe?.media?.[0]}
-              className="w-full h-full"
-              alt="vibes_content"
-            />
+            <img src={vibe?.media?.[0]} className="w-full h-full" alt="vibes_content" />
           )}
 
           {/* {
@@ -196,7 +177,7 @@ export default function Vibe({ vibe }) {
                 />
                 <p>{vibe.creator.user_name}</p>
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
-                <FollowButton userId={vibe.creator._id}/>
+                <FollowButton userId={vibe.creator._id} />
               </div>
             }
 
@@ -218,7 +199,7 @@ export default function Vibe({ vibe }) {
           </div>
           <div className="absolute right-[1rem] top-2 md:w-[45px] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]">
             <div className="flex flex-col">
-              <ThreeDotMenuViewOthers />
+              <ThreeDotMenuViewOthers vibe={vibe} />
             </div>
 
             <div className="flex flex-col">
@@ -249,10 +230,7 @@ export default function Vibe({ vibe }) {
                 )}
                 <p className="text-[10px]">{impressions}</p>
               </div>
-              <div
-                className="flex flex-col items-center gap-[2px] md:gap-1"
-                onClick={() => handleShare()}
-              >
+              <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
                   <Image src={share} alt="colombo" className="w-[1rem]" />
                 ) : (
