@@ -93,7 +93,6 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   };
 
   const handleSongSelect = (song) => {
-
     if (playing === song.id) {
       audioRef.current.pause();
       setPlaying(null);
