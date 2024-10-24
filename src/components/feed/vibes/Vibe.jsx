@@ -22,6 +22,9 @@ import {
   VibesCommentIcon,
   VibesShareIcon,
   VibesViewIcon,
+  VibesLikesIcon,
+  VibesRepostIcon,
+  GenAiIcon
 } from "@/components/Icons";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
@@ -125,16 +128,16 @@ export default function Vibe({ vibe }) {
   }, [song]);
 
   return (
-    <div className=" border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className="relative border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
-      <div className=" flex items-center justify-center object-contain w-full bg-[#333333] ">
+      <div className=" flex items-center justify-center object-contain w-full bg-black ">
         {/* Main Content */}
 
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-        <div className=" relative overflow-hidden border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
+        <div className=" relative overflow-hidden border-green-400 sm:h-[28rem] md:h-[calc(190vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
@@ -216,7 +219,7 @@ export default function Vibe({ vibe }) {
 
             {/* <BannerAdComponent /> */}
           </div>
-          <div className="absolute right-[1rem] top-2 md:w-[45px] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]">
+          <div className="absolute right-[1.5rem] bottom-2 flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
             <div className="flex flex-col">
               <ThreeDotMenuViewOthers />
             </div>
@@ -287,53 +290,53 @@ export default function Vibe({ vibe }) {
                 />
               </div>
             </div>
-            {/* <div className=" absolute bottom-0 lg:bottom-8 flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesLikesIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesCommentIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div
-              className="flex flex-col items-center gap-[2px] md:gap-1 cursor-pointer"
-              onClick={() => handleRepost()}
-            >
-              <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div
-              className="flex flex-col items-center gap-[2px] md:gap-1"
-              onClick={() => handleShare()}
-            >
-              <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
-              <p>856</p>
-            </div>
-
-            <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
-              <GenAiIcon w={30} h={30} fill={"#ffffff"} />
-            </div>
-            <div>
-              <img
-                src="/images/vibes/vibes_music.jpeg"
-                alt="vibes-music"
-                className="w-[41px] rounded-full"
-              />
-            </div> */}
-            {/* </div> */}
           </div>
         </div>
 
         {/* Side Options */}
+        <div className="absolute sm:hidden md:block md:right-[9rem] md:top-[6rem] lg:right-[22rem] lg:bottom-0 lg:top-[2.5rem] xl:right-[14rem] xl:top-[8rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <VibesLikesIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <VibesCommentIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div
+            className="flex flex-col items-center gap-[2px] md:gap-1 cursor-pointer"
+            onClick={() => handleRepost()}
+          >
+            <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div
+            className="flex flex-col items-center gap-[2px] md:gap-1"
+            onClick={() => handleShare()}
+          >
+            <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
+            <p>856</p>
+          </div>
+
+          <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
+            <GenAiIcon w={30} h={30} fill={"#ffffff"} />
+          </div>
+          <div>
+            <img
+              src="/images/vibes/vibes_music.jpeg"
+              alt="vibes-music"
+              className="w-[41px] rounded-full"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
