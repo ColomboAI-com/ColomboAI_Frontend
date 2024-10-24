@@ -9,6 +9,7 @@ import { setSessionStorage } from "@/utlils/utils";
 const UserProfile = ({ userData }) => {
 
   const { setIsFollowerModalOpen, setIsFollowingModalOpen, setIsShareProfileModalOpen, postsCount } = useContext(UserProfileContext);
+  
   return (
     <div className="relative ">
       <img
