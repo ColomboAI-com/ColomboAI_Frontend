@@ -98,19 +98,17 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
 
     <div className="relative">
       {!isUploading ? (
-        <form onSubmit={handleSubmit} className="lg:pb-[21px] sm:pb-0 pt-[21px] flex flex-row w-full justify-center">
+        <form onSubmit={handleSubmit} className="lg:pb-[21px] sm:pb-0 pt-[21px] flex flex-row w-full items-center justify-center">
           <div
-           className="relative sm:w-[25rem] md:w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px] left-[10px]"
+            className="relative sm:w-[22rem] nsm:w-[35rem] md:w-full h-[50px] overflow-hidden font-circular font-sans focus-within:outline-none rounded-[25px] left-[10px]"
 
             style={borderStyle}
           >
-            <input
-              type="text"
+            <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              //   placeholder={file ? '' : "Ask or create anything..."}
               placeholder="Ask or create anything..."
-              className="w-full sm:max-w-[18rem] md:max-w-[45rem] sm: h-full py-[17px] px-[35px]  text-[#1E71F2] text-[16px] tracking-[0.1rem] font-sans overflow-hidden text-ellipsis whitespace-nowrap bg-transparent focus:outline-none"
+              className="w-full sm:max-w-[18rem] nsm:max-w-[33rem] md:max-w-[31rem] lg:max-w-[34rem] xl:max-w-[45rem] text-wrap h-full pt-[0.8rem] resize-none px-[35px] text-[#1E71F2] text-[16px] tracking-[0.1rem] font-sans overflow-hidden text-ellipsis bg-transparent focus:outline-none"
             />
             <div className="absolute top-0 right-0 h-full flex items-center pr-[25px]">
               <button

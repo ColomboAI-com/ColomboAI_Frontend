@@ -1,9 +1,10 @@
 import Modal from "../Modal";
 import SingleStoryModal from "@/components/story/SingleStoryModal";
+import StoryModal from "../StoryModal";
 import { useContext, useState, useEffect } from "react";
 import { StoryContext } from "@/context/StoryContext";
 
-const ViewStory = (data) => {
+const ViewStory = (data, index) => {
   const [isCreateStorySignleOpen, setIsCreateStorySignleOpen] = useState(false);
   const { getStoriesOfUser } = useContext(StoryContext);
   const [detailStory, SetdetailStory] = useState([]);
@@ -20,7 +21,7 @@ const ViewStory = (data) => {
 
   return (
     <div
-      className="relative w-[120px] sm:w-[98px]  md:w-[120px] lg:w-[120px] h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer"
+      className="relative w-[120px] sm:w-full  md:w-[120px] lg:w-[120px] h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer"
       style={{
         backgroundImage: `url(${data?.data?.media[0]})`,
         backgroundSize: "100% 100%",
@@ -37,17 +38,18 @@ const ViewStory = (data) => {
         </h6>
       </div>
       {isCreateStorySignleOpen && (
-        <Modal
+        <StoryModal
           isOpen={isCreateStorySignleOpen}
           setIsOpen={setIsCreateStorySignleOpen}
-          className="w-full  transform overflow-hidden text-left align-middle shadow-xl transition-all"
+          className="sm:w-full lg:w-[90%] transform overflow-hidden text-left align-middle shadow-xl transition-all"
         >
           <SingleStoryModal
             setIsCreateStorySignleOpen={setIsCreateStorySignleOpen}
-            data={detailStory}
-            userData={data?.data?.creator}
+            storyData={detailStory}
+            data_user={data?.data?.creator}
+            index={data}
           />
-        </Modal>
+        </StoryModal>
       )}
     </div>
   );

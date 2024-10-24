@@ -224,15 +224,15 @@ const CommentSection = ({ specificPostId, posts }) => {
       </div> */}
       </div>
       <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4">
-        <div class="flex items-center justify-between px-[16px] py-[12px]">
-          <a class="flex items-center" target="_blank" href={`/profile/${posts?.creator?.user_name}`}>
+        <div className="flex items-center justify-between px-[16px] py-[12px]">
+          <a className="flex items-center" target="_blank" href={`/profile/${posts?.creator?.user_name}`}>
             <ProfilePicture image={posts?.creator?.profile_picture} size={"w-[2rem]"} />
-            <p class="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">
+            <p className="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">
               {posts?.creator?.user_name}
             </p>
           </a>
-          <div class="flex items-center gap-4">
-            <p class="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">
+          <div className="flex items-center gap-4">
+            <p className="font-sans text-sidebarlabel tex-[12px] text-[#8B8B8B]">
               {formatTimeAgo(posts?.createdAt)}
             </p>
           </div>
@@ -396,7 +396,7 @@ const CommentSection = ({ specificPostId, posts }) => {
                 <svg width="16" height="25" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 14.0049V8.60624C1 7.58854 1 7.07972 1.13945 6.59989C1.2789 6.12004 1.54983 5.69666 2.09168 4.84991L3.81834 2.15161C4.30753 1.38712 4.55212 1.00488 4.9 1.00488C5.24788 1.00488 5.49247 1.38712 5.98166 2.15161L7.70832 4.84991C8.25016 5.69666 8.52108 6.12004 8.66057 6.59989C8.8 7.07972 8.8 7.58854 8.8 8.60624V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M1.65039 6.85498C2.06088 7.065 2.61805 7.48756 3.13245 7.5044C3.79461 7.52604 4.24181 6.94416 4.90039 6.94416C5.55897 6.94416 6.00617 7.52604 6.66833 7.5044C7.18274 7.48756 7.73992 7.065 8.15039 6.85498" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M4.90039 7.50488V14.0049" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path><path d="M3.59961 2.95508H6.19961" stroke={isClick ? '#1E71F2' : '#8E8E93'} stroke-linecap="round" stroke-linejoin="round"></path></svg>
               </div>
             <div className="absolute top-[11px] right-0">
-              <button type="button" class="text-white w-[53px] bg-blue-500 hover:bg-blue-400 absolute right-3 top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
+              <button type="button" className="text-white w-[53px] bg-blue-500 hover:bg-blue-400 absolute right-3 top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
               onClick={() => {
                 postComment(specificPostId);
               }}>
