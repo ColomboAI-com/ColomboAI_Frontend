@@ -5,7 +5,7 @@ import { Fragment, useContext, useState } from 'react'
 import Post from './cards/Post';
 import { GlobalContext } from "@/context/GlobalContext";
 
-export default function Modal({isOpen, setIsOpen, className, children}) {
+export default function StoryModal({isOpen, setIsOpen, className, children}) {
 
   const { isSelectedFromComputer, setIsSelectedFromComputer } = useContext(GlobalContext);
   
@@ -31,7 +31,7 @@ export default function Modal({isOpen, setIsOpen, className, children}) {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full items-center justify-center p-0 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
