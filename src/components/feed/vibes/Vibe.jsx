@@ -16,20 +16,28 @@ import stats from "../../../../public/images/icons/vibes_mobile/stats.svg";
 import share from "../../../../public/images/icons/vibes_mobile/share.svg";
 import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
-import { GenAIPen, StatsIcon, VibesCommentIcon, VibesShareIcon, VibesViewIcon } from "@/components/Icons";
+import {
+  GenAIPen,
+  StatsIcon,
+  VibesCommentIcon,
+  VibesShareIcon,
+  VibesViewIcon,
+} from "@/components/Icons";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
 export default function Vibe({ vibe }) {
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
+  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } =
+    useContext(VibeContext);
 
   const [song, setSong] = useState({});
   const [isVibeInView, setIsVibeInView] = useState(false);
   const [impressions, setImpressions] = useState(0);
 
   const VibeViewedRef = useRef(null);
+  const audioRef = useRef(null);
 
   const handleRepost = () => {
     setRepost(!showRepost);
@@ -39,10 +47,14 @@ export default function Vibe({ vibe }) {
   };
 
   useEffect(() => {
+    audioRef.current = typeof Audio !== "undefined" ? new Audio() : null;
+  }, []);
+
+  useEffect(() => {
     handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
     const fetchSong = async () => {
       try {
-        // const result = await fetchSongById("1129600");
+        // const result = await fetchSongById("1295528");
         const result = await fetchSongById();
         setSong(result[0]);
       } catch (error) {
@@ -103,6 +115,15 @@ export default function Vibe({ vibe }) {
     }
   };
 
+  useEffect(() => {
+    if (audioRef.current && song && song.audio) {
+      audioRef.current.src = song.audio;
+      audioRef.current
+        .play()
+        .catch((error) => console.error("Error playing audio:", error));
+    }
+  }, [song]);
+
   return (
     <div className=" border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
@@ -135,11 +156,21 @@ export default function Vibe({ vibe }) {
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
-                <video src={vibe.media[0]} className="w-full h-full overflow-hidden" controls autoPlay loop />
+                <video
+                  src={vibe.media[0]}
+                  className="w-full h-full overflow-hidden"
+                  controls
+                  autoPlay
+                  loop
+                />
               ) : null}
             </React.Fragment>
           ) : (
-            <img src={vibe?.media?.[0]} className="w-full h-full" alt="vibes_content" />
+            <img
+              src={vibe?.media?.[0]}
+              className="w-full h-full"
+              alt="vibes_content"
+            />
           )}
 
           {/* {
@@ -218,7 +249,10 @@ export default function Vibe({ vibe }) {
                 )}
                 <p className="text-[10px]">{impressions}</p>
               </div>
-              <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
+              <div
+                className="flex flex-col items-center gap-[2px] md:gap-1"
+                onClick={() => handleShare()}
+              >
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
                   <Image src={share} alt="colombo" className="w-[1rem]" />
                 ) : (
