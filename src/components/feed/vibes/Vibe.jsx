@@ -339,7 +339,7 @@ export default function Vibe({ vibe, index }) {
         </div>
 
         {/* Side Options */}
-        <div className="absolute sm:hidden md:block md:right-[9rem] md:top-[6rem] lg:right-[22rem] lg:bottom-0 lg:top-[2.5rem] xl:right-[14rem] xl:top-[8rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
+        <div className="absolute sm:hidden md:block md:right-[14.5rem] md:top-[6rem] lg:right-[23rem] lg:bottom-0 lg:top-[2.5rem] xl:right-[20rem] xl:top-[8rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
           <div className="flex flex-col items-center gap-[2px] md:gap-1">
             <ThreeDotMenuViewOthers vibe={vibe} />
           </div>
