@@ -243,7 +243,7 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto`
+                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full sm:h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto`
                 }
               >
                 {children}
@@ -275,7 +275,7 @@ const DefaultLayout = ({ children }) => {
         </div>
 
         {/* Bottombar Mobile View */}
-        <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
+        {pathname !== '/vibes' && <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-1 flex flex-wrap items-center justify-evenly">
               <Link href="/genai-search">
@@ -380,7 +380,7 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       {/* Bottombar Mobile View */}
       {/* <Bottombar /> */}
