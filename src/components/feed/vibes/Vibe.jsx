@@ -35,7 +35,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
-export default function Vibe({ vibe }) {
+export default function Vibe({ vibe, index }) {
   const router = useRouter()
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
