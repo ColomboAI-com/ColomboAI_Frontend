@@ -45,7 +45,7 @@ export default function Vibe({ vibe, index }) {
   const [song, setSong] = useState({});
   const [isVibeInView, setIsVibeInView] = useState(false);
   const [impressions, setImpressions] = useState(0);
-
+  const [isFollowing, setIsFollowing] = useState(vibe.following);
   const VibeViewedRef = useRef(null);
   const audioRef = useRef(null);
   const hasFetchedSong = useRef(false);
@@ -145,10 +145,9 @@ export default function Vibe({ vibe, index }) {
       setImpressions(response.impression.views);
     }
   };
-  const isFollowingCreator = userDetails?.following?.some(
-    (followingUser) => followingUser._id === vibe.creator._id,
-    isFollowing
-  );
+  const handleFollowToggle = (updatedFollowState) => {
+    setIsFollowing(updatedFollowState); // Update the follow state when the button is toggled
+  };
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-0px)] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
@@ -233,7 +232,8 @@ export default function Vibe({ vibe, index }) {
                 <FollowButton
                   userId={vibe.creator._id}
                   creatorName={vibe.creator.name}
-                  isFollowing={isFollowingCreator}
+                  isFollowing={vibe.following}
+                  onToggle={handleFollowToggle}
                 />
               </div>
             }
