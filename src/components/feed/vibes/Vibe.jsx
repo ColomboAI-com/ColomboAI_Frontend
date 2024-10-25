@@ -176,6 +176,7 @@ export default function Vibe({ vibe }) {
                   controls
                   autoPlay
                   loop
+                  muted
                   playsinline
                 />
               ) : null}
