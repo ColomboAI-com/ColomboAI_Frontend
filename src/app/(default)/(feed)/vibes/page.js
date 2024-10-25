@@ -5,9 +5,9 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { VibeContext } from "@/context/VibeContext";
 import Vibe from "@/components/feed/vibes/Vibe";
 import Slider from "react-slick";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import { useSwipeable } from 'react-swipeable';
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { useSwipeable } from "react-swipeable";
 
 var settings = {
   dots: false,
@@ -26,18 +26,18 @@ const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 1,
-    slidesToSlide: 1 
+    slidesToSlide: 1,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
     items: 1,
-    slidesToSlide: 1 
+    slidesToSlide: 1,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 1,
-    slidesToSlide: 1 
-  }
+    slidesToSlide: 1,
+  },
 };
 
 export default function Vibes({ filter }) {
@@ -51,7 +51,7 @@ export default function Vibes({ filter }) {
     },
     onSwipedRight: () => {},
     onSwipedLeft: () => {},
-    preventDefaultTouchmoveEvent: true, 
+    preventDefaultTouchmoveEvent: true,
     trackTouch: true,
   });
   const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
@@ -60,6 +60,7 @@ export default function Vibes({ filter }) {
 
   useEffect(() => {
     getVibes();
+    console.log(vibes);
   }, []);
 
   return (
@@ -78,10 +79,10 @@ export default function Vibes({ filter }) {
           transitionDuration={500}
           removeArrowOnDeviceType={["mobile"]}
           dotListClass="custom-dot-list-style"
-          itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]" 
+          itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]"
         >
           {vibes.map((vibe) => (
-            <Vibe vibe={vibe} key={vibe._id}/>
+            <Vibe vibe={vibe} key={vibe._id} />
           ))}
         </Carousel>
       </div>
