@@ -28,8 +28,9 @@ import {
   VibesViewIcon,
   VibesLikesIcon,
   VibesRepostIcon,
-  GenAiIcon
+  GenAiIcon,
 } from "@/components/Icons";
+import { UserProfileContext } from "@/context/UserProfileContext";
 import { MdOutlineArrowBack } from "react-icons/md";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
@@ -38,9 +39,9 @@ export default function Vibe({ vibe }) {
   const router = useRouter()
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } =
-    useContext(VibeContext);
+  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
 
+  const { userDetails } = useContext(UserProfileContext);
   const [song, setSong] = useState({});
   const [isVibeInView, setIsVibeInView] = useState(false);
   const [impressions, setImpressions] = useState(0);
@@ -144,7 +145,10 @@ export default function Vibe({ vibe }) {
       setImpressions(response.impression.views);
     }
   };
-
+  const isFollowingCreator = userDetails?.following?.some(
+    (followingUser) => followingUser._id === vibe.creator._id,
+    isFollowing
+  );
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[39rem] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
@@ -185,15 +189,12 @@ export default function Vibe({ vibe }) {
                   loop
                   muted
                   playsinline
+                  type="video/mp4"
                 />
               ) : null}
             </React.Fragment>
           ) : (
-            <img
-              src={vibe?.media?.[0]}
-              className="w-full h-full"
-              alt="vibes_content"
-            />
+            <img src={vibe?.media?.[0]} className="w-full h-full" alt="vibes_content" />
           )}
 
           {/* {
@@ -226,8 +227,13 @@ export default function Vibe({ vibe }) {
                 />
                 <p>{vibe.creator.user_name}</p>
 
+
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
-                <FollowButton userId={vibe.creator._id} creatorName={vibe.creator.name} />
+                <FollowButton
+                  userId={vibe.creator._id}
+                  creatorName={vibe.creator.name}
+                  isFollowing={isFollowingCreator}
+                />
               </div>
             }
 
@@ -293,10 +299,7 @@ export default function Vibe({ vibe }) {
                 )}
                 <p className="text-[10px]">{impressions}</p>
               </div>
-              <div
-                className="flex flex-col items-center gap-[2px] md:gap-1"
-                onClick={() => handleShare()}
-              >
+              <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
                   <Image src={share} alt="colombo" className="w-[1rem]" />
                 ) : (
@@ -358,10 +361,7 @@ export default function Vibe({ vibe }) {
             <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
             <p>121.5k</p>
           </div>
-          <div
-            className="flex flex-col items-center gap-[2px] md:gap-1"
-            onClick={() => handleShare()}
-          >
+          <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
             <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
             <p>121.5k</p>
           </div>
@@ -374,11 +374,7 @@ export default function Vibe({ vibe }) {
             <GenAiIcon w={30} h={30} fill={"#ffffff"} />
           </div>
           <div>
-            <img
-              src="/images/vibes/vibes_music.jpeg"
-              alt="vibes-music"
-              className="w-[41px] rounded-full"
-            />
+            <img src="/images/vibes/vibes_music.jpeg" alt="vibes-music" className="w-[41px] rounded-full" />
           </div>
         </div>
       </div>
