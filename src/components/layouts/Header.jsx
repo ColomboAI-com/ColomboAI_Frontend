@@ -98,8 +98,8 @@ const Header = () => {
       <div className="lg:shadow-[0px_2px_4px_0px_#0000001A]">
         <div className="sm:mx-3 block md:hidden">
           <div className="flex flex-row justify-between items-center">
-            <div className="flex  items-center sm:gap-2">
-              <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[3rem]" image={profilePic} />
+            <div className="flex items-center sm:gap-1">
+              <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[2.5rem]" image={profilePic} />
               <CreateDropdown />
             </div>
             <img
