@@ -12,7 +12,7 @@ import Image from "next/image.js";
 const ThreeDotMenuViewOthersHorizontal = ({ vibe }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const { vibes, getVibes, deleteVibe, saveVibe } = useContext(VibeContext);
+  const { vibes, deleteVibe, saveVibe } = useContext(VibeContext);
   const { userDetails } = useContext(UserProfileContext);
   const [name, Setname] = useState();
 

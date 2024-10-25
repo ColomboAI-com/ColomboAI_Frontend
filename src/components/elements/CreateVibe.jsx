@@ -56,7 +56,7 @@ const CreateVibe = ({
   const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
   const { setIsCreateVibeOpen, isSelectedFromComputer, setIsSelectedFromComputer } =
     useContext(GlobalContext);
-  const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
+  const { createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false);
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
