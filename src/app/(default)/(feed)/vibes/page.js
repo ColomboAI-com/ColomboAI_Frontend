@@ -54,6 +54,7 @@ export default function Vibes({ filter }) {
     onSwipedRight: () => {},
     onSwipedLeft: () => {},
     preventDefaultTouchmoveEvent: true,
+    preventDefaultTouchmoveEvent: true,
     trackTouch: true,
   });
 
@@ -76,11 +77,10 @@ export default function Vibes({ filter }) {
     setIsSmallScreen(window.innerWidth < 768);
   };
 
-  // Hook to detect screen size changes and set the initial state on load
   useEffect(() => {
-    updateScreenSize(); // Check screen size on initial load
-    window.addEventListener("resize", updateScreenSize); // Update on resize
-    return () => window.removeEventListener("resize", updateScreenSize); // Clean up event listener
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
   const { vibes, getVibes, page, loadings, resetFeedValues } = useContext(VibeContext);
@@ -95,7 +95,7 @@ export default function Vibes({ filter }) {
   return (
     <>
       {isSmallScreen ? (
-        <div {...swipeHandlers} className="w-full h-[39rem] hide-scrollbar md:hidden bg-black">
+        <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-70px)] hide-scrollbar md:hidden bg-black">
           <Slider ref={sliderRef} {...settings}>
             {vibes.map((vibe, index) => (
               <Vibe vibe={vibe} key={vibe._id} index={index} />
