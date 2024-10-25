@@ -178,6 +178,7 @@ export default function Vibe({ vibe }) {
                   loop
                   muted
                   playsinline
+                  type="video/mp4"
                 />
               ) : null}
             </React.Fragment>
