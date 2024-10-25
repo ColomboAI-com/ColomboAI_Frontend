@@ -3,14 +3,17 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 
-const FollowButton = ({ userId,creatorName}) => { // <FollowButton userId={vibe.creator._id}/>
+const FollowButton = ({ userId,creatorName, isFollowing}) => { // <FollowButton userId={vibe.creator._id}/>
   const { followUnfollowUser, userDetails } = useContext(UserProfileContext); 
   const [toggled, setIsToggled] = useState(false);
   const [name, Setname] = useState();
   console.log(userId);
 
   // Set the initial state based on userDetails
-  
+  useEffect(() => {
+    setIsToggled(isFollowing);
+  }, [isFollowing]);
+
 
   const handleFollowClick = async () => {
     try {
