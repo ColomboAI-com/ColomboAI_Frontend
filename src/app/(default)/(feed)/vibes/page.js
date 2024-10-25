@@ -42,6 +42,8 @@ const responsive = {
 
 export default function Vibes({ filter }) {
   const sliderRef = useRef(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
   const swipeHandlers = useSwipeable({
     onSwipedUp: () => {
       if (sliderRef.current) sliderRef.current.slickNext();
@@ -54,45 +56,63 @@ export default function Vibes({ filter }) {
     preventDefaultTouchmoveEvent: true,
     trackTouch: true,
   });
-  const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
-  const [song, setSong] = useState({});
-  const [vibe, setVibe] = useState({});
+
+  // Function to update screen size state
+  const updateScreenSize = () => {
+    setIsSmallScreen(window.innerWidth < 768);
+  };
+
+  // Hook to detect screen size changes and set the initial state on load
+  useEffect(() => {
+    updateScreenSize(); // Check screen size on initial load
+    window.addEventListener("resize", updateScreenSize); // Update on resize
+    return () => window.removeEventListener("resize", updateScreenSize); // Clean up event listener
+  }, []);
+
+  const { vibes, getVibes, fetchSongById, page, loadings } = useContext(VibeContext);
 
   useEffect(() => {
     getVibes();
-    console.log(vibes);
+    // console.log(vibes);
   }, []);
+
+  useEffect(() => {
+    console.log(vibes);
+  }, [vibes]);
 
   return (
     <>
-      <div className="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem] sm:hidden md:block bg-black">
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={false}
-          responsive={responsive}
-          ssr={true}
-          autoPlay={false}
-          infinite={true}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          removeArrowOnDeviceType={["mobile"]}
-          dotListClass="custom-dot-list-style"
-          itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]"
-        >
-          {vibes.map((vibe) => (
-            <Vibe vibe={vibe} key={vibe._id} />
-          ))}
-        </Carousel>
-      </div>
-      <div {...swipeHandlers} className="w-full h-[39rem] hide-scrollbar md:hidden bg-black">
-        <Slider ref={sliderRef} {...settings}>
-          {vibes.map((vibe) => (
-            <Vibe vibe={vibe} key={vibe._id} />
-          ))}
-        </Slider>
-      </div>
+      {isSmallScreen ? (
+        <div {...swipeHandlers} className="w-full h-[39rem] hide-scrollbar md:hidden bg-black">
+          <Slider ref={sliderRef} {...settings}>
+            {vibes.map((vibe, index) => (
+              <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
+          </Slider>
+        </div>
+      ) : (
+        <div className="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem] sm:hidden md:block bg-black">
+          <Carousel
+            swipeable={false}
+            draggable={false}
+            showDots={false}
+            responsive={responsive}
+            ssr={true}
+            autoPlay={false}
+            infinite={false}
+            keyBoardControl={true}
+            customTransition="all .5"
+            transitionDuration={500}
+            removeArrowOnDeviceType={["mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]"
+          >
+            {vibes.map((vibe, index) => (
+              <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
+          </Carousel>
+        </div>
+      )}
     </>
   );
 }
