@@ -85,7 +85,7 @@ export default function Vibes({ filter }) {
           ))}
         </Carousel>
       </div>
-      <div {...swipeHandlers} className="w-full md:h-[38rem] lg:h-full xl:h-[34.6rem] md:hidden bg-black">
+      <div {...swipeHandlers} className="w-full h-[39rem] hide-scrollbar md:hidden bg-black">
         <Slider ref={sliderRef} {...settings}>
           {vibes.map((vibe) => (
             <Vibe vibe={vibe} key={vibe._id} />

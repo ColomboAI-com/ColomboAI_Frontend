@@ -1,4 +1,5 @@
 import ThreeDotMenuViewOthers from "@/components/elements/ThreeDotMenuViewOthers";
+import ThreeDotMenuViewOthersHorizontal from "@/components/elements/ThreeDotMenuViewOthersHorizontal";
 import { VibeContext } from "@/context/VibeContext";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import RepostVibe from "./Repost";
@@ -9,6 +10,7 @@ import LikeVibe from "./LikeVibe";
 import { useMediaQuery } from "react-responsive";
 import FollowButton from "@/components/elements/FollowButton";
 import { WalletIcon } from "lucide-react";
+import Link from "next/link";
 
 import play from "../../../../public/images/icons/vibes_mobile/play.svg";
 import comment from "../../../../public/images/icons/vibes_mobile/ChatCircleDots.svg";
@@ -16,6 +18,8 @@ import stats from "../../../../public/images/icons/vibes_mobile/stats.svg";
 import share from "../../../../public/images/icons/vibes_mobile/share.svg";
 import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
+import { useRouter } from "next/navigation"
+
 import {
   GenAIPen,
   StatsIcon,
@@ -27,10 +31,12 @@ import {
   GenAiIcon,
 } from "@/components/Icons";
 import { UserProfileContext } from "@/context/UserProfileContext";
+import { MdOutlineArrowBack } from "react-icons/md";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
 export default function Vibe({ vibe }) {
+  const router = useRouter()
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
   const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
@@ -43,7 +49,8 @@ export default function Vibe({ vibe }) {
   const VibeViewedRef = useRef(null);
   const audioRef = useRef(null);
   const hasFetchedSong = useRef(false);
-
+  const [seeMore, setSeeMore] = useState(false)
+  const toggleSeeMore = () => setSeeMore(!seeMore);
   const handleRepost = () => {
     setRepost(!showRepost);
   };
@@ -143,7 +150,7 @@ export default function Vibe({ vibe }) {
     isFollowing
   );
   return (
-    <div className="relative border-green-400 sm:h-[28rem] md:h-[37rem] lg:h-[32.5rem] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className="relative border-green-400 hide-scrollbar sm:h-[39rem] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
       <div className=" flex items-center justify-center object-contain w-full bg-black ">
@@ -152,7 +159,7 @@ export default function Vibe({ vibe }) {
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-        <div className=" relative overflow-hidden border-green-400 sm:h-[28rem] md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-[26rem] md:w-[470px]">
+        <div className=" relative overflow-hidden hide-scrollbar border-green-400 sm:h-[39rem] md:h-[32.5] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-full md:w-[470px]">
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
@@ -198,7 +205,14 @@ export default function Vibe({ vibe }) {
                 </Fragment>
               })
           } */}
+          <div className="md:hidden absolute top-8 left-4 flex flex-row items-center gap-2">
+            <Link href={'/feed'}><MdOutlineArrowBack size={24}/></Link>
+            <p className="text-lg">Vibes</p>
+          </div>
 
+          <div className="md:hidden absolute top-8 right-2">
+            <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
+          </div>
           <div className=" absolute bottom-0 left-4">
             {/* whenever there is sponsored ad uncomment and call this component */}
 
@@ -213,6 +227,7 @@ export default function Vibe({ vibe }) {
                 />
                 <p>{vibe.creator.user_name}</p>
 
+
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
                 <FollowButton
                   userId={vibe.creator._id}
@@ -222,8 +237,22 @@ export default function Vibe({ vibe }) {
               </div>
             }
 
-            <div className="flex flex-wrap mx-4">
-              {<p>{vibe.content}</p>}
+            <div className="flex flex-wrap flex-col md:mx-4 sm:mx-8 sm:mb-2">
+              <p className="leading-5">
+                {vibe.content.length > 130
+                  ? seeMore
+                    ? vibe.content
+                    : `${vibe.content.slice(0, 130)}... `
+                  : vibe.content}
+                {vibe.content.length > 130 && (
+                  <span
+                    onClick={toggleSeeMore}
+                    style={{ color: '#276ab3', cursor: 'pointer' }}
+                  >
+                    {seeMore ? 'see less' : 'see more'}
+                  </span>
+                )}
+              </p>
               {song &&
                 song.name &&
                 song.artist_name && ( // Check if song and properties exist
@@ -238,11 +267,11 @@ export default function Vibe({ vibe }) {
 
             {/* <BannerAdComponent /> */}
           </div>
-          <div className="absolute right-[1.5rem] bottom-2 flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
-            <div className="flex flex-col">
+          <div className="absolute right-[0rem] bottom-[2rem] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
+            {/* <div className="flex flex-col">
               <ThreeDotMenuViewOthers vibe={vibe} />
-            </div>
-            <div className="flex flex-col">
+            </div> */}
+            <div className="flex flex-col gap-[0.5rem]">
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
                   <Image src={play} alt="colombo" className="w-[1rem]" />

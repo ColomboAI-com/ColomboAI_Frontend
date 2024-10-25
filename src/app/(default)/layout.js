@@ -177,7 +177,7 @@ const DefaultLayout = ({ children }) => {
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
-            <header className="sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+            <header className={`${pathname === '/vibes' && `sm:hidden md:block`} sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0`}>
               <div className="sm:pt-[14px] md:py-[14px] bg-white">
                 {isSmallScreen ? <Header
                   setIsShowChatMenu={setIsShowChatMenu}
@@ -243,7 +243,7 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  `w-[100%] lg:w-[100%] sm:max-h-[calc((100vh-175px))] nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} no-scrollbar overflow-y-auto`
+                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto`
                 }
               >
                 {children}
@@ -275,7 +275,7 @@ const DefaultLayout = ({ children }) => {
         </div>
 
         {/* Bottombar Mobile View */}
-        <div className="md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
+        <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-1 flex flex-wrap items-center justify-evenly">
               <Link href="/genai-search">
