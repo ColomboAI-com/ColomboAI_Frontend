@@ -209,6 +209,7 @@ export default function Vibe({ vibe }) {
                   className="w-[36px] rounded-full"
                 />
                 <p>{vibe.creator.user_name}</p>
+                 
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
                 <FollowButton userId={vibe.creator._id} creatorName={vibe.creator.name} />
               </div>
@@ -234,7 +235,6 @@ export default function Vibe({ vibe }) {
             <div className="flex flex-col">
               <ThreeDotMenuViewOthers vibe={vibe} />
             </div>
-
             <div className="flex flex-col">
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
@@ -306,6 +306,9 @@ export default function Vibe({ vibe }) {
 
         {/* Side Options */}
         <div className="absolute sm:hidden md:block md:right-[9rem] md:top-[6rem] lg:right-[22rem] lg:bottom-0 lg:top-[2.5rem] xl:right-[14rem] xl:top-[8rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <ThreeDotMenuViewOthers vibe={vibe} />
+          </div>
           <div className="flex flex-col items-center gap-[2px] md:gap-1">
             <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
             <p>121.5k</p>
