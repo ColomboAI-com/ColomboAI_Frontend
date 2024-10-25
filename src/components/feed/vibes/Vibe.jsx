@@ -18,7 +18,7 @@ import stats from "../../../../public/images/icons/vibes_mobile/stats.svg";
 import share from "../../../../public/images/icons/vibes_mobile/share.svg";
 import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 
 import {
   GenAIPen,
@@ -36,7 +36,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 const walletIcon = "/images/icons/wallet_icon.svg";
 
 export default function Vibe({ vibe }) {
-  const router = useRouter()
+  const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
   const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
@@ -49,7 +49,7 @@ export default function Vibe({ vibe }) {
   const VibeViewedRef = useRef(null);
   const audioRef = useRef(null);
   const hasFetchedSong = useRef(false);
-  const [seeMore, setSeeMore] = useState(false)
+  const [seeMore, setSeeMore] = useState(false);
   const toggleSeeMore = () => setSeeMore(!seeMore);
   const handleRepost = () => {
     setRepost(!showRepost);
@@ -188,7 +188,7 @@ export default function Vibe({ vibe }) {
                   autoPlay
                   loop
                   muted
-                  playsinline
+                  playsInline
                   type="video/mp4"
                 />
               ) : null}
@@ -206,7 +206,9 @@ export default function Vibe({ vibe }) {
               })
           } */}
           <div className="md:hidden absolute top-8 left-4 flex flex-row items-center gap-2">
-            <Link href={'/feed'}><MdOutlineArrowBack size={24}/></Link>
+            <Link href={"/feed"}>
+              <MdOutlineArrowBack size={24} />
+            </Link>
             <p className="text-lg">Vibes</p>
           </div>
 
@@ -227,7 +229,6 @@ export default function Vibe({ vibe }) {
                 />
                 <p>{vibe.creator.user_name}</p>
 
-
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
                 <FollowButton
                   userId={vibe.creator._id}
@@ -245,11 +246,8 @@ export default function Vibe({ vibe }) {
                     : `${vibe.content.slice(0, 130)}... `
                   : vibe.content}
                 {vibe.content.length > 130 && (
-                  <span
-                    onClick={toggleSeeMore}
-                    style={{ color: '#276ab3', cursor: 'pointer' }}
-                  >
-                    {seeMore ? 'see less' : 'see more'}
+                  <span onClick={toggleSeeMore} style={{ color: "#276ab3", cursor: "pointer" }}>
+                    {seeMore ? "see less" : "see more"}
                   </span>
                 )}
               </p>
