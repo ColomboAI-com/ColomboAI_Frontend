@@ -3,10 +3,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 
-const FollowButton = ({ userId, creatorName, isFollowing }) => {
+const FollowButton = ({ userId, creatorName, isFollowing, onToggle  }) => {
   // <FollowButton userId={vibe.creator._id}/>
   const { followUnfollowUser, userDetails } = useContext(UserProfileContext);
-  const [toggled, setIsToggled] = useState(false);
+  const [toggled, setIsToggled] = useState(isFollowing);
   const [name, Setname] = useState();
 
   // Set the initial state based on userDetails
@@ -17,7 +17,8 @@ const FollowButton = ({ userId, creatorName, isFollowing }) => {
   const handleFollowClick = async () => {
     try {
       await followUnfollowUser(userId, !toggled); // Pass the opposite of the current toggle state
-      setIsToggled((prevToggled) => !prevToggled); // Toggle the state
+      setIsToggled((prevToggled) => !prevToggled);
+      onToggle(!toggled) // Toggle the state
     } catch (error) {
       console.error("Error following/unfollowing user", error);
     }
