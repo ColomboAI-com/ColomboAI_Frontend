@@ -54,6 +54,7 @@ export default function Vibes({ filter }) {
     onSwipedRight: () => {},
     onSwipedLeft: () => {},
     preventDefaultTouchmoveEvent: true,
+    preventDefaultTouchmoveEvent: true,
     trackTouch: true,
   });
 
@@ -71,10 +72,11 @@ export default function Vibes({ filter }) {
 
   useEffect(() => {
     getVibes();
+    // console.log(vibes);
   }, []);
 
   useEffect(() => {
-    console.log(vibes);
+    // console.log(vibes);
   }, [vibes]);
 
   return (
