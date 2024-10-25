@@ -6,8 +6,10 @@ import { VibeContext } from "@/context/VibeContext";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { getCookie } from "@/utlils/cookies";
 import UserProfile from "../profile/Profile.jsx";
+import horizontal_dots from "../../../public/images/icons/horizontal_dots.svg";
+import Image from "next/image.js";
 
-const ThreeDotMenuViewOthers = ({ vibe }) => {
+const ThreeDotMenuViewOthersHorizontal = ({ vibe }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
   const { vibes, deleteVibe, saveVibe } = useContext(VibeContext);
@@ -67,6 +69,7 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
   };
 
   const isUserCreator = getCookie("name") === vibe.creator.name;
+
   const menuItems = [
     { icon: "M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z", label: "Save" },
     {
@@ -112,26 +115,26 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
         className="pb-2 rounded-full  focus:outline-none"
         aria-label="More options"
       >
-        <DotsVerticalIcon className="h-8 w-10 text-white" />
+        <Image src={horizontal_dots} alt="colombo" />
       </button>
       {isMenuOpen && (
         <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-10">
           {menuItems.map((item, index) => (
             <React.Fragment>
-              {index == 0 && isUserCreator ? null : (
-                <button
-                  key={index}
-                  className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-gray-100 ${
-                    item.className || "text-gray-700"
-                  }`}
-                  onClick={() => handleFunctions[item.label]()}
-                >
-                  <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                  </svg>
-                  {item.label}
-                </button>
-              )}
+              {/* {index == 0 && vibe.creator._id == userDetails._id ? null : ( */}
+              <button
+                key={index}
+                className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-gray-100 ${
+                  item.className || "text-gray-700"
+                }`}
+                onClick={() => handleFunctions[item.label]()}
+              >
+                <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                </svg>
+                {item.label}
+              </button>
+              {/* )} */}
             </React.Fragment>
           ))}
         </div>
@@ -140,4 +143,4 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
   );
 };
 
-export default ThreeDotMenuViewOthers;
+export default ThreeDotMenuViewOthersHorizontal;

@@ -85,7 +85,9 @@ export default function VibeContextProvider({ children }) {
         },
       });
       setVibes((prev) => [...prev, ...(response.data?.vibes || [])]);
-      // if (res.data?.vibes?.length) setPage((prev) => prev + 1);
+      if (response.data?.vibes?.length) {
+        setPage((prev) => prev + 1);
+      }
     } catch (error) {
       handleError(error);
     } finally {
@@ -268,6 +270,7 @@ export default function VibeContextProvider({ children }) {
         incrementVibeImpressions,
         getVibeImpressions,
         saveVibe,
+        page,
       }}
     >
       {children}
