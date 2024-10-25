@@ -139,7 +139,7 @@ export default function Vibe({ vibe }) {
   };
 
   return (
-    <div className="relative border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className="relative border-green-400 sm:h-[28rem] md:h-[37rem] lg:h-[32.5rem] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
       <div className=" flex items-center justify-center object-contain w-full bg-black ">
@@ -148,7 +148,7 @@ export default function Vibe({ vibe }) {
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-        <div className=" relative overflow-hidden border-green-400 sm:h-[28rem] md:h-[calc(190vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
+        <div className=" relative overflow-hidden border-green-400 sm:h-[28rem] md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-[26rem] md:w-[470px]">
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
