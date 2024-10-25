@@ -59,9 +59,6 @@ export default function Vibe({ vibe, index }) {
   };
 
   useEffect(() => {
-    console.log("VIBE INDEX:  ", index, "VIBE: ");
-    console.log(vibe);
-
     audioRef.current = typeof Audio !== "undefined" ? new Audio() : null;
 
     return () => {

@@ -57,6 +57,20 @@ export default function Vibes({ filter }) {
     trackTouch: true,
   });
 
+  const handleLoadMore = () => {
+    if (!loadings.getVibe) {
+      getVibes(filter, page + 1);
+    }
+  };
+
+  const handleSlideChange = (currentSlide) => {
+    const totalItems = vibes.length;
+    const isAtEnd = currentSlide === totalItems - 1;
+    if (isAtEnd) {
+      handleLoadMore();
+    }
+  };
+
   // Function to update screen size state
   const updateScreenSize = () => {
     setIsSmallScreen(window.innerWidth < 768);
@@ -69,16 +83,14 @@ export default function Vibes({ filter }) {
     return () => window.removeEventListener("resize", updateScreenSize); // Clean up event listener
   }, []);
 
-  const { vibes, getVibes, fetchSongById, page, loadings } = useContext(VibeContext);
+  const { vibes, getVibes, page, loadings, resetFeedValues } = useContext(VibeContext);
 
   useEffect(() => {
     getVibes();
-    // console.log(vibes);
+    return () => {
+      resetFeedValues();
+    };
   }, []);
-
-  useEffect(() => {
-    console.log(vibes);
-  }, [vibes]);
 
   return (
     <>
@@ -106,6 +118,7 @@ export default function Vibes({ filter }) {
             removeArrowOnDeviceType={["mobile"]}
             dotListClass="custom-dot-list-style"
             itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]"
+            afterChange={(previousSlide, { currentSlide }) => handleSlideChange(currentSlide)}
           >
             {vibes.map((vibe, index) => (
               <Vibe vibe={vibe} key={vibe._id} index={index} />
