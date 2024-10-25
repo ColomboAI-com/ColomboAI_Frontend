@@ -3,11 +3,13 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
 import { Delete } from "lucide-react";
 import { VibeContext } from "@/context/VibeContext";
+import { UserProfileContext } from "@/context/UserProfileContext";
 
 const ThreeDotMenuViewOthers = ({ vibe }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const { vibes, getVibes, deleteVibe } = useContext(VibeContext);
+  const { vibes, getVibes, deleteVibe, saveVibe } = useContext(VibeContext);
+  const { userDetails } = useContext(UserProfileContext);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -22,8 +24,15 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSave = () => {
-    console.log("Handling save.");
+  const handleSave = async () => {
+    try {
+      let response = await saveVibe(vibe._id);
+      if (response.success) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUnfollow = () => {
@@ -53,6 +62,10 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
     const vibeId = vibes[0]._id;
     deleteVibe(vibeId);
   };
+
+  useEffect(() => {
+    console.log(userDetails);
+  }, []);
 
   const menuItems = [
     { icon: "M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z", label: "Save" },
@@ -103,18 +116,22 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
       {isMenuOpen && (
         <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-10">
           {menuItems.map((item, index) => (
-            <button
-              key={index}
-              className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-gray-100 ${
-                item.className || "text-gray-700"
-              }`}
-              onClick={() => handleFunctions[item.label]()}
-            >
-              <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-              </svg>
-              {item.label}
-            </button>
+            <React.Fragment>
+              {/* {index == 0 && vibe.creator._id == userDetails._id ? null : ( */}
+              <button
+                key={index}
+                className={`flex items-center w-full px-4 py-2 text-sm text-left hover:bg-gray-100 ${
+                  item.className || "text-gray-700"
+                }`}
+                onClick={() => handleFunctions[item.label]()}
+              >
+                <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
+                </svg>
+                {item.label}
+              </button>
+              {/* )} */}
+            </React.Fragment>
           ))}
         </div>
       )}
