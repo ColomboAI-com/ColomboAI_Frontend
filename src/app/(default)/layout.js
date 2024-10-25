@@ -243,7 +243,7 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto`
+                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full sm:h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto`
                 }
               >
                 {children}

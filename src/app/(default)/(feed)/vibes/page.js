@@ -72,7 +72,7 @@ export default function Vibes({ filter }) {
           responsive={responsive}
           ssr={true}
           autoPlay={false}
-          infinite={true}
+          infinite={false}
           keyBoardControl={true}
           customTransition="all .5"
           transitionDuration={500}
@@ -85,7 +85,7 @@ export default function Vibes({ filter }) {
           ))}
         </Carousel>
       </div>
-      <div {...swipeHandlers} className="w-full h-[39rem] hide-scrollbar md:hidden bg-black">
+      <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-70px)] hide-scrollbar md:hidden bg-black">
         <Slider ref={sliderRef} {...settings}>
           {vibes.map((vibe) => (
             <Vibe vibe={vibe} key={vibe._id} />

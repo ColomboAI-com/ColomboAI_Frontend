@@ -150,7 +150,7 @@ export default function Vibe({ vibe }) {
     isFollowing
   );
   return (
-    <div className="relative border-green-400 hide-scrollbar sm:h-[39rem] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-70px)] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
       <div className=" flex items-center justify-center object-contain w-full bg-black ">
@@ -159,7 +159,7 @@ export default function Vibe({ vibe }) {
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-        <div className=" relative overflow-hidden hide-scrollbar border-green-400 sm:h-[39rem] md:h-[32.5] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-full md:w-[470px]">
+        <div className={` relative overflow-clip hide-scrollbar border-green-400 sm:h-[calc(100vh-70px)] md:h-[32.5] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-full md:w-[470px]`}>
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
@@ -183,7 +183,7 @@ export default function Vibe({ vibe }) {
               {isVibeInView ? (
                 <video
                   src={vibe.media[0]}
-                  className="w-full h-full overflow-hidden"
+                  className="w-full h-full overflow-visible"
                   controls
                   autoPlay
                   loop
@@ -267,7 +267,7 @@ export default function Vibe({ vibe }) {
 
             {/* <BannerAdComponent /> */}
           </div>
-          <div className="absolute right-[0rem] bottom-[2rem] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
+          <div className="absolute right-[0.2rem] bottom-[2rem] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
             {/* <div className="flex flex-col">
               <ThreeDotMenuViewOthers vibe={vibe} />
             </div> */}
