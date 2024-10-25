@@ -25,13 +25,13 @@ var settings = {
     {
       breakpoint: 800,
       settings: {
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 2,
         initialSlide: 2,
       },
     },
     {
-      breakpoint: 767,
+      breakpoint: 480,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,

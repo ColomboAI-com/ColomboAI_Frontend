@@ -10,7 +10,7 @@ export default function page() {
   const { popupVideo } = useContext(GlobalContext);
   const { setPopupVideo } = useContext(GlobalContext);
   return (
-    <div className=" relative flex flex-col mx-auto justify-center sm:w-[375px] w-[680px] md:w-[680px] lg:w-[680px]">
+    <div className="sm:mx-[0rem] md:mx-[2.5rem] xl:mx-[0rem]">
       {popupVideo != "" && <div className="z-[200] fixed top-0 left-0 right-0 bottom-0 bg-gray-100 w-full h-[40rem]">
           <Image src={comment_x_button} onClick={e => setPopupVideo("")} alt="colombo"  className="absolute z-[210] top-2 right-2 cursor-pointer" />
           <video src={popupVideo} controls className="w-full h-full object-contain" />
