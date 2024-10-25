@@ -19,6 +19,7 @@ export default function VibeContextProvider({ children }) {
     getUserVibe: false,
     createVibe: false,
     deleteVibe: false,
+    savingVibe: false,
   });
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
   const router = useRouter();
@@ -78,11 +79,13 @@ export default function VibeContextProvider({ children }) {
     try {
       setLoadings((prev) => ({ ...prev, getVibe: true }));
       const response = await axios.get(`${ROOT_URL_FEED}/vibes/feed`, {
+        params: { type, page, limit },
         headers: {
           Authorization: getCookie("token"),
         },
       });
       setVibes((prev) => [...prev, ...(response.data?.vibes || [])]);
+      // if (res.data?.vibes?.length) setPage((prev) => prev + 1);
     } catch (error) {
       handleError(error);
     } finally {
@@ -228,6 +231,26 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
+  const saveVibe = async (vibeId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, savingVibe: true }));
+      const res = await axios.post(
+        `${ROOT_URL_FEED}/vibes/${vibeId}/save`,
+        {},
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, savingVibe: false }));
+    }
+  };
+
   return (
     <VibeContext.Provider
       value={{
@@ -244,6 +267,7 @@ export default function VibeContextProvider({ children }) {
         likeVibe,
         incrementVibeImpressions,
         getVibeImpressions,
+        saveVibe,
       }}
     >
       {children}

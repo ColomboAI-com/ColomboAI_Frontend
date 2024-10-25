@@ -41,6 +41,7 @@ export default function Vibe({ vibe }) {
 
   const VibeViewedRef = useRef(null);
   const audioRef = useRef(null);
+  const hasFetchedSong = useRef(false);
 
   const handleRepost = () => {
     setRepost(!showRepost);
@@ -51,42 +52,62 @@ export default function Vibe({ vibe }) {
 
   useEffect(() => {
     audioRef.current = typeof Audio !== "undefined" ? new Audio() : null;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
   }, []);
 
   useEffect(() => {
     handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
-    const fetchSong = async () => {
-      try {
-        // const result = await fetchSongById("1295528");
-        const result = await fetchSongById();
-        setSong(result[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchSong();
   }, []);
 
   //   IMPRESSION HANDLING AND PLAYING VIDEO WHEN THE VIBE IS IN VIEW
   useEffect(() => {
-    // Intersection Observer to automatically call handleLoadMore when the button is in view
     const observer = new IntersectionObserver(
-      (entries) => {
+      async (entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
           // VIBE IS IN VIEW
+          setIsVibeInView(true);
           handleIncreaseViewCount();
           handleFetchImpressions();
-          setIsVibeInView(true);
+
+          if (!hasFetchedSong.current && vibe.song_id) {
+            try {
+              hasFetchedSong.current = true;
+              const result = await fetchSongById(vibe.song_id);
+              setSong(result[0]);
+
+              if (audioRef.current && result[0]?.audio) {
+                audioRef.current.src = result[0].audio;
+                audioRef.current.play().catch((error) => {
+                  console.log("Playback requires user interaction:", error);
+                });
+              }
+            } catch (error) {
+              console.log("Error fetching song:", error);
+            }
+          } else if (audioRef.current && audioRef.current.src) {
+            audioRef.current.play().catch((error) => {
+              console.log("Playback requires user interaction:", error);
+            });
+          }
         } else {
           // VIBE IS NOT IN VIEW
           setIsVibeInView(false);
+          if (audioRef.current) {
+            audioRef.current.pause();
+          }
         }
       },
       {
-        root: null, // Uses the browser viewport as the default
+        root: null,
         rootMargin: "0px",
-        threshold: 1.0, // Trigger when 100% of the button is visible
+        threshold: 0.7, // Adjust this threshold as needed
       }
     );
 
@@ -94,13 +115,12 @@ export default function Vibe({ vibe }) {
       observer.observe(VibeViewedRef.current);
     }
 
-    // Cleanup the observer when the component unmounts or if button changes
     return () => {
       if (VibeViewedRef.current) {
         observer.unobserve(VibeViewedRef.current);
       }
     };
-  }, []);
+  }, [vibe.song_id]);
 
   const handleIncreaseViewCount = async () => {
     try {
@@ -117,15 +137,6 @@ export default function Vibe({ vibe }) {
       setImpressions(response.impression.views);
     }
   };
-
-  useEffect(() => {
-    if (audioRef.current && song && song.audio) {
-      audioRef.current.src = song.audio;
-      audioRef.current
-        .play()
-        .catch((error) => console.error("Error playing audio:", error));
-    }
-  }, [song]);
 
   return (
     <div className="relative border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
@@ -199,7 +210,7 @@ export default function Vibe({ vibe }) {
                 />
                 <p>{vibe.creator.user_name}</p>
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
-                <FollowButton followeeId={vibe.creator._id} />
+                <FollowButton userId={vibe.creator._id} />
               </div>
             }
 
@@ -221,7 +232,7 @@ export default function Vibe({ vibe }) {
           </div>
           <div className="absolute right-[1.5rem] bottom-2 flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
             <div className="flex flex-col">
-              <ThreeDotMenuViewOthers />
+              <ThreeDotMenuViewOthers vibe={vibe} />
             </div>
 
             <div className="flex flex-col">
