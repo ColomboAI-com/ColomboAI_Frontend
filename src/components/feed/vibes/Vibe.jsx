@@ -35,6 +35,7 @@ export default function Vibe({ vibe }) {
   const { fetchSongById, incrementVibeImpressions, getVibeImpressions } =
     useContext(VibeContext);
 
+  const { userDetails } = useContext(UserProfileContext);
   const [song, setSong] = useState({});
   const [isVibeInView, setIsVibeInView] = useState(false);
   const [impressions, setImpressions] = useState(0);
@@ -137,7 +138,9 @@ export default function Vibe({ vibe }) {
       setImpressions(response.impression.views);
     }
   };
-
+  const isFollowingCreator = userDetails?.following?.some(
+    (followingUser) => followingUser._id === vibe.creator._id, isFollowing
+  );
   return (
     <div className="relative border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
@@ -211,7 +214,7 @@ export default function Vibe({ vibe }) {
                 <p>{vibe.creator.user_name}</p>
                  
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
-                <FollowButton userId={vibe.creator._id} creatorName={vibe.creator.name} />
+                <FollowButton userId={vibe.creator._id} creatorName={vibe.creator.name} isFollowing={isFollowingCreator} />
               </div>
             }
 
