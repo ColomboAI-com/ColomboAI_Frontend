@@ -20,6 +20,7 @@ const FollowButton = ({ userId,creatorName}) => { // <FollowButton userId={vibe.
       console.error("Error following/unfollowing user", error);
     }
   };
+  
   const isUserCreator = getCookie('name');
   if(isUserCreator === creatorName)
   {

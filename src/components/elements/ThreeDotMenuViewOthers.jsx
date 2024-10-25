@@ -3,14 +3,14 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
 import { Delete } from "lucide-react";
 import { VibeContext } from "@/context/VibeContext";
-import { clearCookie, getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
+import { clearCookie, getCookie } from "@/utlils/cookies";
 import UserProfile from "../profile/Profile.jsx"
 
 const ThreeDotMenuViewOthers = ({ vibe }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const { vibes, getVibes, deleteVibe } = useContext(VibeContext);
+  const { vibes, getVibes, deleteVibe, saveVibe  } = useContext(VibeContext);
   const { userDetails } = useContext(UserProfileContext); 
   const [name, Setname] = useState();
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -57,6 +57,9 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
     
     deleteVibe(vibe._id);
   };
+  useEffect(() => {
+    console.log(userDetails);
+  }, []);
   const isUserCreator = getCookie('name') === vibe.creator.name;
   
   const menuItems = [
