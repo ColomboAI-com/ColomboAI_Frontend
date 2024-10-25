@@ -16,14 +16,24 @@ import stats from "../../../../public/images/icons/vibes_mobile/stats.svg";
 import share from "../../../../public/images/icons/vibes_mobile/share.svg";
 import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
-import { GenAIPen, StatsIcon, VibesCommentIcon, VibesShareIcon, VibesViewIcon } from "@/components/Icons";
+import {
+  GenAIPen,
+  StatsIcon,
+  VibesCommentIcon,
+  VibesShareIcon,
+  VibesViewIcon,
+  VibesLikesIcon,
+  VibesRepostIcon,
+  GenAiIcon
+} from "@/components/Icons";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
 export default function Vibe({ vibe }) {
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
+  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } =
+    useContext(VibeContext);
 
   const [song, setSong] = useState({});
   const [isVibeInView, setIsVibeInView] = useState(false);
@@ -31,6 +41,7 @@ export default function Vibe({ vibe }) {
 
   const VibeViewedRef = useRef(null);
   const audioRef = useRef(null);
+  const hasFetchedSong = useRef(false);
 
   const handleRepost = () => {
     setRepost(!showRepost);
@@ -41,42 +52,62 @@ export default function Vibe({ vibe }) {
 
   useEffect(() => {
     audioRef.current = typeof Audio !== "undefined" ? new Audio() : null;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.src = "";
+      }
+    };
   }, []);
 
   useEffect(() => {
     handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
-    const fetchSong = async () => {
-      try {
-        // const result = await fetchSongById("1295528");
-        const result = await fetchSongById();
-        setSong(result[0]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchSong();
   }, []);
 
   //   IMPRESSION HANDLING AND PLAYING VIDEO WHEN THE VIBE IS IN VIEW
   useEffect(() => {
-    // Intersection Observer to automatically call handleLoadMore when the button is in view
     const observer = new IntersectionObserver(
-      (entries) => {
+      async (entries) => {
         const entry = entries[0];
         if (entry.isIntersecting) {
           // VIBE IS IN VIEW
+          setIsVibeInView(true);
           handleIncreaseViewCount();
           handleFetchImpressions();
-          setIsVibeInView(true);
+
+          if (!hasFetchedSong.current && vibe.song_id) {
+            try {
+              hasFetchedSong.current = true;
+              const result = await fetchSongById(vibe.song_id);
+              setSong(result[0]);
+
+              if (audioRef.current && result[0]?.audio) {
+                audioRef.current.src = result[0].audio;
+                audioRef.current.play().catch((error) => {
+                  console.log("Playback requires user interaction:", error);
+                });
+              }
+            } catch (error) {
+              console.log("Error fetching song:", error);
+            }
+          } else if (audioRef.current && audioRef.current.src) {
+            audioRef.current.play().catch((error) => {
+              console.log("Playback requires user interaction:", error);
+            });
+          }
         } else {
           // VIBE IS NOT IN VIEW
           setIsVibeInView(false);
+          if (audioRef.current) {
+            audioRef.current.pause();
+          }
         }
       },
       {
-        root: null, // Uses the browser viewport as the default
+        root: null,
         rootMargin: "0px",
-        threshold: 1.0, // Trigger when 100% of the button is visible
+        threshold: 0.7, // Adjust this threshold as needed
       }
     );
 
@@ -84,13 +115,12 @@ export default function Vibe({ vibe }) {
       observer.observe(VibeViewedRef.current);
     }
 
-    // Cleanup the observer when the component unmounts or if button changes
     return () => {
       if (VibeViewedRef.current) {
         observer.unobserve(VibeViewedRef.current);
       }
     };
-  }, []);
+  }, [vibe.song_id]);
 
   const handleIncreaseViewCount = async () => {
     try {
@@ -108,24 +138,17 @@ export default function Vibe({ vibe }) {
     }
   };
 
-  useEffect(() => {
-    if (audioRef.current && song && song.audio) {
-      audioRef.current.src = song.audio;
-      audioRef.current.play().catch((error) => console.error("Error playing audio:", error));
-    }
-  }, [song]);
-
   return (
-    <div className=" border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className="relative border-green-400 sm:h-[28rem] md:h-[calc(100vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_247px)] mx-[-24px] md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} />}
       {showShare && <ShareVibe currentState={showShare} />}
-      <div className=" flex items-center justify-center object-contain w-full bg-[#333333] ">
+      <div className=" flex items-center justify-center object-contain w-full bg-black ">
         {/* Main Content */}
 
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-        <div className=" relative overflow-hidden border-green-400 sm:h-[20rem] md:h-[calc(100vh_-_247px)] md:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
+        <div className=" relative overflow-hidden border-green-400 sm:h-[28rem] md:h-[calc(190vh_-_195px)] md:max-h-[calc(100vh_-_195px)] lg:h-[calc(100vh_-_247px)] lg:max-h-[calc(100vh_-_246px)] aspect-[9/16] sm:w-[26rem] md:w-[470px]">
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
@@ -147,11 +170,21 @@ export default function Vibe({ vibe }) {
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
-                <video src={vibe.media[0]} className="w-full h-full overflow-hidden" controls autoPlay loop />
+                <video
+                  src={vibe.media[0]}
+                  className="w-full h-full overflow-hidden"
+                  controls
+                  autoPlay
+                  loop
+                />
               ) : null}
             </React.Fragment>
           ) : (
-            <img src={vibe?.media?.[0]} className="w-full h-full" alt="vibes_content" />
+            <img
+              src={vibe?.media?.[0]}
+              className="w-full h-full"
+              alt="vibes_content"
+            />
           )}
 
           {/* {
@@ -197,7 +230,7 @@ export default function Vibe({ vibe }) {
 
             {/* <BannerAdComponent /> */}
           </div>
-          <div className="absolute right-[1rem] top-2 md:w-[45px] flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 h-[calc(100vh_-_380px)] md:h-[calc(100vh_-_246px)]">
+          <div className="absolute right-[1.5rem] bottom-2 flex flex-col justify-center text-[12px] sm:ml-0 md:ml-4 md:hidden">
             <div className="flex flex-col">
               <ThreeDotMenuViewOthers vibe={vibe} />
             </div>
@@ -230,7 +263,10 @@ export default function Vibe({ vibe }) {
                 )}
                 <p className="text-[10px]">{impressions}</p>
               </div>
-              <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
+              <div
+                className="flex flex-col items-center gap-[2px] md:gap-1"
+                onClick={() => handleShare()}
+              >
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
                   <Image src={share} alt="colombo" className="w-[1rem]" />
                 ) : (
@@ -265,53 +301,53 @@ export default function Vibe({ vibe }) {
                 />
               </div>
             </div>
-            {/* <div className=" absolute bottom-0 lg:bottom-8 flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesLikesIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesCommentIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div
-              className="flex flex-col items-center gap-[2px] md:gap-1 cursor-pointer"
-              onClick={() => handleRepost()}
-            >
-              <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div
-              className="flex flex-col items-center gap-[2px] md:gap-1"
-              onClick={() => handleShare()}
-            >
-              <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
-              <p>856</p>
-            </div>
-
-            <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
-              <GenAiIcon w={30} h={30} fill={"#ffffff"} />
-            </div>
-            <div>
-              <img
-                src="/images/vibes/vibes_music.jpeg"
-                alt="vibes-music"
-                className="w-[41px] rounded-full"
-              />
-            </div> */}
-            {/* </div> */}
           </div>
         </div>
 
         {/* Side Options */}
+        <div className="absolute sm:hidden md:block md:right-[9rem] md:top-[6rem] lg:right-[22rem] lg:bottom-0 lg:top-[2.5rem] xl:right-[14rem] xl:top-[8rem] flex flex-col gap-[5px] md:gap-4 justify-center items-center text-[12px]">
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <VibesLikesIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <VibesCommentIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div
+            className="flex flex-col items-center gap-[2px] md:gap-1 cursor-pointer"
+            onClick={() => handleRepost()}
+          >
+            <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div
+            className="flex flex-col items-center gap-[2px] md:gap-1"
+            onClick={() => handleShare()}
+          >
+            <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
+            <p>121.5k</p>
+          </div>
+          <div className="flex flex-col items-center gap-[2px] md:gap-1">
+            <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
+            <p>856</p>
+          </div>
+
+          <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
+            <GenAiIcon w={30} h={30} fill={"#ffffff"} />
+          </div>
+          <div>
+            <img
+              src="/images/vibes/vibes_music.jpeg"
+              alt="vibes-music"
+              className="w-[41px] rounded-full"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
