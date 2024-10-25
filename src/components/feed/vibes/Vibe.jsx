@@ -35,7 +35,7 @@ import { MdOutlineArrowBack } from "react-icons/md";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
-export default function Vibe({ vibe }) {
+export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
@@ -59,6 +59,9 @@ export default function Vibe({ vibe }) {
   };
 
   useEffect(() => {
+    console.log("VIBE INDEX:  ", index, "VIBE: ");
+    console.log(vibe);
+
     audioRef.current = typeof Audio !== "undefined" ? new Audio() : null;
 
     return () => {
