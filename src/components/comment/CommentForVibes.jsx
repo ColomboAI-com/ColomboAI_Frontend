@@ -11,7 +11,7 @@ import Picker from "emoji-picker-react";
 import Image from "next/image";
 import comment_x_button from "../../../public/images/icons/comment_x_button.svg";
 
-const CommentSection = ({ specificPostId, posts }) => {
+const CommentForVibe = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
   const {
@@ -462,4 +462,4 @@ const CommentSection = ({ specificPostId, posts }) => {
   );
 };
 
-export default CommentSection;
+export default CommentForVibe;
