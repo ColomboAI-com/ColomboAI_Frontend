@@ -9,6 +9,7 @@ import LikeVibe from "./LikeVibe";
 import { useMediaQuery } from "react-responsive";
 import FollowButton from "@/components/elements/FollowButton";
 import { WalletIcon } from "lucide-react";
+import { UserProfileContext } from "@/context/UserProfileContext";
 
 import play from "../../../../public/images/icons/vibes_mobile/play.svg";
 import comment from "../../../../public/images/icons/vibes_mobile/ChatCircleDots.svg";
