@@ -78,7 +78,7 @@ const Header = () => {
 
       <div className="shadow-[0px_2px_4px_0px_#0000001A]">
         <div className=" hidden md:flex items-center justify-between">
-          <div className="w-[100%] lg:w-[75%] px-5 lg:px-28 border-">
+          <div className="w-[100%] lg:w-[75%]   px-5 lg:px-28 border-">
             {/* <InputBar/> */}
             {pathname === "/gen-search" ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
           </div>
@@ -99,7 +99,7 @@ const Header = () => {
         <div className="sm:mx-3 block md:hidden">
           <div className="flex flex-row justify-between items-center">
             <div className="flex  items-center sm:gap-2">
-              <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[3rem]" image={profilePic} />
+              <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[2rem]" image={profilePic} />
               <CreateDropdown />
             </div>
             <img
@@ -112,8 +112,10 @@ const Header = () => {
               <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
             </div>
           </div>
-          <div className="w-full flex flex-row justify-between items-center">
+          <div className="w-full flex flex-row justify-center gap-x-8 items-center">
+            <div className="w-[85%]">
             <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
+            </div>
             <div className="sm:pt-4 md:pt-0"><SearchIcon w={35} h={35} fill={"#646464"} /></div>
           </div>
         </div>
