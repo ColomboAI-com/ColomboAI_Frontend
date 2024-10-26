@@ -84,7 +84,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   return (
     <div className="bg-[#1a1a1af0] sm:p-1 md:p-4 sm:flex sm:flex-row sm:justify-start md:grid md:grid-cols-3">
       {/* Left Section */}
-      <div className="flex flex-col ml-[4rem] h-full justify-between p-4">
+      <div className="flex flex-col ml-[4rem] h-full justify-between p-4 sm:hidden md:block">
         <div className="text-3xl md:block opacity-0 sm:hidden">
           <MdOutlineClose
             style={{ color: "#fff", cursor: "pointer" }}
