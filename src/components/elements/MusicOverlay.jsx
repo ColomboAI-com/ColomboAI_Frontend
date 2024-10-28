@@ -51,6 +51,10 @@ const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
     }
   }, [song_id]);
 
+  const togglePlay = () => {
+    onPlayPause();
+  }
+
   useEffect(() => {
     if (waveformRef.current && song) {
       destroyWavesurfer();
@@ -124,7 +128,7 @@ const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
         </div>
       </div>
       <div className="flex justify-center mt-6">
-        {/* <button
+        <button
           onClick={togglePlay}
           className="bg-white rounded-full p-4"
         >
@@ -133,7 +137,7 @@ const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
           ) : (
             <Play className="text-blue-600 w-8 h-8" />
           )}
-        </button> */}
+        </button>
       </div>
     </div>
   );
