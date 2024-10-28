@@ -6,7 +6,6 @@ import UserProfileContextProvider from "@/context/UserProfileContext";
 import { useContext } from "react";
 import { usePathname } from "next/navigation";
 
-
 const FeedLayout = ({ children }) => {
   const { isCommentOpen } = useContext(GlobalContext);
   const pathname = usePathname();
