@@ -27,7 +27,7 @@ export default function StoryModal({isOpen, setIsOpen, className, children}) {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-black/25" />
+            <div className="fixed inset-0 " />
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
