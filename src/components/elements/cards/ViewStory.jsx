@@ -41,7 +41,7 @@ const ViewStory = (data, index) => {
         <StoryModal
           isOpen={isCreateStorySignleOpen}
           setIsOpen={setIsCreateStorySignleOpen}
-          className="sm:w-full lg:w-[90%] transform overflow-hidden text-left align-middle shadow-xl transition-all"
+          className="sm:w-[100%] xl:ml-[68px] lg:ml-[62px] md:ml-[34px] transform overflow-hidden text-left align-middle shadow-xl transition-all"
         >
           <SingleStoryModal
             setIsCreateStorySignleOpen={setIsCreateStorySignleOpen}

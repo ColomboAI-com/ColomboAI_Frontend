@@ -43,7 +43,7 @@ const Sidebar = () => {
     return (
         <>
             {/* Desktop View */}
-            <div className={`xl:w-[100%]  lg:w-[3.5rem]  ${font.className}`}>
+            <div className={` xl:w-[100%]  lg:w-[3.5rem] md:w-[3.5rem] bg-white  ${font.className}`}>
                 <div className="lg:mb-[40px] md:mt-[1.5rem] md:mb-[46px] xl:mt-[1.5rem] lg:mt-[1.5rem] relative">
 
                     <Dropdown
