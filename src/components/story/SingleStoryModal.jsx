@@ -8,6 +8,7 @@ import { StoryContext } from "@/context/StoryContext";
 import Link from "next/link";
 import Username from "../elements/Username";
 import ProfilePicture from "../elements/ProfilePicture";
+import { useSwipeable } from "react-swipeable";
 
 export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData, data_user, index }) {
   const [data, setData] = useState(storyData)
@@ -16,6 +17,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   const storiesRef = useRef(null);
   const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
   const storyStyles = {
+    widht:'100%',
     objectFit: "cover",
     borderRadius: "10px",
     justifyContent: "center",
@@ -81,10 +83,22 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
     }
   };
 
+  const handlers = useSwipeable({
+    onSwipedUp: () => handleNextStory(),
+    onSwipedDown: () => handlePreviousStory(),
+    preventDefaultTouchmoveEvent:true,
+    trackMouse:true, 
+    passive : false
+  })
+  const closeStoryModal = () => {
+    console.log("here in close story")
+    setIsStoryModalOpen(false);
+  };
   return (
-    <div className="bg-[#1a1a1af0] sm:p-1 md:p-4 sm:flex sm:flex-row sm:justify-start md:grid md:grid-cols-3">
+    <div {...handlers} className="bg-[#1a1a1af0]  h-screen  md:p-4  md:grid md:grid-cols-3">
       {/* Left Section */}
-      <div className="flex flex-col ml-[4rem] h-full justify-between p-4">
+      <div className="flex flex-col lg:ml-[14rem] md:ml-[12rem] h-full justify-between p-4  sm:hidden w-fit md:flex">
+      {/* <div className="flex flex-col items-end h-full justify-between p-4  sm:hidden border border-pink-500 w-fit md:flex lg:flex"> */}
         <div className="text-3xl md:block opacity-0 sm:hidden">
           <MdOutlineClose
             style={{ color: "#fff", cursor: "pointer" }}
@@ -103,9 +117,10 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
         </div>
       </div>
       {/* Middle Section */}
-      <div className="relative  m-auto">
+      <div className=" relative m-auto">
         <div className="h-3/4 w-full rounded-[5px] justify-center story-detail-box">
           <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
+          
             <MdOutlineArrowBack
               onClick={() => setIsCreateStorySignleOpen(false)}
               style={{ color: "#fff", cursor: "pointer" }}
@@ -120,7 +135,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
           <Stories
             stories={data.map((story) => story.media[0])}
             defaultInterval={5000}
-            width={432}
+            // width={432}
             height={768}
             justifyContent={"center"}
             ref={storiesRef}
@@ -159,7 +174,9 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
       </div>
 
       {/* Right Section */}
-      <div className="flex flex-col items-end h-full justify-between p-4">
+      <div className="flex flex-col items-end h-full justify-between lg:ml-[8rem] md:ml-[12rem] p-4  w-fit">
+      
+             {/* <div className="flex flex-col items-end h-full justify-between p-4 lg:pr-16 sm:hidden md:flex lg:flex"> */}
         <div className="text-3xl md:block sm:hidden">
           <MdOutlineClose
             onClick={() => setIsCreateStorySignleOpen(false)}

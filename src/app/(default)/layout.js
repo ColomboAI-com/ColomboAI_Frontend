@@ -173,7 +173,7 @@ const DefaultLayout = ({ children }) => {
     <FeedContextProvider>
       <div className={`min-w-screen border-yellow-400 md:relative  ${font.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
-          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="lg:min-w-[4%]  xl:min-w-[5%] max-h-[calc(100vh-0px)] bg-white fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
@@ -275,7 +275,7 @@ const DefaultLayout = ({ children }) => {
         </div>
 
         {/* Bottombar Mobile View */}
-        <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
+        {pathname !== '/vibes' && <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-1 flex flex-wrap items-center justify-evenly">
               <Link href="/genai-search">
@@ -380,7 +380,7 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       {/* Bottombar Mobile View */}
       {/* <Bottombar /> */}

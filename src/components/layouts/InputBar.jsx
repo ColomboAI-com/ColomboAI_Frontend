@@ -108,7 +108,7 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Ask or create anything..."
-              className="w-full sm:max-w-[17rem] nsm:max-w-[33rem] md:max-w-[31rem] lg:max-w-[34rem] xl:max-w-[45rem] text-wrap h-full pt-[0.8rem] resize-none px-[35px] text-[#1E71F2] text-[16px] tracking-[0.1rem] font-sans overflow-hidden text-ellipsis bg-transparent focus:outline-none"
+              className="w-full sm:max-w-[17rem] nsm:max-w-[33rem] md:max-w-[31rem] lg:max-w-[34rem] xl:max-w-[45rem] text-wrap h-full pt-[0.8rem] resize-none px-[35px] text-[#1E71F2] sm:text-[14px] md:text-[16px] tracking-[0.1rem] font-sans overflow-hidden text-ellipsis bg-transparent focus:outline-none"
             />
             <div className="absolute top-0 right-0 h-full flex items-center pr-[25px]">
               <button
