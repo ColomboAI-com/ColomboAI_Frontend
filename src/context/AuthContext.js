@@ -162,12 +162,47 @@ export const AuthContextProvider = ({ children }) => {
   const handlePopupConfirm = async () => {
     await addnewdevice(inputs.email); // Perform action on confirmation
     setShowPopup(false); // Hide the popup after confirming
-    setTimeout(() => router.replace('/'), 1000);
+    setTimeout(() => router.replace("/"), 1000);
   };
 
   const handlePopupCancel = () => {
     setShowPopup(false); // Hide the popup after canceling
     router.replace("/");
+  };
+
+  const passKeySignUp = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/`, {
+        action: "sign-up",
+        user_name: inputs.username,
+        name: inputs.name,
+        age: inputs.age,
+      });
+      MessageBox("success", res.data.message);
+      return res;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeyVerficiation = async ({ data }) => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/`, {
+        action: "sign-up",
+        user_name: inputs.username,
+        data,
+      });
+      MessageBox("success", res.data.message);
+      return res;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
   };
 
   return (
@@ -189,15 +224,12 @@ export const AuthContextProvider = ({ children }) => {
         ssoAuthentication,
         addnewdevice,
         resetAuthValues,
+        passKeySignUp,
+        passKeyVerficiation,
       }}
     >
       {children}
-      {showPopup && (
-        <NewDevicePopup
-          onConfirm={handlePopupConfirm}
-          onCancel={handlePopupCancel}
-        />
-      )}
+      {showPopup && <NewDevicePopup onConfirm={handlePopupConfirm} onCancel={handlePopupCancel} />}
     </AuthContext.Provider>
   );
 };
