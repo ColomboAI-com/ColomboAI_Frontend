@@ -17,11 +17,11 @@ const SignUp = () => {
     setValidations,
     handleInputs,
     loadings,
-    getOTP,
     resetAuthValues,
     passKeySignUp,
     passKeyVerficiation,
   } = useAuth();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -37,23 +37,13 @@ const SignUp = () => {
       setValidations((prev) => ({ ...prev, name: true }));
       return;
     }
-    if (!isValidEmail(inputs.email)) {
-      setValidations((prev) => ({ ...prev, email: true }));
-      return;
-    }
     if (!isValidAge(inputs.age)) {
       setValidations((prev) => ({ ...prev, age: true }));
       return;
     }
-    const res = await getOTP("sign-up");
-    if (res) {
-      setSessionStorage("otp-page", "sign-up");
-      setSessionStorage("auth-details", JSON.stringify(inputs));
-      router.push("/otp-verification");
-    }
   };
 
-  const PassKeyAction = async () => {
+  const passKeyAction = async () => {
     try {
       const res = await passKeySignUp();
       if (res.success) {
