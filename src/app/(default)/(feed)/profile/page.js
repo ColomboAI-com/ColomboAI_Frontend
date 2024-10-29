@@ -30,7 +30,7 @@ const Profile = () => {
         ?
         <Loader/>
         :
-        <div className=" max-w-5xl mx-auto font-sans">
+        <div className=" max-w-5xl mx-auto font-sans sm:w-[375px] w-[680px] md:w-[680px] lg:w-[680px]">
             <UserProfile userData={userDetails}/>
             <Navigation username={userName}  />
             {
