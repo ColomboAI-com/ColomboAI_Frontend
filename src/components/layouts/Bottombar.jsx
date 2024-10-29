@@ -10,6 +10,12 @@ import {
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
+import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
+import genai from "../../../public/images/icons/sidebar/gen-ai-icon.svg"
+
+
+import Image from "next/image";
 
 const Bottombar = () => {
   const pathname = usePathname();
@@ -31,11 +37,7 @@ const Bottombar = () => {
           <Link href="/gen-search">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
-                <GenAiIcon
-                  w="30"
-                  h="30"
-                  fill={pathname === "/gen-search" ? "#1E71F2" : "#8E8E93"}
-                />
+                <Image src={genai} alt="colombo"/>
               </div>
               <p
                 className={`${pathname === "/gen-search"
@@ -48,14 +50,15 @@ const Bottombar = () => {
             </div>
           </Link>
 
-          <Link href="/task-bot">
+          <Link href="/vibes">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
-                <TaskBotIcon
+                <Image src={pathname === "/vibes" ? blue_vibes_icon : vibes_icon} alt="colombo"/>
+                {/* <TaskBotIcon
                   w="30"
                   h="30"
                   fill={pathname === "/task-bot" ? "#1E71F2" : "#8E8E93"}
-                />
+                /> */}
               </div>
               <p
                 className={`${pathname === "/task-bot"
@@ -63,7 +66,7 @@ const Bottombar = () => {
                     : "text-sidebaricon"
                   } text-center text-[14px] mt-3 font-sans`}
               >
-                Task bot
+                Vibes
               </p>
             </div>
           </Link>
