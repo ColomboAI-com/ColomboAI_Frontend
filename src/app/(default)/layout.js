@@ -248,7 +248,7 @@ const DefaultLayout = ({ children }) => {
               >
                 {children}
               </div>
-              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar self-start sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
+              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed' || pathname === '/videos' || pathname === '/thoughts' || pathname === '/explore') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar self-start sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
                 <RightSidebar />
               </div>}
             </div>}
