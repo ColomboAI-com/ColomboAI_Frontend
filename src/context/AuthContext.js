@@ -170,16 +170,16 @@ export const AuthContextProvider = ({ children }) => {
     router.replace("/");
   };
 
-  const passKeySignUp = async () => {
+  const passKeySignUpStart = async () => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      const res = await axios.post(`${ROOT_URL_AUTH}/passkey/sign-up/start`, {
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/start`, {
         user_name: inputs.username,
         name: inputs.name,
         age: inputs.age,
       });
       MessageBox("success", res.data.message);
-      return res;
+      return res.data;
     } catch (err) {
       handleError(err);
     } finally {
@@ -187,10 +187,10 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const passKeyVerficiation = async ({ data }) => {
+  const passKeySignUpFinish = async ({ data }) => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      const res = await axios.post(`${ROOT_URL_AUTH}/passkey/sign-up/finish`, {
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/finish`, {
         user_name: inputs.username,
         data,
       });
@@ -222,8 +222,8 @@ export const AuthContextProvider = ({ children }) => {
         ssoAuthentication,
         addnewdevice,
         resetAuthValues,
-        passKeySignUp,
-        passKeyVerficiation,
+        passKeySignUpStart,
+        passKeySignUpFinish,
       }}
     >
       {children}
