@@ -34,13 +34,13 @@ const Bottombar = () => {
     <div className=" md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
       <div className="shadow-[0px_2px_4px_0px_#0000001A]">
         <div className="py-4 flex flex-wrap items-center justify-evenly">
-          <Link href="/gen-search">
+          <Link href="/genai-search">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
                 <Image src={genai} alt="colombo"/>
               </div>
               <p
-                className={`${pathname === "/gen-search"
+                className={`${pathname === "/genai-search"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
                   } text-center text-[14px] mt-3 font-sans`}
