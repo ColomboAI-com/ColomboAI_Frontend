@@ -1,12 +1,9 @@
 import React from 'react';
-// import logoImage from './CommingSoon/images/shoppingimage/image.png'; // Import the image from the src folder
-// import logoog from './CommingSoon/images/logoimage/image.png';
 import logoImage from './images/shoppingimage/image.png'
 import logoog from './images/logoimage/image.png'
 const App = () => {
-  // Inline Styles
   const appStyle = {
-    minHeight: '80vh',
+    minHeight: '76vh',
     background: 'linear-gradient(to bottom, #3577eb, #1e1a8a)',
     display: 'flex',
     flexDirection: 'column',
@@ -14,10 +11,7 @@ const App = () => {
     justifyContent: 'center',
     textAlign: 'center',
     padding: '36px',
-    // marginTop:'40px',
     marginBottom:'0' ,
-    
-    
   };
 
   return (
@@ -28,33 +22,7 @@ const App = () => {
   );
 };
 
-const Header = () => {
-  // Inline Styles for Header
-  const headerStyle = {
-    color: 'white',
-    fontSize: '1rem',
-    fontWeight: 'bold',
-    marginBottom: '20px'
-  };
-
-  const logoStyle = {
-    width: '230px',
-    height: '66px'
-  };
-
-  return (
-    <header style={headerStyle}>
-      <img 
-        src={logoog.src}  // Use the imported image here
-        alt="ColomboAI Logo"
-        style={logoStyle}
-      />
-    </header>
-  );
-};
-
 const FeedPlaceholder = () => {
-  // Inline Styles for Feed Placeholder
   const imageContainerStyle = {
     display: 'flex',
     justifyContent: 'center',

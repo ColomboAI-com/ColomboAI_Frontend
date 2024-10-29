@@ -79,7 +79,7 @@ const SearchProfile = () => {
                 />
             </div>
             {searchListOpen && (
-                <div className="absolute border-[1px] ml-8 mr-8 bg-white right-0 shadow left-0 rounded-t-[0px] rounded-b-[20px]">
+                <div className="max-h-[11rem] no-scrollbar overflow-y-scroll border-[1px] ml-8 mr-8 bg-white right-0 shadow left-0 rounded-t-[0px] rounded-b-[20px]">
                     {displayData.length > 0 ? (
                         displayData.map((val) => (
                             <React.Fragment key={val.user_name}>
