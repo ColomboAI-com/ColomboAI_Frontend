@@ -1,13 +1,13 @@
 import React from "react";
 import SuggestionCard from "./SuggestionCard";
-import SuggestedVibes from "../layouts/SuggestedVibes";
+import RightSidebar from "../layouts/RightSidebar";
 
 const Suggestions = () => {
   return (
     <div>
       <div className="text-center text-brandplaceholder mb-4">Some Suggestions For You</div>
-      <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-        <SuggestedVibes />
+      <div className={`overflow-y-auto no-scrollbar md:hidden self-start sm:w-[100%] pt-[13px] px-2 relative`}>
+        <RightSidebar />
       </div>
       <div className="grid grid-cols-3 overflow-auto max-h-screen">
         <SuggestionCard />
