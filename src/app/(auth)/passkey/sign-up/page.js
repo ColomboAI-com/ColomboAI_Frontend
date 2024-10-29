@@ -2,21 +2,11 @@
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
 import RedirectLink from "@/components/auth/RedirectLink";
 import SocialAuthentication from "@/components/auth/SocialAuthentication";
-import {
-  AgeValidation,
-  EmailValidation,
-  NameValidation,
-  UsernameValidation,
-} from "@/components/Validations";
+import { AgeValidation, EmailValidation, NameValidation, UsernameValidation } from "@/components/Validations";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/elements/Button";
 import { setSessionStorage } from "@/utlils/utils";
-import {
-  isValidEmail,
-  isValidName,
-  isValidUserName,
-  isValidAge,
-} from "@/utlils/validate";
+import { isValidEmail, isValidName, isValidUserName, isValidAge } from "@/utlils/validate";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -27,9 +17,11 @@ const SignUp = () => {
     setValidations,
     handleInputs,
     loadings,
-    getOTP,
     resetAuthValues,
+    passKeySignUp,
+    passKeyVerficiation,
   } = useAuth();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -45,19 +37,21 @@ const SignUp = () => {
       setValidations((prev) => ({ ...prev, name: true }));
       return;
     }
-    if (!isValidEmail(inputs.email)) {
-      setValidations((prev) => ({ ...prev, email: true }));
-      return;
-    }
     if (!isValidAge(inputs.age)) {
       setValidations((prev) => ({ ...prev, age: true }));
       return;
     }
-    const res = await getOTP("sign-up");
-    if (res) {
-      setSessionStorage("otp-page", "sign-up");
-      setSessionStorage("auth-details", JSON.stringify(inputs));
-      router.push("/otp-verification");
+  };
+
+  const passKeyAction = async () => {
+    try {
+      const res = await passKeySignUp();
+      if (res.success) {
+        const resp = await passKeyVerficiation({ data: res.data });
+        console.log(resp);
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
     }
   };
 
@@ -72,7 +66,7 @@ const SignUp = () => {
               alt="welcome_to_colomboai"
             />
             <h5 className="text-[1.25rem] font-sans text-center py-[0.08rem]">
-              Register your passkey for  <span className="text-[#1E71F2]">secure acess</span>
+              Register your passkey for <span className="text-[#1E71F2]">secure acess</span>
             </h5>
           </div>
           <div>
@@ -87,9 +81,7 @@ const SignUp = () => {
                 value={inputs.username}
                 onChange={handleInputs}
               />
-              {validations.username && (
-                <UsernameValidation value={inputs.username} />
-              )}
+              {validations.username && <UsernameValidation value={inputs.username} />}
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
@@ -111,7 +103,7 @@ const SignUp = () => {
                 value={inputs.age}
                 onChange={handleInputs}
               />
-               {validations.age && <AgeValidation value={inputs.age} />}
+              {validations.age && <AgeValidation value={inputs.age} />}
               {/* <input
                 type="email"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
@@ -134,7 +126,6 @@ const SignUp = () => {
           </div>
 
           <div className="text-center text-[16px]  font-sans ">
-            
             you"ll be prompted to use biometrics or your devices PIN
           </div>
           {/* <div className="w-[85%] mx-auto">

@@ -2,34 +2,16 @@
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
 import RedirectLink from "@/components/auth/RedirectLink";
 import SocialAuthentication from "@/components/auth/SocialAuthentication";
-import {
-  AgeValidation,
-  EmailValidation,
-  NameValidation,
-  UsernameValidation,
-} from "@/components/Validations";
+import { AgeValidation, EmailValidation, NameValidation, UsernameValidation } from "@/components/Validations";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/elements/Button";
 import { setSessionStorage } from "@/utlils/utils";
-import {
-  isValidEmail,
-  isValidName,
-  isValidUserName,
-  isValidAge,
-} from "@/utlils/validate";
+import { isValidEmail, isValidName, isValidUserName, isValidAge } from "@/utlils/validate";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 const SignUp = () => {
-  const {
-    inputs,
-    validations,
-    setValidations,
-    handleInputs,
-    loadings,
-    getOTP,
-    resetAuthValues,
-  } = useAuth();
+  const { inputs, validations, setValidations, handleInputs, loadings, getOTP, resetAuthValues } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -87,9 +69,7 @@ const SignUp = () => {
                 value={inputs.username}
                 onChange={handleInputs}
               />
-              {validations.username && (
-                <UsernameValidation value={inputs.username} />
-              )}
+              {validations.username && <UsernameValidation value={inputs.username} />}
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
@@ -111,7 +91,7 @@ const SignUp = () => {
                 value={inputs.age}
                 onChange={handleInputs}
               />
-               {validations.age && <AgeValidation value={inputs.age} />}
+              {validations.age && <AgeValidation value={inputs.age} />}
               <input
                 type="email"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
@@ -132,17 +112,11 @@ const SignUp = () => {
               />
             </div>
           </div>
-          <div className="text-center text-[16px] text-[#1E6DE9] font-sans py-[0.85rem]">
-            OR
-          </div>
+          <div className="text-center text-[16px] text-[#1E6DE9] font-sans py-[0.85rem]">OR</div>
           <div className="w-[85%] mx-auto">
             <SocialAuthentication />
           </div>
-          <RedirectLink
-            title={"Already have an account?"}
-            href={"/sign-in"}
-            linkName={"LOG IN"}
-          />
+          <RedirectLink title={"Already have an account?"} href={"/sign-in"} linkName={"LOG IN"} />
           <AgreeTermAndConditions />
         </div>
       </div>
