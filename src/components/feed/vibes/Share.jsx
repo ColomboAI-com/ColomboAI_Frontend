@@ -239,7 +239,8 @@ export default function ShareVibe({ currentState, vibeId }) {
                 // }
                 onClick={handleCopy}
               >
-                https://post.colomboai.com/660ad7b3053e33a40c....
+                {/* https://post.colomboai.com/660ad7b3053e33a40c.... */}
+                {vibeURL}
               </button>
               <button
                 // onClick={() =>
