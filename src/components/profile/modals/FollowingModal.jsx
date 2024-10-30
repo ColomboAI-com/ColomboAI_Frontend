@@ -47,14 +47,14 @@ const FollowingModal = ({followingsData}) => {
             {filteredItems?.map((person) => {
                 return (
                     <div key={person._id}>
-                        <div className={`flex w-full items-center border-b- justify-between p-2 hover:bg-gray-100 hover:text-brandprimary`}>
+                        <div className={`flex w-full items-center border-b- justify-between p-2 sm:px-0 md:px-2 hover:bg-gray-100 hover:text-brandprimary`}>
                             <div className="flex-1">
                                 <Link className="flex items-center w-fit" href={`/profile/${person?.user_name || ''}`}>
                                     <div className="relative flex-shrink-0">
-                                        <img src={`${person.profile_picture}`} className="h-12 w-12 rounded-full object-cover" alt="profile_image" />
+                                        <img src={`${person.profile_picture}`} className="h-12 w-12 sm:h-10 sm:w-10 rounded-full object-cover" alt="profile_image" />
                                     </div>
-                                    <div className="mx-3 text-left">
-                                        <p className="font-semibold flex">
+                                    <div className="mx-2 text-left">
+                                        <p className="font-semibold flex max-w-[160px] sm:text-[12px] md:text-[15px] truncate">
                                             @{person.user_name}
                                             {
                                                 person.active && 
@@ -70,7 +70,7 @@ const FollowingModal = ({followingsData}) => {
                             <button onClick={() => {
                                 setIsUnFollowModalOpen(true)
                                 setUnFollowModalData(person)
-                                }} className="border-[1px] bg-brandprimary text-white rounded-2xl px-6 py-1">
+                                }} className="border-[1px] bg-brandprimary text-white rounded-2xl px-6 py-1 md:px-6 sm:px-2">
                                 Following
                             </button>
                         </div>

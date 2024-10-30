@@ -148,10 +148,11 @@ export default function Vibe({ vibe, index }) {
   const handleFollowToggle = (updatedFollowState) => {
     setIsFollowing(updatedFollowState); // Update the follow state when the button is toggled
   };
+  
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-0px)] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
-      {showRepost && <RepostVibe currentState={showRepost} />}
-      {showShare && <ShareVibe currentState={showShare} />}
+      {showRepost && <RepostVibe currentState={showRepost} vibe={vibe} />}
+      {showShare && <ShareVibe currentState={showShare} vibeId={vibe._id} />}
       <div className=" flex items-center justify-center object-contain w-full bg-black ">
         {/* Main Content */}
 
