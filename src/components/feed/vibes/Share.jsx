@@ -19,6 +19,7 @@ import {
   MessengerIcon,
   RectangleBar,
 } from "@/components/Icons";
+import { copyValue } from "@/utlils/commonFunctions";
 
 export default function ShareVibe({ currentState, vibeId }) {
   const [isVisible, setIsVisible] = useState(currentState);
@@ -46,14 +47,18 @@ export default function ShareVibe({ currentState, vibeId }) {
     };
   }, [isVisible, handleVisibility]);
 
-  const copyToClipboard = (param1) => {
-    navigator.clipboard
-      .writeText(param1)
-      .then(() => {})
-      .catch((err) => {
-        console.error("Failed to copy text: ", err);
-      });
-  };
+  // const copyToClipboard = (param1) => {
+  //   navigator.clipboard
+  //     .writeText(param1)
+  //     .then(() => {})
+  //     .catch((err) => {
+  //       console.error("Failed to copy text: ", err);
+  //     });
+  // };
+
+  const handleCopy = () => {
+    copyValue(vibeURL);
+  }
 
   // console.log(vibeId);
 
@@ -227,20 +232,22 @@ export default function ShareVibe({ currentState, vibeId }) {
             <div className="flex justify-between mt-[14px] w-[400px] h-[30px] mx-auto">
               <button
                 className="w-[78%] bg-white text-[#1E71F2] text-[12px] rounded-2xl w-[314px] h-[30px]"
-                onClick={() =>
-                  copyToClipboard(
-                    "https://post.colomboai.com/660ad7b3053e33a40c...."
-                  )
-                }
+                // onClick={() =>
+                //   copyToClipboard(
+                //     "https://post.colomboai.com/660ad7b3053e33a40c...."
+                //   )
+                // }
+                onClick={handleCopy}
               >
                 https://post.colomboai.com/660ad7b3053e33a40c....
               </button>
               <button
-                onClick={() =>
-                  copyToClipboard(
-                    "https://post.colomboai.com/660ad7b3053e33a40c...."
-                  )
-                }
+                // onClick={() =>
+                //   copyToClipboard(
+                //     "https://post.colomboai.com/660ad7b3053e33a40c...."
+                //   )
+                // }
+                onClick={handleCopy}
                 className="w-[20%] bg-white text-[14px] text-[#1E71F2] rounded-2xl w-[80px] h-[30px]"
               >
                 Copy
