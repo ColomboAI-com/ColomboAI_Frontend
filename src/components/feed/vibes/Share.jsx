@@ -22,6 +22,7 @@ import {
 
 export default function ShareVibe({ currentState, vibeId }) {
   const [isVisible, setIsVisible] = useState(currentState);
+  const vibeURL = `${window.location.href}/${vibeId}`;
   const handleVisibility = () => {
     setIsVisible(!isVisible);
   };
