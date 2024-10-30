@@ -167,10 +167,19 @@ export default function ShareVibe({ currentState, vibeId }) {
                 <div className="flex justify-center">Messenger</div>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                <div className="bg-[#4676ED] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
+                {/* <div className="bg-[#4676ED] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
                   <FacebookIcon w={23.96} h={45.06} fill="white" />
                 </div>
-                <div className="flex justify-center">Facebook</div>
+                <div className="flex justify-center">Facebook</div> */}
+                <Link
+                  href={`https://www.facebook.com/sharer.php?u=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img alt="" src="/images/shareicon/facebook.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Facebook
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
                 <div
