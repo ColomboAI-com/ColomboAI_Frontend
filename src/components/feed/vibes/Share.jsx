@@ -20,6 +20,7 @@ import {
   RectangleBar,
 } from "@/components/Icons";
 import { copyValue } from "@/utlils/commonFunctions";
+import Link from "next/link";
 
 export default function ShareVibe({ currentState, vibeId }) {
   const [isVisible, setIsVisible] = useState(currentState);
@@ -58,7 +59,7 @@ export default function ShareVibe({ currentState, vibeId }) {
 
   const handleCopy = () => {
     copyValue(vibeURL);
-  }
+  };
 
   // console.log(vibeId);
 
@@ -136,7 +137,7 @@ export default function ShareVibe({ currentState, vibeId }) {
             <hr className="mt-[17px] mb-[19px] mx-4" />
             <div className="mt-4 mb-[19px]  flex flex-wrap justify-between mx-auto w-[376px] h-[157px]">
               <div className=" w-[56px] h-[74px] text-[12px] mb-[9px]">
-                <div
+                {/* <div
                   className="bg-black h-[56px] w-[56px] rounded-[50%] flex items-center justify-center"
                   style={{
                     backgroundImage:
@@ -146,7 +147,18 @@ export default function ShareVibe({ currentState, vibeId }) {
                 >
                   <InstagramIcon />
                 </div>
-                <div className="flex justify-center">Instagram</div>
+                <div className="flex justify-center">Instagram</div> */}
+                <Link
+                  href={`https://www.instagram.com/?url=${encodeURIComponent(
+                    vibeURL
+                  )}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/instagram.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Instagram
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
                 <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
