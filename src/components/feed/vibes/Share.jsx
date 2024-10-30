@@ -182,7 +182,7 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                <div
+                {/* <div
                   className="h-[56px] w-[56px] rounded-[50%] flex items-center justify-center"
                   style={{
                     background:
@@ -191,29 +191,65 @@ export default function ShareVibe({ currentState, vibeId }) {
                 >
                   <WhatsAppIcon />
                 </div>
-                <div className="flex justify-center">WhatsApp</div>
+                <div className="flex justify-center">WhatsApp</div> */}
+                <Link
+                  href={`https://api.whatsapp.com/send?phone=&text=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/whatsapp.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    WhatsAapp
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                <div className="bg-black h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
+                {/* <div className="bg-black h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
                   <XIcon />
                 </div>
-                <div className="flex justify-center">X</div>
+                <div className="flex justify-center">X</div> */}
+                <Link
+                  href={`https://twitter.com/share?url=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/twitter.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    X
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                <div className="bg-[#DC4711] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
+                {/* <div className="bg-[#DC4711] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
                   <RedditIcon />
                 </div>
-                <div className="flex justify-center">Reddit</div>
+                <div className="flex justify-center">Reddit</div> */}
+                <Link
+                  href={`https://reddit.com/submit?url=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/reddit.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Reddit
+                  </p>
+                </Link>
               </div>
 
               <div className="w-[56px] h-[74px] text-[12px]">
-                <div className="bg-white h-[56px] w-[56px] rounded-[50%]">
+                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%]">
                   <PinterestIcon />
                 </div>
-                <div className="flex justify-center">Pinterest</div>
+                <div className="flex justify-center">Pinterest</div> */}
+                <Link
+                  href={`https://pinterest.com/pin/create/bookmarklet/?url=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/pintrest.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Pintrest
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                <div
+                {/* <div
                   className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center"
                   style={{
                     background: `linear-gradient(0deg, #1D93D2 0%, #38B0E3 100%)`,
@@ -221,31 +257,73 @@ export default function ShareVibe({ currentState, vibeId }) {
                 >
                   <TelegramIcon />
                 </div>
-                <div className="flex justify-center">Telegram</div>
+                <div className="flex justify-center">Telegram</div> */}
+                <Link
+                  href={`https://telegram.me/share/url?url=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/telegram.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Telegram
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                <div className="bg-[#121F37] h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
+                {/* <div className="bg-[#121F37] h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
                   <TumblrIcon />
                 </div>
-                <div className="flex justify-center">Tumblr</div>
+                <div className="flex justify-center">Tumblr</div> */}
+                <Link
+                  href={`https://www.tumblr.com/share/link?url=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/tumblr.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Tumblr
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                <div className="bg-[#4467AD] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
+                {/* <div className="bg-[#4467AD] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
                   <LinkedinIcon />
                 </div>
-                <div className="flex justify-center">Linkedin</div>
+                <div className="flex justify-center">Linkedin</div> */}
+                <Link
+                  href={`https://www.linkedin.com/shareArticle?url=${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/linkedin.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Linkedin
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
+                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
                   <EmailIcon />
                 </div>
-                <div className="flex justify-center">E-mail</div>
+                <div className="flex justify-center">E-mail</div> */}
+                <Link
+                  href={`mailto:?body=Check out this site ${vibeURL}`}
+                  target="_blank"
+                >
+                  <img src="/images/shareicon/email.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    Email
+                  </p>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
+                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
                   <SMSIcon />
                 </div>
-                <div className="flex justify-center">SMS</div>
+                <div className="flex justify-center">SMS</div> */}
+                <Link href={"#"} target="_blank">
+                  <img src="/images/shareicon/sms.svg" />
+                  <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
+                    SMS
+                  </p>
+                </Link>
               </div>
             </div>
 
