@@ -16,6 +16,7 @@
     "@heroicons/react": "^1.0.6",
     "@next/font": "^14.2.14",
     "@popperjs/core": "^2.11.8",
+    "@simplewebauthn/browser": "^11.0.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "axios": "^1.6.8",
     "caniuse-lite": "^1.0.30001667",
