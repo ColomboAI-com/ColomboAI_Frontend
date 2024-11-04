@@ -43,15 +43,17 @@ const SignUp = () => {
       return;
     }
 
-    const optionsJSON = await passKeySignUpStart();
-
-    let attResp;
     try {
+      const optionsJSON = await passKeySignUpStart();
+
+      if (!optionsJSON) {
+        return;
+      }
+
+      let attResp;
       // Pass the options to the authenticator and wait for a response
-      console.log("PACKAGE REGISTRATION START");
       attResp = await startRegistration({ optionsJSON });
-      console.log("ATT RESP");
-      console.log(attResp);
+      await passKeySignUpFinish({ data: attResp });
     } catch (error) {
       // Some basic error handling
       if (error.name === "InvalidStateError") {
@@ -60,10 +62,6 @@ const SignUp = () => {
         console.log(error);
       }
     }
-    console.log("VERIFYING WITH BACKEND");
-    const verificationResp = await passKeySignUpFinish({ data: attResp });
-    console.log("VERIFICATION COMPLETE");
-    console.log(verificationResp);
   };
 
   return (
@@ -134,7 +132,7 @@ const SignUp = () => {
 
           <RedirectLink
             title={"Already have an account?"}
-            href={"passkey/sign-in"}
+            href={"/passkey/sign-in"}
             linkName={"LOG IN WITH PASSKEY"}
           />
           <AgreeTermAndConditions />

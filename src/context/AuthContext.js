@@ -173,7 +173,6 @@ export const AuthContextProvider = ({ children }) => {
   const passKeySignUpStart = async () => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      // const res = await axios.post(`http://localhost:8000/auth/passkey/sign-up/start`, {
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/start`, {
         user_name: inputs.username,
         name: inputs.name,
@@ -192,7 +191,6 @@ export const AuthContextProvider = ({ children }) => {
     console.log(data);
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      // const res = await axios.post(`http://localhost:8000/auth/passkey/sign-up/finish`, {
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/finish`, {
         user_name: inputs.username,
         data,
