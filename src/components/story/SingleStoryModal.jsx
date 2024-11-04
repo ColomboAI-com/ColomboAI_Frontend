@@ -17,7 +17,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   const storiesRef = useRef(null);
   const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
   const storyStyles = {
-    widht:'100%',
+    
     objectFit: "cover",
     borderRadius: "10px",
     justifyContent: "center",
@@ -90,21 +90,40 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
     trackMouse:true, 
     passive : false
   })
-  const closeStoryModal = () => {
-    console.log("here in close story")
-    setIsStoryModalOpen(false);
+  
+  const maxWidth = 432;
+ 
+
+  const [storiesWidth, setStoriesWidth] = useState(window.innerWidth < 700 ? window.innerWidth : maxWidth);
+  // const storiesRef = useRef(null);
+  const [storiesHeight, setStoriesHeight] = useState(window.innerWidth < maxWidth ? window.innerHeight : 768 )
+  const updateWidth = () => {
+  
+    if (window.innerWidth < 700){
+    setStoriesWidth(window.innerWidth);
+    setStoriesHeight(window.innerHeight)
+    }
+    else{
+      setStoriesWidth(432)
+      setStoriesHeight(768)
+    }
   };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
   return (
-    <div {...handlers} className="bg-[#1a1a1af0]  h-screen  md:p-4  md:grid md:grid-cols-3">
+    <div {...handlers} className="bg-[#1a1a1af0] sm:flex sm:flex-row sm:justify-center sm:space-x-0 space-x-2 h-screen  md:p-4 flex justify-center  flex-col ">
       {/* Left Section */}
-      <div className="flex flex-col lg:ml-[14rem] md:ml-[12rem] h-full justify-between p-4  sm:hidden w-fit md:flex">
+      <div className="flex flex-col  h-full justify-between p-4  sm:hidden w-fit md:flex">
       {/* <div className="flex flex-col items-end h-full justify-between p-4  sm:hidden border border-pink-500 w-fit md:flex lg:flex"> */}
         <div className="text-3xl md:block opacity-0 sm:hidden">
           <MdOutlineClose
             style={{ color: "#fff", cursor: "pointer" }}
           />
         </div>
-        <div className="text-3xl md:block sm:hidden">
+        <div className="text-3xl md:block sm:hidden ">
           <MdOutlineArrowBack
             onClick={handlePreviousStory}
             disabled={currentStoryIndex === 0}
@@ -117,8 +136,8 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
         </div>
       </div>
       {/* Middle Section */}
-      <div className=" relative m-auto">
-        <div className="h-3/4 w-full rounded-[5px] justify-center story-detail-box">
+      <div className=" relative mx-auto h-full ">
+        <div className="h-full  w-full rounded-[5px] justify-center story-detail-box">
           <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
           
             <MdOutlineArrowBack
@@ -136,7 +155,9 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
             stories={data.map((story) => story.media[0])}
             defaultInterval={5000}
             // width={432}
-            height={768}
+            width={storiesWidth}
+            height={storiesHeight}
+            // height={768}
             justifyContent={"center"}
             ref={storiesRef}
             onStoryEnd={(index, story) => {
@@ -174,7 +195,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
       </div>
 
       {/* Right Section */}
-      <div className="flex flex-col items-end h-full justify-between lg:ml-[8rem] md:ml-[12rem] p-4  w-fit">
+      <div className="sm:hidden md:flex flex-col items-end h-full justify-between  p-4  w-fit">
       
              {/* <div className="flex flex-col items-end h-full justify-between p-4 lg:pr-16 sm:hidden md:flex lg:flex"> */}
         <div className="text-3xl md:block sm:hidden">
@@ -183,7 +204,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
             style={{ color: "#fff", cursor: "pointer" }}
           />
         </div>
-        <div className="text-3xl md:block sm:hidden">
+        <div className="text-3xl md:block sm:hidden ">
           <MdOutlineArrowForward
             onClick={handleNextStory}
             disabled={currentStoryIndex === allStories.length - 1}
