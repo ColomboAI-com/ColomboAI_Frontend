@@ -8,6 +8,7 @@ import { useContext, useEffect, Fragment, useRef } from "react";
 import { getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import SuggestedVibes from "@/components/layouts/SuggestedVibes";
+import LargeAdComponent from "@/components/ads/LargeAd";
 
 export default function RenderFeed({ filter }) {
   const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
@@ -116,18 +117,24 @@ export default function RenderFeed({ filter }) {
         posts.map((i, index) => (
           <Fragment key={index}>
             <Post post={i} index={index} />
-            {(index + 1) % 6 === 0 && (
-              // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
-              //   <FooterAdComponent divid={`feed-ad-${index}`}/>
-              // </div>
+            {(index + 1) % 4 === 0 && (index + 1) % 8 !== 0 && (
+           
               <div className="overflow-x-hidden rounded-[10px] mt-5">
                 <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
                   <SuggestedVibes />
                 </div>
-                <div className=" max-w-[100%] overflow-hidden ">
-                  <FooterAdComponent divid={`feed-ad-${index}`} />
+              </div>
+
+            )}
+            {(index + 1) % 8 === 0 && (
+       
+              <div className="overflow-x-hidden rounded-[10px] mt-5 border border-red-500 h-[626px]">
+                <div className=" max-w-[100%] overflow-hidden  ">
+                  <LargeAdComponent divid={`feed-ad-${index}`} />
+                  {/* <FooterAdComponent divid={`feed-ad-${index}`} /> */}
                 </div>
               </div>
+              
             )}
           </Fragment>
         ))
