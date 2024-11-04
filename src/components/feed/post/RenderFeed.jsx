@@ -8,6 +8,7 @@ import { useContext, useEffect, Fragment, useRef } from "react";
 import { getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import SuggestedVibes from "@/components/layouts/SuggestedVibes";
+import LargeAdComponent from "@/components/ads/LargeAd";
 
 export default function RenderFeed({ filter }) {
   const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
@@ -129,7 +130,8 @@ export default function RenderFeed({ filter }) {
        
               <div className="overflow-x-hidden rounded-[10px] mt-5 border border-red-500 h-[626px]">
                 <div className=" max-w-[100%] overflow-hidden  ">
-                  <FooterAdComponent divid={`feed-ad-${index}`} />
+                  <LargeAdComponent divid={`feed-ad-${index}`} />
+                  {/* <FooterAdComponent divid={`feed-ad-${index}`} /> */}
                 </div>
               </div>
               
