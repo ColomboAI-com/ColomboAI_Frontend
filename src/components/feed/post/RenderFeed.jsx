@@ -128,7 +128,7 @@ export default function RenderFeed({ filter }) {
             )}
             {(index + 1) % 8 === 0 && (
        
-              <div className="overflow-x-hidden rounded-[10px] mt-5 border border-red-500 h-[626px]">
+              <div className="overflow-x-hidden rounded-[10px] mt-5 h-[570px] border-[0.5px]  border-brandprimary">
                 <div className=" max-w-[100%] overflow-hidden  ">
                   <LargeAdComponent divid={`feed-ad-${index}`} />
                   {/* <FooterAdComponent divid={`feed-ad-${index}`} /> */}
