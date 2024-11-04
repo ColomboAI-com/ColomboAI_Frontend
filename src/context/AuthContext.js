@@ -188,10 +188,43 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const passKeySignUpFinish = async ({ data }) => {
-    console.log(data);
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/finish`, {
+        user_name: inputs.username,
+        data,
+      });
+      MessageBox("success", res.data.message);
+      return res;
+    } catch (err) {
+      console.log(err);
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignInStart = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/start`, {
+        user_name: inputs.username,
+      });
+      MessageBox("success", res.data.message);
+      console.log(res);
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignInFinish = async ({ data }) => {
+    console.log(data);
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`, {
         user_name: inputs.username,
         data,
       });
@@ -226,6 +259,8 @@ export const AuthContextProvider = ({ children }) => {
         resetAuthValues,
         passKeySignUpStart,
         passKeySignUpFinish,
+        passKeySignInStart,
+        passKeySignInFinish,
       }}
     >
       {children}

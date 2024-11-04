@@ -29,7 +29,6 @@ const SignUp = () => {
   }, []);
 
   const onSignUp = async () => {
-    console.log("SIGN UP STARTED");
     if (!isValidUserName(inputs.username)) {
       setValidations((prev) => ({ ...prev, username: true }));
       return;
