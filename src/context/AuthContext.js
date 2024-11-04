@@ -170,16 +170,16 @@ export const AuthContextProvider = ({ children }) => {
     router.replace("/");
   };
 
-  const passKeySignUp = async () => {
+  const passKeySignUpStart = async () => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      const res = await axios.post(`${ROOT_URL_AUTH}/passkey/sign-up/start`, {
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/start`, {
         user_name: inputs.username,
         name: inputs.name,
         age: inputs.age,
       });
       MessageBox("success", res.data.message);
-      return res;
+      return res.data;
     } catch (err) {
       handleError(err);
     } finally {
@@ -187,16 +187,51 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const passKeyVerficiation = async ({ data }) => {
+  const passKeySignUpFinish = async ({ data }) => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      const res = await axios.post(`${ROOT_URL_AUTH}/passkey/sign-up/finish`, {
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-up/finish`, {
         user_name: inputs.username,
         data,
       });
       MessageBox("success", res.data.message);
       return res;
     } catch (err) {
+      console.log(err);
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignInStart = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/start`, {
+        user_name: inputs.username,
+      });
+      MessageBox("success", res.data.message);
+      console.log(res);
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignInFinish = async ({ data }) => {
+    console.log(data);
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`, {
+        user_name: inputs.username,
+        data,
+      });
+      MessageBox("success", res.data.message);
+      return res;
+    } catch (err) {
+      console.log(err);
       handleError(err);
     } finally {
       setLoadings((prev) => ({ ...prev, auth: false }));
@@ -222,8 +257,10 @@ export const AuthContextProvider = ({ children }) => {
         ssoAuthentication,
         addnewdevice,
         resetAuthValues,
-        passKeySignUp,
-        passKeyVerficiation,
+        passKeySignUpStart,
+        passKeySignUpFinish,
+        passKeySignInStart,
+        passKeySignInFinish,
       }}
     >
       {children}
