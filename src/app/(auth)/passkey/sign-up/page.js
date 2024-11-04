@@ -77,7 +77,7 @@ const SignUp = () => {
               alt="welcome_to_colomboai"
             />
             <h5 className="text-[1.25rem] font-sans text-center py-[0.08rem]">
-              Register your passkey for <span className="text-[#1E71F2]">secure acess</span>
+              Register your passkey for <span className="text-[#1E71F2]">secure acesss</span>
             </h5>
           </div>
           <div>
