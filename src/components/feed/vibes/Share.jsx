@@ -137,17 +137,6 @@ export default function ShareVibe({ currentState, vibeId }) {
             <hr className="mt-[17px] mb-[19px] mx-4" />
             <div className="mt-4 mb-[19px]  flex flex-wrap justify-between mx-auto w-[376px] h-[157px]">
               <div className=" w-[56px] h-[74px] text-[12px] mb-[9px]">
-                {/* <div
-                  className="bg-black h-[56px] w-[56px] rounded-[50%] flex items-center justify-center"
-                  style={{
-                    backgroundImage:
-                      "url(https://s3-alpha-sig.figma.com/img/87c1/e416/c02a2d62cc5f9cc87b56abd149f77f7b?Expires=1726444800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=V1FGh21sRQAuDo8tlE38YmRgSB2el7TfshOo0dD3BIBel8hXCUN6FRP5gzyCnHbd-Lq8Up5gCSqzNFE6bLGVa~OVD-MuVKANPqi0FiezddZ4sj-Y5wim5gH-oVs~ZQvM9SNwxUEn5IweMyQJU0wbFWuaUN~7Kv3y4Nqlqd5Ve4IR5jEEIeYpPDB-fCvbw~I0AUzq~tYaV9s9E0nTBel0v2wAWG4-TH3aptOkE~xMZ7pm4Va4AXtOQh5EfV3AHZw2ElUGamaB9pufj-GX~w9Qpf3vX8KQbirjhhoAt9r2QQ4c-yKHvJVEq9UtuZOm-8aPvX~HUJNN1VX0~d81BISgWQ__)",
-                    backgroundSize: "cover",
-                  }}
-                >
-                  <InstagramIcon />
-                </div>
-                <div className="flex justify-center">Instagram</div> */}
                 <Link
                   href={`https://www.instagram.com/?url=${encodeURIComponent(
                     vibeURL
@@ -161,16 +150,25 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
+                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
                   <MessengerIcon />
                 </div>
-                <div className="flex justify-center">Messenger</div>
+                <div className="flex justify-center">Messenger</div> */}
+                <Link
+                  href={`https://www.facebook.com/dialog/send?link=${encodeURIComponent(
+                    vibeURL
+                  )}&app_id=YOUR_APP_ID&redirect_uri=${encodeURIComponent(
+                    vibeURL
+                  )}`}
+                  target="_blank"
+                >
+                  <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
+                    <MessengerIcon />
+                  </div>
+                  <div className="flex justify-center">Messenger</div>
+                </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                {/* <div className="bg-[#4676ED] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
-                  <FacebookIcon w={23.96} h={45.06} fill="white" />
-                </div>
-                <div className="flex justify-center">Facebook</div> */}
                 <Link
                   href={`https://www.facebook.com/sharer.php?u=${vibeURL}`}
                   target="_blank"
@@ -182,31 +180,17 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                {/* <div
-                  className="h-[56px] w-[56px] rounded-[50%] flex items-center justify-center"
-                  style={{
-                    background:
-                      "linear-gradient(0deg, #78CD51 7.27%, #A0FC84 107.27%)",
-                  }}
-                >
-                  <WhatsAppIcon />
-                </div>
-                <div className="flex justify-center">WhatsApp</div> */}
                 <Link
                   href={`https://api.whatsapp.com/send?phone=&text=${vibeURL}`}
                   target="_blank"
                 >
                   <img src="/images/shareicon/whatsapp.svg" />
                   <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
-                    WhatsAapp
+                    WhatsApp
                   </p>
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                {/* <div className="bg-black h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
-                  <XIcon />
-                </div>
-                <div className="flex justify-center">X</div> */}
                 <Link
                   href={`https://twitter.com/share?url=${vibeURL}`}
                   target="_blank"
@@ -218,10 +202,6 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px] mb-[9px]">
-                {/* <div className="bg-[#DC4711] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
-                  <RedditIcon />
-                </div>
-                <div className="flex justify-center">Reddit</div> */}
                 <Link
                   href={`https://reddit.com/submit?url=${vibeURL}`}
                   target="_blank"
@@ -234,10 +214,6 @@ export default function ShareVibe({ currentState, vibeId }) {
               </div>
 
               <div className="w-[56px] h-[74px] text-[12px]">
-                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%]">
-                  <PinterestIcon />
-                </div>
-                <div className="flex justify-center">Pinterest</div> */}
                 <Link
                   href={`https://pinterest.com/pin/create/bookmarklet/?url=${vibeURL}`}
                   target="_blank"
@@ -249,15 +225,6 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                {/* <div
-                  className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center"
-                  style={{
-                    background: `linear-gradient(0deg, #1D93D2 0%, #38B0E3 100%)`,
-                  }}
-                >
-                  <TelegramIcon />
-                </div>
-                <div className="flex justify-center">Telegram</div> */}
                 <Link
                   href={`https://telegram.me/share/url?url=${vibeURL}`}
                   target="_blank"
@@ -269,10 +236,6 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                {/* <div className="bg-[#121F37] h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
-                  <TumblrIcon />
-                </div>
-                <div className="flex justify-center">Tumblr</div> */}
                 <Link
                   href={`https://www.tumblr.com/share/link?url=${vibeURL}`}
                   target="_blank"
@@ -284,10 +247,6 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                {/* <div className="bg-[#4467AD] h-[56px] w-[56px] rounded-[50%] flex justify-center items-center">
-                  <LinkedinIcon />
-                </div>
-                <div className="flex justify-center">Linkedin</div> */}
                 <Link
                   href={`https://www.linkedin.com/shareArticle?url=${vibeURL}`}
                   target="_blank"
@@ -299,10 +258,6 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
-                  <EmailIcon />
-                </div>
-                <div className="flex justify-center">E-mail</div> */}
                 <Link
                   href={`mailto:?body=Check out this site ${vibeURL}`}
                   target="_blank"
@@ -314,10 +269,6 @@ export default function ShareVibe({ currentState, vibeId }) {
                 </Link>
               </div>
               <div className="w-[56px] h-[74px] text-[12px]">
-                {/* <div className="bg-white h-[56px] w-[56px] rounded-[50%] flex items-center justify-center">
-                  <SMSIcon />
-                </div>
-                <div className="flex justify-center">SMS</div> */}
                 <Link href={"#"} target="_blank">
                   <img src="/images/shareicon/sms.svg" />
                   <p className="text-[10.01px] font-sans text-white text-center mt-[6px]">
