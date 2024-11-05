@@ -7,7 +7,7 @@ import logoog from './images/logoimage/image.png'
 const App = () => {
   // Inline Styles
   const appStyle = {
-    minHeight: '80vh',
+    minHeight: '76vh',
     background: 'linear-gradient(to bottom, #3577eb, #1e1a8a)',
     display: 'flex',
     flexDirection: 'column',

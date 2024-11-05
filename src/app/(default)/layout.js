@@ -39,6 +39,9 @@ import { Montserrat } from "@next/font/google";
 import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
 import path from "path";
 import { useMediaQuery } from "react-responsive";
+import shop_blue from "../../../public/images/icons/main_menu_icons/shop_blue.svg"
+import shop_grey from "../../../public/images/icons/main_menu_icons/shop_grey.svg"
+
 
 
 const font = Montserrat({
@@ -243,7 +246,7 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full sm:h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto`
+                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full sm:h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full overflow-y-visible`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${(pathname !== 'vibes' || pathname !== '/explore') && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto self-start`
                 }
               >
                 {children}
@@ -342,11 +345,12 @@ const DefaultLayout = ({ children }) => {
               <Link href="/shop">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <ShopIcon
+                    <Image src={pathname === "/shop" ? shop_blue : shop_grey} alt="colombo"/>
+                    {/* <ShopIcon
                       w="30"
                       h="30"
                       fill={pathname === "/shop" ? "#1E71F2" : "#8E8E93"}
-                    />
+                    /> */}
                   </div>
                   <p
                     className={`${pathname === "/shop"
