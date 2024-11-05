@@ -39,6 +39,9 @@ import { Montserrat } from "@next/font/google";
 import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
 import path from "path";
 import { useMediaQuery } from "react-responsive";
+import shop_blue from "../../../public/images/icons/main_menu_icons/shop_blue.svg"
+import shop_grey from "../../../public/images/icons/main_menu_icons/shop_grey.svg"
+
 
 
 const font = Montserrat({
@@ -342,11 +345,12 @@ const DefaultLayout = ({ children }) => {
               <Link href="/shop">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <ShopIcon
+                    <Image src={pathname === "/shop" ? shop_blue : shop_grey} alt="colombo"/>
+                    {/* <ShopIcon
                       w="30"
                       h="30"
                       fill={pathname === "/shop" ? "#1E71F2" : "#8E8E93"}
-                    />
+                    /> */}
                   </div>
                   <p
                     className={`${pathname === "/shop"
