@@ -8,6 +8,8 @@ import { useEffect } from "react";
 
 import { startAuthentication } from "@simplewebauthn/browser";
 import { isValidUserName } from "@/utlils/validate";
+import { setUserCookies } from "@/utlils/commonFunctions";
+import { clearCookie } from "@/utlils/cookies";
 
 const SignIn = () => {
   const {
@@ -33,9 +35,8 @@ const SignIn = () => {
     }
 
     try {
-      console.log("SIGN IN START");
       const optionsJSON = await passKeySignInStart();
-      console.log(optionsJSON);
+
       if (!optionsJSON) {
         return;
       }
@@ -43,12 +44,14 @@ const SignIn = () => {
       let asseResp;
       // Pass the options to the authenticator and wait for a response
       asseResp = await startAuthentication({ optionsJSON });
-      console.log("AUTHENTICATION RESP");
-      console.log(asseResp);
-      console.log("VERIFICATION START");
       let verif = await passKeySignInFinish({ data: asseResp });
-      console.log("SIGN IN FINISH\nVERIF:");
       console.log(verif);
+      if (verif) {
+        setUserCookies(verif);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
+      }
     } catch (error) {
       // Some basic error handling
       if (error.name === "InvalidStateError") {
