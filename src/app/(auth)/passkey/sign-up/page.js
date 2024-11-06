@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { startRegistration } from "@simplewebauthn/browser";
 import RedirectLink from "@/components/auth/RedirectLink";
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
+import { setUserCookies } from "@/utlils/commonFunctions";
 
 const SignUp = () => {
   const {
@@ -52,7 +53,13 @@ const SignUp = () => {
       let attResp;
       // Pass the options to the authenticator and wait for a response
       attResp = await startRegistration({ optionsJSON });
-      await passKeySignUpFinish({ data: attResp });
+      let verif = await passKeySignUpFinish({ data: attResp });
+      if (verif) {
+        setUserCookies(verif);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
+      }
     } catch (error) {
       // Some basic error handling
       if (error.name === "InvalidStateError") {
