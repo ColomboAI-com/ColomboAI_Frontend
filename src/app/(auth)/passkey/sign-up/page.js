@@ -55,7 +55,7 @@ const SignUp = () => {
       attResp = await startRegistration({ optionsJSON });
       let verif = await passKeySignUpFinish({ data: attResp });
       if (verif) {
-        setUserCookies(verif);
+        setUserCookies(verif.data);
         setTimeout(() => {
           window.location.replace("/");
         }, 1500);

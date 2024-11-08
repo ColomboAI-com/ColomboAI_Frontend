@@ -220,7 +220,6 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const passKeySignInFinish = async ({ data }) => {
-    console.log(data);
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`, {
