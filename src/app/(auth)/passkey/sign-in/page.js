@@ -45,9 +45,9 @@ const SignIn = () => {
       // Pass the options to the authenticator and wait for a response
       asseResp = await startAuthentication({ optionsJSON });
       let verif = await passKeySignInFinish({ data: asseResp });
-      console.log(verif);
+      // console.log(verif);
       if (verif) {
-        setUserCookies(verif);
+        setUserCookies(verif.data);
         setTimeout(() => {
           window.location.replace("/");
         }, 1500);
