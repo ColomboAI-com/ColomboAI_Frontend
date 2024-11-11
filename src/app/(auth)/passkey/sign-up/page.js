@@ -89,7 +89,7 @@ const SignUp = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="your name"
+                placeholder="Enter a UserName for your profile"
                 autoComplete="off"
                 maxLength={30}
                 name={"username"}
@@ -100,7 +100,7 @@ const SignUp = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="Display name"
+                placeholder="Your Name"
                 autoComplete="off"
                 maxLength={50}
                 name={"name"}

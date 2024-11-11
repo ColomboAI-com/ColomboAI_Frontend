@@ -80,7 +80,7 @@ const SignIn = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="your name"
+                placeholder="User Name you used to sign up"
                 autoComplete="off"
                 maxLength={30}
                 name={"username"}
