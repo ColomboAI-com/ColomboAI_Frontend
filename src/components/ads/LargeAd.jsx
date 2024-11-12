@@ -21,7 +21,7 @@ const LargeAdComponent = ({divid}) => {
                 try {
                   console.log('Defining ad slot...');
                  
-                  window.googletag.defineSlot('/23102803892/Test_970x',[[970, 90], [728, 90], [970, 250], [728, 250]],
+                  window.googletag.defineSlot('/23102803892/Test_768x',[[480, 320], [768, 1024], [1024, 768]],
                     divid)
                   .addService(window.googletag.pubads());
                   

@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { startRegistration } from "@simplewebauthn/browser";
 import RedirectLink from "@/components/auth/RedirectLink";
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
+import { setUserCookies } from "@/utlils/commonFunctions";
 
 const SignUp = () => {
   const {
@@ -52,7 +53,13 @@ const SignUp = () => {
       let attResp;
       // Pass the options to the authenticator and wait for a response
       attResp = await startRegistration({ optionsJSON });
-      await passKeySignUpFinish({ data: attResp });
+      let verif = await passKeySignUpFinish({ data: attResp });
+      if (verif) {
+        setUserCookies(verif.data);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
+      }
     } catch (error) {
       // Some basic error handling
       if (error.name === "InvalidStateError") {
@@ -82,7 +89,7 @@ const SignUp = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="your name"
+                placeholder="Enter a UserName for your profile"
                 autoComplete="off"
                 maxLength={30}
                 name={"username"}
@@ -93,7 +100,7 @@ const SignUp = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="Display name"
+                placeholder="Your Name"
                 autoComplete="off"
                 maxLength={50}
                 name={"name"}

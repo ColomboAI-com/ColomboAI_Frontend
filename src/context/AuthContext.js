@@ -211,7 +211,6 @@ export const AuthContextProvider = ({ children }) => {
         user_name: inputs.username,
       });
       MessageBox("success", res.data.message);
-      console.log(res);
       return res.data;
     } catch (err) {
       handleError(err);
@@ -221,7 +220,6 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   const passKeySignInFinish = async ({ data }) => {
-    console.log(data);
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
       const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`, {

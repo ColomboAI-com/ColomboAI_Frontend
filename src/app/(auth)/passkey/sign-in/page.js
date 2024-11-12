@@ -8,6 +8,8 @@ import { useEffect } from "react";
 
 import { startAuthentication } from "@simplewebauthn/browser";
 import { isValidUserName } from "@/utlils/validate";
+import { setUserCookies } from "@/utlils/commonFunctions";
+import { clearCookie } from "@/utlils/cookies";
 
 const SignIn = () => {
   const {
@@ -33,9 +35,8 @@ const SignIn = () => {
     }
 
     try {
-      console.log("SIGN IN START");
       const optionsJSON = await passKeySignInStart();
-      console.log(optionsJSON);
+
       if (!optionsJSON) {
         return;
       }
@@ -43,12 +44,14 @@ const SignIn = () => {
       let asseResp;
       // Pass the options to the authenticator and wait for a response
       asseResp = await startAuthentication({ optionsJSON });
-      console.log("AUTHENTICATION RESP");
-      console.log(asseResp);
-      console.log("VERIFICATION START");
       let verif = await passKeySignInFinish({ data: asseResp });
-      console.log("SIGN IN FINISH\nVERIF:");
-      console.log(verif);
+      // console.log(verif);
+      if (verif) {
+        setUserCookies(verif.data);
+        setTimeout(() => {
+          window.location.replace("/");
+        }, 1500);
+      }
     } catch (error) {
       // Some basic error handling
       if (error.name === "InvalidStateError") {
@@ -77,7 +80,7 @@ const SignIn = () => {
               <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="your name"
+                placeholder="User Name you used to sign up"
                 autoComplete="off"
                 maxLength={30}
                 name={"username"}
