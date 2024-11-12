@@ -117,7 +117,7 @@ export default function RenderFeed({ filter }) {
         posts.map((i, index) => (
           <Fragment key={index}>
             <Post post={i} index={index} />
-            {(index + 1) % 4 === 0 && (index + 1) % 8 !== 0 && (
+            {(index + 1) % 7 === 0 && (index + 1) % 4 !== 0 && (
            
               <div className="overflow-x-hidden rounded-[10px] mt-5">
                 <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
@@ -126,7 +126,7 @@ export default function RenderFeed({ filter }) {
               </div>
 
             )}
-            {(index + 1) % 8 === 0 && (
+            {(index + 1) % 4 === 0 && (
        
               <div className="overflow-x-hidden rounded-[10px] mt-5 h-[570px] border-[0.5px]  border-brandprimary">
                 <div className=" max-w-[100%] overflow-hidden  ">
