@@ -115,7 +115,7 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const archiveVibe = async (id = "66f34a4536049e10646e09f9") => {
+  const archiveVibe = async (vibeId) => {
     try {
       const res = await axios.put(`${ROOT_URL_FEED}/posts/${id}/archive`, {
         headers: {
