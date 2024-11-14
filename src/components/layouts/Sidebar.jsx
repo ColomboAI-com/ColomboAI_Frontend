@@ -30,7 +30,7 @@ const Sidebar = () => {
   const feedSections = ["/feed", "/video", "/vibes", "/thoughts", "/images", "/explore", "/profile"];
 
   useEffect(() => {
-    Setname(getCookie("name"));
+    Setname(getCookie("username"));
     SetprofilePic(getCookie("profilePic"));
   }, []);
 

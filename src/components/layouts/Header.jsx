@@ -41,7 +41,7 @@ const Header = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setName(getCookie("name"));
+    setName(getCookie("username"));
     SetprofilePic(getCookie("profilePic"));
   }, []);
 
