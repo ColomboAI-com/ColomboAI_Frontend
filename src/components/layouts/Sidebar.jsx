@@ -44,17 +44,17 @@ const Sidebar = () => {
       {/* Desktop View */}
       <div className={` xl:w-[100%]  lg:w-[3.5rem] md:w-[3.5rem] bg-white  ${font.className}`}>
         <div className="lg:mb-[40px] md:mt-[1.5rem] md:mb-[46px] xl:mt-[1.5rem] lg:mt-[1.5rem] relative">
-          <Dropdown
+        <Dropdown
             offset={[0, 10]}
             placement="bottom-start"
-            btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-            button={<ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] " image={profilePic} />}
+            btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
+            button={<ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[24px]" image={profilePic} />}
           >
-            <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
+            <ul className="rounded-lg bg-white shadow-md min-w-[160px] text-center">
               <Link href="/profile">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-brandprimary">{name || "Profile"}</li>
               </Link>
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>
+              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleSignOut}>
                 Log out
               </li>
             </ul>
