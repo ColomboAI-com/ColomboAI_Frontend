@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState, useCallback} from 'react';
-import { Play, Pause} from 'lucide-react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { Play, Pause } from 'lucide-react';
 import WaveSurfer from 'wavesurfer.js';
 import axios from 'axios';
+import { IoIosMusicalNotes } from "react-icons/io";
 
-const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
+
+const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose, nextStep }) => {
   const [song, setSong] = useState(null);
   const waveformRef = useRef(null);
   const wavesurfer = useRef(null);
@@ -16,7 +18,7 @@ const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
       wavesurfer.current = null;
     }
   }, []);
- 
+
   useEffect(() => {
     return () => {
       isMounted.current = false;
@@ -114,32 +116,49 @@ const MusicOverlay = ({ song_id, isPlaying, onPlayPause, onClose }) => {
   if (!song) return null;
 
   return (
-    <div className="absolute inset-0 flex flex-col justify-between p-4 text-black bg-opacity-90">
-      <div className="flex justify-between items-center">
-      </div>
-      <div className="relative top-[64px]" style={{ right: 'auto' }}>
-        <div className="flex flex-col items-center mt-auto mb-4">
-          <h3 className="text-xl text-center font-circularStd text-[20px] font-bold">{song.name}</h3>
-          <p className="text-sm opacity-80 text-center font-circularStd text-[14px] font-[450]">by {song.artist_name}</p>
+    <>
+      {nextStep ? <div className="absolute inset-0 flex flex-col justify-between p-4 text-black bg-opacity-90">
+        <div className="flex justify-between items-center">
         </div>
+        <div className="relative top-[64px]" style={{ right: 'auto' }}>
+          <div className="flex flex-col items-center mt-auto mb-4">
+            <h3 className="text-xl text-center font-circularStd text-[20px] font-bold">{song.name}</h3>
+            <p className="text-sm opacity-80 text-center font-circularStd text-[14px] font-[450]">by {song.artist_name}</p>
+          </div>
 
-        <div className="relative mx-auto overflow-hidden rounded-lg mt-6" style={{ width: '100%', maxWidth: '400px' }}>
-          <div ref={waveformRef} className="w-full h-[73px]" />
+          <div className="relative mx-auto overflow-hidden rounded-lg mt-6" style={{ width: '100%', maxWidth: '400px' }}>
+            <div ref={waveformRef} className="w-full h-[73px]" />
+          </div>
         </div>
-      </div>
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={togglePlay}
-          className="bg-white rounded-full p-4"
-        >
-          {isPlaying ? (
-            <Pause className="text-blue-600 w-8 h-8" />
-          ) : (
-            <Play className="text-blue-600 w-8 h-8" />
-          )}
-        </button>
-      </div>
-    </div>
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={togglePlay}
+            className="bg-white rounded-full p-4"
+          >
+            {isPlaying ? (
+              <Pause className="text-blue-600 w-8 h-8" />
+            ) : (
+              <Play className="text-blue-600 w-8 h-8" />
+            )}
+          </button>
+        </div>
+      </div> :
+        <div className='absolute bottom-[17.5rem] left-6 text-sm flex flex-row items-center'>
+          <IoIosMusicalNotes className="w-[20px] h-[20px]" />
+          <p>{song.name} - by {song.artist_name}</p>
+          <button
+            onClick={togglePlay}
+            className="bg-white rounded-full p-2 ml-2"
+          >
+            {isPlaying ? (
+              <Pause className="text-blue-600 w-3 h-3" />
+            ) : (
+              <Play className="text-blue-600 w-3 h-3" />
+            )}
+          </button>
+        </div>
+      }
+    </>
   );
 };
 

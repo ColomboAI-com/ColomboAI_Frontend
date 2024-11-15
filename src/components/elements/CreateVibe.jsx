@@ -360,6 +360,7 @@ const CreateVibe = ({
                   setCaptionInput={setCaptionInput}
                   width={imageWidth}
                   handleCreateVibe={handleCreateVibe}
+                  selectedSong={selectedSong}
                 />
               </div>
             ) : (
@@ -397,6 +398,7 @@ const CreateVibe = ({
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onClose={() => setSelectedSong(null)}
+                nextStep={nextStep}
               />
             )}
           </div>
@@ -614,6 +616,7 @@ const CreateVibe = ({
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onClose={() => setSelectedSong(null)}
+                nextStep={nextStep}
               />
             )}
           </div>
