@@ -11,7 +11,7 @@ import SuggestedVibes from "@/components/layouts/SuggestedVibes";
 import LargeAdComponent from "@/components/ads/LargeAd";
 
 export default function RenderFeed({ filter }) {
-  const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
+  const { posts, getPosts, loadings, page, resetFeedValues, generateWallet } = useContext(FeedContext);
 
   const { getUserDetails } = useContext(UserProfileContext);
 
@@ -111,6 +111,15 @@ export default function RenderFeed({ filter }) {
 
   if (loadings.getPost && !posts.length) return <Loader className={"mt-5"} />;
 
+  // Function to handle the ad click
+  const handleAdClick = (index) => {
+    // Collect the previous 4 postIds when the ad is clicked
+    const postIds = posts.slice(index - 4, index).map((post) => post._id);
+    const adRevenue = 100; // TODO - adRevenue how to calc?
+
+    generateWallet(postIds, adRevenue);
+  };
+
   return (
     <div className="sm:px-0 md:px-0" id="posts_container_infy_scroll">
       {posts.length ? (
@@ -118,23 +127,22 @@ export default function RenderFeed({ filter }) {
           <Fragment key={index}>
             <Post post={i} index={index} />
             {(index + 1) % 7 === 0 && (index + 1) % 4 !== 0 && (
-           
               <div className="overflow-x-hidden rounded-[10px] mt-5">
                 <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
                   <SuggestedVibes />
                 </div>
               </div>
-
             )}
             {(index + 1) % 4 === 0 && (
-       
-              <div className="overflow-x-hidden rounded-[10px] mt-5 h-[570px] border-[0.5px]  border-brandprimary">
+              <div
+                className="overflow-x-hidden rounded-[10px] mt-5 h-[570px] border-[0.5px]  border-brandprimary"
+                onClick={() => handleAdClick(index + 1)}
+              >
                 <div className=" max-w-[100%] overflow-hidden  ">
                   <LargeAdComponent divid={`feed-ad-${index}`} />
                   {/* <FooterAdComponent divid={`feed-ad-${index}`} /> */}
                 </div>
               </div>
-              
             )}
           </Fragment>
         ))
