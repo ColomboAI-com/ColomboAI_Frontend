@@ -27,8 +27,6 @@ export default function FeedContextProvider({ children }) {
     topUser: false,
     getImpressions: false,
     incrementImpression: false,
-    getWallet: false,
-    calcWallet: false,
   });
 
   const getPosts = async (type, page = 1, limit = 10) => {
@@ -330,43 +328,6 @@ export default function FeedContextProvider({ children }) {
     }
   };
 
-  const getPostWallet = async (postId) => {
-    try {
-      setLoadings((prev) => ({ ...prev, getWallet: true }));
-      const res = await axios.get(`${ROOT_URL_FEED}/wallet/${postId}/`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
-      return res.data;
-    } catch (err) {
-      handleError(err);
-    } finally {
-      setLoadings((prev) => ({ ...prev, getWallet: false }));
-    }
-  };
-
-  const generateWallet = async (postIds, adRevenue) => {
-    try {
-      setLoadings((prev) => ({ ...prev, calcWallet: true }));
-      const res = await axios.post(
-        `${ROOT_URL_FEED}/wallet/calculate/`,
-        { postIds, adRevenue },
-        {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        }
-      );
-
-      console.log(res);
-    } catch (error) {
-      handleError(err);
-    } finally {
-      setLoadings((prev) => ({ ...prev, calcWallet: true }));
-    }
-  };
-
   const resetFeedValues = () => {
     setPosts([]);
     setPage(1);
@@ -400,8 +361,6 @@ export default function FeedContextProvider({ children }) {
         topUsers,
         getPostImpressions,
         incrementPostImpressions,
-        getPostWallet,
-        generateWallet,
       }}
     >
       {children}
