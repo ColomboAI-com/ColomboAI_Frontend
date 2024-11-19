@@ -21,9 +21,10 @@ export default function PostActions({ post }) {
     setOpenMagicPenWithIcon,
   } = useContext(GlobalContext);
 
-  const { getPostImpressions } = useContext(FeedContext);
+  const { getPostImpressions, getPostWallet } = useContext(FeedContext);
 
   const [impressions, setImpressions] = useState(0);
+  const [wallet, setWallet] = useState(0);
 
   const handleShare = (postId) => {
     setIsShareOpen(true);
@@ -53,8 +54,17 @@ export default function PostActions({ post }) {
     }
   };
 
+  const handleFetchWallet = async () => {
+    const response = await getPostWallet(post._id);
+
+    if (response.success) {
+      setWallet(response.data.amount);
+    }
+  };
+
   useEffect(() => {
     handleFetchImpressions();
+    handleFetchWallet();
   }, []);
 
   return (
@@ -92,7 +102,7 @@ export default function PostActions({ post }) {
           </div>
           <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
             <Image src={wallet_icon} alt="colombo" width={28} height={27} />
-            <p className="text-sidebarlabel font-sans text-[14px]">$20</p>
+            <p className="text-sidebarlabel font-sans text-[14px]">${wallet.toFixed(2)}</p>
           </div>
         </div>
       </div>
