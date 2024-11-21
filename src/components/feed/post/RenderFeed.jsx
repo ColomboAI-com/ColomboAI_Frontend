@@ -9,6 +9,7 @@ import { getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import SuggestedVibes from "@/components/layouts/SuggestedVibes";
 import LargeAdComponent from "@/components/ads/LargeAd";
+import VideoAd from "@/components/ads/VideoAd";
 
 export default function RenderFeed({ filter }) {
   const { posts, getPosts, loadings, page, resetFeedValues, generateWallet } = useContext(FeedContext);
@@ -129,7 +130,7 @@ export default function RenderFeed({ filter }) {
             {(index + 1) % 7 === 0 && (index + 1) % 4 !== 0 && (
               <div className="overflow-x-hidden rounded-[10px] mt-5">
                 <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                  <SuggestedVibes />
+                  <VideoAd />
                 </div>
               </div>
             )}
