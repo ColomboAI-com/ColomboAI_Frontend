@@ -57,7 +57,7 @@ export default function PostActions({ post }) {
   const handleFetchWallet = async () => {
     const response = await getPostWallet(post._id);
 
-    if (response.success) {
+    if (response?.success) {
       setWallet(response.data.amount);
     }
   };
