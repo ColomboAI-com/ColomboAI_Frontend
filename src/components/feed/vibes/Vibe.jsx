@@ -39,7 +39,8 @@ export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions } = useContext(VibeContext);
+  const { fetchSongById, incrementVibeImpressions, getVibeImpressions, fetchVibeWallet } =
+    useContext(VibeContext);
 
   const { userDetails } = useContext(UserProfileContext);
   const [song, setSong] = useState({});
@@ -51,6 +52,9 @@ export default function Vibe({ vibe, index }) {
   const hasFetchedSong = useRef(false);
   const [seeMore, setSeeMore] = useState(false);
   const toggleSeeMore = () => setSeeMore(!seeMore);
+
+  const [wallet, setWallet] = useState(0);
+
   const handleRepost = () => {
     setRepost(!showRepost);
   };
@@ -69,8 +73,17 @@ export default function Vibe({ vibe, index }) {
     };
   }, []);
 
+  const handleFetchVibeWallet = async () => {
+    const response = await fetchVibeWallet(vibe._id);
+
+    if (response.success) {
+      setWallet(response.data.amount);
+    }
+  };
+
   useEffect(() => {
     handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
+    handleFetchVibeWallet(vibe._id);
   }, []);
 
   //   IMPRESSION HANDLING AND PLAYING VIDEO WHEN THE VIBE IS IN VIEW
@@ -148,7 +161,7 @@ export default function Vibe({ vibe, index }) {
   const handleFollowToggle = (updatedFollowState) => {
     setIsFollowing(updatedFollowState); // Update the follow state when the button is toggled
   };
-  
+
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-0px)] md:h-[37rem] lg:h-[32.5rem] sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} vibe={vibe} />}
@@ -159,7 +172,9 @@ export default function Vibe({ vibe, index }) {
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
-        <div className={` relative overflow-clip hide-scrollbar border-green-400 sm:h-[calc(100vh-0px)] md:h-[32.5] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-full md:w-[470px]`}>
+        <div
+          className={` relative overflow-clip hide-scrollbar border-green-400 sm:h-[calc(100vh-0px)] md:h-[32.5] lg:h-[32.5rem] xl:h-[35rem]  aspect-[9/16] sm:w-full md:w-[470px]`}
+        >
           <div
             ref={VibeViewedRef}
             style={{ height: "1px" }}
@@ -239,7 +254,11 @@ export default function Vibe({ vibe, index }) {
               </div>
             }
 
-            <div className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${vibe.type == 'video' ? `sm:mb-[3.5rem]` : `sm:mb-2`}`}>
+            <div
+              className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${
+                vibe.type == "video" ? `sm:mb-[3.5rem]` : `sm:mb-2`
+              }`}
+            >
               <p className="leading-5">
                 {vibe.content.length > 130
                   ? seeMore
@@ -313,7 +332,7 @@ export default function Vibe({ vibe, index }) {
                 ) : (
                   <WalletIcon />
                 )}
-                <p className="text-[10px]">$20</p>
+                <p className="text-[10px]">{wallet}</p>
               </div>
               {/* <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full"> */}
               {/* <GenAiIcon w={30} h={25} fill={"#ffffff"} /> */}
@@ -366,7 +385,7 @@ export default function Vibe({ vibe, index }) {
           </div>
           <div className="flex flex-col items-center gap-[2px] md:gap-1">
             <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
-            <p>856</p>
+            <p>{wallet}</p>
           </div>
 
           <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
