@@ -44,7 +44,7 @@ const VideoAd = () => {
     });
 
     return () => {
-      window.removeEventListener("scroll", toggleVideoSize);
+      // window.removeEventListener("scroll", toggleVideoSize);
     };
   }, []);
 

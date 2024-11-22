@@ -9,40 +9,47 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSwipeable } from "react-swipeable";
 
-var settings = {
-  dots: false,
-  arrows: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  adaptiveHeight: true,
-  vertical: true,
-  verticalSwiping: false,
-  swipe: false,
-  draggable: false,
-};
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 1,
-    slidesToSlide: 1,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 1,
-    slidesToSlide: 1,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-    slidesToSlide: 1,
-  },
-};
-
 export default function Vibes({ filter }) {
   const sliderRef = useRef(null);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    vertical: true,
+    verticalSwiping: false,
+    swipe: false,
+    draggable: false,
+    afterChange: (currentIndex) => {
+      // console.log("CURR INDEX", currentIndex);
+      // Check if the current slide is the last one
+      if (currentIndex === vibes.length - 1) {
+        handleLoadMore();
+      }
+    },
+  };
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+  };
 
   const swipeHandlers = useSwipeable({
     onSwipedUp: () => {
