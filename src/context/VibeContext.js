@@ -253,6 +253,22 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
+  const fetchVibeWallet = async (vibeId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
+      const res = await axios.get(`${ROOT_URL_FEED}/wallet/vibe/${vibeId}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
+    }
+  };
+
   return (
     <VibeContext.Provider
       value={{
@@ -271,6 +287,7 @@ export default function VibeContextProvider({ children }) {
         getVibeImpressions,
         saveVibe,
         page,
+        fetchVibeWallet,
       }}
     >
       {children}
