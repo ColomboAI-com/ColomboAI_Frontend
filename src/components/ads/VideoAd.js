@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import Dropdown from "../messages/Dropdown";
 import { LikeIcon, MagicPenIcon, PostMoreOptionsIcon, RePostIcon } from "../Icons";
 import Image from "next/image";
-import post_comment from "../../../public/images/icons/post_comment.svg"
-import post_stats from "../../../public/images/icons/post_stats.svg"
-import reply_icon from "../../../public/images/icons/reply_icon.svg"
-import wallet_icon from "../../../public/images/icons/wallet_icon.svg"
+import post_comment from "../../../public/images/icons/post_comment.svg";
+import post_stats from "../../../public/images/icons/post_stats.svg";
+import reply_icon from "../../../public/images/icons/reply_icon.svg";
+import wallet_icon from "../../../public/images/icons/wallet_icon.svg";
 
 const VideoAd = () => {
   useEffect(() => {
@@ -75,14 +75,7 @@ const VideoAd = () => {
             />
           </div>
         </div>
-        <video
-          id="content_video"
-          className="w-full"
-          preload="auto"
-          muted
-          autoPlay
-          controls={true}
-        >
+        <video id="content_video" className="w-full" preload="auto" muted autoPlay controls={true}>
           <source
             src="https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_30mb.mp4"
             type="video/mp4"
@@ -100,9 +93,7 @@ const VideoAd = () => {
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
             </div>
-            <button
-              className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1"
-            >
+            <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={reply_icon} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
             </button>
             <button className="">
@@ -110,9 +101,7 @@ const VideoAd = () => {
             </button>
           </div>
           <div className="flex items-center lg:gap-[19px] md:gap-[19px] gap-[10px]">
-            <div
-              className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1"
-            >
+            <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <MagicPenIcon />
             </div>
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
