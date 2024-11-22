@@ -74,16 +74,20 @@ export default function Vibe({ vibe, index }) {
   }, []);
 
   const handleFetchVibeWallet = async () => {
-    const response = await fetchVibeWallet(vibe._id);
+    try {
+      const response = await fetchVibeWallet(vibe._id);
 
-    if (response.success) {
-      setWallet(response.data.amount);
+      if (response.success) {
+        setWallet(response.data.amount);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   useEffect(() => {
     handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
-    handleFetchVibeWallet(vibe._id);
+    handleFetchVibeWallet(vibe._id); // Fetch Wallet
   }, []);
 
   //   IMPRESSION HANDLING AND PLAYING VIDEO WHEN THE VIBE IS IN VIEW
