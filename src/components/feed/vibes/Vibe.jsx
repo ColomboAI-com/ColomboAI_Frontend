@@ -39,7 +39,7 @@ export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions, fetchVibeWallet } =
+  const { fetchSongById, incrementVibeImpressions, getVibeImpressions, fetchVibeWallet, calcVibeWallet } =
     useContext(VibeContext);
 
   const { userDetails } = useContext(UserProfileContext);
@@ -85,9 +85,21 @@ export default function Vibe({ vibe, index }) {
     }
   };
 
+  // TODO - GENERATE WALLET REVENUE
+  const handleGenerateWalletRevenue = async (adRevenue) => {
+    try {
+      const response = await calcVibeWallet(vibe._id, adRevenue);
+      if (response.success) {
+        setWallet(response.data.amount);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
-    handleFetchVibeWallet(vibe._id); // Fetch Wallet
+    handleFetchVibeWallet(); // Fetch Wallet
   }, []);
 
   //   IMPRESSION HANDLING AND PLAYING VIDEO WHEN THE VIBE IS IN VIEW
