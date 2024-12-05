@@ -8,6 +8,7 @@ import Slider from "react-slick";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { useSwipeable } from "react-swipeable";
+import VibesAd from "@/components/ads/vibesAd";
 
 export default function Vibes({ filter }) {
   const sliderRef = useRef(null);
@@ -58,8 +59,8 @@ export default function Vibes({ filter }) {
     onSwipedDown: () => {
       if (sliderRef.current) sliderRef.current.slickPrev();
     },
-    onSwipedRight: () => {},
-    onSwipedLeft: () => {},
+    onSwipedRight: () => { },
+    onSwipedLeft: () => { },
     preventDefaultTouchmoveEvent: true,
     preventDefaultTouchmoveEvent: true,
     trackTouch: true,
@@ -105,7 +106,9 @@ export default function Vibes({ filter }) {
         <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black">
           <Slider ref={sliderRef} {...settings}>
             {vibes.map((vibe, index) => (
-              <Vibe vibe={vibe} key={vibe._id} index={index} />
+              <>
+                {(index + 1) % 4 === 0 ? <VibesAd key={index} /> : <Vibe vibe={vibe} key={vibe._id} index={index} />}
+              </>
             ))}
           </Slider>
         </div>
@@ -128,7 +131,9 @@ export default function Vibes({ filter }) {
             afterChange={(previousSlide, { currentSlide }) => handleSlideChange(currentSlide)}
           >
             {vibes.map((vibe, index) => (
-              <Vibe vibe={vibe} key={vibe._id} index={index} />
+              <>
+                {(index + 1) % 4 === 0 ? <VibesAd key={index} /> : <Vibe vibe={vibe} key={vibe._id} index={index} />}
+              </>
             ))}
           </Carousel>
         </div>
