@@ -127,33 +127,35 @@ export default function RenderFeed({ filter }) {
         posts.map((i, index) => (
           <Fragment key={index}>
             <Post post={i} index={index} />
-            {(index + 1) % 7 === 0 && (index + 1) % 4 !== 0 && (
-              <div className="overflow-x-hidden rounded-[10px] mt-5">
-                <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                  <VideoAd />
-                </div>
-              </div>
-            )}
-            {(index + 1) % 4 === 0 && (
-              <div
-                className="overflow-x-hidden rounded-[10px] mt-5 h-[570px] border-[0.5px]  border-brandprimary"
-                onClick={() => handleAdClick(index + 1)}
-              >
-                <div className=" max-w-[100%] overflow-hidden  ">
-                  <LargeAdComponent divid={`feed-ad-${index}`} />
-                  {/* <FooterAdComponent divid={`feed-ad-${index}`} /> */}
-                </div>
-              </div>
+            {(index + 1) % 7 === 0 && (
+              <>
+                {(Math.floor((index + 1) / 7) % 2 === 0) ? (
+                  // Render VideoAd for even cycles
+                  <div className="overflow-x-hidden rounded-[10px] mt-5">
+                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                      <VideoAd />
+                    </div>
+                  </div>
+                ) : (
+                  // Render LargeAdComponent for odd cycles
+                  <div className="overflow-x-hidden rounded-[10px] mt-5" onClick={() => handleAdClick(index + 1)}>
+                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                      <LargeAdComponent divid={`feed-ad-${index}`} />
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </Fragment>
         ))
       ) : (
         <NoDataFound className={"mt-5"} />
-      )}
+      )
+      }
       {/* Invisible Load More Button */}
       <div ref={loadMoreRef} style={{ height: "1px" }}></div>
       <div style={{ color: "transparent" }}>Hello</div>
       {/* KEEP THIS DIV WITH HELLO SO THAT THE BUTTON APPEARS IN THE WINDOW FOR INFINITE SCROLL TO WORK */}
-    </div>
+    </div >
   );
 }
