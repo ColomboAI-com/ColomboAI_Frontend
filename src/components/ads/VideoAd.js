@@ -32,6 +32,11 @@ const VideoAd = () => {
         muted: true,
         controls: true, // Enable/disable controls as needed
         debug: false, // Explicitly disable debugging
+        loadingSpinner: false,
+        errorDisplay: false,
+        textTrackSettings: false,
+        bigPlayButton: false,
+        controlBar: false,
       });
 
       const videoContainer = document.getElementById("videoContainer");
@@ -75,7 +80,7 @@ const VideoAd = () => {
             />
           </div>
         </div>
-        <video id="content_video" className="w-full" preload="auto" muted autoPlay controls={true}>
+        <video id="content_video" className="w-full h-auto" preload="auto" muted autoPlay controls={true}>
           <source
             src="https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_30mb.mp4"
             type="video/mp4"
