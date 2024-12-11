@@ -346,26 +346,26 @@ export default function FeedContextProvider({ children }) {
     }
   };
 
-  const generateWallet = async (postIds, adRevenue) => {
-    try {
-      setLoadings((prev) => ({ ...prev, calcWallet: true }));
-      const res = await axios.post(
-        `${ROOT_URL_FEED}/wallet/calculate/`,
-        { postIds, adRevenue },
-        {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        }
-      );
+  // const generateWallet = async (postIds, adRevenue) => {
+  //   try {
+  //     setLoadings((prev) => ({ ...prev, calcWallet: true }));
+  //     const res = await axios.post(
+  //       `${ROOT_URL_FEED}/wallet/calculate/`,
+  //       { postIds, adRevenue },
+  //       {
+  //         headers: {
+  //           Authorization: getCookie("token"),
+  //         },
+  //       }
+  //     );
 
-      console.log(res);
-    } catch (error) {
-      handleError(err);
-    } finally {
-      setLoadings((prev) => ({ ...prev, calcWallet: true }));
-    }
-  };
+  //     console.log(res);
+  //   } catch (error) {
+  //     handleError(err);
+  //   } finally {
+  //     setLoadings((prev) => ({ ...prev, calcWallet: true }));
+  //   }
+  // };
 
   const resetFeedValues = () => {
     setPosts([]);
@@ -401,7 +401,7 @@ export default function FeedContextProvider({ children }) {
         getPostImpressions,
         incrementPostImpressions,
         getPostWallet,
-        generateWallet,
+        // generateWallet,
       }}
     >
       {children}
