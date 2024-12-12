@@ -269,45 +269,45 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const calcVibeWallet = async (vibeId, adRevenue) => {
-    try {
-      setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
-      const res = await axios.post(
-        `${ROOT_URL_FEED}/wallet/vibe/${vibeId}`,
-        { adRevenue },
-        {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        }
-      );
-      return res.data;
-    } catch (err) {
-      handleError(err);
-    } finally {
-      setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
-    }
-  };
+  // const calcVibeWallet = async (vibeId, adRevenue) => {
+  //   try {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
+  //     const res = await axios.post(
+  //       `${ROOT_URL_FEED}/wallet/vibe/${vibeId}`,
+  //       { adRevenue },
+  //       {
+  //         headers: {
+  //           Authorization: getCookie("token"),
+  //         },
+  //       }
+  //     );
+  //     return res.data;
+  //   } catch (err) {
+  //     handleError(err);
+  //   } finally {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
+  //   }
+  // };
 
-  const generateMultiVibeWalletRevenue = async (vibeIds, adRevenue) => {
-    try {
-      setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
-      const res = await axios.post(
-        `${ROOT_URL_FEED}/wallet/vibe/calc-multi`,
-        { vibeIds, adRevenue },
-        {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        }
-      );
-      return res.data;
-    } catch (err) {
-      handleError(err);
-    } finally {
-      setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
-    }
-  };
+  // const generateMultiVibeWalletRevenue = async (vibeIds, adRevenue) => {
+  //   try {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
+  //     const res = await axios.post(
+  //       `${ROOT_URL_FEED}/wallet/vibe/calc-multi`,
+  //       { vibeIds, adRevenue },
+  //       {
+  //         headers: {
+  //           Authorization: getCookie("token"),
+  //         },
+  //       }
+  //     );
+  //     return res.data;
+  //   } catch (err) {
+  //     handleError(err);
+  //   } finally {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
+  //   }
+  // };
 
   return (
     <VibeContext.Provider
@@ -328,8 +328,8 @@ export default function VibeContextProvider({ children }) {
         saveVibe,
         page,
         fetchVibeWallet,
-        calcVibeWallet,
-        generateMultiVibeWalletRevenue,
+        // calcVibeWallet,
+        // generateMultiVibeWalletRevenue,
       }}
     >
       {children}
