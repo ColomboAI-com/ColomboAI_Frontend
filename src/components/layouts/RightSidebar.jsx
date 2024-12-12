@@ -59,7 +59,7 @@ const RightSidebar = () => {
         </div>
         <div className="px-[22px] overflow-hidden flex flex-col items-center">
           <SideTopAdComponent divid="maindsidetop" />
-          <SideAdComponent divid="mainsidemid" />
+          {/* <SideAdComponent divid="mainsidemid" /> */}
           <SideTopAdComponent divid="mainsidebottom" />
           {/* <Sponsored/>
                 <Events/>
