@@ -127,9 +127,9 @@ export default function RenderFeed({ filter }) {
         posts.map((i, index) => (
           <Fragment key={index}>
             <Post post={i} index={index} />
-            {(index + 1) % 7 === 0 && (
+            {(index + 1) % 4 === 0 && (
               <>
-                {Math.floor((index + 1) / 7) % 2 === 0 ? (
+                {Math.floor((index + 1) / 4) % 2 === 0 ? (
                   // Render VideoAd for even cycles
                   <div className="overflow-x-hidden rounded-[10px] mt-5">
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
