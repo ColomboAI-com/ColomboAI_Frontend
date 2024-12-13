@@ -7,6 +7,7 @@ import { ThreeDots } from "react-loader-spinner";
 import Button from "@/elements/Button";
 import { MessageBox } from "../MessageBox";
 import { constructFrom } from "date-fns";
+import ReactPlayer from "react-player";
 
 const CreatePost = () => {
   const [isMagicPenOpen, setIsMagicPenOpen] = useState(false);
@@ -198,9 +199,7 @@ const CreatePost = () => {
                         className="w-full h-full object-cover rounded-xl"
                       />
                     ) : postType.includes("video") ? (
-                      <video src={url} autoPlay loop controls className="w-full h-full object-cover rounded-xl">
-                        <source src={url} />
-                      </video>
+                      <ReactPlayer url={url} playing={true} loop={true} controls={true} className="w-full h-full object-cover rounded-xl"/>
                     ) : null}
                     <div className="absolute top-3 right-2">
                       <div className="flex flex-row items-center justify-center">

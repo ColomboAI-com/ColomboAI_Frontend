@@ -30,6 +30,7 @@ import Image from "next/image";
 import { set } from "date-fns";
 import { VibeContext } from "@/context/VibeContext";
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
+import ReactPlayer from "react-player";
 
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
@@ -509,7 +510,7 @@ const CreateVibe = ({
           )}
         </div>
       ) : mediaUrl !== "" && postType.includes("video") ? (
-        //           <video
+        //           <ReactPlayer
         //             key={mediaUrl}
         //             autoPlay
         //             loop
@@ -537,20 +538,18 @@ const CreateVibe = ({
             onClick={handleTextClick}
           /> */}
           <div className="relative max-h-[34rem] overflow-hidden">
-            <video
+            <ReactPlayer
               key={mediaUrl}
               ref={imgRef}
-              src={mediaUrl}
+              url={mediaUrl}
               alt="File Preview"
               className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
-              autoPlay
-              loop
-              controls
-            >
-              <source src={mediaUrl} />
-            </video>
+              playing={true}
+              loop={true}
+              controls={true}
+            />
 
             {isTrimming ? (
               // <Image

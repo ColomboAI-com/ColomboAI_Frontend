@@ -200,7 +200,7 @@ export default function Vibe({ vibe, index }) {
           {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
 
           {/* {vibes.length > 0 && vibes[0].type === "video" && (
-            <video
+            <ReactPlayer
               src={vibes[0].media[0]}
               className="w-full h-full"
               controls
@@ -212,7 +212,7 @@ export default function Vibe({ vibe, index }) {
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
-                <video
+                <ReactPlayer
                   src={vibe.media[0]}
                   className="w-full h-full overflow-visible"
                   controls

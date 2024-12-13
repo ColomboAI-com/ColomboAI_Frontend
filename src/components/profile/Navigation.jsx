@@ -6,6 +6,7 @@ import Thought from './Thought';
 import Video from './Video';
 import Bookmark from './Bookmark';
 import Tag from './Tag';
+import ReactPlayer from 'react-player';
 
 const IconButton = ({ label, onClick, children }) => (
   <div className="mx-4" onClick={onClick} role="button" tabIndex="0" aria-label={label} onKeyDown={(e) => {
@@ -29,7 +30,7 @@ const Navigation = ({username}) => {
             case 'thought':
                 return <Thought username={username}/>;
             case 'video':
-                return <Video username={username}/>;
+                return <ReactPlayer username={username}/>;
             case 'bookmark':
                 return <Bookmark username={username}/>;
             case 'tags':

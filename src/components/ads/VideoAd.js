@@ -6,6 +6,7 @@ import post_comment from "../../../public/images/icons/post_comment.svg";
 import post_stats from "../../../public/images/icons/post_stats.svg";
 import reply_icon from "../../../public/images/icons/reply_icon.svg";
 import wallet_icon from "../../../public/images/icons/wallet_icon.svg";
+import ReactPlayer from "react-player";
 
 const VideoAd = () => {
   useEffect(() => {
@@ -80,13 +81,7 @@ const VideoAd = () => {
             />
           </div>
         </div>
-        <video id="content_video" className="w-full h-auto" preload="auto" muted autoPlay controls={true}>
-          <source
-            src="https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_30mb.mp4"
-            type="video/mp4"
-          />
-          Your browser does not support the video tag.
-        </video>
+        <ReactPlayer  url="https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_30mb.mp4" id="content_video" className="w-full h-auto" loop={true} muted={true} playing={true} />
         <div className="flex items-center justify-between pt-2 px-3">
           <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]">
             <LikeIcon />

@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from "react";
 import { StoryContext } from "@/context/StoryContext";
 import { MessageBox } from "../MessageBox";
 import { GlobalContext } from "@/context/GlobalContext";
+import ReactPlayer from "react-player";
 
 const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const [file, setFile] = useState(null);
@@ -117,9 +118,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
                   className="w-full h-[66vh] object-contain"
                 />
               ) : (
-                <video key={mediaUrl} autoPlay loop controls className="w-full aspect-video">
-                  <source src={mediaUrl} />
-                </video>
+                <ReactPlayer url={mediaUrl} key={mediaUrl} playing={true} loop={true} controls={true} className="w-full aspect-video"/>
               )}
               <div className="absolute top-3 right-2">
                 <div className="flex flex-row items-center justify-center">

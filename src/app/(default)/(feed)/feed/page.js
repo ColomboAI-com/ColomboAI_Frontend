@@ -11,6 +11,7 @@ import { GlobalContext } from "@/context/GlobalContext"
 import { useContext } from "react"
 import Image from "next/image"
 import comment_x_button from "../../../../../public/images/icons/comment_x_button.svg"
+import ReactPlayer from "react-player"
 
 const Feed = () => {
   const { popupImage } = useContext(GlobalContext)
@@ -26,7 +27,7 @@ const Feed = () => {
         </div>}
         {popupVideo != "" && <div className="z-[200] fixed top-0 left-0 right-0 bottom-0 bg-gray-100 w-full h-[50rem]">
           <Image src={comment_x_button} onClick={e => setPopupVideo("")} alt="colombo"  className="absolute z-[210] top-2 right-2 cursor-pointer" />
-          <video src={popupVideo} controls className="w-full h-full object-contain" />
+          <ReactPlayer url={popupVideo} controls={true} className="w-full h-full object-contain" />
         </div>}
         <Stories />
 

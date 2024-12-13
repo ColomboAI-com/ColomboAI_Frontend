@@ -10,6 +10,7 @@ import VideoBlock from "../feed/post/VideoBlock";
 import Picker from "emoji-picker-react";
 import Image from "next/image";
 import comment_x_button from "../../../public/images/icons/comment_x_button.svg";
+import ReactPlayer from "react-player";
 
 const CommentForVibe = ({ specificPostId, posts }) => {
   const magicBoxInputRef = useRef();
@@ -203,9 +204,7 @@ const CommentForVibe = ({ specificPostId, posts }) => {
             <img src={posts?.media[0]} className="w-full h-full aspect-video object-contain" />
           )}
           {posts?.type === "video" && (
-            <video className="inset-0 w-full h-full aspect-video" src={posts?.media[0]} controls>
-              Your browser does not support the video tag.
-            </video>
+            <ReactPlayer className="inset-0 w-full h-full aspect-video" url={posts?.media[0]} controls={true} />
           )}
           {posts?.type === "" && (
             <img src="/images/home/feed-banner-img.png" className="w-full h-full aspect-video" />
