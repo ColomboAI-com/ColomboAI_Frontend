@@ -27,9 +27,13 @@ const LargeAdComponent = ({divid}) => {
                 try {
                   console.log('Defining ad slot...');
                  
-                  window.googletag.defineSlot('/23102803892/Test_768x',[[480, 320], [768, 1024], [1024, 768]],
-                    divid)
+                  // window.googletag.defineSlot('/23102803892/Test_768x',[[480, 320], [768, 1024], [1024, 768]],
+                  //   divid)
+                  // .addService(window.googletag.pubads());
+
+                  window.googletag.defineSlot('/23102803892/Test_768x', [[480, 320], 'fluid'], divid)
                   .addService(window.googletag.pubads());
+
                   
                   // console.log('Enabling single request mode...');
                   // window.googletag.pubads().enableSingleRequest();
@@ -41,7 +45,6 @@ const LargeAdComponent = ({divid}) => {
                   window.googletag.enableServices();
                   
                   console.log('Displaying ad...');
-                  
 
                   window.googletag.display(divid);
                   
@@ -62,7 +65,7 @@ const LargeAdComponent = ({divid}) => {
     <>
         <div
       className="overflow-x-hidden border-[0.5px] w-full border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5"
-      id="videoContainer"
+      //id="videoContainer"
     >
       <div className="flex flex-col w-full py-[10px]">
         <div className="flex pb-2 flex-row justify-between items-center px-3">
@@ -81,6 +84,8 @@ const LargeAdComponent = ({divid}) => {
           async
           src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
         ></script>
+        <div id={divid} className="h-auto"></div>
+
         <div className="flex items-center justify-between pt-2 px-3">
           <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]">
             <LikeIcon />
