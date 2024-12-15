@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Dropdown from "../messages/Dropdown";
 import { LikeIcon, MagicPenIcon, PostMoreOptionsIcon, RePostIcon } from "../Icons";
 import Image from "next/image";
@@ -7,6 +7,8 @@ import post_stats from "../../../public/images/icons/post_stats.svg";
 import reply_icon from "../../../public/images/icons/reply_icon.svg";
 import wallet_icon from "../../../public/images/icons/wallet_icon.svg";
 const LargeAdComponent = ({divid}) => {
+    const [adLoaded, setAdLoaded] = useState(false);
+
     useEffect(() => {
         const loadGPTScript = () => {
           return new Promise((resolve, reject) => {
@@ -47,19 +49,25 @@ const LargeAdComponent = ({divid}) => {
                   console.log('Displaying ad...');
 
                   window.googletag.display(divid);
+                  setAdLoaded(true);
                   
                 } catch (error) {
                   console.error('Error setting up Google Publisher Tag:', error);
+                  setAdLoaded(false);
                 }
               });
             } else {
               console.error('Google Publisher Tag library is not loaded.');
+              setAdLoaded(false);
             }
           })
           .catch((error) => {
             console.error('Failed to load Google Publisher Tag script:', error);
+            setAdLoaded(false);
           });
       }, []);
+  
+  if (!adLoaded) return null; //returning null if there is no ad
 
   return (
     <>
