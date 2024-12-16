@@ -143,7 +143,7 @@ export default function RenderFeed({ filter }) {
                     onClick={() => handleAdClick(index + 1)}
                   >
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                      <LargeAdComponent divid={`feed-ad-${index}`} />
+                      <LargeAdComponent divid={`feed-ad-${index}`} filter={filter}/>
                     </div>
                   </div>
                 )}
