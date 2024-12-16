@@ -19,6 +19,7 @@ import share from "../../../../public/images/icons/vibes_mobile/share.svg";
 import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
 import { useRouter } from "next/navigation";
+import ReactPlayer from "react-player";
 
 import {
   GenAIPen,
@@ -213,14 +214,20 @@ export default function Vibe({ vibe, index }) {
             <React.Fragment>
               {isVibeInView ? (
                 <ReactPlayer
-                  src={vibe.media[0]}
+                  url={vibe.media[0]}
                   className="w-full h-full overflow-visible"
                   controls
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  type="video/mp4"
+                  playing={true}
+                  loop={true}
+                  muted={true}
+                  playsinline={true}
+                  config={{
+                    file: {
+                      attributes: {
+                        type: "video/mp4",
+                      },
+                    },
+                  }}
                 />
               ) : null}
             </React.Fragment>
@@ -271,9 +278,8 @@ export default function Vibe({ vibe, index }) {
             }
 
             <div
-              className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${
-                vibe.type == "video" ? `sm:mb-[3.5rem]` : `sm:mb-2`
-              }`}
+              className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${vibe.type == "video" ? `sm:mb-[3.5rem]` : `sm:mb-2`
+                }`}
             >
               <p className="leading-5">
                 {vibe.content.length > 130
