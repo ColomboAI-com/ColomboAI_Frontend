@@ -33,7 +33,7 @@ const LargeAdComponent = ({divid}) => {
                   //   divid)
                   // .addService(window.googletag.pubads());
 
-                  window.googletag.defineSlot('/23102803892/Test_768x', [[480, 320], 'fluid'], divid)
+                  window.googletag.defineSlot('/23102803892/Feed/InlineDisplayAds', [[480, 320], 'fluid'], divid)
                   .addService(window.googletag.pubads());
 
                   
