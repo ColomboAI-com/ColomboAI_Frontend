@@ -6,7 +6,7 @@ import post_comment from "../../../public/images/icons/post_comment.svg";
 import post_stats from "../../../public/images/icons/post_stats.svg";
 import reply_icon from "../../../public/images/icons/reply_icon.svg";
 import wallet_icon from "../../../public/images/icons/wallet_icon.svg";
-const LargeAdComponent = ({divid}) => {
+const LargeAdComponent = ({divid, filter}) => {
     const [adLoaded, setAdLoaded] = useState(false);
 
     useEffect(() => {
@@ -33,7 +33,11 @@ const LargeAdComponent = ({divid}) => {
                   //   divid)
                   // .addService(window.googletag.pubads());
 
-                  window.googletag.defineSlot('/23102803892/Feed/InlineDisplayAds', [[480, 320], 'fluid'], divid)
+                  const adSlotUrl =
+                  filter === 'image' ? '/23102803892/Images/InlineDisplayAds' :
+                  '/23102803892/Feed/InlineDisplayAds';
+
+                  window.googletag.defineSlot(adSlotUrl, [[480, 320], 'fluid'], divid)
                   .addService(window.googletag.pubads());
 
                   
