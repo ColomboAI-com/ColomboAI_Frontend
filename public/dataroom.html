@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColomboAI Investor Data Room</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #666;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .metric-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #1a1a1a;
+            margin: 12px 0;
+        }
+
+        .metric-card .label {
+            color: #666;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            color: #1a1a1a;
+        }
+
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: start;
+            padding: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .document-item:hover {
+            background-color: #f9fafb;
+        }
+
+        .document-content {
+            margin-left: 16px;
+        }
+
+        .document-content h3 {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1a1a1a;
+        }
+
+        .document-content p {
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .contact-info {
+            margin-bottom: 24px;
+        }
+
+        .contact-info h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .contact-info .title {
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 0.875rem;
+        }
+
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 40px;
+            padding: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header"></header>
+         <header class="header">
+            <div class="logo">
+                <img src="ColomboAI-logo.svg" alt="" class="apple-image">
+              </div>
+            <h1>Welcome to ColomboAI's Investor Data Room</h1>
+            <p>Join us in revolutionizing the AI and social media industry</p>
+        </header>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="value">1B</div>
+                <div class="label">Target Users</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">$8B</div>
+                <div class="label">Projected Revenue</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">$5.7M</div>
+                <div class="label">Monthly Burn Rate</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Available Documents</h2>
+            <div class="documents-grid">
+                <div class="document-item">
+                    <div class="document-content">
+                        <h3>Pitch Deck</h3>
+                        <p>Mission, products, innovations & revenue potential</p>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <div class="document-content">
+                        <h3>Business Plan</h3>
+                        <p>Growth strategy, milestones & market analysis</p>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <div class="document-content">
+                        <h3>Financial Projections</h3>
+                        <p>Revenue, cost & profit projections</p>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <div class="document-content">
+                        <h3>Post Wallet Overview</h3>
+                        <p>Revolutionary content monetization system</p>
+                    </div>
+                </div>
+                <div class="document-item">
+                    <div class="document-content">
+                        <h3>Competitive Analysis</h3>
+                        <p>Market positioning & competitive advantages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Contact Information</h2>
+            <div class="contacts-grid">
+                <div class="contact-info">
+                    <h3>Juwon Lee</h3>
+                    <div class="title">Chief Financial Officer</div>
+                    <div class="contact-detail">📧 Juwon.L@ColomboAI.com</div>
+                    <div class="contact-detail">📞  <a href="tel:+12245009863" > +1-224-500-9863</a></div>
+                    <div class="contact-detail">🌐<a href="https://colomboai.com/" > www.ColomboAI.com</a></div>
+                </div>
+                <div class="contact-info">
+                    <h3>Wilfried Kouadio</h3>
+                    <div class="title">CEO & Founder</div>
+                    <div class="contact-detail">📧 Wilfried.k@ColomboAI.com</div>
+                    <div class="contact-detail">📞  <a href="tel:+14053056209" > +1-405-305-6209</a></div>
+                    <div class="contact-detail">🌐<a href="https://colomboai.com/" > www.ColomboAI.com</a></div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p><strong>Together, we're building the next global tech giant.</strong></p>
+        </footer>
+    </div>
+</body>
+</html>
