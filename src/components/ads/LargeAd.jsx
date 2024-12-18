@@ -33,14 +33,20 @@ const LargeAdComponent = ({divid, filter}) => {
                   //   divid)
                   // .addService(window.googletag.pubads());
 
-                  const adSlotUrl =
-                  filter === 'image' ? '/23102803892/Images/InlineDisplayAds' :
-                  '/23102803892/Feed/InlineDisplayAds';
+                  let adSlotUrl;
+
+                  if (filter === 'image') {
+                    adSlotUrl = '/23102803892/Images/InlineDisplayAds';
+                  } else if (filter === 'thought') {
+                    adSlotUrl = '/23102803892/Thought/InlineDisplayAds';
+                  } else {
+                    adSlotUrl = '/23102803892/Feed/InlineDisplayAds';
+}
 
                   window.googletag.defineSlot(adSlotUrl, [[480, 320], 'fluid'], divid)
                   .addService(window.googletag.pubads());
-
                   
+
                   // console.log('Enabling single request mode...');
                   // window.googletag.pubads().enableSingleRequest();
                   
@@ -51,7 +57,7 @@ const LargeAdComponent = ({divid, filter}) => {
                   window.googletag.enableServices();
                   
                   console.log('Displaying ad...');
-
+                  
                   window.googletag.display(divid);
                   setAdLoaded(true);
                   
@@ -69,9 +75,10 @@ const LargeAdComponent = ({divid, filter}) => {
             console.error('Failed to load Google Publisher Tag script:', error);
             setAdLoaded(false);
           });
+        //console.log(adLoaded, "adloaded")
       }, []);
-  
-  //if (!adLoaded) return null; //returning null if there is no ad
+
+  if (!adLoaded) return null; //returning null if there is no ad
 
   return (
     <>

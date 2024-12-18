@@ -129,7 +129,7 @@ export default function RenderFeed({ filter }) {
             <Post post={i} index={index} />
             {(index + 1) % 4 === 0 && (
               <>
-                {filter !== "image" && Math.floor((index + 1) / 4) % 2 === 0 ? (
+                {filter !== "image" && filter !== "thought" && Math.floor((index + 1) / 4) % 2 === 0 ? (
                   // Render VideoAd for even cycles
                   <div className="overflow-x-hidden rounded-[10px] mt-5">
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
