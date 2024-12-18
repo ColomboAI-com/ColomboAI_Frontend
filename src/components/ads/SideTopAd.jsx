@@ -21,10 +21,10 @@ const SideTopAdComponent = ({divid}) => {
                 try {
                   console.log('Defining ad slot...');
                  
-                  window.googletag.defineSlot('/23102803892/Genai_Desktop_300v_sidebar_top', [[300, 250], [336, 280]],
+                  window.googletag.defineSlot('/23102803892/Genai_Desktop_300v_sidebar_top', [[300, 250]],
                      divid)
                   .addService(window.googletag.pubads());
-                  
+                 // [336, 280]
                 //   console.log('Enabling single request mode...');
                 //   window.googletag.pubads().enableSingleRequest();
                   

@@ -38,7 +38,7 @@ const LargeAdComponent = ({divid, filter}) => {
                   if (filter === 'image') {
                     adSlotUrl = '/23102803892/Images/InlineDisplayAds';
                   } else if (filter === 'thought') {
-                    adSlotUrl = '/23102803892/Thought/InlineDisplayAds';
+                    adSlotUrl = '/23102803892/Thoughts/InlineDisplayAds';
                   } else {
                     adSlotUrl = '/23102803892/Feed/InlineDisplayAds';
 }
@@ -75,10 +75,10 @@ const LargeAdComponent = ({divid, filter}) => {
             console.error('Failed to load Google Publisher Tag script:', error);
             setAdLoaded(false);
           });
-        //console.log(adLoaded, "adloaded")
+
       }, []);
 
-  if (!adLoaded) return null; //returning null if there is no ad
+  //if (!adLoaded) return null; //returning null if there is no ad
 
   return (
     <>
@@ -116,9 +116,9 @@ const LargeAdComponent = ({divid, filter}) => {
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
             </div>
-            <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+            {/* <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={reply_icon} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-            </button>
+            </button> */}
             <button className="">
               <RePostIcon />
             </button>
@@ -127,9 +127,9 @@ const LargeAdComponent = ({divid, filter}) => {
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <MagicPenIcon />
             </div>
-            <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+            {/* <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={wallet_icon} alt="colombo" width={28} height={27} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
