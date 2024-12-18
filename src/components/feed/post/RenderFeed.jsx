@@ -129,21 +129,19 @@ export default function RenderFeed({ filter }) {
             <Post post={i} index={index} />
             {(index + 1) % 4 === 0 && (
               <>
-                {filter !== "image" && filter !== "thought" && Math.floor((index + 1) / 4) % 2 === 0 ? (
-                  // Render VideoAd for even cycles
+                {Math.floor((index + 1) / 4) % 2 === 0 ? (
                   <div className="overflow-x-hidden rounded-[10px] mt-5">
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
                       <VideoAd />
                     </div>
                   </div>
                 ) : (
-                  // Render LargeAdComponent for odd cycles
                   <div
                     className="overflow-x-hidden rounded-[10px] mt-5"
                     onClick={() => handleAdClick(index + 1)}
                   >
                     <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                      <LargeAdComponent divid={`feed-ad-${index}`} filter={filter}/>
+                      <LargeAdComponent divid={`feed-ad-${index}`} />
                     </div>
                   </div>
                 )}

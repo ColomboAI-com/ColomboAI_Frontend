@@ -220,6 +220,8 @@ export default function Vibe({ vibe, index }) {
                   playing={true}
                   loop={true}
                   muted={true}
+                  width="100%"
+                  height="100%"
                   playsinline={true}
                   config={{
                     file: {
