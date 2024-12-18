@@ -57,7 +57,7 @@ const RightSidebar = () => {
         <div className="xl:hidden flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[12px]">
           Sponsored Ad
         </div>
-        <div className="px-[22px] overflow-hidden flex flex-col items-center">
+        <div className="px-[18px] overflow-hidden flex flex-col items-center">
           <SideTopAdComponent divid="maindsidetop" />
           {/* <SideAdComponent divid="mainsidemid" /> */}
           <SideTopAdComponent divid="mainsidebottom" />
