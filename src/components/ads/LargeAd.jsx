@@ -33,14 +33,20 @@ const LargeAdComponent = ({divid, filter}) => {
                   //   divid)
                   // .addService(window.googletag.pubads());
 
-                  const adSlotUrl =
-                  filter === 'image' ? '/23102803892/Images/InlineDisplayAds' :
-                  '/23102803892/Feed/InlineDisplayAds';
+                  let adSlotUrl;
+
+                  if (filter === 'image') {
+                    adSlotUrl = '/23102803892/Images/InlineDisplayAds';
+                  } else if (filter === 'thought') {
+                    adSlotUrl = '/23102803892/Thoughts/InlineDisplayAds';
+                  } else {
+                    adSlotUrl = '/23102803892/Feed/InlineDisplayAds';
+}
 
                   window.googletag.defineSlot(adSlotUrl, [[480, 320], 'fluid'], divid)
                   .addService(window.googletag.pubads());
-
                   
+
                   // console.log('Enabling single request mode...');
                   // window.googletag.pubads().enableSingleRequest();
                   
@@ -51,7 +57,7 @@ const LargeAdComponent = ({divid, filter}) => {
                   window.googletag.enableServices();
                   
                   console.log('Displaying ad...');
-
+                  
                   window.googletag.display(divid);
                   setAdLoaded(true);
                   
@@ -69,8 +75,9 @@ const LargeAdComponent = ({divid, filter}) => {
             console.error('Failed to load Google Publisher Tag script:', error);
             setAdLoaded(false);
           });
+
       }, []);
-  
+
   //if (!adLoaded) return null; //returning null if there is no ad
 
   return (
@@ -109,9 +116,9 @@ const LargeAdComponent = ({divid, filter}) => {
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
             </div>
-            <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+            {/* <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={reply_icon} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-            </button>
+            </button> */}
             <button className="">
               <RePostIcon />
             </button>
@@ -120,9 +127,9 @@ const LargeAdComponent = ({divid, filter}) => {
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <MagicPenIcon />
             </div>
-            <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+            {/* <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={wallet_icon} alt="colombo" width={28} height={27} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

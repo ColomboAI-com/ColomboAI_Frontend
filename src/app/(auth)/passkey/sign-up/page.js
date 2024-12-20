@@ -29,6 +29,37 @@ const SignUp = () => {
     return () => resetAuthValues();
   }, []);
 
+  const validateUserInputs = () => {
+    // Username regex
+    const usernameRegex = /^(?!.*(?:admin|Colombo|ColomboAI))[a-zA-Z0-9_]{5,30}$/;
+
+    // Display name regex
+    const displayNameRegex = /^(?!.*(?:admin|Colombo|ColomboAI)).{1,50}$/;
+
+    // Check username
+    if (!usernameRegex.test(inputs.username)) {
+      return {
+        isValid: false,
+        error:
+          "Username must be 5-30 characters long, contain only letters, numbers, and underscores, and cannot contain 'admin', 'Colombo', or 'ColomboAI'.",
+      };
+    }
+
+    // Check display name
+    if (!displayNameRegex.test(inputs.name)) {
+      return {
+        isValid: false,
+        error:
+          "Display name must be 1-50 characters long and cannot contain 'admin', 'Colombo', or 'ColomboAI'.",
+      };
+    }
+
+    return {
+      isValid: true,
+      error: null,
+    };
+  };
+
   const onSignUp = async () => {
     if (!isValidUserName(inputs.username)) {
       setValidations((prev) => ({ ...prev, username: true }));
@@ -40,6 +71,12 @@ const SignUp = () => {
     }
     if (!isValidAge(inputs.age)) {
       setValidations((prev) => ({ ...prev, age: true }));
+      return;
+    }
+
+    let check = validateUserInputs();
+    if (!check.isValid) {
+      alert(check.error);
       return;
     }
 
