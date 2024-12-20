@@ -18,7 +18,7 @@ import { useState, useCallback, useEffect } from "react";
 import { getCookie } from "cookies-next";
 import { Montserrat } from "@next/font/google";
 import ProfilePicture from "../elements/ProfilePicture";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import Dropdown from "../messages/Dropdown.jsx";
 import { clearCookie } from "@/utlils/cookies.js";
 
@@ -61,6 +61,10 @@ const Header = () => {
     router.push("/sign-in");
   };
 
+  const handleMessagingClick = () => {
+    router.push("/messages");
+  };
+
   return (
     <div className={`bg-white sticky top-14 z-40 ${font.className}`}>
       {/* Desktop view */}
@@ -95,7 +99,9 @@ const Header = () => {
             </span>
             {pathname != "/shop" && <CreateDropdown />}
             <NotificationIcon w={35} h={35} fill={"#646464"} />
-            <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+            <span onClick={handleMessagingClick}>
+              <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+            </span>
           </div>
         </div>
       </div>
@@ -111,7 +117,12 @@ const Header = () => {
                 offset={[0, 2]}
                 placement="bottom-start"
                 btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-                button={<ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[2.5rem]" image={profilePic} />}
+                button={
+                  <ProfilePicture
+                    size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[2.5rem]"
+                    image={profilePic}
+                  />
+                }
               >
                 <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                   <Link href="/profile">
@@ -124,21 +135,21 @@ const Header = () => {
               </Dropdown>
               <CreateDropdown />
             </div>
-            <img
-              src="/images/home/ColomboAI-logo.svg"
-              alt="logo-image"
-              className="mx-auto"
-            />
+            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto" />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
               <NotificationIcon w={35} h={35} fill={"#646464"} />
-              <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+              <span onClick={handleMessagingClick}>
+                <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+              </span>
             </div>
           </div>
           <div className="w-full flex flex-row justify-center gap-x-8 items-center">
             <div className="w-[85%]">
               <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
             </div>
-            <div className="sm:pt-4 md:pt-0"><SearchIcon w={35} h={35} fill={"#646464"} /></div>
+            <div className="sm:pt-4 md:pt-0">
+              <SearchIcon w={35} h={35} fill={"#646464"} />
+            </div>
           </div>
         </div>
       </div>
