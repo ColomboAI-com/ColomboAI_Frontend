@@ -116,12 +116,12 @@ const LargeAdComponent = ({divid, filter}) => {
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
             </div>
-            {/* <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+            <button className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
               <Image src={reply_icon} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-            </button> */}
-            <button className="">
-              <RePostIcon />
             </button>
+            {/* <button className="">
+              <RePostIcon />
+            </button> */}
           </div>
           <div className="flex items-center lg:gap-[19px] md:gap-[19px] gap-[10px]">
             <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
