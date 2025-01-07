@@ -40,8 +40,12 @@ export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions, fetchVibeWallet } =
-    useContext(VibeContext);
+  const {
+    fetchSongById,
+    incrementVibeImpressions,
+    getVibeImpressions,
+    fetchVibeWallet,
+  } = useContext(VibeContext);
 
   const { userDetails } = useContext(UserProfileContext);
   const [song, setSong] = useState({});
@@ -213,28 +217,17 @@ export default function Vibe({ vibe, index }) {
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
-                <ReactPlayer
-                  url={vibe.media[0]}
-                  className="w-full h-full overflow-visible"
-                  controls
-                  playing={true}
-                  loop={true}
-                  muted={true}
-                  width="100%"
-                  height="100%"
-                  playsinline={true}
-                  config={{
-                    file: {
-                      attributes: {
-                        type: "video/mp4",
-                      },
-                    },
-                  }}
-                />
-              ) : null}
+                <video className="w-full h-full overflow-visible" controls width="100%" height="100%" autoPlay>
+                  <source src={vibe.media[0]} type="video/mp4" />
+                </video>
+              ) :null}
             </React.Fragment>
           ) : (
-            <img src={vibe?.media?.[0]} className="w-full h-full" alt="vibes_content" />
+            <img
+              src={vibe?.media?.[0]}
+              className="w-full h-full"
+              alt="vibes_content"
+            />
           )}
 
           {/* {
@@ -255,7 +248,7 @@ export default function Vibe({ vibe, index }) {
           <div className="md:hidden absolute top-8 right-2">
             <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
           </div>
-          <div className=" absolute bottom-0 left-4">
+          <div className=" absolute bottom-10 left-4">
             {/* whenever there is sponsored ad uncomment and call this component */}
 
             {/* <SponsoredAdComponent/> */}
@@ -280,8 +273,9 @@ export default function Vibe({ vibe, index }) {
             }
 
             <div
-              className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${vibe.type == "video" ? `sm:mb-[3.5rem]` : `sm:mb-2`
-                }`}
+              className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${
+                vibe.type == "video" ? `sm:mb-[3.5rem]` : `sm:mb-2`
+              }`}
             >
               <p className="leading-5">
                 {vibe.content.length > 130
@@ -290,7 +284,10 @@ export default function Vibe({ vibe, index }) {
                     : `${vibe.content.slice(0, 130)}... `
                   : vibe.content}
                 {vibe.content.length > 130 && (
-                  <span onClick={toggleSeeMore} style={{ color: "#276ab3", cursor: "pointer" }}>
+                  <span
+                    onClick={toggleSeeMore}
+                    style={{ color: "#276ab3", cursor: "pointer" }}
+                  >
                     {seeMore ? "see less" : "see more"}
                   </span>
                 )}
@@ -341,7 +338,10 @@ export default function Vibe({ vibe, index }) {
                 )}
                 <p className="text-[10px]">{impressions}</p>
               </div>
-              <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
+              <div
+                className="flex flex-col items-center gap-[2px] md:gap-1"
+                onClick={() => handleShare()}
+              >
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
                   <Image src={share} alt="colombo" className="w-[1rem]" />
                 ) : (
@@ -403,12 +403,19 @@ export default function Vibe({ vibe, index }) {
             <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
             <p>121.5k</p>
           </div>
-          <div className="flex flex-col items-center gap-[2px] md:gap-1" onClick={() => handleShare()}>
+          <div
+            className="flex flex-col items-center gap-[2px] md:gap-1"
+            onClick={() => handleShare()}
+          >
             <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
             <p>121.5k</p>
           </div>
           <div className="flex flex-col items-center gap-[2px] md:gap-1">
-            <img src={walletIcon} alt="wallet-icon" className="w-[30px] h-[30px]" />
+            <img
+              src={walletIcon}
+              alt="wallet-icon"
+              className="w-[30px] h-[30px]"
+            />
             <p>{wallet}</p>
           </div>
 
@@ -416,7 +423,11 @@ export default function Vibe({ vibe, index }) {
             <GenAiIcon w={30} h={30} fill={"#ffffff"} />
           </div>
           <div>
-            <img src="/images/vibes/vibes_music.jpeg" alt="vibes-music" className="w-[41px] rounded-full" />
+            <img
+              src="/images/vibes/vibes_music.jpeg"
+              alt="vibes-music"
+              className="w-[41px] rounded-full"
+            />
           </div>
         </div>
       </div>
