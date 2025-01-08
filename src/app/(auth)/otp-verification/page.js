@@ -3,10 +3,7 @@ import ResendOTP from "@/components/auth/ResendOTP";
 import { OTPValidation } from "@/components/Validations";
 import { useAuth } from "@/context/AuthContext";
 import Button from "@/elements/Button";
-import {
-  getShortEmail,
-  setUserCookies,
-} from "@/utlils/commonFunctions";
+import { getShortEmail, setUserCookies } from "@/utlils/commonFunctions";
 import { clearSessionStorage, getSessionStorage } from "@/utlils/utils";
 import { isValidOTP } from "@/utlils/validate";
 import { useRouter } from "next/navigation";
@@ -25,15 +22,14 @@ const OTPVerification = () => {
     signIn,
     resetAuthValues,
     new_device,
-    setShowPopup
+    setShowPopup,
   } = useAuth();
   const router = useRouter();
   const [page, setPage] = useState("sign-in");
 
   useEffect(() => {
     const userDetails = getSessionStorage("auth-details");
-    if (userDetails)
-      setInputs((prev) => ({ ...prev, ...JSON.parse(userDetails) }));
+    if (userDetails) setInputs((prev) => ({ ...prev, ...JSON.parse(userDetails) }));
     return () => {
       clearSessionStorage();
       resetAuthValues();
@@ -59,10 +55,9 @@ const OTPVerification = () => {
         setShowPopup(true);
       } else {
         setTimeout(() => {
-          window.location.pathname = '/'
-        }, 1000)
-      };
-
+          window.location.pathname = "/passkey/sign-up";
+        }, 1000);
+      }
     }
   };
 
@@ -76,16 +71,11 @@ const OTPVerification = () => {
               className="mb-[12px] object-cover mx-auto sm:hidden md:block"
               alt="welcome_to_colomboai"
             />
-            <h5 className="text-[24px] font-sans text-center mb-[0px] text-[#656565]">
-              Enter OTP
-            </h5>
+            <h5 className="text-[24px] font-sans text-center mb-[0px] text-[#656565]">Enter OTP</h5>
             <p className="text-[#737373] text-[16px] font-sans text-center lg:mt-[10px] lg:block sm:grid sm:mt-[35px]">
               Enter the OTP you received on
               <br />
-              <span className="text-[#1E71F2]">
-                {" "}
-                {getShortEmail(inputs.email)}
-              </span>{" "}           
+              <span className="text-[#1E71F2]"> {getShortEmail(inputs.email)}</span>{" "}
             </p>
           </div>
           <div>
