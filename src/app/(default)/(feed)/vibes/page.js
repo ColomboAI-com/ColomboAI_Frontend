@@ -5,78 +5,138 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { VibeContext } from "@/context/VibeContext";
 import Vibe from "@/components/feed/vibes/Vibe";
 import Slider from "react-slick";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-
-var settings = {
-  dots: false,
-  arrows: false,
-  infinite: false,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  adaptiveHeight: true,
-  vertical: true,
-  verticalSwiping: true,
-};
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 1,
-    slidesToSlide: 1 // optional, default to 1.
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 1,
-    slidesToSlide: 1 // optional, default to 1.
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-    slidesToSlide: 1 // optional, default to 1.
-  }
-};
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { useSwipeable } from "react-swipeable";
+import VibesAd from "@/components/ads/vibesAd";
 
 export default function Vibes({ filter }) {
-  const { vibes, getVibes, fetchSongById } = useContext(VibeContext);
-  const [song, setSong] = useState({});
-  const [vibe, setVibe] = useState({});
+  const sliderRef = useRef(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  var settings = {
+    dots: false,
+    arrows: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    vertical: true,
+    verticalSwiping: false,
+    swipe: false,
+    draggable: false,
+    afterChange: (currentIndex) => {
+      // console.log("CURR INDEX", currentIndex);
+      // Check if the current slide is the last one
+      if (currentIndex === vibes.length - 1) {
+        handleLoadMore();
+      }
+    },
+  };
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+      slidesToSlide: 1,
+    },
+  };
+
+  const swipeHandlers = useSwipeable({
+    onSwipedUp: () => {
+      if (sliderRef.current) sliderRef.current.slickNext();
+    },
+    onSwipedDown: () => {
+      if (sliderRef.current) sliderRef.current.slickPrev();
+    },
+    onSwipedRight: () => { },
+    onSwipedLeft: () => { },
+    preventDefaultTouchmoveEvent: true,
+    preventDefaultTouchmoveEvent: true,
+    trackTouch: true,
+  });
+
+  const handleLoadMore = () => {
+    if (!loadings.getVibe) {
+      getVibes(filter, page + 1);
+    }
+  };
+
+  const handleSlideChange = (currentSlide) => {
+    const totalItems = vibes.length;
+    const isAtEnd = currentSlide === totalItems - 1;
+    if (isAtEnd) {
+      handleLoadMore();
+    }
+  };
+
+  // Function to update screen size state
+  const updateScreenSize = () => {
+    setIsSmallScreen(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, []);
+
+  const { vibes, getVibes, page, loadings, resetFeedValues } = useContext(VibeContext);
 
   useEffect(() => {
     getVibes();
+    return () => {
+      resetFeedValues();
+    };
   }, []);
-
   return (
     <>
-      <div className="w-full md:h-[38rem] lg:h-full xl:h-[34.6rem] sm:hidden md:block bg-black"> {/* Ensure full-screen container */}
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={false}
-          responsive={responsive}
-          ssr={true}
-          autoPlay={false}
-          infinite={true}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          // containerClass="carousel-container"
-          removeArrowOnDeviceType={["mobile"]}
-          dotListClass="custom-dot-list-style"
-          itemClass="w-full h-full" // Full-screen item
-        >
-          {vibes.map((vibe) => (
-            <Vibe vibe={vibe} key={vibe._id} />
-          ))}
-        </Carousel>
-      </div>
-      <div className="w-full md:h-[38rem] lg:h-full xl:h-[34.6rem] md:hidden bg-black">
-        <Slider {...settings}>
-          {vibes.map((vibe) => (
-            <Vibe vibe={vibe} key={vibe._id} />
-          ))}
-        </Slider>
-      </div>
+      {isSmallScreen ? (
+        <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black">
+          <Slider ref={sliderRef} {...settings}>
+            {vibes.map((vibe, index) => (
+              (index + 1) % 4 === 0
+                ? <VibesAd key={`ad-${index}`} />
+                : <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
+          </Slider>
+        </div>
+      ) : (
+        <div className="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem] sm:hidden md:block bg-black">
+          <Carousel
+            swipeable={false}
+            draggable={false}
+            showDots={false}
+            responsive={responsive}
+            ssr={true}
+            autoPlay={false}
+            infinite={false}
+            keyBoardControl={true}
+            customTransition="all .5"
+            transitionDuration={500}
+            removeArrowOnDeviceType={["mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]"
+            afterChange={(previousSlide, { currentSlide }) => handleSlideChange(currentSlide)}
+          >
+            {vibes.map((vibe, index) => (
+              (index + 1) % 4 === 0
+                ? <VibesAd key={`ad-${index}`} />
+                : <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
+          </Carousel>
+        </div>
+      )}
     </>
   );
 }

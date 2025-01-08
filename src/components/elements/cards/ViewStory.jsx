@@ -21,7 +21,7 @@ const ViewStory = (data, index) => {
 
   return (
     <div
-      className="relative w-[120px] sm:w-full  md:w-[120px] lg:w-[120px] h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer"
+      className="relative w-[120px] sm:w-[100px]  md:w-[120px] lg:w-[120px] h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer"
       style={{
         backgroundImage: `url(${data?.data?.media[0]})`,
         backgroundSize: "100% 100%",
@@ -41,7 +41,7 @@ const ViewStory = (data, index) => {
         <StoryModal
           isOpen={isCreateStorySignleOpen}
           setIsOpen={setIsCreateStorySignleOpen}
-          className="sm:w-full lg:w-[90%] transform overflow-hidden text-left align-middle shadow-xl transition-all"
+          className="sm:w-[100%] xl:ml-[68px] lg:ml-[62px] md:ml-[34px] transform overflow-hidden text-left align-middle shadow-xl transition-all"
         >
           <SingleStoryModal
             setIsCreateStorySignleOpen={setIsCreateStorySignleOpen}

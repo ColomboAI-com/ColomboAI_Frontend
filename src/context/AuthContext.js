@@ -48,6 +48,10 @@ export const AuthContextProvider = ({ children }) => {
     setValidations((prev) => ({ ...prev, [name]: false }));
   };
 
+  const setInputData = (username, name) => {
+    setInputs((prev) => ({ ...prev, username, name }));
+  };
+
   const getOTP = async (action = "sign-in") => {
     try {
       setLoadings((prev) => ({ ...prev, otp: true }));
@@ -162,12 +166,94 @@ export const AuthContextProvider = ({ children }) => {
   const handlePopupConfirm = async () => {
     await addnewdevice(inputs.email); // Perform action on confirmation
     setShowPopup(false); // Hide the popup after confirming
-    setTimeout(() => router.replace('/'), 1000);
+    setTimeout(() => router.replace("/"), 1000);
   };
 
   const handlePopupCancel = () => {
     setShowPopup(false); // Hide the popup after canceling
     router.replace("/");
+  };
+
+  const passKeySignUpStart = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(
+        `${ROOT_URL_AUTH}/auth/passkey/sign-up/start`,
+        {
+          user_name: inputs.username,
+          name: inputs.name,
+          age: inputs.age,
+        },
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
+      MessageBox("success", res.data.message);
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignUpFinish = async ({ data }) => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(
+        `${ROOT_URL_AUTH}/auth/passkey/sign-up/finish`,
+        {
+          user_name: inputs.username,
+          data,
+        },
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
+      MessageBox("success", res.data.message);
+      return res;
+    } catch (err) {
+      console.log(err);
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignInStart = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/start`, {
+        user_name: inputs.username,
+      });
+      MessageBox("success", res.data.message);
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
+  };
+
+  const passKeySignInFinish = async ({ data }) => {
+    try {
+      setLoadings((prev) => ({ ...prev, auth: true }));
+      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`, {
+        user_name: inputs.username,
+        data,
+      });
+      MessageBox("success", res.data.message);
+      return res;
+    } catch (err) {
+      console.log(err);
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, auth: false }));
+    }
   };
 
   return (
@@ -189,15 +275,15 @@ export const AuthContextProvider = ({ children }) => {
         ssoAuthentication,
         addnewdevice,
         resetAuthValues,
+        passKeySignUpStart,
+        passKeySignUpFinish,
+        passKeySignInStart,
+        passKeySignInFinish,
+        setInputData,
       }}
     >
       {children}
-      {showPopup && (
-        <NewDevicePopup
-          onConfirm={handlePopupConfirm}
-          onCancel={handlePopupCancel}
-        />
-      )}
+      {showPopup && <NewDevicePopup onConfirm={handlePopupConfirm} onCancel={handlePopupCancel} />}
     </AuthContext.Provider>
   );
 };

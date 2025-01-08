@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColomboAI Elite Collection - The Apple Series</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: normal;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .logo .star {
+            color: #60a5fa;
+            display: inline-block;
+            transform: translateY(-10px);
+            margin-left: 2px;
+        }
+
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #4b5563;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .apple-preview {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .apple-container {
+            position: relative;
+            aspect-ratio: 1;
+            margin-bottom: 2rem;
+            perspective: 1000px;
+        }
+
+        .apple {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .apple-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            transform: translateZ(-20px);
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        .apple-ring {
+            position: absolute;
+            inset: -10%;
+            border: 2px solid #2563eb;
+            border-radius: 50%;
+            opacity: 0.2;
+            animation: pulse 2s infinite;
+            z-index: 2;
+            backdrop-filter: blur(4px);
+        }
+
+        @keyframes pulse {
+            0% { transform: translateZ(10px) scale(1); opacity: 0.2; }
+            50% { transform: translateZ(20px) scale(1.05); opacity: 0.3; }
+            100% { transform: translateZ(10px) scale(1); opacity: 0.2; }
+        }
+
+        .piece-number {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+
+        .purchase-section {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .purchase-btn {
+            display: block;
+            background: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .purchase-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .benefits-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+        }
+
+        .benefits-list {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .benefits-list h3 {
+            color: #2563eb;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefits-list ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefits-list li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .benefits-list li::before {
+            content: "•";
+            color: #2563eb;
+            position: absolute;
+            left: 0;
+        }
+
+        .highlight-box {
+            background: #eef2ff;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .terms {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 2rem;
+        }
+
+        .terms h3 {
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            margin-top: 4rem;
+            color: #6b7280;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .apple-preview {
+                position: static;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .header-content {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+              <img src="ColomboAI-logo.svg" alt="" class="apple-image">
+            </div>
+            <a href="https://nowpayments.io/payment/?iid=4883923335" class="purchase-btn" target="_blank">Purchase Now</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <h1>Own the Apple, Own the World</h1>
+            <p>Join the Social Media Revolution. Be among the 100,000 pioneering users who will shape the future of social media expression through exclusive digital art ownership.</p>
+        </section>
+
+        <div class="content-grid">
+            <div class="apple-preview">
+                <div class="apple-container">
+                    <div class="apple">
+                        
+                        <div class="apple-ring"></div>
+                        <img src="1.png" alt="" class="apple-image">
+                    </div>
+                    <div class="piece-number">#000001</div>
+                </div>
+                
+                <div class="purchase-section">
+                    <h3>The Apple Collection</h3>
+                    <p>Limited Edition Digital Art</p>
+                    <div style="font-size: 1.5rem; font-weight: 600; margin: 1rem 0;">Price: $500</div>
+                    <a href="https://nowpayments.io/payment/?iid=4883923335" class="purchase-btn" target="_blank">Purchase Digital Art</a>
+                </div>
+            </div>
+
+            <div class="benefits-section">
+                <div class="benefits-list">
+                    <h3>The Apple Collection</h3>
+                    <ul>
+                        <li>100,000 unique AI-generated masterpieces</li>
+                        <li>Individually numbered artwork (#000001 - #100000)</li>
+                        <li>High-resolution digital art delivery</li>
+                        <li>90 days of free advertising on ColomboAI platform</li>
+                    </ul>
+
+                    <h3>Elite Status Benefits</h3>
+                    <ul>
+                        <li>Distinguished Apple checkmark verification badge</li>
+                        <li>Priority content visibility in the ColomboAI ecosystem</li>
+                        <li>Enhanced algorithmic reach for maximum content exposure</li>
+                        <li>Front-page content placement opportunities</li>
+                        <li>Elite creator status recognition</li>
+                    </ul>
+
+                    <h3>Revolutionary Platform</h3>
+                    <ul>
+                        <li>On track to reach 1 billion daily active users</li>
+                        <li>High daily active user engagement rate</li>
+                        <li>Game-changing Post Wallet system - all users earn from their content</li>
+                        <li>Transparent earnings: See exactly how much each post generates in real-time</li>
+                        <li>Equal opportunity monetization for casual users and influencers alike</li>
+                        <li>Complete ecosystem with Generative Shop, News, and Vibes features</li>
+                    </ul>
+                </div>
+
+                <div class="benefits-list">
+                    <h3>Perfect for TikTok Creators</h3>
+                    <ul>
+                        <li>Familiar content creation experience</li>
+                        <li>Enhanced reach potential</li>
+                        <li>Elite creator community access</li>
+                        <li>Priority feature access</li>
+                        <li>Superior content visibility</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <h3>Your Elite Journey Includes:</h3>
+                        <ul>
+                            <li>Unique digital artwork</li>
+                            <li>Elite verification status</li>
+                            <li>Priority content visibility</li>
+                            <li>Exclusive community access</li>
+                            <li>Enhanced creator tools</li>
+                            <li>90 days of free advertising</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Secure payment processed by NOWPayments</p>
+        <p>Join an exclusive community of elite creators shaping the future of social media expression</p>
+    </footer>
+</body>
+</html>

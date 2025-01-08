@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { VideoPlayIcon, VideoForwardIcon, VideoPreviousIcon } from "../Icons";
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
+import ReactPlayer from 'react-player';
 
 export const VideoEditor = ({ videoUrl, onClose, onTrim }) => {
   const [ffmpeg, setFfmpeg] = useState(null);
@@ -198,9 +199,9 @@ export const VideoEditor = ({ videoUrl, onClose, onTrim }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="bg-[#2563EB] rounded-lg overflow-hidden w-[600px]">
-        <video 
+        <ReactPlayer 
           ref={videoRef} 
-          src={videoUrl} 
+          url={videoUrl} 
           className="w-full aspect-video object-cover" 
           onClick={togglePlayPause}
         />
@@ -474,7 +475,7 @@ export const VideoEditor = ({ videoUrl, onClose, onTrim }) => {
 //   return (
 //     <div className="fixed inset-0 flex items-center justify-center">
 //       <div className="bg-[#2563EB] rounded-lg overflow-hidden w-[600px]">
-//         <video 
+//         <ReactPlayer 
 //           ref={videoRef} 
 //           src={videoUrl} 
 //           className="w-full aspect-video object-cover" 

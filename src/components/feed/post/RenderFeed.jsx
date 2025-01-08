@@ -8,6 +8,8 @@ import { useContext, useEffect, Fragment, useRef } from "react";
 import { getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import SuggestedVibes from "@/components/layouts/SuggestedVibes";
+import LargeAdComponent from "@/components/ads/LargeAd";
+import VideoAd from "@/components/ads/VideoAd";
 
 export default function RenderFeed({ filter }) {
   const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
@@ -110,24 +112,40 @@ export default function RenderFeed({ filter }) {
 
   if (loadings.getPost && !posts.length) return <Loader className={"mt-5"} />;
 
+  // // Function to handle the ad click
+  // const handleAdClick = (index) => {
+  //   // Collect the previous 4 postIds when the ad is clicked
+  //   const postIds = posts.slice(index - 4, index).map((post) => post._id);
+  //   const adRevenue = 100; // TODO - adRevenue how to calc?
+
+  //   generateWallet(postIds, adRevenue);
+  // };
+
   return (
     <div className="sm:px-0 md:px-0" id="posts_container_infy_scroll">
       {posts.length ? (
         posts.map((i, index) => (
           <Fragment key={index}>
             <Post post={i} index={index} />
-            {(index + 1) % 6 === 0 && (
-              // <div className="border border-red-400 max-w-[100%] overflow-hidden mt-5">
-              //   <FooterAdComponent divid={`feed-ad-${index}`}/>
-              // </div>
-              <div className="overflow-x-hidden rounded-[10px] mt-5">
-                <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                  <SuggestedVibes />
-                </div>
-                <div className=" max-w-[100%] overflow-hidden ">
-                  <FooterAdComponent divid={`feed-ad-${index}`} />
-                </div>
-              </div>
+            {(index + 1) % 4 === 0 && (
+              <>
+                {Math.floor((index + 1) / 4) % 2 === 0 ? (
+                  <div className="overflow-x-hidden rounded-[10px] mt-5">
+                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                      <VideoAd />
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="overflow-x-hidden rounded-[10px] mt-5"
+                    onClick={() => handleAdClick(index + 1)}
+                  >
+                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                      <LargeAdComponent divid={`feed-ad-${index}`} />
+                    </div>
+                  </div>
+                )}
+              </>
             )}
           </Fragment>
         ))

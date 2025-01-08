@@ -19,7 +19,7 @@ const font = Montserrat({
   subsets: ["latin"],
 });
 
-const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) => {
+const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, selectedSong }) => {
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
@@ -98,7 +98,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe }) 
     >
       {/* Tag Users Button */}
       <div
-        className={`flex text-white w-[160px] rounded-tr-lg h-[30px] items-center transition-shadow duration-3000 ease-in-out ${
+        className={`flex text-white w-[160px] rounded-tr-lg h-[30px] items-center ${selectedSong && `mb-6`} transition-shadow duration-3000 ease-in-out ${
           selectedUsers.length > 0
             ? "bg-blue-500 hover:shadow-[0_0_15px_5px_rgba(0,150,255,0.5)]"
             : "bg-gray-500 hover:shadow-[0_0_15px_5px_rgba(100,100,100,0.5)]"

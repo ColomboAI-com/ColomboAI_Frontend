@@ -8,6 +8,7 @@ import { StoryContext } from "@/context/StoryContext";
 import Link from "next/link";
 import Username from "../elements/Username";
 import ProfilePicture from "../elements/ProfilePicture";
+import { useSwipeable } from "react-swipeable";
 
 export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData, data_user, index }) {
   const [data, setData] = useState(storyData)
@@ -16,6 +17,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   const storiesRef = useRef(null);
   const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
   const storyStyles = {
+    
     objectFit: "cover",
     borderRadius: "10px",
     justifyContent: "center",
@@ -81,16 +83,47 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
     }
   };
 
+  const handlers = useSwipeable({
+    onSwipedUp: () => handleNextStory(),
+    onSwipedDown: () => handlePreviousStory(),
+    preventDefaultTouchmoveEvent:true,
+    trackMouse:true, 
+    passive : false
+  })
+  
+  const maxWidth = 432;
+ 
+
+  const [storiesWidth, setStoriesWidth] = useState(window.innerWidth < 700 ? window.innerWidth : maxWidth);
+  // const storiesRef = useRef(null);
+  const [storiesHeight, setStoriesHeight] = useState(window.innerWidth < maxWidth ? window.innerHeight : 768 )
+  const updateWidth = () => {
+  
+    if (window.innerWidth < 700){
+    setStoriesWidth(window.innerWidth);
+    setStoriesHeight(window.innerHeight)
+    }
+    else{
+      setStoriesWidth(432)
+      setStoriesHeight(768)
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
   return (
-    <div className="bg-[#1a1a1af0] sm:p-1 md:p-4 sm:flex sm:flex-row sm:justify-start md:grid md:grid-cols-3">
+    <div {...handlers} className="bg-[#1a1a1af0] sm:flex sm:flex-row sm:justify-center sm:space-x-0 space-x-2 h-screen  md:p-4 flex justify-center  flex-col ">
       {/* Left Section */}
-      <div className="flex flex-col ml-[4rem] h-full justify-between p-4">
+      <div className="flex flex-col  h-full justify-between p-4  sm:hidden w-fit md:flex">
+      {/* <div className="flex flex-col items-end h-full justify-between p-4  sm:hidden border border-pink-500 w-fit md:flex lg:flex"> */}
         <div className="text-3xl md:block opacity-0 sm:hidden">
           <MdOutlineClose
             style={{ color: "#fff", cursor: "pointer" }}
           />
         </div>
-        <div className="text-3xl md:block sm:hidden">
+        <div className="text-3xl md:block sm:hidden ">
           <MdOutlineArrowBack
             onClick={handlePreviousStory}
             disabled={currentStoryIndex === 0}
@@ -103,9 +136,10 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
         </div>
       </div>
       {/* Middle Section */}
-      <div className="relative  m-auto">
-        <div className="h-3/4 w-full rounded-[5px] justify-center story-detail-box">
+      <div className=" relative mx-auto h-full ">
+        <div className="h-full  w-full rounded-[5px] justify-center story-detail-box">
           <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
+          
             <MdOutlineArrowBack
               onClick={() => setIsCreateStorySignleOpen(false)}
               style={{ color: "#fff", cursor: "pointer" }}
@@ -120,8 +154,10 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
           <Stories
             stories={data.map((story) => story.media[0])}
             defaultInterval={5000}
-            width={432}
-            height={768}
+            // width={432}
+            width={storiesWidth}
+            height={storiesHeight}
+            // height={768}
             justifyContent={"center"}
             ref={storiesRef}
             onStoryEnd={(index, story) => {
@@ -159,14 +195,16 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
       </div>
 
       {/* Right Section */}
-      <div className="flex flex-col items-end h-full justify-between p-4">
+      <div className="sm:hidden md:flex flex-col items-end h-full justify-between  p-4  w-fit">
+      
+             {/* <div className="flex flex-col items-end h-full justify-between p-4 lg:pr-16 sm:hidden md:flex lg:flex"> */}
         <div className="text-3xl md:block sm:hidden">
           <MdOutlineClose
             onClick={() => setIsCreateStorySignleOpen(false)}
             style={{ color: "#fff", cursor: "pointer" }}
           />
         </div>
-        <div className="text-3xl md:block sm:hidden">
+        <div className="text-3xl md:block sm:hidden ">
           <MdOutlineArrowForward
             onClick={handleNextStory}
             disabled={currentStoryIndex === allStories.length - 1}

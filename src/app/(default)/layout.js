@@ -39,6 +39,9 @@ import { Montserrat } from "@next/font/google";
 import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
 import path from "path";
 import { useMediaQuery } from "react-responsive";
+import shop_blue from "../../../public/images/icons/main_menu_icons/shop_blue.svg"
+import shop_grey from "../../../public/images/icons/main_menu_icons/shop_grey.svg"
+
 
 
 const font = Montserrat({
@@ -173,11 +176,11 @@ const DefaultLayout = ({ children }) => {
     <FeedContextProvider>
       <div className={`min-w-screen border-yellow-400 md:relative  ${font.className}`}>
         <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
-          <div className="lg:min-w-[4%] xl:min-w-[5%] max-h-[calc(100vh-0px)] fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
+          <div className="lg:min-w-[4%]  xl:min-w-[5%] max-h-[calc(100vh-0px)] bg-white fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
           <div className="min-w-[100%] md:min-w-[90%] lg:min-w-[96%] xl:min-w-[95%] xl:ml-[5%] lg:ml-[5%] md:ml-[5%] flex flex-col relative sm:ml-[0]">
-            <header className="sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
+            <header className={`${pathname === '/vibes' && `sm:hidden md:block`} sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0`}>
               <div className="sm:pt-[14px] md:py-[14px] bg-white">
                 {isSmallScreen ? <Header
                   setIsShowChatMenu={setIsShowChatMenu}
@@ -243,12 +246,12 @@ const DefaultLayout = ({ children }) => {
 
               <div
                 className={
-                  `w-[100%] lg:w-[100%] sm:max-h-[calc((100vh-175px))] nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${pathname !== 'vibes' || pathname !== '/explore' && `md:max-h-[calc(100vh-192.28px)]`} no-scrollbar overflow-y-auto`
+                  `w-[100%] lg:w-[100%] ${pathname === '/vibes' ? ` sm:max-h-full sm:h-full` : `sm:max-h-[calc((100vh-175px))]`} nsm:max-h-[calc((100vh-175px))] ${pathname === '/explore' && `md:h-full overflow-y-visible`} ${pathname === '/vibes' && `md:max-h-[calc(100vh-0px)]`} ${(pathname !== 'vibes' || pathname !== '/explore') && `md:max-h-[calc(100vh-192.28px)]`} hide-scrollbar no-scrollbar overflow-y-auto self-start`
                 }
               >
                 {children}
               </div>
-              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar self-start sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
+              {(pathname === "/shop" || pathname === '/news') ? null : <div className={`${(pathname === `/vibes` || pathname === '/feed' || pathname === '/videos' || pathname === '/thoughts' || pathname === '/explore') && 'sm:hidden lg:hidden xl:block'} lg:max-h-[calc(100vh-192.28px)] overflow-y-auto no-scrollbar self-start sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}>
                 <RightSidebar />
               </div>}
             </div>}
@@ -275,7 +278,7 @@ const DefaultLayout = ({ children }) => {
         </div>
 
         {/* Bottombar Mobile View */}
-        <div className="md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
+        {pathname !== '/vibes' && <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-1 flex flex-wrap items-center justify-evenly">
               <Link href="/genai-search">
@@ -342,11 +345,12 @@ const DefaultLayout = ({ children }) => {
               <Link href="/shop">
                 <div className="mx-4">
                   <div className="w-[29px] mx-auto">
-                    <ShopIcon
+                    <Image src={pathname === "/shop" ? shop_blue : shop_grey} alt="colombo"/>
+                    {/* <ShopIcon
                       w="30"
                       h="30"
                       fill={pathname === "/shop" ? "#1E71F2" : "#8E8E93"}
-                    />
+                    /> */}
                   </div>
                   <p
                     className={`${pathname === "/shop"
@@ -380,7 +384,7 @@ const DefaultLayout = ({ children }) => {
               </Link>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       {/* Bottombar Mobile View */}
       {/* <Bottombar /> */}

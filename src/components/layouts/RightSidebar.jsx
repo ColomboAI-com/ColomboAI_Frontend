@@ -43,7 +43,7 @@ var trending = {
 
 const RightSidebar = () => {
   return (
-    <div className="w-[100%] h-full overflow-y-auto">  {/* This ensures the sidebar is scrollable */}
+    <div className="w-[100%] h-full overflow-y-scroll">  {/* This ensures the sidebar is scrollable */}
       <div className="px-[22px]">
         <div className="">
           <h5 className="text-[19px] font-sans text-[#333333] font-[700]">
@@ -57,9 +57,9 @@ const RightSidebar = () => {
         <div className="xl:hidden flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[12px]">
           Sponsored Ad
         </div>
-        <div className="px-[22px] overflow-hidden flex flex-col items-center">
+        <div className="px-[18px] overflow-hidden flex flex-col items-center">
           <SideTopAdComponent divid="maindsidetop" />
-          <SideAdComponent divid="mainsidemid" />
+          {/* <SideAdComponent divid="mainsidemid" /> */}
           <SideTopAdComponent divid="mainsidebottom" />
           {/* <Sponsored/>
                 <Events/>

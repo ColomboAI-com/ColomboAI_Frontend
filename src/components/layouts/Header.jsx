@@ -18,8 +18,9 @@ import { useState, useCallback, useEffect } from "react";
 import { getCookie } from "cookies-next";
 import { Montserrat } from "@next/font/google";
 import ProfilePicture from "../elements/ProfilePicture";
-
 import { useRouter } from "next/navigation";
+import Dropdown from "../messages/Dropdown.jsx";
+import { clearCookie } from "@/utlils/cookies.js";
 
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
@@ -35,10 +36,12 @@ const Header = () => {
   const [initialMessage, setInitialMessage] = useState("");
   const [initialFile, setInitialFile] = useState(null);
   const [profilePic, SetprofilePic] = useState();
+  const [name, setName] = useState();
 
   const router = useRouter();
 
   useEffect(() => {
+    setName(getCookie("name"));
     SetprofilePic(getCookie("profilePic"));
   }, []);
 
@@ -52,6 +55,14 @@ const Header = () => {
 
   const handleSearchClick = () => {
     router.push("/explore");
+  };
+  const handleSignOut = () => {
+    clearCookie();
+    router.push("/sign-in");
+  };
+
+  const handleMessagingClick = () => {
+    router.push("/messages");
   };
 
   return (
@@ -78,7 +89,7 @@ const Header = () => {
 
       <div className="shadow-[0px_2px_4px_0px_#0000001A]">
         <div className=" hidden md:flex items-center justify-between">
-          <div className="w-[100%] lg:w-[75%] px-5 lg:px-28 border-">
+          <div className="w-[100%] lg:w-[75%]   px-5 lg:px-28 border-">
             {/* <InputBar/> */}
             {pathname === "/gen-search" ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
           </div>
@@ -88,7 +99,9 @@ const Header = () => {
             </span>
             {pathname != "/shop" && <CreateDropdown />}
             <NotificationIcon w={35} h={35} fill={"#646464"} />
-            <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+            <span onClick={handleMessagingClick}>
+              <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+            </span>
           </div>
         </div>
       </div>
@@ -98,23 +111,45 @@ const Header = () => {
       <div className="lg:shadow-[0px_2px_4px_0px_#0000001A]">
         <div className="sm:mx-3 block md:hidden">
           <div className="flex flex-row justify-between items-center">
-            <div className="flex  items-center sm:gap-2">
-              <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[3rem]" image={profilePic} />
+            <div className="flex items-center sm:gap-1">
+              {/* <ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[2.5rem]" image={profilePic} /> */}
+              <Dropdown
+                offset={[0, 2]}
+                placement="bottom-start"
+                btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
+                button={
+                  <ProfilePicture
+                    size="xl:w-[42px] lg:w-[42px] md:w-[30px] sm:w-[2.5rem]"
+                    image={profilePic}
+                  />
+                }
+              >
+                <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
+                  <Link href="/profile">
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li>
+                  </Link>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>
+                    Log out
+                  </li>
+                </ul>
+              </Dropdown>
               <CreateDropdown />
             </div>
-            <img
-              src="/images/home/ColomboAI-logo.svg"
-              alt="logo-image"
-              className="mx-auto"
-            />
+            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto" />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
               <NotificationIcon w={35} h={35} fill={"#646464"} />
-              <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+              <span onClick={handleMessagingClick}>
+                <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
+              </span>
             </div>
           </div>
-          <div className="w-full flex flex-row justify-between items-center">
-            <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
-            <div className="sm:pt-4 md:pt-0"><SearchIcon w={35} h={35} fill={"#646464"} /></div>
+          <div className="w-full flex flex-row justify-center gap-x-8 items-center">
+            <div className="w-[85%]">
+              <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
+            </div>
+            <div className="sm:pt-4 md:pt-0">
+              <SearchIcon w={35} h={35} fill={"#646464"} />
+            </div>
           </div>
         </div>
       </div>

@@ -85,7 +85,9 @@ export default function VibeContextProvider({ children }) {
         },
       });
       setVibes((prev) => [...prev, ...(response.data?.vibes || [])]);
-      // if (res.data?.vibes?.length) setPage((prev) => prev + 1);
+      if (response.data?.vibes?.length) {
+        setPage((prev) => prev + 1);
+      }
     } catch (error) {
       handleError(error);
     } finally {
@@ -113,7 +115,7 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
-  const archiveVibe = async (id = "66f34a4536049e10646e09f9") => {
+  const archiveVibe = async (vibeId) => {
     try {
       const res = await axios.put(`${ROOT_URL_FEED}/posts/${id}/archive`, {
         headers: {
@@ -251,6 +253,62 @@ export default function VibeContextProvider({ children }) {
     }
   };
 
+  const fetchVibeWallet = async (vibeId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
+      const res = await axios.get(`${ROOT_URL_FEED}/wallet/vibe/${vibeId}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
+    }
+  };
+
+  // const calcVibeWallet = async (vibeId, adRevenue) => {
+  //   try {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
+  //     const res = await axios.post(
+  //       `${ROOT_URL_FEED}/wallet/vibe/${vibeId}`,
+  //       { adRevenue },
+  //       {
+  //         headers: {
+  //           Authorization: getCookie("token"),
+  //         },
+  //       }
+  //     );
+  //     return res.data;
+  //   } catch (err) {
+  //     handleError(err);
+  //   } finally {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
+  //   }
+  // };
+
+  // const generateMultiVibeWalletRevenue = async (vibeIds, adRevenue) => {
+  //   try {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: true }));
+  //     const res = await axios.post(
+  //       `${ROOT_URL_FEED}/wallet/vibe/calc-multi`,
+  //       { vibeIds, adRevenue },
+  //       {
+  //         headers: {
+  //           Authorization: getCookie("token"),
+  //         },
+  //       }
+  //     );
+  //     return res.data;
+  //   } catch (err) {
+  //     handleError(err);
+  //   } finally {
+  //     setLoadings((prev) => ({ ...prev, getVibeWallet: false }));
+  //   }
+  // };
+
   return (
     <VibeContext.Provider
       value={{
@@ -268,6 +326,10 @@ export default function VibeContextProvider({ children }) {
         incrementVibeImpressions,
         getVibeImpressions,
         saveVibe,
+        page,
+        fetchVibeWallet,
+        // calcVibeWallet,
+        // generateMultiVibeWalletRevenue,
       }}
     >
       {children}

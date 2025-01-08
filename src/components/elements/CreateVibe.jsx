@@ -30,6 +30,7 @@ import Image from "next/image";
 import { set } from "date-fns";
 import { VibeContext } from "@/context/VibeContext";
 import CreateVibeErrorComponent from "../feed/vibes/CreateVibeError";
+import ReactPlayer from "react-player";
 
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
@@ -56,7 +57,7 @@ const CreateVibe = ({
   const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
   const { setIsCreateVibeOpen, isSelectedFromComputer, setIsSelectedFromComputer } =
     useContext(GlobalContext);
-  const { getVibes, createVibe, vibes, setVibes } = useContext(VibeContext);
+  const { createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false);
   const [trimmedVideoUrl, setTrimmedVideoUrl] = useState("");
@@ -360,6 +361,7 @@ const CreateVibe = ({
                   setCaptionInput={setCaptionInput}
                   width={imageWidth}
                   handleCreateVibe={handleCreateVibe}
+                  selectedSong={selectedSong}
                 />
               </div>
             ) : (
@@ -397,6 +399,7 @@ const CreateVibe = ({
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onClose={() => setSelectedSong(null)}
+                nextStep={nextStep}
               />
             )}
           </div>
@@ -507,7 +510,7 @@ const CreateVibe = ({
           )}
         </div>
       ) : mediaUrl !== "" && postType.includes("video") ? (
-        //           <video
+        //           <ReactPlayer
         //             key={mediaUrl}
         //             autoPlay
         //             loop
@@ -535,20 +538,18 @@ const CreateVibe = ({
             onClick={handleTextClick}
           /> */}
           <div className="relative max-h-[34rem] overflow-hidden">
-            <video
+            <ReactPlayer
               key={mediaUrl}
               ref={imgRef}
-              src={mediaUrl}
+              url={mediaUrl}
               alt="File Preview"
               className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
-              autoPlay
-              loop
-              controls
-            >
-              <source src={mediaUrl} />
-            </video>
+              playing={true}
+              loop={true}
+              controls={true}
+            />
 
             {isTrimming ? (
               // <Image
@@ -614,6 +615,7 @@ const CreateVibe = ({
                 isPlaying={isPlaying}
                 onPlayPause={handlePlayPause}
                 onClose={() => setSelectedSong(null)}
+                nextStep={nextStep}
               />
             )}
           </div>
