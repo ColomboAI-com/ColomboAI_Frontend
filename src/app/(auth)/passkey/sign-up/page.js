@@ -10,6 +10,7 @@ import { startRegistration } from "@simplewebauthn/browser";
 import RedirectLink from "@/components/auth/RedirectLink";
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
 import { setUserCookies } from "@/utlils/commonFunctions";
+import { getCookie } from "cookies-next";
 
 const SignUp = () => {
   const {
@@ -21,64 +22,70 @@ const SignUp = () => {
     resetAuthValues,
     passKeySignUpStart,
     passKeySignUpFinish,
+    setInputData,
   } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
+    if (!getCookie("token")) {
+      router.push("/sign-in");
+    }
+    const dispName = getCookie("name").split(" ").join("_");
+    setInputData(getCookie("username"), dispName);
     return () => resetAuthValues();
   }, []);
 
-  const validateUserInputs = () => {
-    // Username regex
-    const usernameRegex = /^(?!.*(?:admin|Colombo|ColomboAI))[a-zA-Z0-9_]{5,30}$/;
+  // const validateUserInputs = () => {
+  //   // Username regex
+  //   const usernameRegex = /^(?!.*(?:admin|Colombo|ColomboAI))[a-zA-Z0-9_]{5,30}$/;
 
-    // Display name regex
-    const displayNameRegex = /^(?!.*(?:admin|Colombo|ColomboAI)).{1,50}$/;
+  //   // Display name regex
+  //   const displayNameRegex = /^(?!.*(?:admin|Colombo|ColomboAI)).{1,50}$/;
 
-    // Check username
-    if (!usernameRegex.test(inputs.username)) {
-      return {
-        isValid: false,
-        error:
-          "Username must be 5-30 characters long, contain only letters, numbers, and underscores, and cannot contain 'admin', 'Colombo', or 'ColomboAI'.",
-      };
-    }
+  //   // Check username
+  //   if (!usernameRegex.test(inputs.username)) {
+  //     return {
+  //       isValid: false,
+  //       error:
+  //         "Username must be 5-30 characters long, contain only letters, numbers, and underscores, and cannot contain 'admin', 'Colombo', or 'ColomboAI'.",
+  //     };
+  //   }
 
-    // Check display name
-    if (!displayNameRegex.test(inputs.name)) {
-      return {
-        isValid: false,
-        error:
-          "Display name must be 1-50 characters long and cannot contain 'admin', 'Colombo', or 'ColomboAI'.",
-      };
-    }
+  //   // Check display name
+  //   if (!displayNameRegex.test(inputs.name)) {
+  //     return {
+  //       isValid: false,
+  //       error:
+  //         "Display name must be 1-50 characters long and cannot contain 'admin', 'Colombo', or 'ColomboAI'.",
+  //     };
+  //   }
 
-    return {
-      isValid: true,
-      error: null,
-    };
-  };
+  //   return {
+  //     isValid: true,
+  //     error: null,
+  //   };
+  // };
 
   const onSignUp = async () => {
-    if (!isValidUserName(inputs.username)) {
-      setValidations((prev) => ({ ...prev, username: true }));
-      return;
-    }
-    if (!isValidName(inputs.name)) {
-      setValidations((prev) => ({ ...prev, name: true }));
-      return;
-    }
+    // if (!isValidUserName(inputs.username)) {
+    //   setValidations((prev) => ({ ...prev, username: true }));
+    //   return;
+    // }
+    // if (!isValidName(inputs.name)) {
+    //   setValidations((prev) => ({ ...prev, name: true }));
+    //   return;
+    // }
     if (!isValidAge(inputs.age)) {
       setValidations((prev) => ({ ...prev, age: true }));
       return;
     }
 
-    let check = validateUserInputs();
-    if (!check.isValid) {
-      alert(check.error);
-      return;
-    }
+    // let check = validateUserInputs();
+    // if (!check.isValid) {
+    //   alert(check.error);
+    //   return;
+    // }
 
     try {
       const optionsJSON = await passKeySignUpStart();
@@ -125,26 +132,28 @@ const SignUp = () => {
             <div className="w-[85%] mx-auto">
               <input
                 type="text"
-                className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
+                className="mt-2 w-full rounded-[40px] border-[1px] px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none bg-gray-400"
                 placeholder="Enter a UserName for your profile"
                 autoComplete="off"
                 maxLength={30}
                 name={"username"}
-                value={inputs.username}
-                onChange={handleInputs}
+                value={`UserName: ${inputs.username}`}
+                // onChange={handleInputs}
+                disabled={true}
               />
               {validations.username && <UsernameValidation value={inputs.username} />}
-              <input
+              {/* <input
                 type="text"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
-                placeholder="Your Name"
+                placeholder="Email"
                 autoComplete="off"
                 maxLength={50}
-                name={"name"}
-                value={inputs.name}
-                onChange={handleInputs}
-              />
-              {validations.name && <NameValidation value={inputs.name} />}
+                name={"email"}
+                value={inputs.email}
+                // onChange={handleInputs}
+                disabled={true}
+              /> */}
+              {/* {validations.email && <NameValidation value={inputs.email} />} */}
               <input
                 type="number"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"
