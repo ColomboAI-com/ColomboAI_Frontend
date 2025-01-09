@@ -10,6 +10,7 @@ import { startAuthentication } from "@simplewebauthn/browser";
 import { isValidUserName } from "@/utlils/validate";
 import { setUserCookies } from "@/utlils/commonFunctions";
 import { clearCookie } from "@/utlils/cookies";
+import { getCookie } from "cookies-next";
 
 const SignIn = () => {
   const {
@@ -20,11 +21,16 @@ const SignIn = () => {
     resetAuthValues,
     passKeySignInStart,
     passKeySignInFinish,
+    setInputUserName,
   } = useAuth();
 
   const router = useRouter();
 
   useEffect(() => {
+    if (!getCookie("token")) {
+      router.push("/sign-in");
+    }
+    setInputUserName(getCookie("username"));
     return () => resetAuthValues();
   }, []);
 
@@ -73,7 +79,7 @@ const SignIn = () => {
                 alt="welcome_to_colomboai"
               />
               <h5 className="text-[24px] font-sans text-center font-[450]">
-                Enter your <span className="text-[#1E71F2]">Username</span>
+                <span className="text-[#1E71F2]">Username</span>
               </h5>
             </div>
             <div>
@@ -85,7 +91,8 @@ const SignIn = () => {
                 maxLength={30}
                 name={"username"}
                 value={inputs.username}
-                onChange={handleInputs}
+                // onChange={handleInputs}
+                disabled={true}
               />
               {validations.username && <UsernameValidation value={inputs.username} />}
               <Button
