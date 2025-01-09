@@ -51,6 +51,11 @@ const OTPVerification = () => {
     else res = await signIn();
     if (res) {
       setUserCookies(res.data);
+      if (getSessionStorage("otp-page") === "sign-in") {
+        setTimeout(() => {
+          window.location.pathname = "/passkey/sign-in";
+        }, 1000);
+      }
       if (page === "sign-in" && new_device) {
         setShowPopup(true);
       } else {

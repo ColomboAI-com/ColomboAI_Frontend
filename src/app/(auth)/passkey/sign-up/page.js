@@ -31,7 +31,7 @@ const SignUp = () => {
     if (!getCookie("token")) {
       router.push("/sign-in");
     }
-    const dispName = getCookie("name").split(" ").join("_");
+    const dispName = getCookie("name") ? getCookie("name").split(" ").join("_") : "";
     setInputData(getCookie("username"), dispName);
     return () => resetAuthValues();
   }, []);
