@@ -9,7 +9,6 @@ import { IoIosMusicalNotes } from "react-icons/io";
 import LikeVibe from "./LikeVibe";
 import { useMediaQuery } from "react-responsive";
 import FollowButton from "@/components/elements/FollowButton";
-import { WalletIcon } from "lucide-react";
 import Link from "next/link";
 
 import play from "../../../../public/images/icons/vibes_mobile/play.svg";
@@ -30,6 +29,7 @@ import {
   VibesLikesIcon,
   VibesRepostIcon,
   GenAiIcon,
+  WalletIcon
 } from "@/components/Icons";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { MdOutlineArrowBack } from "react-icons/md";
@@ -352,7 +352,7 @@ export default function Vibe({ vibe, index }) {
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
-                  <Image src={wallet} alt="colombo" className="w-[1rem]" />
+                  <img src={walletIcon} alt="colombo" className="w-[1rem]"/>
                 ) : (
                   <WalletIcon />
                 )}
