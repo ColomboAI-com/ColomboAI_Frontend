@@ -23,6 +23,7 @@ const SignUp = () => {
     passKeySignUpStart,
     passKeySignUpFinish,
     setInputData,
+    setUserAge,
   } = useAuth();
 
   const router = useRouter();
@@ -32,7 +33,9 @@ const SignUp = () => {
       router.push("/sign-in");
     }
     const dispName = getCookie("name") ? getCookie("name").split(" ").join("_") : "";
+    let userAge = localStorage.getItem("userAge");
     setInputData(getCookie("username"), dispName);
+    if (userAge != undefined) setUserAge(userAge);
     return () => resetAuthValues();
   }, []);
 
@@ -154,6 +157,7 @@ const SignUp = () => {
                 disabled={true}
               /> */}
               {/* {validations.email && <NameValidation value={inputs.email} />} */}
+
               <input
                 type="number"
                 className="mt-2 w-full rounded-[40px] border-[1px] border-brandprimary bg-white px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none"

@@ -36,6 +36,7 @@ const SignUp = () => {
       setValidations((prev) => ({ ...prev, age: true }));
       return;
     }
+    localStorage.setItem("userAge", inputs.age);
     const res = await getOTP("sign-up");
     if (res) {
       setSessionStorage("otp-page", "sign-up");
