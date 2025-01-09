@@ -32,10 +32,16 @@ export const SocialAuthContextProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       if (user) {
+        let isComingFromSignIn = await localStorage.getItem("isComingFromSignIn");
         const res = await ssoAuthentication({ provider: selectedProvider, token: user.accessToken });
         if (res) {
           setUserCookies(res.data);
-          router.push("/passkey/sign-up/");
+          console.log(isComingFromSignIn);
+          if (isComingFromSignIn === "SIGN-IN") {
+            router.push("/passkey/sign-in/");
+          } else if (isComingFromSignIn === "SIGN-UP") {
+            router.push("/passkey/sign-up/");
+          }
         }
       }
     })();

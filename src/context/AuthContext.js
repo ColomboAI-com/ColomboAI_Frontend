@@ -51,6 +51,9 @@ export const AuthContextProvider = ({ children }) => {
   const setInputData = (username, name) => {
     setInputs((prev) => ({ ...prev, username, name }));
   };
+  const setInputUserName = (username) => {
+    setInputs((prev) => ({ ...prev, username }));
+  };
 
   const getOTP = async (action = "sign-in") => {
     try {
@@ -227,9 +230,17 @@ export const AuthContextProvider = ({ children }) => {
   const passKeySignInStart = async () => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/start`, {
-        user_name: inputs.username,
-      });
+      const res = await axios.post(
+        `${ROOT_URL_AUTH}/auth/passkey/sign-in/start`,
+        {
+          user_name: inputs.username,
+        },
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       MessageBox("success", res.data.message);
       return res.data;
     } catch (err) {
@@ -242,10 +253,18 @@ export const AuthContextProvider = ({ children }) => {
   const passKeySignInFinish = async ({ data }) => {
     try {
       setLoadings((prev) => ({ ...prev, auth: true }));
-      const res = await axios.post(`${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`, {
-        user_name: inputs.username,
-        data,
-      });
+      const res = await axios.post(
+        `${ROOT_URL_AUTH}/auth/passkey/sign-in/finish`,
+        {
+          user_name: inputs.username,
+          data,
+        },
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       MessageBox("success", res.data.message);
       return res;
     } catch (err) {
@@ -280,6 +299,7 @@ export const AuthContextProvider = ({ children }) => {
         passKeySignInStart,
         passKeySignInFinish,
         setInputData,
+        setInputUserName,
       }}
     >
       {children}

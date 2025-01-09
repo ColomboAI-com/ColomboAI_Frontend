@@ -15,6 +15,7 @@ const SignUp = () => {
   const router = useRouter();
 
   useEffect(() => {
+    localStorage.setItem("isComingFromSignIn", "SIGN-UP");
     return () => resetAuthValues();
   }, []);
 
