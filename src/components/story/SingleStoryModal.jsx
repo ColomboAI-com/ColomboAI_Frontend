@@ -154,6 +154,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
           <Stories
             stories={data.map((story) => story.media[0])}
             defaultInterval={5000}
+            preventDefault={true}
             // width={432}
             width={storiesWidth}
             height={storiesHeight}
