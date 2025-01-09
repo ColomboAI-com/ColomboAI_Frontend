@@ -55,6 +55,10 @@ export const AuthContextProvider = ({ children }) => {
     setInputs((prev) => ({ ...prev, username }));
   };
 
+  const setUserAge = (age) => {
+    setInputs((prev) => ({ ...prev, age }));
+  };
+
   const getOTP = async (action = "sign-in") => {
     try {
       setLoadings((prev) => ({ ...prev, otp: true }));
@@ -300,6 +304,7 @@ export const AuthContextProvider = ({ children }) => {
         passKeySignInFinish,
         setInputData,
         setInputUserName,
+        setUserAge,
       }}
     >
       {children}
