@@ -119,7 +119,7 @@ const SignUp = () => {
 
   return (
     <div className="lg:h-screen lg:overflow-hidden bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
-      <div className="min-h-screen flex justify-center lg:items-center lg:my-[18px] sm:px-[20px]">
+      <div className="flex justify-center lg:items-center lg:my-[18px] sm:px-[20px]">
         <div className="md:max-w-[380px] xxl:px-[0] lg:px-[0] w-full mx-auto sm:max-w-full sm:w-full md:w-full">
           <div className="">
             <img
