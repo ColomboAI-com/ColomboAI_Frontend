@@ -39,6 +39,7 @@ export default function UserProfileContextProvider({ children }) {
         },
       });
       setUserDetails(res.data);
+      localStorage.setItem("userVerified", res.data.verified);
     } catch (err) {
       handleError(err);
     } finally {

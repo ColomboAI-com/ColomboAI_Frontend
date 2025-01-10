@@ -11,6 +11,8 @@ import {
 import { GlobalContext } from "@/context/GlobalContext";
 import Modal from "./Modal";
 import UploadStoryModal from "../story/UploadStoryModal";
+import VerificationPopup from "./VerificationPopup";
+import { UserProfileContext } from "@/context/UserProfileContext";
 
 export default function CreateDropdown({ w, h, filyl }) {
   const { setIsCreatePostOpen } = useContext(GlobalContext);
@@ -25,12 +27,44 @@ export default function CreateDropdown({ w, h, filyl }) {
   // Check Screen Size
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const handleOpen = (e) => {
-    setIsCreateStoryOpen(!isCreateStoryOpen);
+  const [userNotVerifiedModal, setUserNotVerifiedModal] = useState(false);
+  const [isUserVerified, setIsUserVerified] = useState(false);
+
+  // const { userDetails } = useContext(UserProfileContext);
+
+  const handleOpen = (postType) => {
+    if (isUserVerified == false) {
+      setUserNotVerifiedModal(true);
+      return;
+    }
+    if (postType == "post") setIsCreatePostOpen(true);
+    if (postType == "story") setIsCreateStoryOpen(true);
+    if (postType == "vibe") setIsCreateVibeOpen(true);
+    if (postType == "magicP") {
+      setIsCreatePostOpen(true);
+      setOpenMagicPenWithIcon(true);
+    }
+  };
+
+  const updateUserVerifiedInfo = async () => {
+    let userVerified = await localStorage.getItem("userVerified");
+    let boolValue;
+
+    if (typeof userVerified === "string") {
+      boolValue = userVerified === "true";
+    } else if (typeof userVerified === "boolean") {
+      boolValue = userVerified;
+    } else {
+      boolValue = false;
+    }
+
+    setIsUserVerified(boolValue);
   };
 
   useEffect(() => {
     // Directly check the screen size on initial load
+    // console.log(userDetails);
+    updateUserVerifiedInfo();
     const checkScreenSize = () => {
       const screenWidth = window.innerWidth;
       if (screenWidth <= 767) {
@@ -52,6 +86,16 @@ export default function CreateDropdown({ w, h, filyl }) {
 
   return (
     <div>
+      {userNotVerifiedModal && (
+        <Modal
+          isOpen={userNotVerifiedModal}
+          setIsOpen={setUserNotVerifiedModal}
+          className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
+        >
+          <VerificationPopup setIsOpen={setUserNotVerifiedModal} />
+        </Modal>
+      )}
+
       <Menu as="div" className="relative inline-block text-left z-50 sm:pt-3 md:pt-0">
         {({ open }) => (
           <>
@@ -85,7 +129,7 @@ export default function CreateDropdown({ w, h, filyl }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => setIsCreatePostOpen(true)}
+                        onClick={() => handleOpen("post")}
                         className={`${
                           active ? "bg-brandprimary text-white" : "text-brandprimary"
                         } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px] font-sans font-[500]`}
@@ -100,7 +144,7 @@ export default function CreateDropdown({ w, h, filyl }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => setIsCreateStoryOpen(true)}
+                        onClick={() => handleOpen("story")}
                         className={`${
                           active ? "bg-brandprimary text-white" : "text-brandprimary"
                         } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
@@ -116,7 +160,7 @@ export default function CreateDropdown({ w, h, filyl }) {
                     {({ active }) => (
                       <button
                         onClick={() => {
-                          setIsCreateVibeOpen(true);
+                          handleOpen("vibe");
                         }}
                         className={`${
                           active ? "bg-brandprimary text-white" : "text-brandprimary"
@@ -132,7 +176,7 @@ export default function CreateDropdown({ w, h, filyl }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        onClick={() => setIsCreatePostOpen(true)}
+                        onClick={() => handleOpen("post")}
                         className={`${
                           active ? "bg-brandprimary text-white" : "text-brandprimary"
                         } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
@@ -148,8 +192,7 @@ export default function CreateDropdown({ w, h, filyl }) {
                     {({ active }) => (
                       <button
                         onClick={() => {
-                          setIsCreatePostOpen(true);
-                          setOpenMagicPenWithIcon(true);
+                          handleOpen("magicP");
                         }}
                         className={`${
                           active ? "bg-brandprimary text-white" : "text-brandprimary"
