@@ -278,7 +278,7 @@ const DefaultLayout = ({ children }) => {
         </div>
 
         {/* Bottombar Mobile View */}
-        {pathname !== '/vibes' && <div className={`md:hidden bg-white sticky bottom-0 z-50 border-t-2 border-brandprimary rounded-xl`}>
+        {pathname !== '/vibes' && <div className={`md:hidden bg-white fixed bottom-0 z-50 w-full border-t-2 border-brandprimary rounded-xl`}>
           <div className="shadow-[0px_2px_4px_0px_#0000001A]">
             <div className="py-1 flex flex-wrap items-center justify-evenly">
               <Link href="/genai-search">
