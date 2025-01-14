@@ -110,7 +110,8 @@ const SignUp = () => {
       if (verif) {
         setUserCookies(verif.data);
         setTimeout(() => {
-          window.location.replace("/");
+          window.location.href = "/";
+          window.location.reload();
         }, 1500);
       }
     } catch (error) {
