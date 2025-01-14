@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import Button from "@/elements/Button";
 import { isValidName, isValidUserName, isValidAge } from "@/utlils/validate";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { startRegistration } from "@simplewebauthn/browser";
 import RedirectLink from "@/components/auth/RedirectLink";
@@ -26,6 +26,8 @@ const SignUp = () => {
     setUserAge,
   } = useAuth();
 
+  let [socialLogin, setSocialLogin] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -36,6 +38,10 @@ const SignUp = () => {
     let userAge = localStorage.getItem("userAge");
     setInputData(getCookie("username"), dispName);
     if (userAge != undefined) setUserAge(userAge);
+    else {
+      setSocialLogin(true);
+      // alert("triggered");
+    }
     return () => resetAuthValues();
   }, []);
 
@@ -133,17 +139,34 @@ const SignUp = () => {
           </div>
           <div>
             <div className="w-[85%] mx-auto">
-              <input
-                type="text"
-                className="mt-2 w-full rounded-[40px] border-[1px] px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none bg-gray-400"
-                placeholder="Enter a UserName for your profile"
-                autoComplete="off"
-                maxLength={30}
-                name={"username"}
-                value={`UserName: ${inputs.username}`}
-                // onChange={handleInputs}
-                disabled={true}
-              />
+              {socialLogin ? (
+                <>
+                  <br />
+                  Username:
+                  <input
+                    type="text"
+                    className="mt-2 w-full rounded-[40px] border-[1px] px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none bg-brand-primary"
+                    placeholder="Enter a UserName for your profile"
+                    autoComplete="off"
+                    maxLength={30}
+                    name={"username"}
+                    value={`${inputs.username}`}
+                    onChange={handleInputs}
+                  />
+                </>
+              ) : (
+                <input
+                  type="text"
+                  className="mt-2 w-full rounded-[40px] border-[1px] px-[20px] py-[0.5rem] text-black placeholder:text-brandplaceholder focus:border-brandprimary focus:bg-white focus:outline-none bg-gray-400"
+                  placeholder="Enter a UserName for your profile"
+                  autoComplete="off"
+                  maxLength={30}
+                  name={"username"}
+                  value={`UserName: ${inputs.username}`}
+                  disabled={true}
+                />
+              )}
+
               {validations.username && <UsernameValidation value={inputs.username} />}
               {/* <input
                 type="text"
