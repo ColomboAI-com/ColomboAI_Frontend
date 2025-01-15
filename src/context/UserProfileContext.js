@@ -38,9 +38,10 @@ export default function UserProfileContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-      setUserDetails(res.data);
-      localStorage.setItem("userVerified", res.data.verified);
+      await setUserDetails(res.data);
+      await localStorage.setItem("userVerified", res.data.verified);
     } catch (err) {
+      console.log(err);
       handleError(err);
     } finally {
       setLoadings((prev) => ({ ...prev, userDetails: false }));

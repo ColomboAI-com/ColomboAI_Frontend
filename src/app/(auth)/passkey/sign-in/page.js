@@ -96,7 +96,7 @@ const SignIn = () => {
               />
               {validations.username && <UsernameValidation value={inputs.username} />}
               <Button
-                title={"LOGIN"}
+                title={"Continue with Passkey"}
                 className={
                   "mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in"
                 }

@@ -4,13 +4,14 @@ import { useAuth } from "@/context/AuthContext";
 import Button from "@/elements/Button";
 import { isValidName, isValidUserName, isValidAge } from "@/utlils/validate";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { startRegistration } from "@simplewebauthn/browser";
 import RedirectLink from "@/components/auth/RedirectLink";
 import AgreeTermAndConditions from "@/components/auth/AgreeTermAndConditions";
 import { setUserCookies } from "@/utlils/commonFunctions";
 import { getCookie } from "cookies-next";
+import { UserProfileContext } from "@/context/UserProfileContext";
 
 const SignUp = () => {
   const {
@@ -26,22 +27,40 @@ const SignUp = () => {
     setUserAge,
   } = useAuth();
 
+  const { userDetails, getUserDetails } = useContext(UserProfileContext);
+
   let [socialLogin, setSocialLogin] = useState(false);
+  let [loadingData, setLoadingData] = useState(true);
 
   const router = useRouter();
 
+  const checkUserDetails = async () => {
+    await getUserDetails(getCookie("username"));
+  };
+
   useEffect(() => {
-    if (!getCookie("token")) {
-      router.push("/sign-in");
+    if (userDetails !== null) {
+      setLoadingData(false);
+      if (userDetails.verified === true) {
+        router.push("/");
+      }
     }
+
     const dispName = getCookie("name") ? getCookie("name").split(" ").join("_") : "";
     let userAge = localStorage.getItem("userAge");
     setInputData(getCookie("username"), dispName);
     if (userAge != undefined) setUserAge(userAge);
     else {
       setSocialLogin(true);
-      // alert("triggered");
     }
+  }, [userDetails]);
+
+  useEffect(() => {
+    if (!getCookie("token")) {
+      router.push("/sign-in");
+    }
+    checkUserDetails();
+
     return () => resetAuthValues();
   }, []);
 
@@ -109,8 +128,10 @@ const SignUp = () => {
       let verif = await passKeySignUpFinish({ data: attResp });
       if (verif) {
         setUserCookies(verif.data);
+
+        window.location.href = "/";
         setTimeout(() => {
-          window.location.href = "/";
+          // window.location.href = "/";
           window.location.reload();
         }, 1500);
       }
@@ -193,14 +214,25 @@ const SignUp = () => {
                 onChange={handleInputs}
               />
               {validations.age && <AgeValidation value={inputs.age} />}
-              <Button
-                title={"CONTINUE"}
-                className={
-                  "mt-[0.8rem] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[0.5rem] text-white focus:bg-brandprimary transition duration-300 ease-in"
-                }
-                // loading={loadings.otp}
-                onClick={onSignUp}
-              />
+
+              {loadingData ? (
+                <Button
+                  title={"Loading please wait"}
+                  className={
+                    "mt-[0.8rem] block w-full rounded-[40px] font-sans font-[700] bg-gray-500 px-[20px] py-[0.5rem] text-white focus:bg-brandprimary transition duration-300 ease-in"
+                  }
+                  disabled={true}
+                />
+              ) : (
+                <Button
+                  title={"Passkey Registration required"}
+                  className={
+                    "mt-[0.8rem] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[0.5rem] text-white focus:bg-brandprimary transition duration-300 ease-in"
+                  }
+                  // loading={loadings.otp}
+                  onClick={onSignUp}
+                />
+              )}
             </div>
           </div>
 
@@ -208,6 +240,22 @@ const SignUp = () => {
 
           <div className="text-center text-[16px]  font-sans ">
             you"ll be prompted to use biometrics or your devices PIN
+          </div>
+
+          <br />
+          <div className="w-[85%] mx-auto">
+            <Button
+              title={"DENY"}
+              className={
+                "mt-[0.8rem] block w-full rounded-[40px] font-sans font-[700] bg-red-600 px-[20px] py-[0.5rem] text-white focus:bg-red-600 transition duration-300 ease-in"
+              }
+              // loading={loadings.otp}
+              onClick={() => router.push("/")}
+            />
+          </div>
+          <br />
+          <div className="text-center text-[16px]  font-sans ">
+            If you deny, you will have limited usage of our platform
           </div>
 
           <RedirectLink
