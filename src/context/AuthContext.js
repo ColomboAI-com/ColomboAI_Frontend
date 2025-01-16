@@ -248,6 +248,11 @@ export const AuthContextProvider = ({ children }) => {
       MessageBox("success", res.data.message);
       return res.data;
     } catch (err) {
+      if (err.response.data.ERR_CODE && err.response.data.ERR_CODE === "UNVERIFIED_USER") {
+        setTimeout(() => {
+          router.push("/passkey/sign-up");
+        }, 1000);
+      }
       handleError(err);
     } finally {
       setLoadings((prev) => ({ ...prev, auth: false }));

@@ -34,7 +34,7 @@ const SignIn = () => {
     return () => resetAuthValues();
   }, []);
 
-  const onSignUp = async () => {
+  const onSignIn = async () => {
     if (!isValidUserName(inputs.username)) {
       setValidations((prev) => ({ ...prev, username: true }));
       return;
@@ -100,14 +100,16 @@ const SignIn = () => {
                 className={
                   "mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in"
                 }
-                onClick={onSignUp}
+                onClick={onSignIn}
               />
             </div>
 
             {/* <p>resend the OTP</p>
             <div className="text-center text-[16px] text-[#1E6DE9] font-sans py-[34px]">OR</div>
             <SocialAuthentication /> */}
-            <RedirectLink title={"Don't have an account?"} href={"/passkey/sign-up"} linkName={"SIGN UP"} />
+            <br />
+            <div className="text-center">Proceed with passkey to get full access</div>
+            {/* <RedirectLink title={"Don't have an account?"} href={"/passkey/sign-up"} linkName={"SIGN UP"} /> */}
           </div>
         </div>
       </div>
