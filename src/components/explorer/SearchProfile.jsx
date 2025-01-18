@@ -1,5 +1,5 @@
 'use client'
-
+import RenderFeedBuName from "@/components/feed/post/RenderFeedBuName";
 import React, { useEffect, useState, useContext, useRef } from 'react';
 import { FeedContext } from '../../context/FeedContext';
 import Link from 'next/link';
@@ -9,7 +9,9 @@ const SearchProfile = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [searchListOpen, setSearchListOpen] = useState(false);
     const [showSearchResults, setShowSearchResults] = useState(false);
-    const [baseURL, setBaseURL] = useState('')
+    const [banisclicked, setbanisclicked] = useState(false);
+    const [AdMode, setAdMode] = useState('');
+    const [baseURL, setBaseURL] = useState('');
     const searchRef = useRef(null);
 
     useEffect(() => {
@@ -17,6 +19,15 @@ const SearchProfile = () => {
             setBaseURL(new URL(window.location.href).origin)
         }
     }, [])
+
+    const onclickpost = (data) => {
+        setbanisclicked(data);
+        setSearchQuery(data);
+    }
+
+    const BanMode = (data) => {
+        setAdMode(data);
+    }
 
     const handleSearch = async () => {
         try {
@@ -33,6 +44,7 @@ const SearchProfile = () => {
                 setShowSearchResults(true);
             } else {
                 setShowSearchResults(false);
+                setbanisclicked(false);
             }
         }, 500);
 
@@ -78,35 +90,50 @@ const SearchProfile = () => {
                     onFocus={handleFocus}
                 />
             </div>
-            {searchListOpen && (
-                <div className="max-h-[11rem] no-scrollbar overflow-y-scroll border-[1px] ml-8 mr-8 bg-white right-0 shadow left-0 rounded-t-[0px] rounded-b-[20px]">
+            {searchListOpen && (!banisclicked) && (
+                <div className="max-h-[11rem] no-scrollbar">
                     {displayData.length > 0 ? (
                         displayData.map((val) => (
                             <React.Fragment key={val.user_name}>
                                 <hr />
-                                <Link href={`${baseURL}/profile/${val.user_name}`} target="_blank">
-                                    <div className="flex items-center justify-between px-[16px] py-[3px]">
-                                        <div className="flex items-center">
-                                            <img
-                                                src={val.profile_picture}
-                                                alt="suggested_image"
-                                                className="rounded-full w-[30px] h-[30px] mr-3"
-                                            />
-                                            <div>
-                                                <a className='text-[14px] font-sans font-[600]'>@{val.user_name}</a>
-                                                <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">{val.name}</p>
-                                            </div>
+                                <div className="flex items-center justify-between px-[16px] py-[3px]" >
+                                    <div className="flex items-center">
+                                        <div>
+                                            <a className='text-[14px] font-sans font-[600]' onClick={(e) => onclickpost(val.user_name)}>#{val.user_name}</a>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             </React.Fragment>
                         ))
                     ) : (
-                        <p className="px-[16px] py-[15px] text-center text-[#8B8B8B]">No Data Found</p>
+                        <div></div>
                     )}
                 </div>
             )}
-
+            {(!searchListOpen) && banisclicked  && (
+                <div>
+                    <list className="flex justify-between p-4">
+                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("")}}>For you</option>
+                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("Account")}}>Accounts</option>
+                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("audio")}}>Audio</option>
+                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("video")}}>Video</option>
+                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("image")}}>Image</option>
+                    </list>
+                    <div>
+                        {console.log(AdMode)}
+                        {AdMode == "Account" ? 
+                        <Link href={`${baseURL}/profile/${banisclicked}`} target="_blank">
+                            <div>
+                                <a className='text-[14px] font-sans font-[600]'>@{banisclicked}</a>
+                                <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">{banisclicked}</p>
+                            </div>
+                        </Link>
+                        : <RenderFeedBuName filter={AdMode} CreatorName={banisclicked}></RenderFeedBuName>
+                        }
+                    </div>
+                </div>
+                
+            )}
         </div>
     );
 }
