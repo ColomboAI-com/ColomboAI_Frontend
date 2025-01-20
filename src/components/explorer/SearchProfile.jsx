@@ -115,12 +115,11 @@ const SearchProfile = () => {
                     <list className="flex justify-between p-4">
                         <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("")}}>For you</option>
                         <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("Account")}}>Accounts</option>
-                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("audio")}}>Audio</option>
+                        <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("thought")}}>Thought</option>
                         <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("video")}}>Video</option>
                         <option className="bg-white hover:bg-stone-400" onClick={(e) => {BanMode("image")}}>Image</option>
                     </list>
                     <div>
-                        {console.log(AdMode)}
                         {AdMode == "Account" ? 
                         <Link href={`${baseURL}/profile/${banisclicked}`} target="_blank">
                             <div>
