@@ -31,6 +31,7 @@ const SignUp = () => {
 
   let [socialLogin, setSocialLogin] = useState(false);
   let [loadingData, setLoadingData] = useState(true);
+  let [isResetting, setIsResetting] = useState(false);
 
   const router = useRouter();
 
@@ -38,12 +39,33 @@ const SignUp = () => {
     await getUserDetails(getCookie("username"));
   };
 
+  const CheckIfRecovery = async (userData) => {
+    let isForgotPasskey = await localStorage.getItem("forgotPasskey");
+    let boolValue;
+
+    if (isForgotPasskey == null || isForgotPasskey == undefined) {
+      boolValue = false;
+    } else {
+      if (typeof isForgotPasskey === "string") {
+        boolValue = isForgotPasskey === "true";
+      } else if (typeof isForgotPasskey === "boolean") {
+        boolValue = isForgotPasskey;
+      } else {
+        boolValue = false;
+      }
+    }
+
+    if (boolValue === false && userData.verified === true) {
+      router.push("/");
+    } else {
+      setIsResetting(true);
+    }
+  };
+
   useEffect(() => {
     if (userDetails !== null) {
       setLoadingData(false);
-      if (userDetails.verified === true) {
-        router.push("/");
-      }
+      CheckIfRecovery(userDetails);
     }
 
     const dispName = getCookie("name") ? getCookie("name").split(" ").join("_") : "";
@@ -156,6 +178,7 @@ const SignUp = () => {
               alt="welcome_to_colomboai"
             />
             <h5 className="text-[1.25rem] font-sans text-center py-[0.08rem]">
+              {isResetting && <span className="font-bold">Passkey Recovery </span>} <br />
               Register your passkey for <span className="text-[#1E71F2]">secure acesss</span>
             </h5>
           </div>
