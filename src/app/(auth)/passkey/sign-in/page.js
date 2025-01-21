@@ -67,6 +67,12 @@ const SignIn = () => {
       }
     }
   };
+
+  const resetPasskeyRedirect = async () => {
+    await localStorage.setItem("forgotPasskey", true);
+    router.push("/passkey/sign-up");
+  };
+
   return (
     <>
       <div className="lg:h-screen lg:overflow-auto bg-[url('/images/home/star-bg.png')] bg-[length:89%_96%] bg-no-repeat bg-center sm:h-auto">
@@ -109,6 +115,14 @@ const SignIn = () => {
             <SocialAuthentication /> */}
             <br />
             <div className="text-center">Proceed with passkey to get full access</div>
+            <br />
+            <div className="text-center">
+              <span className="font-bold">Forgot Passkey?</span> &nbsp;&nbsp;
+              <button className="text-blue-700" onClick={resetPasskeyRedirect}>
+                Click here to reset Passkey
+              </button>
+            </div>
+
             {/* <RedirectLink title={"Don't have an account?"} href={"/passkey/sign-up"} linkName={"SIGN UP"} /> */}
           </div>
         </div>
