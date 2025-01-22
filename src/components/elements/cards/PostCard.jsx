@@ -91,8 +91,14 @@ const PostCard = ({ post }) => {
             href={`/profile/${post?.creator?.user_name || ""}`}
             target="_blank"
           >
-            <ProfilePicture image={post?.creator?.profile_picture} size={"w-[2rem]"} />
-            <Username username={post?.creator?.user_name} className="text-[12px]" />
+            <ProfilePicture
+              image={post?.creator?.profile_picture}
+              size={"w-[2rem]"}
+            />
+            <Username
+              username={post?.creator?.user_name}
+              className="text-[12px]"
+            />
           </Link>
           <div className="flex items-center gap-4 justify-between pl-2 lg:w-fit md:w-fit w-full">
             <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">
@@ -107,10 +113,18 @@ const PostCard = ({ post }) => {
             >
               {userDetails?.user_name === post?.creator?.user_name ? (
                 <ul className="rounded bg-white shadow-md text-center">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Archive</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Hide Like Counts</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Turn Off Commenting</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    Archive
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    Edit
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    Hide Like Counts
+                  </li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    Turn Off Commenting
+                  </li>
                   <li
                     className="px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer"
                     onClick={handleDeletePost}
