@@ -183,6 +183,21 @@ export const AuthContextProvider = ({ children }) => {
 
   const passKeySignUpStart = async () => {
     try {
+      let isForgotPasskey = await localStorage.getItem("forgotPasskey");
+      let boolValue;
+
+      if (isForgotPasskey == null || isForgotPasskey == undefined) {
+        boolValue = false;
+      } else {
+        if (typeof isForgotPasskey === "string") {
+          boolValue = isForgotPasskey === "true";
+        } else if (typeof isForgotPasskey === "boolean") {
+          boolValue = isForgotPasskey;
+        } else {
+          boolValue = false;
+        }
+      }
+
       setLoadings((prev) => ({ ...prev, auth: true }));
       const res = await axios.post(
         `${ROOT_URL_AUTH}/auth/passkey/sign-up/start`,
@@ -190,6 +205,7 @@ export const AuthContextProvider = ({ children }) => {
           user_name: inputs.username,
           name: inputs.name,
           age: inputs.age,
+          forgotPasskey: boolValue,
         },
         {
           headers: {
@@ -198,6 +214,7 @@ export const AuthContextProvider = ({ children }) => {
         }
       );
       MessageBox("success", res.data.message);
+      localStorage.setItem("forgotPasskey", false);
       return res.data;
     } catch (err) {
       handleError(err);
