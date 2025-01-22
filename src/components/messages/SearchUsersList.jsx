@@ -12,9 +12,11 @@ const SearchUsersList = () => {
 
   const { getFollowers, followersData, followingsData } = useContext(UserProfileContext);
 
-  const { createConversation, DUMMY_TEXT } = useMessages();
+  const { createConversation, DUMMY_TEXT, conversations } = useMessages();
 
   const [contactList, setContactList] = useState([]);
+
+  let existingConversationUsers = new Set();
 
   useEffect(() => {
     getFollowers("followers");
@@ -25,10 +27,15 @@ const SearchUsersList = () => {
     const uniqueUserIds = new Set();
 
     let contact_list = [];
+    for (let conv of conversations) {
+      conv.participants.forEach((user) => {
+        existingConversationUsers.add(user._id);
+      });
+    }
 
     if (followersData) {
       for (let user of followersData) {
-        if (user._id && !uniqueUserIds.has(user._id)) {
+        if (user._id && !uniqueUserIds.has(user._id) && !existingConversationUsers.has(user._id)) {
           uniqueUserIds.add(user._id);
           contact_list.push(user);
         }
@@ -37,7 +44,7 @@ const SearchUsersList = () => {
 
     if (followingsData) {
       for (let user of followingsData) {
-        if (user._id && !uniqueUserIds.has(user._id)) {
+        if (user._id && !uniqueUserIds.has(user._id) && !existingConversationUsers.has(user._id)) {
           uniqueUserIds.add(user._id);
           contact_list.push(user);
         }
@@ -45,7 +52,7 @@ const SearchUsersList = () => {
     }
 
     setContactList(contact_list);
-  }, [followersData, followingsData]);
+  }, [followersData, followingsData, conversations]);
 
   const handleCreateConversation = (user) => {
     let data = {
