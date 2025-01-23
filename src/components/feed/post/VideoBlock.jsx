@@ -7,7 +7,7 @@ export default function VideoBlock({
 }) {
   return (
     <div id="video" className="sm:col-span-3">
-      <div className="object-cover md:h-[24rem] sm:h-[30rem]">
+      <div className="object-cover md:h-[24rem] sm:h-auto">
         {typeof video === "object" ? (
           video.map((src) => (
             <VideoPlayer onReady={() => {}} src={src + "#t=2"} />
