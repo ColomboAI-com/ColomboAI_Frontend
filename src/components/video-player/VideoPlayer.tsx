@@ -95,8 +95,8 @@ export const VideoJS = (props) => {
   }, [playerRef]);
 
   return (
-    <div data-vjs-player className="h-[100%] w-[100%]" ref={ref}>
-      <div ref={videoRef} className="h-[100%] w-[100%]" />
+    <div data-vjs-player className="h-auto w-[100%]" ref={ref}>
+      <div ref={videoRef} className="h-auto w-[100%]" />
     </div>
   );
 };
