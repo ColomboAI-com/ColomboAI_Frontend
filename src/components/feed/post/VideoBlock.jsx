@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactPlayer from "react-player";
 import VideoPlayer from "@/components/video-player/VideoPlayer";
 
@@ -10,10 +10,10 @@ export default function VideoBlock({
       <div className="object-cover md:h-[24rem] sm:h-[30rem]">
         {typeof video === "object" ? (
           video.map((src) => (
-            <VideoPlayer onReady={() => {}} src={src + "#t=0.001"} />
+            <VideoPlayer onReady={() => {}} src={src + "#t=2"} />
           ))
         ) : (
-          <VideoPlayer onReady={() => {}} src={src + "#t=0.001"} />
+          <VideoPlayer onReady={() => {}} src={video + "#t=2"} />
         )}
       </div>
     </div>

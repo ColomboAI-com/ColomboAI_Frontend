@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
-// import { useInView } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 
 export const VideoJS = (props) => {
-  // const { ref, inView } = useInView();
+  const { ref, inView } = useInView();
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const { src, onReady } = props;
+
+  const [isReady, setIsReady] = useState<boolean>(false);
 
   React.useEffect(() => {
     // Make sure Video.js player is only initialized once
@@ -49,6 +51,7 @@ export const VideoJS = (props) => {
         },
         () => {
           onReady && onReady(player);
+          setIsReady(true);
           // player.play();
         }
       ));
@@ -69,6 +72,16 @@ export const VideoJS = (props) => {
     }
   }, [videoRef]);
 
+  useEffect(() => {
+    if (isReady && inView) {
+      setTimeout(() => {
+        playerRef.current?.play();
+      }, 500);
+    } else {
+      playerRef.current?.pause();
+    }
+  }, [isReady, inView, playerRef]);
+
   // Dispose the Video.js player when the functional component unmounts
   React.useEffect(() => {
     const player = playerRef.current;
@@ -82,7 +95,7 @@ export const VideoJS = (props) => {
   }, [playerRef]);
 
   return (
-    <div data-vjs-player className="h-[100%] w-[100%]">
+    <div data-vjs-player className="h-[100%] w-[100%]" ref={ref}>
       <div ref={videoRef} className="h-[100%] w-[100%]" />
     </div>
   );

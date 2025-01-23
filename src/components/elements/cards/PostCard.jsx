@@ -112,8 +112,8 @@ const PostCard = ({ post }) => {
               button={<PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"} />}
             >
               {userDetails?.user_name === post?.creator?.user_name ? (
-                <ul className="rounded bg-white shadow-md text-center">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <ul className="rounded bg-white shadow-md text-center ring-1 ring-gray-100">
+                  <li className="rounded px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     Archive
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
@@ -126,15 +126,15 @@ const PostCard = ({ post }) => {
                     Turn Off Commenting
                   </li>
                   <li
-                    className="px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+                    className="rounded px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer"
                     onClick={handleDeletePost}
                   >
                     Delete
                   </li>
                 </ul>
               ) : (
-                <ul className="rounded bg-white shadow-md">
-                  <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <ul className="rounded bg-white shadow-md ring-1 ring-gray-100">
+                  <li className="rounded flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                     <SaveIcon w={25} h={25} fill={"currentcolor"} />
                     <span className="ml-2">Save</span>
                   </li>
@@ -154,7 +154,7 @@ const PostCard = ({ post }) => {
                     <UserProfileIcon w={25} h={25} fill={"currentcolor"} />
                     <span className="ml-2">About this account</span>
                   </li>
-                  <li className="flex items-center px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer">
+                  <li className="rounded flex items-center px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer">
                     <ReportIcon w={25} h={25} fill={"currentcolor"} />
                     <span className="ml-2">Report</span>
                   </li>
