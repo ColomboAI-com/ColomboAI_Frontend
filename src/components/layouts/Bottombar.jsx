@@ -31,9 +31,9 @@ const Bottombar = () => {
   ];
 
   return (
-    <div className=" md:hidden bg-white fixed bottom-0 z-50 border-t-2 border-brandprimary rounded-xl">
+    <div className=" md:hidden bg-white fixed bottom-0 z-50 border-t-2 border-brandprimary rounded-xl w-full">
       <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-        <div className="py-4 flex flex-wrap items-center justify-evenly">
+        <div className="py-1 flex flex-wrap items-center justify-evenly">
           <Link href="/genai-search">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
@@ -43,7 +43,7 @@ const Bottombar = () => {
                 className={`${pathname === "/genai-search"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-2 font-sans`}
               >
                 Gen AI
               </p>
@@ -64,7 +64,7 @@ const Bottombar = () => {
                 className={`${pathname === "/task-bot"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-2 font-sans`}
               >
                 Vibes
               </p>
@@ -86,7 +86,7 @@ const Bottombar = () => {
                 className={`${feedSections.includes(`${pathname}`)
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-2 font-sans`}
               >
                 Feed
               </p>
@@ -106,7 +106,7 @@ const Bottombar = () => {
                 className={`${pathname === "/shop"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-2 font-sans`}
               >
                 Shop
               </p>
@@ -126,7 +126,7 @@ const Bottombar = () => {
                 className={`${pathname === "/news"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-3 font-sans`}
+                  } text-center text-[14px] mt-2 font-sans`}
               >
                 News
               </p>
