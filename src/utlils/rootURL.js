@@ -8,12 +8,12 @@
 // export const ROOT_URL_FEED = "http://localhost:8001";
 
 // export const ROOT_URL_MESSAGES = "ws://localhost:8001";
-export const ROOT_URL_MESSAGES = "http://localhost:8001";
+// export const ROOT_URL_MESSAGES = "http://localhost:8001";
 
 export const ROOT_URL_AUTH = "https://caiuserservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com";
 export const ROOT_URL_FEED = "https://caifeedservice-1-dev-dot-fair-myth-398920.uc.r.appspot.com";
 
-// export const ROOT_URL_MESSAGES = "https://cai-messaging-dev-dot-fair-myth-398920.uc.r.appspot.com/";
+export const ROOT_URL_MESSAGES = "https://cai-messaging-dev-dot-fair-myth-398920.uc.r.appspot.com/";
 
 export const ROOT_URL_NOTIFICATION = "https://notificationservice-dev-dot-fair-myth-398920.uc.r.appspot.com";
 
