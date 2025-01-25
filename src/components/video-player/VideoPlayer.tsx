@@ -56,6 +56,15 @@ export const VideoJS = (props) => {
         }
       ));
 
+      player.on("click", () => {
+        if (!player.isFullscreen()) {
+          player.requestFullscreen(); // Enter fullscreen mode
+          setTimeout(() => {
+            player.play();
+          }, 200);
+        }
+      });
+
       // You could update an existing player in the `else` block here
       // on prop change, for example:
     } else {
@@ -95,8 +104,12 @@ export const VideoJS = (props) => {
   }, [playerRef]);
 
   return (
-    <div data-vjs-player className="h-auto w-[100%]" ref={ref}>
-      <div ref={videoRef} className="h-auto w-[100%]" />
+    <div data-vjs-player className="h-full w-[100%] relative">
+      <div
+        className="intersection-observer-element h-10 w-10 mt-[100px] absolute bg-red-500"
+        ref={ref}
+      />
+      <div ref={videoRef} className="h-full w-[100%]" />
     </div>
   );
 };
