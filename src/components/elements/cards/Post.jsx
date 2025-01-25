@@ -51,21 +51,7 @@ const Post = ({ post, index }) => {
 
   return (
     <>
-      {!post.repostBy ? (
-        <PostCard
-          post={{
-            ...post,
-            media:
-              index === 0
-                ? "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                : index === 1
-                ? "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
-                : post.media,
-          }}
-        />
-      ) : (
-        <RePostCard post={post} />
-      )}
+      {!post.repostBy ? <PostCard post={post} /> : <RePostCard post={post} />}
       {/* <div className="flex items-center">
         <ProfilePicture image={post?.creator?.profile_picture} className="w-[20px] h-[20px]" />
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
