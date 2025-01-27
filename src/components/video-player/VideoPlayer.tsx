@@ -57,34 +57,6 @@ export const VideoJS = (props) => {
           // player.play();
         }
       ));
-
-      // player.on("click", () => {
-      //   if (!player.isFullscreen()) {
-      //     try {
-      //       const postsContainer = document.getElementById("scroll-section");
-      //       lastScrollPosition.current = postsContainer.scrollTop;
-      //       player.requestFullscreen(); // Enter fullscreen mode
-      //     } catch (err) {}
-      //     setTimeout(() => {
-      //       player.play();
-      //     }, 200);
-      //   }
-      // });
-      // player.on("touchend", () => {
-      //   if (!player.isFullscreen()) {
-      //     try {
-      //       const postsContainer = document.getElementById("scroll-section");
-      //       lastScrollPosition.current = postsContainer.scrollTop;
-      //       player.requestFullscreen(); // Enter fullscreen mode
-      //     } catch (err) {}
-      //     setTimeout(() => {
-      //       player.play();
-      //     }, 200);
-      //   }
-      // });
-
-      // You could update an existing player in the `else` block here
-      // on prop change, for example:
     } else {
       const player = playerRef.current;
 
