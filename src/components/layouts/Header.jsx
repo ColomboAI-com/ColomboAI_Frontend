@@ -99,7 +99,7 @@ const Header = () => {
             </span>
             {pathname != "/shop" && <CreateDropdown />}
             <NotificationIcon w={35} h={35} fill={"#646464"} />
-            <span onClick={handleMessagingClick}>
+            <span onClick={handleMessagingClick} className="cursor-pointer">
               <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
             </span>
           </div>
@@ -138,7 +138,7 @@ const Header = () => {
             <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto" />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
               <NotificationIcon w={35} h={35} fill={"#646464"} />
-              <span onClick={handleMessagingClick}>
+              <span onClick={handleMessagingClick} className="cursor-pointer">
                 <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
               </span>
             </div>
