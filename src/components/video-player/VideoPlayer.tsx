@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import { useInView } from "react-intersection-observer";
@@ -8,6 +8,8 @@ export const VideoJS = (props) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
   const { src, onReady } = props;
+
+  let lastScrollPosition = useRef<number>(0);
 
   const [isReady, setIsReady] = useState<boolean>(false);
 
@@ -55,18 +57,6 @@ export const VideoJS = (props) => {
           // player.play();
         }
       ));
-
-      player.on("click", () => {
-        if (!player.isFullscreen()) {
-          player.requestFullscreen(); // Enter fullscreen mode
-          setTimeout(() => {
-            player.play();
-          }, 200);
-        }
-      });
-
-      // You could update an existing player in the `else` block here
-      // on prop change, for example:
     } else {
       const player = playerRef.current;
 
@@ -103,8 +93,43 @@ export const VideoJS = (props) => {
     };
   }, [playerRef]);
 
+  const handlPlayerClick = () => {
+    const player = playerRef.current;
+    if (!player.isFullscreen()) {
+      try {
+        const postsContainer = document.getElementById("scroll-section");
+        lastScrollPosition.current = postsContainer.scrollTop;
+        player.requestFullscreen(); // Enter fullscreen mode
+      } catch (err) {}
+      setTimeout(() => {
+        player.play();
+      }, 200);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("fullscreenchange", () => {
+      if (!document.fullscreenElement) {
+        // Restore the saved scroll position
+        const scrollSection = document.getElementById("scroll-section");
+        if (scrollSection) {
+          console.log(
+            "lastScrollPosition.current: " + lastScrollPosition.current
+          );
+          scrollSection.scrollTop = lastScrollPosition.current;
+        }
+      }
+    });
+  }, []);
+
   return (
     <div data-vjs-player className="h-full w-[100%] relative">
+      {!playerRef?.current?.isFullscreen() && (
+        <div
+          className="h-[100%] w-[100%] absolute z-[99]"
+          onClick={handlPlayerClick}
+        />
+      )}
       <div
         className="intersection-observer-element h-10 w-10 mt-[100px] absolute bg-red-500"
         ref={ref}
