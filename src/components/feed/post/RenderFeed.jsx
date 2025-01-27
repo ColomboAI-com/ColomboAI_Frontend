@@ -12,7 +12,8 @@ import LargeAdComponent from "@/components/ads/LargeAd";
 import VideoAd from "@/components/ads/VideoAd";
 
 export default function RenderFeed({ filter }) {
-  const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
+  const { posts, getPosts, loadings, page, resetFeedValues } =
+    useContext(FeedContext);
 
   const { getUserDetails } = useContext(UserProfileContext);
 

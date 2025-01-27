@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-  font-family: '';
+  font-family: "";
 }
 
 .slick-next,
@@ -38,11 +37,11 @@ body {
 
 .slick-prev:before,
 .slick-next:before {
-  font-family: 'slick';
+  font-family: "slick";
   font-size: 20px;
   line-height: 1;
-  opacity: .75;
-  color: #E3E3E3 !important;
+  opacity: 0.75;
+  color: #e3e3e3 !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: transparent;
@@ -53,7 +52,6 @@ body {
 }
 
 @layer utilities {
-
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -77,7 +75,6 @@ body {
     /* Firefox */
   }
 }
-
 
 /* width */
 ::-webkit-scrollbar {
