@@ -10,7 +10,8 @@ import { getCookie } from "cookies-next";
 const SearchUsersList = () => {
   const { isNewMessageOpen, setIsNewMessageOpen } = useContext(GlobalContext);
 
-  const { getFollowers, followersData, followingsData } = useContext(UserProfileContext);
+  const { getFollowers, followersData, followingsData } =
+    useContext(UserProfileContext);
 
   const { createConversation, DUMMY_TEXT } = useMessages();
 
@@ -98,7 +99,9 @@ const SearchUsersList = () => {
                           </span>
                         )} */}
                         </p>
-                        <p className="max-w-[160px] truncate text-xs text-gray-500">{person.name}</p>
+                        <p className="max-w-[160px] truncate text-xs text-gray-500">
+                          {person.name}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -115,7 +118,8 @@ const SearchUsersList = () => {
         ) : (
           <div className="text-center">
             {" "}
-            You do not follow any people. <br /> Follow users for them to show up here
+            You do not follow any people. <br /> Follow users for them to show
+            up here
           </div>
         )}
       </div>

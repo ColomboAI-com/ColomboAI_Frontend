@@ -20,7 +20,7 @@ export const MessagesContextProvider = ({ children }) => {
   const [messageInput, setMessageInput] = useState("");
   const [messageFile, setMessageFile] = useState(null);
   const [loadings, setLoadings] = useState({
-    conversations: false,
+    conversations: true,
     history: false,
     sendMsg: false,
   });
@@ -36,7 +36,9 @@ export const MessagesContextProvider = ({ children }) => {
     //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGViMzYyM2U2ODQ5NDJhN2JjZGZjZiIsImlhdCI6MTczMzI3MzAxMSwiZXhwIjoxNzY0ODA5MDExfQ.XYK893FAtv_dpY2OyB2XVZpMjW_JQOZ1OMED_NZmkX8";
 
     // socketRef.current = new WebSocket(`${ROOT_URL_MESSAGES}?token=${token}`);
-    socketRef.current = new WebSocket(`${ROOT_URL_MESSAGES}?token=${encodeURIComponent(token)}`);
+    socketRef.current = new WebSocket(
+      `${ROOT_URL_MESSAGES}?token=${encodeURIComponent(token)}`
+    );
 
     socketRef.current.onopen = () => {
       console.log("WebSocket connection established");
@@ -89,14 +91,24 @@ export const MessagesContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (disconnectedUser) {
+      setLoadings((prev) => ({
+        ...prev,
+        conversations: true,
+      }));
       let allChats = [...conversations];
-      let findChat = allChats.find((e) => e.participants?.[0]?._id == disconnectedUser.userId);
+      let findChat = allChats.find(
+        (e) => e.participants?.[0]?._id == disconnectedUser.userId
+      );
       if (findChat?.participants?.[0]?.lastActiveTime) {
         const index = allChats.indexOf(findChat);
         findChat.participants[0].lastActiveTime = disconnectedUser.time;
         allChats[index] = findChat;
       }
       setConversations(allChats);
+      setLoadings((prev) => ({
+        ...prev,
+        conversations: false,
+      }));
     }
   }, [disconnectedUser]);
 
@@ -140,7 +152,10 @@ export const MessagesContextProvider = ({ children }) => {
       const message = {
         token: getCookie("token"),
         type: "fetchMessages",
-        payload: { conversationId: currentConversation._id, privateKey: currentConversation.privateKey },
+        payload: {
+          conversationId: currentConversation._id,
+          privateKey: currentConversation.privateKey,
+        },
       };
       socketRef.current.send(JSON.stringify(message));
     }
@@ -164,6 +179,7 @@ export const MessagesContextProvider = ({ children }) => {
           sender: userId,
           recipient: recipientId,
           content: messageInput,
+          img: messageFile,
           recipientPublicKey: currentConversation.publicKey,
         },
       };
@@ -181,6 +197,10 @@ export const MessagesContextProvider = ({ children }) => {
 
   const loadConversations = (payload) => {
     setConversations(payload);
+    setLoadings((prev) => ({
+      ...prev,
+      conversations: false,
+    }));
   };
 
   const conversationCreated = (payload) => {

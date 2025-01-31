@@ -78,7 +78,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 3px;
+  width: 5px;
 }
 
 /* Track */
@@ -88,7 +88,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #a7a7a7;
   border-radius: 5px;
 }
 
