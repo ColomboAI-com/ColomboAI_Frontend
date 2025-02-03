@@ -55,8 +55,9 @@ const SignUp = () => {
       }
     }
 
-    if (boolValue === false && userData.verified === true) {
-      router.push("/");
+    if (boolValue === false) {
+      if (userData.verified === true) router.push("/");
+      else setIsResetting(false);
     } else {
       setIsResetting(true);
     }
