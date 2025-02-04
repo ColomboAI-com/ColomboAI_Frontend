@@ -48,13 +48,7 @@ const Message = ({ message }) => {
             //   `}
             // >
             <div className={`rounded-2xl bg-[#E3E3E3] p-2 py-2`}>
-              <video
-                src={message.media}
-                className="aspect-video object-cover rounded-2xl"
-                controls
-                preload="metadata"
-                crossOrigin="anonymous"
-              >
+              <video src={message.media} className="aspect-video object-cover rounded-2xl" controls>
                 Your browser does not support the video tag.
               </video>
             </div>
