@@ -23,12 +23,30 @@ export default function UserProfileContextProvider({ children }) {
 
   const [followersData, setFollowersData] = useState(null);
   const [followingsData, setFollowingsData] = useState(null);
+  const [stories, setStories] = useState([]);
 
   let [isFollowerModalOpen, setIsFollowerModalOpen] = useState(false);
   let [isFollowingModalOpen, setIsFollowingModalOpen] = useState(false);
   let [isShareProfileModalOpen, setIsShareProfileModalOpen] = useState(false);
   let [isUnFollowModalOpen, setIsUnFollowModalOpen] = useState(false);
   let [unFollowModalData, setUnFollowModalData] = useState();
+
+  const getStories = async () => {
+    try {
+      const res = await axios.get(
+        `${ROOT_URL_FEED}/stories/users/${getCookie("userid")}`,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
+      console.log(res.data, "getStories");
+      setStories(res.data);
+    } catch (err) {
+      handleError(err, "getStories");
+    }
+  };
 
   const getUserDetails = async (userName) => {
     try {
@@ -150,11 +168,15 @@ export default function UserProfileContextProvider({ children }) {
 
   const followUnfollowUser = async (userId = "", isUnfollow = false) => {
     try {
-      const res = await axios.patch(`${ROOT_URL_AUTH}/user/follow/${userId}`, null, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const res = await axios.patch(
+        `${ROOT_URL_AUTH}/user/follow/${userId}`,
+        null,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       if (isUnfollow) {
         getUserDetails(getCookie("username"));
       }
@@ -166,11 +188,15 @@ export default function UserProfileContextProvider({ children }) {
 
   const blockUser = async (userId = "") => {
     try {
-      const res = await axios.patch(`${ROOT_URL_AUTH}/user/block/${userId}`, null, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const res = await axios.patch(
+        `${ROOT_URL_AUTH}/user/block/${userId}`,
+        null,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       if (res.data.success) {
         MessageBox("success", res.data.message);
       }
@@ -231,6 +257,8 @@ export default function UserProfileContextProvider({ children }) {
         followingsData,
         setFollowingsData,
         handleFollower,
+        getStories,
+        stories,
       }}
     >
       {children}

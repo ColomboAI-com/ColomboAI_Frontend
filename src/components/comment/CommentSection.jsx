@@ -12,7 +12,7 @@ import Image from "next/image";
 import comment_x_button from "../../../public/images/icons/comment_x_button.svg";
 import ReactPlayer from "react-player";
 
-const CommentSection = ({ specificPostId, posts }) => {
+const CommentSection = ({ specificPostId, posts, onClose }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
   const {
@@ -21,7 +21,8 @@ const CommentSection = ({ specificPostId, posts }) => {
     generateComment: generateCommentContext,
     getComments,
   } = useContext(FeedContext);
-  const { setIsCommentOpen, openMagicPenWithIcon, setOpenMagicPenWithIcon } = useContext(GlobalContext);
+  const { setIsCommentOpen, openMagicPenWithIcon, setOpenMagicPenWithIcon } =
+    useContext(GlobalContext);
   const [commentData, setCommentData] = useState("");
   const [generateCommentData, setGenerateCommentData] = useState();
   const [isClick, setIsClick] = useState(false);
@@ -125,7 +126,9 @@ const CommentSection = ({ specificPostId, posts }) => {
   const handleDeleteComment = async (postId, commentId) => {
     try {
       await deleteCommentContext({ postId, commentId });
-      setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -190,24 +193,39 @@ const CommentSection = ({ specificPostId, posts }) => {
     };
   }, [pickerRef]);
 
+  console.log(comments, "comments");
+
   return (
     <div className="flex flex-row justify-center relative">
       <Image
         src={comment_x_button}
         alt="colombo"
-        onClick={(e) => setIsCommentOpen(false)}
+        onClick={(e) => {
+          setIsCommentOpen(false);
+          onClose?.();
+        }}
         className="absolute xl:top-2 xl:left-2 sm:top-10 right-3 cursor-pointer"
       />
       <div className="bg-[black] sm:h-[0rem] xl:h-[40rem] xl:flex sm:w-[0rem] xl:w-full xl:overflow-hidden ">
         <div className="h-full w-full">
           {posts?.type === "image" && (
-            <img src={posts?.media[0]} className="w-full h-full aspect-video object-contain" />
+            <img
+              src={posts?.media[0]}
+              className="w-full h-full aspect-video object-contain"
+            />
           )}
           {posts?.type === "video" && (
-            <ReactPlayer className="inset-0 w-full h-full aspect-video" url={posts?.media[0]} controls={true} />
+            <ReactPlayer
+              className="inset-0 !w-full !h-auto !aspect-video"
+              url={posts?.media[0]}
+              controls={true}
+            />
           )}
           {posts?.type === "" && (
-            <img src="/images/home/feed-banner-img.png" className="w-full h-full aspect-video" />
+            <img
+              src="/images/home/feed-banner-img.png"
+              className="w-full h-full aspect-video"
+            />
           )}
         </div>
         {/* <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
@@ -222,10 +240,17 @@ const CommentSection = ({ specificPostId, posts }) => {
 
       </div> */}
       </div>
-      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4">
-        <div className="flex items-center justify-between px-[16px] py-[12px]">
-          <a className="flex items-center" target="_blank" href={`/profile/${posts?.creator?.user_name}`}>
-            <ProfilePicture image={posts?.creator?.profile_picture} size={"w-[2rem]"} />
+      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4 flex flex-col">
+        <div className="flex items-center justify-between py-[12px]">
+          <a
+            className="flex items-center"
+            target="_blank"
+            href={`/profile/${posts?.creator?.user_name}`}
+          >
+            <ProfilePicture
+              image={posts?.creator?.profile_picture}
+              size={"w-[2rem]"}
+            />
             <p className="text-[18px] font-sans font-[700] text-[#242424] pl-[17px]">
               {posts?.creator?.user_name}
             </p>
@@ -237,26 +262,35 @@ const CommentSection = ({ specificPostId, posts }) => {
           </div>
         </div>
         <div className="border-b-[1px] border-[#E3E3E3]">
-          <p className="text-[#515151] text-[16px] font-sans text-left">{posts?.content}</p>
+          <p className="text-[#515151] text-[16px] font-sans text-left">
+            {posts?.content}
+          </p>
         </div>
         <div className="flex mt-2 items-center justify-center">
-          <h4 className="text-[15px] color-[#333333] font-sans font-[700]">Comments</h4>
+          <h4 className="text-[15px] color-[#333333] font-sans font-[700]">
+            Comments
+          </h4>
           <div></div>
         </div>
         <div
           ref={containerRef}
-          className="comment-section no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
+          className="comment-section flex-1 no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[calc(100vh-485px)] md:h-[44vh]"
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">
-              <p className="text-[#515151] text-[16px] font-sans text-center">No Comments Found</p>
+              <p className="text-[#515151] text-[16px] font-sans text-center">
+                No Comments Found
+              </p>
             </div>
           )}
           {comments.map((comment) => (
             <div key={comment._id}>
               <div className="flex items-start justify-start gap-2 my-4">
                 <div className="w-[36px] h-[36px]">
-                  <img src={comment.creator.profile_picture} className="w-[36px] h-[36px] rounded-[50%]" />
+                  <img
+                    src={comment.creator.profile_picture}
+                    className="w-[36px] h-[36px] rounded-[50%]"
+                  />
                 </div>
                 <div className="w-[85%] text-left">
                   <div className="flex items-center justify-between">
@@ -267,7 +301,9 @@ const CommentSection = ({ specificPostId, posts }) => {
                       <div className="flex items-center gap-[20px] right-0">
                         <div
                           className="text-[#212121] text-[14px] font-sans font-[450] leading-[21px] cursor-pointer right-0"
-                          onClick={() => handleDeleteComment(specificPostId, comment._id)}
+                          onClick={() =>
+                            handleDeleteComment(specificPostId, comment._id)
+                          }
                         >
                           Delete
                         </div>
