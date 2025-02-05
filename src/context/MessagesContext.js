@@ -26,22 +26,7 @@ export const MessagesContextProvider = ({ children }) => {
   });
 
   // HELPER METHODS GO HERE --------------------------------------------------------
-  const fileToArrayBuffer = (file) => {
-    if (file === null) return null;
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
 
-      reader.onload = () => {
-        resolve(reader.result);
-      };
-
-      reader.onerror = () => {
-        reject(reader.error);
-      };
-
-      reader.readAsArrayBuffer(file);
-    });
-  };
   // --------------------------------------------------------------------------------
 
   const DUMMY_TEXT = "CyYPvSCUj$Qf_dummy_text";
@@ -90,6 +75,9 @@ export const MessagesContextProvider = ({ children }) => {
           break;
         case "newMessage":
           setNewMessage(data.message);
+          break;
+        case "editedMessage":
+          afterMessageEdited(data.payload);
           break;
         default:
           console.log("Unknown message type:", data.type);
@@ -182,6 +170,16 @@ export const MessagesContextProvider = ({ children }) => {
 
   const sendMessage = async () => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      let mediaUploadResp = null;
+      if (messageFile) {
+        const formData = new FormData();
+        formData.append("file", messageFile);
+        mediaUploadResp = await axios.post(ROOT_URL_MESSAGES + "/upload-media", formData, {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        });
+      }
       let userId = getCookie("userid");
       let recipientId = null;
       for (let p of currentConversation.participants) {
@@ -196,7 +194,13 @@ export const MessagesContextProvider = ({ children }) => {
         if (messageFile.type.includes("video")) messageType = "VIDEO";
       }
 
-      const arrayBuffer = await fileToArrayBuffer(messageFile);
+      let fileUrl = null;
+      if (mediaUploadResp !== null) {
+        if (mediaUploadResp.data.status === 200) {
+          fileUrl = mediaUploadResp.data.fileUrl;
+        }
+      }
+
       const message = {
         token: getCookie("token"),
         type: "sendMessage",
@@ -207,14 +211,29 @@ export const MessagesContextProvider = ({ children }) => {
           content: messageInput,
           img: messageFile,
           recipientPublicKey: currentConversation.publicKey,
-          file: arrayBuffer,
-          fileName: messageFile ? messageFile.name : null,
           messageType,
+          media: fileUrl,
         },
       };
       socketRef.current.send(JSON.stringify(message));
+      setMessageInput("");
       setMessageFile(null);
       setIsFileMessageModalOpen(false);
+    }
+  };
+
+  const editMessage = async (message) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      const data = {
+        token: getCookie("token"),
+        type: "editMessage",
+        payload: {
+          messageId: message._id,
+          updatedContent: message.content,
+          publicKey: currentConversation.publicKey,
+        },
+      };
+      socketRef.current.send(JSON.stringify(data));
     }
   };
 
@@ -250,9 +269,38 @@ export const MessagesContextProvider = ({ children }) => {
   };
 
   const messageSent = (payload) => {
-    setChatHistory((prev) => [...prev, payload]);
-    setMessageInput("");
-    setMessageFile(null);
+    console.log(payload.conversation);
+    setConversations((prevConversations) => {
+      let updatedConvs = prevConversations.map((conv) => {
+        if (conv._id === payload.conversation._id) {
+          return { ...conv, lastMessage: payload.conversation.lastMessage };
+        }
+        return conv;
+      });
+      return updatedConvs;
+    });
+
+    setChatHistory((prev) => [...prev, payload.message]);
+  };
+
+  const afterMessageEdited = (message) => {
+    console.log(message);
+
+    if (currentConversation._id === message.conversationId) {
+      setChatHistory((prev) => {
+        let updatedMessages = prev.map((mess) => {
+          if (mess._id === message._id) {
+            return {
+              ...mess,
+              content: message.content,
+            };
+          }
+          return mess;
+        });
+
+        return updatedMessages;
+      });
+    }
   };
 
   return (
@@ -289,6 +337,7 @@ export const MessagesContextProvider = ({ children }) => {
         setIsFileMessageModalOpen,
         messageFile,
         setMessageFile,
+        editMessage,
       }}
     >
       {children}
