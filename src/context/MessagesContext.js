@@ -25,6 +25,25 @@ export const MessagesContextProvider = ({ children }) => {
     sendMsg: false,
   });
 
+  // HELPER METHODS GO HERE --------------------------------------------------------
+  const fileToArrayBuffer = (file) => {
+    if (file === null) return null;
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+
+      reader.onerror = () => {
+        reject(reader.error);
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  };
+  // --------------------------------------------------------------------------------
+
   const DUMMY_TEXT = "CyYPvSCUj$Qf_dummy_text";
   const MESSAGE_MAX_LENGTH = 1024;
 
@@ -161,7 +180,7 @@ export const MessagesContextProvider = ({ children }) => {
     }
   };
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       let userId = getCookie("userid");
       let recipientId = null;
@@ -171,6 +190,13 @@ export const MessagesContextProvider = ({ children }) => {
         }
       }
 
+      let messageType = "TEXT";
+      if (messageFile) {
+        if (messageFile.type.includes("image")) messageType = "IMAGE";
+        if (messageFile.type.includes("video")) messageType = "VIDEO";
+      }
+
+      const arrayBuffer = await fileToArrayBuffer(messageFile);
       const message = {
         token: getCookie("token"),
         type: "sendMessage",
@@ -181,9 +207,14 @@ export const MessagesContextProvider = ({ children }) => {
           content: messageInput,
           img: messageFile,
           recipientPublicKey: currentConversation.publicKey,
+          file: arrayBuffer,
+          fileName: messageFile ? messageFile.name : null,
+          messageType,
         },
       };
       socketRef.current.send(JSON.stringify(message));
+      setMessageFile(null);
+      setIsFileMessageModalOpen(false);
     }
   };
 
@@ -236,10 +267,6 @@ export const MessagesContextProvider = ({ children }) => {
         loadings,
         isShowChatMenu,
         setIsShowChatMenu,
-        isFileMessageModalOpen,
-        setIsFileMessageModalOpen,
-        messageFile,
-        setMessageFile,
 
         // -------------------------------- ABOVE THIS ARE USELESS FUNCTIONS ---------------------
         fetchConversations,
@@ -258,6 +285,10 @@ export const MessagesContextProvider = ({ children }) => {
         messageInput,
         setMessageInput,
         sendMessage,
+        isFileMessageModalOpen,
+        setIsFileMessageModalOpen,
+        messageFile,
+        setMessageFile,
       }}
     >
       {children}

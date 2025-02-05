@@ -12,12 +12,14 @@ import { GlobalContext } from "@/context/GlobalContext";
 //import SearchAll from './searchall'; // Import your SearchAll component
 
 const MessageHeader = () => {
-  const { setIsNewMessageOpen } = useContext(GlobalContext);
+  const { setIsNewMessageOpen, setIsSearchUserOpen } =
+    useContext(GlobalContext);
   const pathname = usePathname();
   const [showSearchPage, setShowSearchPage] = useState(false); // State to toggle SearchAll visibility
 
   const handleSearchClick = () => {
-    setShowSearchPage(true); // Show the SearchAll component when SearchIcon is clicked
+    // setShowSearchPage(true); // Show the SearchAll component when SearchIcon is clicked
+    setIsSearchUserOpen(true);
   };
 
   return (

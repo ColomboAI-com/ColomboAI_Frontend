@@ -11,6 +11,7 @@ import SelectPicture from "@/components/messages/SelectPicture";
 import CreatePost from "@/components/elements/CreatePost";
 import { MessagesContextProvider } from "@/context/MessagesContext";
 import UserProfileContextProvider from "@/context/UserProfileContext";
+import SearchUsersListGeneral from "@/components/messages/SearchUsersListGeneral";
 
 const DefaultLayout = ({ children }) => {
   const {
@@ -18,6 +19,8 @@ const DefaultLayout = ({ children }) => {
     setIsNewMessageOpen,
     isCreatePostOpen,
     setIsCreatePostOpen,
+    isSearchUserOpen,
+    setIsSearchUserOpen,
   } = useContext(GlobalContext);
   return (
     <MessagesContextProvider>
@@ -65,6 +68,15 @@ const DefaultLayout = ({ children }) => {
                       className="w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                     >
                       <CreatePost />
+                    </Modal>
+                  )}
+                  {isSearchUserOpen && (
+                    <Modal
+                      isOpen={isSearchUserOpen}
+                      setIsOpen={setIsSearchUserOpen}
+                      className="w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
+                    >
+                      <SearchUsersListGeneral />
                     </Modal>
                   )}
                   {children}

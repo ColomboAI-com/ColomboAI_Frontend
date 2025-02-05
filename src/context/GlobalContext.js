@@ -9,6 +9,7 @@ export default function GlobalContextProvider({ children }) {
   let [isRepostOpen, setIsRepostOpen] = useState(false);
   let [isCommentOpen, setIsCommentOpen] = useState(false);
   let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
+  let [isSearchUserOpen, setIsSearchUserOpen] = useState(false);
   let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
   let [specificPostId, setSpecificPostId] = useState();
   let [posts, setPosts] = useState();
@@ -20,7 +21,7 @@ export default function GlobalContextProvider({ children }) {
   let [storyFile, setStoryFile] = useState(null);
   let [openMagicPenWithIcon, setOpenMagicPenWithIcon] = useState(false);
   let [popupImage, setPopupImage] = useState("");
-  let [popupVideo, setPopupVideo] = useState("")
+  let [popupVideo, setPopupVideo] = useState("");
 
   return (
     <GlobalContext.Provider
@@ -59,6 +60,8 @@ export default function GlobalContextProvider({ children }) {
         setPopupImage,
         popupVideo,
         setPopupVideo,
+        isSearchUserOpen,
+        setIsSearchUserOpen,
       }}
     >
       {children}

@@ -99,6 +99,12 @@ export default function Conversations() {
                                   "Sent a photo"}
                             </p>
                           </div>
+                          <div className="mx-auto">
+                            <div className="bg-[#eb5757] h-6 w-6 rounded-full text-white text-sm flex justify-center items-center">
+                              9
+                            </div>
+                            <div className="text-xs mt-1 text-gray-500">2m</div>
+                          </div>
                         </div>
                       </div>
                       {/* <div>
