@@ -1,12 +1,13 @@
 import NoDataFound from "../NoDataFound";
 import BookmarkCard from "./cards/BookmarkCard";
 
-const Bookmark = ({username}) => {
+const Bookmark = ({ username }) => {
   return (
     <>
-    <div className="border-y-2 py-4 border-gray-300">
-      <NoDataFound/>
-    </div>
+      <div className="flex flex-col justify-center items-center gap-2 h-[calc(100vh-725px)] min-h-[200px]">
+        <img src={`/images/home/no-saved.svg`} />
+        <p className="text-center text-sm text-gray-500">Nothing saved yet.</p>
+      </div>
       {/* <div className="grid grid-cols-3 overflow-auto max-h-screen border-brandprimary border-2 ">
         <BookmarkCard />
         <BookmarkCard />
