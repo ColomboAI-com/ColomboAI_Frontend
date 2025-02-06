@@ -9,6 +9,7 @@ import { setSessionStorage } from "@/utlils/utils";
 import StoryModal from "../elements/StoryModal";
 import SingleStoryModal from "../story/SingleStoryModal";
 import UserStoryModal from "./UserStoryModal";
+import CreateDropdown from "../elements/CreateDropdown";
 
 const UserProfile = ({ userData }) => {
   const {
@@ -18,6 +19,7 @@ const UserProfile = ({ userData }) => {
     postsCount,
     getStories,
     stories,
+    isShareProfileModalOpen,
   } = useContext(UserProfileContext);
   const [isCreateStorySignleOpen, setIsCreateStorySignleOpen] = useState(false);
 
@@ -26,6 +28,7 @@ const UserProfile = ({ userData }) => {
   }, []);
 
   console.log(stories);
+
   return (
     <div className="pt-8">
       <div className="lg:px-12">
@@ -123,9 +126,13 @@ const UserProfile = ({ userData }) => {
           >
             Share profile
           </button>
-          <button className=" [&_path]:fill-white [&_svg]:w-2 [&_svg]:h-2 bg-[#ACACAC] rounded-full p-1 w-[18px] h-[18px] flex justify-center items-center">
-            <PlusIcon w={8} h={8} fill={"#FFFFFF"} />
-          </button>
+          <CreateDropdown
+            icon={
+              <button className=" [&_path]:fill-white [&_svg]:w-2 [&_svg]:h-2 bg-[#ACACAC] rounded-full p-1 w-[18px] h-[18px] flex justify-center items-center">
+                <PlusIcon w={8} h={8} fill={"#FFFFFF"} />
+              </button>
+            }
+          />
         </div>
       </div>
       {/** TODO: Saved stories, enable it once api is ready */}
