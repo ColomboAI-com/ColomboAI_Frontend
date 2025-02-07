@@ -48,7 +48,7 @@ const UserProfile = ({ userData }) => {
                 <ProfilePicture
                   image={userData?.profile_picture}
                   alt="Profile Picture"
-                  className="min-w-full min-h-full rounded-full"
+                  className="min-w-full min-h-full  !w-full !h-full rounded-full"
                 />
               </div>
             </div>
