@@ -114,7 +114,7 @@ const SearchProfile = () => {
                         className="text-[14px] font-sans font-[600]"
                         onClick={(e) => onclickpost(val.user_name)}
                       >
-                        #{val.user_name}
+                        @{val.user_name}
                       </a>
                     </div>
                   </div>

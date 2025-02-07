@@ -12,6 +12,7 @@ import CreatePost from "@/components/elements/CreatePost";
 import { MessagesContextProvider } from "@/context/MessagesContext";
 import UserProfileContextProvider from "@/context/UserProfileContext";
 import SearchUsersListGeneral from "@/components/messages/SearchUsersListGeneral";
+import SearchConversation from "@/components/messages/SearchConversation";
 
 const DefaultLayout = ({ children }) => {
   const {
@@ -21,6 +22,8 @@ const DefaultLayout = ({ children }) => {
     setIsCreatePostOpen,
     isSearchUserOpen,
     setIsSearchUserOpen,
+    isSearchConversationOpen,
+    setIsSearchConversationOpen,
   } = useContext(GlobalContext);
   return (
     <MessagesContextProvider>
@@ -70,13 +73,13 @@ const DefaultLayout = ({ children }) => {
                       <CreatePost />
                     </Modal>
                   )}
-                  {isSearchUserOpen && (
+                  {isSearchConversationOpen && (
                     <Modal
-                      isOpen={isSearchUserOpen}
-                      setIsOpen={setIsSearchUserOpen}
-                      className="w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
+                      isOpen={isSearchConversationOpen}
+                      setIsOpen={setIsSearchConversationOpen}
+                      className="w-full max-w-2xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                     >
-                      <SearchUsersListGeneral />
+                      <SearchConversation />
                     </Modal>
                   )}
                   {children}

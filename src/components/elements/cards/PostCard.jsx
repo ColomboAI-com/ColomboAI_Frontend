@@ -89,11 +89,10 @@ const PostCard = ({ post }) => {
           <Link
             className="flex items-center justify-start w-full md:w-fit lg:w-fit"
             href={`/profile/${post?.creator?.user_name || ""}`}
-            target="_blank"
           >
             <ProfilePicture
               image={post?.creator?.profile_picture}
-              size={"w-[2rem]"}
+              size={"w-[2rem] h-[2rem]"}
             />
             <Username
               username={post?.creator?.user_name}

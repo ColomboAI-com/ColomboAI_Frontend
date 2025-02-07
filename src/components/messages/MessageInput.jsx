@@ -67,7 +67,7 @@ export default function MessageInput() {
   };
 
   return (
-    <div className="absolute bottom-10 left-0 w-full">
+    <div className="absolute bottom-10 left-0 w-full bg-white">
       <div className="w-full flex items-center justify-center space-x-3">
         <div className="relative pl-4 lg:w-[80%] w-[90%] flex items-center border-[1px] border-brandprimary rounded-[30px]">
           <EmojiPicker onSelect={onSelectEmoji}>

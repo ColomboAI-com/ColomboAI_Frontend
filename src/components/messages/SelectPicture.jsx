@@ -50,11 +50,21 @@ const SelectPicture = () => {
       <div className=" px-10 font-sans border- border-purple-400 flex flex-col justify-between h-[50vh] ">
         {messageFile ? (
           <div className="relative my-8 w-[350px] mx-auto">
-            <img
-              src={URL.createObjectURL(messageFile)}
-              alt="File Preview"
-              className="w-full h-full object-contain"
-            />
+            {!messageFile?.type?.includes("video") ? (
+              <img
+                src={URL.createObjectURL(messageFile)}
+                alt="File Preview"
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <video
+                src={URL.createObjectURL(messageFile)}
+                className="aspect-video object-cover rounded-2xl"
+                controls
+              >
+                Your browser does not support the video tag.
+              </video>
+            )}
             <div className=" absolute top-3 right-2">
               <div className="flex flex-row items-center justify-center">
                 <span onClick={clearFileHandler} className="px-2 pointer">

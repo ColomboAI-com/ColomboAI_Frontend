@@ -168,7 +168,10 @@ const Header = () => {
                 setUploadedFile={setInitialFile}
               />
             </div>
-            <div className="sm:pt-4 md:pt-0">
+            <div
+              className="sm:pt-4 md:pt-0 cursor-pointer"
+              onClick={handleSearchClick}
+            >
               <SearchIcon w={35} h={35} fill={"#646464"} />
             </div>
           </div>
