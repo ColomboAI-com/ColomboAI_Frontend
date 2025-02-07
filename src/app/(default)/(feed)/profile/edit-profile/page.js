@@ -12,6 +12,7 @@ const EditProfile = () => {
   const [username, setUsername] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
+  const [link, setLink] = useState("");
   const [file, setFile] = useState(null);
   const [mediaUrl, setMediaUrl] = useState("");
   const { loadings, editProfile, getUserDetails } =
@@ -105,6 +106,16 @@ const EditProfile = () => {
           name={"email"}
           value={bio}
           onChange={(e) => setBio(e.target.value)}
+        />
+        <input
+          type="text"
+          className="mt-4 w-full rounded-[40px] border-[1px] border-[#ACACAC] bg-[#EEEEEE] px-[30px] py-[22px] text-black placeholder:text-brandplaceholder focus:border-[#ACACAC] focus:bg-[#EEEEEE] focus:outline-none"
+          placeholder="Edit Link"
+          autoComplete="off"
+          maxLength={50}
+          name={"link"}
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
         />
         <Button
           title={"UPDATE"}
