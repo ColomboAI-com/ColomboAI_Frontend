@@ -14,7 +14,7 @@ import UploadStoryModal from "../story/UploadStoryModal";
 import VerificationPopup from "./VerificationPopup";
 import { UserProfileContext } from "@/context/UserProfileContext";
 
-export default function CreateDropdown({ w, h, filyl }) {
+export default function CreateDropdown({ w, h, filyl, icon }) {
   const { setIsCreatePostOpen } = useContext(GlobalContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
   const { isCreateVibeOpen } = useContext(GlobalContext);
@@ -96,7 +96,10 @@ export default function CreateDropdown({ w, h, filyl }) {
         </Modal>
       )}
 
-      <Menu as="div" className="inline-block text-left z-50 sm:pt-3 md:pt-0">
+      <Menu
+        as="div"
+        className="relative inline-block text-left z-50 sm:pt-3 md:pt-0"
+      >
         {({ open }) => (
           <>
             <div className="flex items-center justify-center">
@@ -106,7 +109,15 @@ export default function CreateDropdown({ w, h, filyl }) {
                 className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
                 aria-hidden="true"
               /> */}
-                <CreateIcon w={30} h={30} fill={open ? "#1E71F2" : "#646464"} />
+                {icon ? (
+                  icon
+                ) : (
+                  <CreateIcon
+                    w={30}
+                    h={30}
+                    fill={open ? "#1E71F2" : "#646464"}
+                  />
+                )}
               </Menu.Button>
             </div>
             <Transition

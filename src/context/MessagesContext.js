@@ -79,6 +79,8 @@ export const MessagesContextProvider = ({ children }) => {
         case "editedMessage":
           afterMessageEdited(data.payload);
           break;
+        case "deletedMessage":
+          afterMessageDeleted(data.payload);
         default:
           console.log("Unknown message type:", data.type);
           console.log(data);
@@ -237,6 +239,20 @@ export const MessagesContextProvider = ({ children }) => {
     }
   };
 
+  const deleteMessage = async (message) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      const data = {
+        token: getCookie("token"),
+        type: "deleteMessage",
+        payload: {
+          messageId: message._id,
+          publicKey: currentConversation.publicKey,
+        },
+      };
+      socketRef.current.send(JSON.stringify(data));
+    }
+  };
+
   // RECEIVEING FROM SERVER TO CLIENT
 
   const confirmAuthentication = (payload) => {
@@ -293,6 +309,27 @@ export const MessagesContextProvider = ({ children }) => {
             return {
               ...mess,
               content: message.content,
+            };
+          }
+          return mess;
+        });
+
+        return updatedMessages;
+      });
+    }
+  };
+
+  const afterMessageDeleted = (message) => {
+    console.log(message);
+
+    if (currentConversation._id === message.conversationId) {
+      setChatHistory((prev) => {
+        let updatedMessages = prev.map((mess) => {
+          if (mess._id === message._id) {
+            return {
+              ...mess,
+              content: message.content,
+              isDeleted: message.isDeleted,
             };
           }
           return mess;

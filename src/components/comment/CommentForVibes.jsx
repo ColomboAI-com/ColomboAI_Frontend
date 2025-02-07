@@ -235,7 +235,7 @@ const CommentForVibe = ({ specificPostId, posts }) => {
 
       </div> */}
       </div>
-      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4">
+      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4 flex flex-col">
         <div className="flex items-center justify-between px-[16px] py-[12px]">
           <a
             className="flex items-center"
@@ -269,7 +269,7 @@ const CommentForVibe = ({ specificPostId, posts }) => {
         </div>
         <div
           ref={containerRef}
-          className="comment-section no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
+          className="comment-section flex-1 no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">

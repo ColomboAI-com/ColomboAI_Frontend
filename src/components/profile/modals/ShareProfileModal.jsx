@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import { copyValue } from "@/utlils/commonFunctions";
 
-const ShareProfileModal = ({ userData }) => {
+const ShareProfileModal = ({ userData, showCloseButton = true }) => {
   const {
     isFollowerModalOpen,
     setIsFollowerModalOpen,
@@ -28,15 +28,17 @@ const ShareProfileModal = ({ userData }) => {
   return (
     <>
       {!shareProfile && (
-        <div className="w-full flex flex-col bg-[#1E71F2]">
-          <div className="m-6 self-end">
-            <button
-              className="outline-none focus:ring-offset-0 focus:ring-0"
-              onClick={() => setIsShareProfileModalOpen(false)}
-            >
-              <CrossIcon w={20} h={20} fill={"#fff"} />
-            </button>
-          </div>
+        <div className="w-full flex flex-col bg-[#1E71F2] share-profile-modal">
+          {showCloseButton && (
+            <div className="m-6 self-end">
+              <button
+                className="outline-none focus:ring-offset-0 focus:ring-0"
+                onClick={() => setIsShareProfileModalOpen(false)}
+              >
+                <CrossIcon w={20} h={20} fill={"#fff"} />
+              </button>
+            </div>
+          )}
           <div className=" flex flex-col items-center px-12 pb-10 gap-6">
             <div className="bg-white rounded-2xl flex flex-col justify-center items-center p-3">
               <img
@@ -68,18 +70,20 @@ const ShareProfileModal = ({ userData }) => {
       )}
 
       {shareProfile && (
-        <div className="w-full flex flex-col items-center bg-[#1E71F2]">
+        <div className="w-full h-full flex flex-col items-center bg-[#1E71F2]">
           <div className="before:content-[''] before:bg-white before:block before:w-[40px] before:h-[3px] before:mx-auto before:rounded-[20px] before:mt-[8.98px]">
             <div className="flex">
               <h5 className="text-[18.51px] font-sans text-white text-center m-2">
                 Share Profiles
               </h5>
-              <button
-                className="absolute outline-none focus:ring-offset-0 focus:ring-0 mr-5 mt-3 end-0"
-                onClick={() => setShareProfile(false)}
-              >
-                <CrossIcon w={20} h={20} fill={"#fff"} />
-              </button>
+              {showCloseButton && (
+                <button
+                  className="absolute outline-none focus:ring-offset-0 focus:ring-0 mr-5 mt-3 end-0"
+                  onClick={() => setShareProfile(false)}
+                >
+                  <CrossIcon w={20} h={20} fill={"#fff"} />
+                </button>
+              )}
             </div>
           </div>
           <hr className="w-full color-white my-[18px]" />

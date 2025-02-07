@@ -15,7 +15,7 @@ import Modal from "../elements/Modal";
 import React from "react";
 import AIMessageGenerator from "../messages/AIMessageGenerator";
 
-const CommentSection = ({ specificPostId, posts }) => {
+const CommentSection = ({ specificPostId, posts, onClose }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
   const [showAIPromptModal, setShowAIPromptModal] = useState(false);
@@ -192,12 +192,17 @@ const CommentSection = ({ specificPostId, posts }) => {
     };
   }, [pickerRef]);
 
+  console.log(comments, "comments");
+
   return (
     <div className="flex flex-row justify-center relative">
       <Image
         src={comment_x_button}
         alt="colombo"
-        onClick={(e) => setIsCommentOpen(false)}
+        onClick={(e) => {
+          setIsCommentOpen(false);
+          onClose?.();
+        }}
         className="absolute xl:top-2 xl:left-2 sm:top-10 right-3 cursor-pointer"
       />
       <div className="bg-[black] sm:h-[0rem] xl:h-[40rem] xl:flex sm:w-[0rem] xl:w-full xl:overflow-hidden ">
@@ -210,7 +215,7 @@ const CommentSection = ({ specificPostId, posts }) => {
           )}
           {posts?.type === "video" && (
             <ReactPlayer
-              className="inset-0 w-full h-full aspect-video"
+              className="inset-0 !w-full !h-auto !aspect-video"
               url={posts?.media[0]}
               controls={true}
             />
@@ -234,8 +239,8 @@ const CommentSection = ({ specificPostId, posts }) => {
 
       </div> */}
       </div>
-      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4">
-        <div className="flex items-center justify-between px-[16px] py-[12px]">
+      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4 flex flex-col">
+        <div className="flex items-center justify-between py-[12px]">
           <a
             className="flex items-center"
             target="_blank"
@@ -268,7 +273,7 @@ const CommentSection = ({ specificPostId, posts }) => {
         </div>
         <div
           ref={containerRef}
-          className="comment-section no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
+          className="comment-section flex-1 no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[calc(100vh-485px)] md:h-[44vh]"
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">
