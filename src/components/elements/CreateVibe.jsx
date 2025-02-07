@@ -246,6 +246,13 @@ const CreateVibe = ({
     }
   }, [mediaUrl]);
 
+  const shouldShowNextButton = () => {
+    if (isMagicPenOpen || isColorPickerVisible) {
+      return false;
+    }
+    return true;
+  };
+
   console.log(song_id);
 
   return (
@@ -321,7 +328,12 @@ const CreateVibe = ({
                           "w-fit sm2:text-xl hover:bg-brandprimary/80 text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
                         }
                       >
-                        Select from computer
+                        <span className="hidden lg:block">
+                          Select from computer
+                        </span>
+                        <span className="block lg:hidden">
+                          Select from device
+                        </span>
                       </button>
                     )}
                     <input
@@ -356,43 +368,6 @@ const CreateVibe = ({
           )}
         </div>
       ) : null}
-      <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
-        <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
-          <textarea
-            value={promptInput}
-            onChange={(e) => setPromptInput(e.target.value)}
-            // onKeyDown={handleKeyDown}
-            placeholder="Create using Magic Pen"
-            className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
-          />
-        </div>
-        <button
-          className=" -ml-12 mt-3 "
-          onClick={() => {
-            handleGenerateVibe();
-            setNextStep(true);
-          }}
-        >
-          {loadings?.generatePost ? (
-            <ThreeDots
-              visible={true}
-              height="25"
-              width="25"
-              color="##141212"
-              radius="9"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-            />
-          ) : (
-            <SendIcon
-              w={32}
-              h={32}
-              fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"}
-            />
-          )}
-        </button>
-      </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
           className={`relative my-6 ${
@@ -421,6 +396,49 @@ const CreateVibe = ({
               onClick={handleTextClick}
               onLoad={handleImageLoad}
             />
+            <div
+              className={`${
+                isMagicPenOpen ? "flex" : "hidden"
+              } items-center absolute top-0 left-6 bottom-0 right-6 justify-center z-[100]`}
+            >
+              <div className="flex items-start w-full">
+                <div className="items-start w-full rounded-2xl border border-brandprimary">
+                  <textarea
+                    value={promptInput}
+                    onChange={(e) => setPromptInput(e.target.value)}
+                    // onKeyDown={handleKeyDown}
+                    placeholder="Create using Magic Pen"
+                    className="flex  p-3 pr-12 rounded-2xl w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
+                  />
+                </div>
+                <button
+                  className=" -ml-12 mt-3 "
+                  onClick={() => {
+                    handleGenerateVibe();
+                    setNextStep(true);
+                  }}
+                >
+                  {loadings?.generatePost ? (
+                    <ThreeDots
+                      visible={true}
+                      height="25"
+                      width="25"
+                      color="##141212"
+                      radius="9"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
+                  ) : (
+                    <SendIcon
+                      w={32}
+                      h={32}
+                      fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"}
+                    />
+                  )}
+                </button>
+              </div>
+            </div>
             {isTrimming ? (
               <VideoEditor
                 videoUrl={mediaUrl}
@@ -457,7 +475,7 @@ const CreateVibe = ({
                   selectedSong={selectedSong}
                 />
               </div>
-            ) : (
+            ) : shouldShowNextButton() ? (
               <Button
                 title={"NEXT"}
                 className={
@@ -469,7 +487,7 @@ const CreateVibe = ({
                   setIsMagicPenOpen(false);
                 }}
               />
-            )}
+            ) : null}
             {isColorPickerVisible ? (
               <div draggable={true}>
                 <textarea
@@ -526,14 +544,16 @@ const CreateVibe = ({
                 />
               </button>
               <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
-                <button
-                  className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
-                    isTrimming && `rounded-full bg-[#245FDF]`
-                  }`}
-                  onClick={(e) => toggleTrimming()}
-                >
-                  <VideoEditIcon />
-                </button>
+                {!postType.includes("image") && (
+                  <button
+                    className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
+                      isTrimming && `rounded-full bg-[#245FDF]`
+                    }`}
+                    onClick={(e) => toggleTrimming()}
+                  >
+                    <VideoEditIcon />
+                  </button>
+                )}
                 <button
                   className={`w-10 h-10 flex flex-row justify-center items-center ${
                     isColorPickerVisible && `rounded-full bg-[#245FDF]`
@@ -681,7 +701,7 @@ const CreateVibe = ({
                   handleCreateVibe={handleCreateVibe}
                 />
               </div>
-            ) : (
+            ) : shouldShowNextButton() ? (
               <Button
                 title={"NEXT"}
                 className={
@@ -693,7 +713,7 @@ const CreateVibe = ({
                   setIsMagicPenOpen(false);
                 }}
               />
-            )}
+            ) : null}
             {isColorPickerVisible ? (
               <div draggable={true}>
                 <textarea
