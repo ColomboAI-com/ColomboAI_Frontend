@@ -175,7 +175,7 @@ const DefaultLayout = ({ children }) => {
       <div
         className={`min-w-screen border-yellow-400 md:relative  ${font.className}`}
       >
-        <div className="flex lg:max-h-[87vh] border-green-400 xl:h-screen">
+        <div className="flex h-screen lg:max-h-[100vh] border-green-400">
           <div className="lg:min-w-[4%]  xl:min-w-[5%] max-h-[calc(100vh-0px)] bg-white fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
           </div>
@@ -208,7 +208,7 @@ const DefaultLayout = ({ children }) => {
             )}
 
             {!isSelectedFromComputer && (
-              <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400">
+              <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400 flex-1 h-[calc(100vh-170px)]">
                 {isCreatePostOpen && (
                   <Modal
                     isOpen={isCreatePostOpen}
@@ -270,9 +270,13 @@ const DefaultLayout = ({ children }) => {
                       : `sm:max-h-[calc((100vh-175px))]`
                   } nsm:max-h-[calc((100vh-175px))] ${
                     pathname === "/explore" && `md:h-full overflow-y-visible`
-                  } ${pathname === "/vibes" && `md:max-h-[calc(100vh-0px)]`} ${
-                    (pathname !== "vibes" || pathname !== "/explore") &&
-                    `md:max-h-[calc(100vh-192.28px)]`
+                  } ${
+                    pathname === "/vibes" &&
+                    `md:max-h-[calc(100vh-0px)] flex flex-col`
+                  } ${
+                    pathname !== "/vibes" && pathname !== "/explore"
+                      ? `md:max-h-[calc(100vh-192.28px)]`
+                      : ""
                   } hide-scrollbar no-scrollbar overflow-y-auto self-start`}
                 >
                   {children}

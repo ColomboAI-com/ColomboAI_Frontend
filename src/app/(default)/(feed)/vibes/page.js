@@ -59,8 +59,8 @@ export default function Vibes({ filter }) {
     onSwipedDown: () => {
       if (sliderRef.current) sliderRef.current.slickPrev();
     },
-    onSwipedRight: () => { },
-    onSwipedLeft: () => { },
+    onSwipedRight: () => {},
+    onSwipedLeft: () => {},
     preventDefaultTouchmoveEvent: true,
     preventDefaultTouchmoveEvent: true,
     trackTouch: true,
@@ -91,7 +91,8 @@ export default function Vibes({ filter }) {
     return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
-  const { vibes, getVibes, page, loadings, resetFeedValues } = useContext(VibeContext);
+  const { vibes, getVibes, page, loadings, resetFeedValues } =
+    useContext(VibeContext);
 
   useEffect(() => {
     getVibes();
@@ -102,17 +103,22 @@ export default function Vibes({ filter }) {
   return (
     <>
       {isSmallScreen ? (
-        <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black">
+        <div
+          {...swipeHandlers}
+          className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black"
+        >
           <Slider ref={sliderRef} {...settings}>
-            {vibes.map((vibe, index) => (
-              (index + 1) % 4 === 0
-                ? <VibesAd key={`ad-${index}`} />
-                : <Vibe vibe={vibe} key={vibe._id} index={index} />
-            ))}
+            {vibes.map((vibe, index) =>
+              (index + 1) % 4 === 0 ? (
+                <VibesAd key={`ad-${index}`} />
+              ) : (
+                <Vibe vibe={vibe} key={vibe._id} index={index} />
+              )
+            )}
           </Slider>
         </div>
       ) : (
-        <div className="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem] sm:hidden md:block bg-black">
+        <div className="w-full md:h-full sm:hidden md:block !bg-[#333] [&_.react-multi-carousel-list]:h-full [&_ul]:h-full ">
           <Carousel
             swipeable={false}
             draggable={false}
@@ -126,14 +132,18 @@ export default function Vibes({ filter }) {
             transitionDuration={500}
             removeArrowOnDeviceType={["mobile"]}
             dotListClass="custom-dot-list-style"
-            itemClass="w-full md:h-[37rem] lg:h-[32.5rem] xl:h-[35rem]"
-            afterChange={(previousSlide, { currentSlide }) => handleSlideChange(currentSlide)}
+            itemClass="w-full md:h-full !bg-[#333]"
+            afterChange={(previousSlide, { currentSlide }) =>
+              handleSlideChange(currentSlide)
+            }
           >
-            {vibes.map((vibe, index) => (
-              (index + 1) % 4 === 0
-                ? <VibesAd key={`ad-${index}`} />
-                : <Vibe vibe={vibe} key={vibe._id} index={index} />
-            ))}
+            {vibes.map((vibe, index) =>
+              (index + 1) % 4 === 0 ? (
+                <VibesAd key={`ad-${index}`} />
+              ) : (
+                <Vibe vibe={vibe} key={vibe._id} index={index} />
+              )
+            )}
           </Carousel>
         </div>
       )}
