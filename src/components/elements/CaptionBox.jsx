@@ -8,7 +8,7 @@ import blue_x from "../../../public/images/icons/blue_x.svg";
 import Image from "next/image";
 import "../../app/globals.css";
 import { Montserrat } from "@next/font/google";
-import axios from "axios"; 
+import axios from "axios";
 import { debounce } from "lodash";
 import { ROOT_URL_FEED, ROOT_URL_AUTH } from "@/utlils/rootURL";
 import { getCookie } from "@/utlils/cookies";
@@ -19,7 +19,13 @@ const font = Montserrat({
   subsets: ["latin"],
 });
 
-const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, selectedSong }) => {
+const CaptionBox = ({
+  captionInput,
+  setCaptionInput,
+  width,
+  handleCreateVibe,
+  selectedSong,
+}) => {
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
   const [isMagicPenInputVisible, setIsMagicPenInputVisible] = useState(true);
@@ -55,14 +61,14 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, se
   };
 
   const handleTagUsers = () => {
-    setShowUsers((prevState) => !prevState); 
+    setShowUsers((prevState) => !prevState);
   };
 
   const handleUserClick = (user) => {
     if (selectedUsers.includes(user)) {
       setSelectedUsers(selectedUsers.filter((u) => u !== user)); // Remove user if already selected
     } else {
-      setSelectedUsers([...selectedUsers, user]); 
+      setSelectedUsers([...selectedUsers, user]);
     }
   };
 
@@ -84,39 +90,46 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, se
   const handleSearchChange = debounce((e) => {
     const query = e.target.value;
     setSearch(query);
-    if (query) {
-      searchUsers(query); // Fetch users with debounced query
-    } else {
-      setFilteredUsers([]); // Clear results when input is empty
-    }
-  }, 300); 
+    // if (query) {
+    searchUsers(query || ""); // Fetch users with debounced query
+    // } else {
+    //   setFilteredUsers([]); // Clear results when input is empty
+    // }
+  }, 300);
 
   return (
     <div
-      className={`mx-auto flex flex-col ${font.className} p-6 rounded-xl bg-gray-100 shadow-lg`}
+      className={`mx-auto flex flex-col ${font.className} p-6 rounded-b-xl bg-gray-100 shadow-lg`}
       style={{ width: width ? `${width}px` : "auto" }}
     >
       {/* Tag Users Button */}
       <div
-        className={`flex text-white w-[160px] rounded-tr-lg h-[30px] items-center ${selectedSong && `mb-6`} transition-shadow duration-3000 ease-in-out ${
+        className={`flex absolute left-0 pl-2.5 top-[-30px] text-white w-[160px] rounded-tr-lg h-[30px] items-center ${
+          selectedSong && `mb-6`
+        } transition-shadow duration-3000 ease-in-out ${
           selectedUsers.length > 0
             ? "bg-blue-500 hover:shadow-[0_0_15px_5px_rgba(0,150,255,0.5)]"
-            : "bg-gray-500 hover:shadow-[0_0_15px_5px_rgba(100,100,100,0.5)]"
+            : "bg-gray-800 hover:shadow-[0_0_15px_5px_rgba(100,100,100,0.5)]"
         }`}
       >
         <button onClick={handleTagUsers}>
           <div className="flex flex-row items-center gap-1">
             <Image src={tag} alt="Tag People" />
             <p>
-              {selectedUsers.length > 0 ? `Tagged ${selectedUsers.length}` : "Tag People"}
+              {selectedUsers.length > 0
+                ? `Tagged ${selectedUsers.length}`
+                : "Tag People"}
             </p>
           </div>
         </button>
       </div>
 
       {/* Main Content */}
-      <div className={`bg-white rounded-b-lg shadow-md ${!showUsers ? `p-0 h-18` : `pt-0`}`}>
-
+      <div
+        className={`rounded-[10px] border-[0.5px] bg-[#F7F7F7] border-[#ACACAC] ${
+          !showUsers ? `p-0 h-18` : `pt-0`
+        }`}
+      >
         {showUsers ? (
           <div className="bg-brandprimary text-black p-4 rounded-lg shadow-lg flex flex-col items-center max-h-[197px] hide-scrollbar overflow-y-auto">
             <hr className="border-t-[3px] rounded-full w-[2rem] border-white mb-1" />
@@ -156,18 +169,22 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, se
                       <div className="flex items-center">
                         {/* Profile Picture */}
                         {user?.profile_picture ? (
-                         <img
-                           src={user.profile_picture}
-                           alt="suggested_image"
-                           className="rounded-full w-[30px] h-[30px] mr-3"
-                           />
-                           ) : (
-                             <div className="w-[30px] h-[30px] bg-gray-300 rounded-full mr-3" />
-                             )}
+                          <img
+                            src={user.profile_picture}
+                            alt="suggested_image"
+                            className="rounded-full w-[30px] h-[30px] mr-3"
+                          />
+                        ) : (
+                          <div className="w-[30px] h-[30px] bg-gray-300 rounded-full mr-3" />
+                        )}
                         {/* User Details */}
                         <div>
-                          <strong>@{user.user_name}</strong> {/* Bold username */}
-                          <div className="text-sm text-gray-500">{user.name}</div> {/* Name below the username */}
+                          <strong>@{user.user_name}</strong>{" "}
+                          {/* Bold username */}
+                          <div className="text-sm text-gray-500">
+                            {user.name}
+                          </div>{" "}
+                          {/* Name below the username */}
                         </div>
                       </div>
                     </li>
@@ -185,7 +202,7 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, se
                 value={captionInput}
                 placeholder="Write your caption here"
                 onChange={handlePostInputChange}
-                className="w-full p-4 rounded-md text-gray-700 bg-white placeholder-gray-400 text-sm resize-none outline-none mb-2"
+                className="w-full p-4 text-gray-700 bg-[#F7F7F7] rounded-[10px] placeholder-gray-400 text-sm resize-none outline-none mb-2"
                 rows={3}
               />
               <div
@@ -197,13 +214,13 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, se
             </div>
 
             {isMagicPenInputVisible && (
-              <div className="relative mt-4">
+              <div className="relative m-4">
                 <div className="border border-blue-300 rounded-md">
                   <textarea
                     value={promptInput}
                     onChange={(e) => setPromptInput(e.target.value)}
                     placeholder="Ask or create anything"
-                    className="w-full p-4 pr-12 rounded-md text-gray-700 bg-gray-50 placeholder-gray-400 text-sm resize-none outline-none"
+                    className="w-full p-4 pr-12 rounded-md text-gray-700 bg-gray-100 placeholder-gray-400 text-sm resize-none outline-none"
                     rows={2}
                   />
                   <button
@@ -234,14 +251,16 @@ const CaptionBox = ({ captionInput, setCaptionInput, width, handleCreateVibe, se
         )}
       </div>
       {/* Create Vibe Button */}
-      <div className="flex justify-center mt-4">
-        <button
-          className="bg-brandprimary text-white font-semibold py-2 px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
-          onClick={handleCreateVibe}
-        >
-          Create Vibe
-        </button>
-      </div>
+      {!showUsers && (
+        <div className="flex justify-center mt-4">
+          <button
+            className="bg-brandprimary w-full text-white font-semibold py-[13px] px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
+            onClick={handleCreateVibe}
+          >
+            Share VIBE
+          </button>
+        </div>
+      )}
     </div>
   );
 };

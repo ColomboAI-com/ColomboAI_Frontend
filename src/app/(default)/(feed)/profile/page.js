@@ -47,7 +47,7 @@ const Profile = () => {
       ) : (
         <>
           {!isShareProfileModalOpen ? (
-            <div className="xl:mx-auto max-w-5xl mx-auto font-sans sm:w-[375px] w-[700px] md:w-[700px] lg:w-[700px]">
+            <div className="xl:mx-auto max-w-5xl mx-auto font-sans sm:w-[375px] w-[706px] md:w-[706px] lg:w-[706px]">
               <UserProfile userData={userDetails} />
               <Navigation username={userName} />
               {isFollowerModalOpen && (

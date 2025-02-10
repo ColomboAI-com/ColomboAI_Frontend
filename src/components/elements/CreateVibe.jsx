@@ -654,19 +654,20 @@ const CreateVibe = ({
             onClick={handleTextClick}
           /> */}
           <div className="relative max-h-[34rem] overflow-hidden">
-            <ReactPlayer
-              key={mediaUrl}
-              ref={imgRef}
-              url={mediaUrl}
-              alt="File Preview"
-              className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
-              onClick={handleTextClick}
-              onLoad={handleImageLoad}
-              playing={true}
-              loop={true}
-              controls={true}
-            />
-
+            {!isTrimming && (
+              <ReactPlayer
+                key={mediaUrl}
+                ref={imgRef}
+                url={mediaUrl}
+                alt="File Preview"
+                className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
+                onClick={handleTextClick}
+                onLoad={handleImageLoad}
+                playing={true}
+                loop={true}
+                controls={true}
+              />
+            )}
             {isTrimming ? (
               // <Image
               //   src={tmp_trim}
@@ -702,17 +703,19 @@ const CreateVibe = ({
                 />
               </div>
             ) : shouldShowNextButton() ? (
-              <Button
-                title={"NEXT"}
-                className={
-                  "absolute bottom-4 right-[2.5rem] w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
-                }
-                loading={loadings?.createVibe}
-                onClick={() => {
-                  setNextStep(false);
-                  setIsMagicPenOpen(false);
-                }}
-              />
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+                <Button
+                  title={"NEXT"}
+                  className={
+                    "w-fit sm:text-xs font-[500] text-blue-500 shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-white py-2 px-24 z-10"
+                  }
+                  loading={loadings?.createVibe}
+                  onClick={() => {
+                    setNextStep(false);
+                    setIsMagicPenOpen(false);
+                  }}
+                />
+              </div>
             ) : null}
             {isColorPickerVisible ? (
               <div draggable={true}>

@@ -12,7 +12,11 @@ const FeedLayout = ({ children }) => {
 
   return (
     <UserProfileContextProvider>
-      <div className="w-full mx-auto bg-white">
+      <div
+        className={`w-full mx-auto bg-white ${
+          pathname === `/vibes` ? "flex-1 flex flex-col h-full" : ""
+        }`}
+      >
         <div
           className={`${
             pathname === "/vibes" && `sm:hidden md:block`
@@ -23,7 +27,7 @@ const FeedLayout = ({ children }) => {
         <div
           className={`w-full overflow-x-clip hide-scrollbar ${
             pathname === "/explore" ? `overflow-y-visible` : `overflow-y-auto`
-          } ${pathname === `/vibes` ? `md:px-0` : `md:px-10`} lg:px-0 ${
+          } ${pathname === `/vibes` ? `md:px-0 flex-1` : `md:px-10`} lg:px-0 ${
             !["/vibes", "/profile"].includes(pathname) && `xl:px-20`
           }`}
           id="feed_section"
