@@ -6,7 +6,7 @@ import ProfilePicture from "../elements/ProfilePicture";
 import { useMessages } from "@/context/MessagesContext";
 import { getCookie } from "cookies-next";
 
-const SearchConversation = () => {
+const SearchConversation = ({ setIsOpen }) => {
   const { setIsNewMessageOpen, setIsSearchUserOpen } =
     useContext(GlobalContext);
   const [query, setQuery] = useState("");
@@ -48,6 +48,7 @@ const SearchConversation = () => {
           onClick={() => {
             setIsNewMessageOpen(false);
             setIsSearchUserOpen(false);
+            setIsOpen(false);
           }}
         >
           <CrossIcon w={20} h={20} fill={"#646464"} />

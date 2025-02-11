@@ -83,27 +83,88 @@ const PostCard = ({ post }) => {
         <Username username={post?.creator?.user_name} className="text-[12px] pl-[7px]" /><span className="text-[#b3b3b3] font-sans"> reposted this</span>
       </div> */}
       <div
-        className={`overflow-x-hidden border-[0.5px]  border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5`}
+        className={`overflow-x-hidden border-[0.5px] border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5 pb-4`}
       >
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <Link
-            className="flex items-center justify-start w-full md:w-fit lg:w-fit"
+            className="flex items-center justify-start w-full"
             href={`/profile/${post?.creator?.user_name || ""}`}
           >
             <ProfilePicture
               image={post?.creator?.profile_picture}
               size={"w-[2rem] h-[2rem]"}
             />
-            <Username
-              username={post?.creator?.user_name}
-              className="text-[12px]"
-            />
+            <div className="flex flex-1 items-center justify-between">
+              <div className="flex md:flex-row flex-col md:items-center flex-1">
+                <div className="flex-1">
+                  <Username
+                    username={post?.creator?.user_name}
+                    className="text-[12px]"
+                  />
+                </div>
+                <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B] mr-2 pl-[12px]">
+                  {formatTimeAgo(post?.createdAt)}
+                </p>
+              </div>
+              <Dropdown
+                offset={[0, 10]}
+                placement="bottom-start"
+                btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
+                button={<PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"} />}
+              >
+                {userDetails?.user_name === post?.creator?.user_name ? (
+                  <ul className="rounded bg-white shadow-md text-center ring-1 ring-gray-100">
+                    <li className="rounded px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Archive
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Edit
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Hide Like Counts
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Turn Off Commenting
+                    </li>
+                    <li
+                      className="rounded px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+                      onClick={handleDeletePost}
+                    >
+                      Delete
+                    </li>
+                  </ul>
+                ) : (
+                  <ul className="rounded bg-white shadow-md ring-1 ring-gray-100">
+                    <li className="rounded flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <SaveIcon w={25} h={25} fill={"currentcolor"} />
+                      <span className="ml-2">Save</span>
+                    </li>
+                    <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <RestrictUserIcon w={25} h={25} fill={"currentcolor"} />
+                      <span className="ml-2">Unfollow</span>
+                    </li>
+                    <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <SaveIcon w={25} h={25} fill={"currentcolor"} />
+                      <span className="ml-2">Hide</span>
+                    </li>
+                    <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <InfoIcon w={25} h={25} fill={"currentcolor"} />
+                      <span className="ml-2">Why are you seeing this</span>
+                    </li>
+                    <li className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      <UserProfileIcon w={25} h={25} fill={"currentcolor"} />
+                      <span className="ml-2">About this account</span>
+                    </li>
+                    <li className="rounded flex items-center px-4 py-2 text-red-600 hover:bg-gray-100 cursor-pointer">
+                      <ReportIcon w={25} h={25} fill={"currentcolor"} />
+                      <span className="ml-2">Report</span>
+                    </li>
+                  </ul>
+                )}
+              </Dropdown>
+            </div>
           </Link>
-          <div className="flex items-center gap-4 justify-between pl-2 lg:w-fit md:w-fit w-full">
-            <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B]">
-              {formatTimeAgo(post?.createdAt)}
-            </p>
-
+          {/* <div className="flex items-center gap-4 justify-between pl-2 lg:w-fit md:w-fit w-full">
             <Dropdown
               offset={[0, 10]}
               placement="bottom-start"
@@ -160,7 +221,7 @@ const PostCard = ({ post }) => {
                 </ul>
               )}
             </Dropdown>
-          </div>
+          </div> */}
         </div>
 
         {post?.type === "image" && <ImageBlock image={post.media} />}

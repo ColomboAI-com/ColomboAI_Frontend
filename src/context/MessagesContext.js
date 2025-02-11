@@ -176,11 +176,15 @@ export const MessagesContextProvider = ({ children }) => {
       if (messageFile) {
         const formData = new FormData();
         formData.append("file", messageFile);
-        mediaUploadResp = await axios.post(ROOT_URL_MESSAGES + "/upload-media", formData, {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        });
+        mediaUploadResp = await axios.post(
+          ROOT_URL_MESSAGES + "/upload-media",
+          formData,
+          {
+            headers: {
+              Authorization: getCookie("token"),
+            },
+          }
+        );
       }
       let userId = getCookie("userid");
       let recipientId = null;
@@ -375,6 +379,7 @@ export const MessagesContextProvider = ({ children }) => {
         messageFile,
         setMessageFile,
         editMessage,
+        deleteMessage,
       }}
     >
       {children}

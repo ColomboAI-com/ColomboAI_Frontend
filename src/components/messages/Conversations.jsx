@@ -36,7 +36,7 @@ export default function Conversations() {
 
   return (
     <div
-      className={`bg-white shadow absolute z-10 border-r-[1px] border-brandprimary h-full w-full lg:max-w-xs flex-none space-y-4 overflow-hidden lg:relative block ${
+      className={`bg-white shadow absolute z-10 border-r-[1px] md:border-brandprimary border-transparent h-full w-full lg:max-w-xs flex-none space-y-4 overflow-hidden lg:relative block ${
         isShowChatMenu ? "!block" : ""
       }`}
     >
@@ -99,12 +99,12 @@ export default function Conversations() {
                                   "Sent a photo"}
                             </p>
                           </div>
-                          <div className="mx-auto">
+                          {/* <div className="mx-auto">
                             <div className="bg-[#eb5757] h-6 w-6 rounded-full text-white text-sm flex justify-center items-center">
                               9
                             </div>
                             <div className="text-xs mt-1 text-gray-500">2m</div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       {/* <div>

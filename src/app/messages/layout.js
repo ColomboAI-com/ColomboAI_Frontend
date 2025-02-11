@@ -79,7 +79,9 @@ const DefaultLayout = ({ children }) => {
                       setIsOpen={setIsSearchConversationOpen}
                       className="w-full max-w-2xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                     >
-                      <SearchConversation />
+                      <SearchConversation
+                        setIsOpen={setIsSearchConversationOpen}
+                      />
                     </Modal>
                   )}
                   {children}

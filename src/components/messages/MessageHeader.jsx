@@ -41,7 +41,7 @@ const MessageHeader = () => {
           >
             <SearchIcon w={30} h={30} fill={"currentcolor"} />
           </button>
-          <div className="text-[#646464] hover:text-brandprimary mt-2">
+          <div className="text-[#646464] hover:text-brandprimary md:mt-2">
             <CreateDropdown w={30} h={30} fill={"currentcolor"} />
           </div>
           <button className="text-[#646464] hover:text-brandprimary">
