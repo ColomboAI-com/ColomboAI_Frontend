@@ -7,7 +7,7 @@ export const VideoJS = (props) => {
   const { ref, inView } = useInView();
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const { src, onReady } = props;
+  const { src, onReady, isPlayerClickable = true } = props;
 
   let lastScrollPosition = useRef<number>(0);
 
@@ -28,7 +28,7 @@ export const VideoJS = (props) => {
       const options = {
         autoplay: false,
         muted: true,
-        controls: true,
+        controls: false,
         responsive: true,
         fluid: true,
         playsinline: true,
@@ -39,6 +39,7 @@ export const VideoJS = (props) => {
             type: "video/mp4",
           },
         ],
+        ...(props.options || {}),
       };
 
       const player = (playerRef.current = videojs(
@@ -72,7 +73,7 @@ export const VideoJS = (props) => {
   }, [videoRef]);
 
   useEffect(() => {
-    if (isReady && inView) {
+    if (isReady && inView && isPlayerClickable) {
       setTimeout(() => {
         playerRef.current?.play();
       }, 500);
@@ -95,7 +96,7 @@ export const VideoJS = (props) => {
 
   const handlPlayerClick = () => {
     const player = playerRef.current;
-    if (!player.isFullscreen()) {
+    if (!player.isFullscreen() && props.isPlayerClickable) {
       try {
         const postsContainer = document.getElementById("scroll-section");
         lastScrollPosition.current = postsContainer.scrollTop;

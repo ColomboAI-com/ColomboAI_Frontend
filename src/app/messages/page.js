@@ -15,7 +15,17 @@ import { getCookie } from "cookies-next";
 const ComponentsAppsChat = () => {
   const { selectedChat } = useMessages();
   const { isUserProfileOpen, setIsUserProfileOpen } = useContext(GlobalContext);
-  const { setOnlineUsers, setDisconnectedUser, setNewMessage } = useMessages();
+  const {
+    setOnlineUsers,
+    setDisconnectedUser,
+    setNewMessage,
+    setSelectedChat,
+  } = useMessages();
+
+  const closeChat = () => {
+    setIsUserProfileOpen(false);
+    setSelectedChat(false);
+  };
 
   // useEffect(() => {
   //   const connectSocket = io(`${ROOT_URL_MESSAGES}`, {
@@ -47,21 +57,25 @@ const ComponentsAppsChat = () => {
 
   return (
     <div className="font-sans">
-      <div className="relative flex h-[calc(100vh_-_155px)] md:h-[calc(100vh_-_140px)] sm:min-h-0 max-h-[calc(100vh_-_240px)] md:max-h-[calc(100vh_-_140px)]">
+      <div className="relative overflow-x-hidden flex h-[calc(100vh_-_155px)] md:h-[calc(100vh_-_140px)] sm:min-h-0 max-h-[calc(100vh_-_240px)] md:max-h-[calc(100vh_-_140px)]">
         <Conversations />
-        <div className="Chat-window bg-white shadow flex-1 p-0">
-          {selectedChat && !isUserProfileOpen ? (
+        {selectedChat && !isUserProfileOpen ? (
+          <div className="Chat-window bg-white shadow flex-1 p-0 lg:relative absolute w-[100%] h-[100%] lg:z-[1] z-[11]">
             <div className="relative h-full">
-              <ChatWindowHeader />
+              <ChatWindowHeader closeChat={closeChat} />
               <ChatHistory />
               <MessageInput />
             </div>
-          ) : isUserProfileOpen ? (
-            <UserProfileSection data={selectedChat} />
-          ) : (
-            <BlankChatWindow />
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="Chat-window bg-white shadow flex-1 p-0 lg:relative absolute w-[100%] lg:z-[1] z-[11] lg:block hidden">
+            {selectedChat && !isUserProfileOpen ? null : isUserProfileOpen ? (
+              <UserProfileSection data={selectedChat} />
+            ) : (
+              <BlankChatWindow />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

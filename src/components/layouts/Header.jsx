@@ -4,7 +4,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import InputBar from "./InputBar.jsx";
-import { ChatBubbleIcon, CreateIcon, NotificationIcon, SearchIcon } from "../Icons";
+import {
+  ChatBubbleIcon,
+  CreateIcon,
+  NotificationIcon,
+  SearchIcon,
+} from "../Icons";
 import FeedFilter from "./FeedFilter";
 import CreateDropdown from "../elements/CreateDropdown";
 import Modal from "../elements/Modal";
@@ -91,7 +96,11 @@ const Header = () => {
         <div className=" hidden md:flex items-center justify-between">
           <div className="w-[100%] lg:w-[75%]   px-5 lg:px-28 border-">
             {/* <InputBar/> */}
-            {pathname === "/gen-search" ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
+            {pathname === "/gen-search" ? (
+              <GenSearch />
+            ) : (
+              <InputBar setUploadedFile={setInitialFile} />
+            )}
           </div>
           <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
             <span className="cursor-pointer" onClick={handleSearchClick}>
@@ -99,7 +108,7 @@ const Header = () => {
             </span>
             {pathname != "/shop" && <CreateDropdown />}
             <NotificationIcon w={35} h={35} fill={"#646464"} />
-            <span onClick={handleMessagingClick}>
+            <span className="cursor-pointer" onClick={handleMessagingClick}>
               <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
             </span>
           </div>
@@ -126,28 +135,43 @@ const Header = () => {
               >
                 <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                   <Link href="/profile">
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">
+                      {name}
+                    </li>
                   </Link>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer "
+                    onClick={handleSignOut}
+                  >
                     Log out
                   </li>
                 </ul>
               </Dropdown>
               <CreateDropdown />
             </div>
-            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto" />
+            <img
+              src="/images/home/ColomboAI-logo.svg"
+              alt="logo-image"
+              className="mx-auto"
+            />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
               <NotificationIcon w={35} h={35} fill={"#646464"} />
-              <span onClick={handleMessagingClick}>
+              <span onClick={handleMessagingClick} className="cursor-pointer">
                 <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
               </span>
             </div>
           </div>
           <div className="w-full flex flex-row justify-center gap-x-8 items-center">
             <div className="w-[85%]">
-              <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
+              <InputBar
+                sendMessage={handleStartChat}
+                setUploadedFile={setInitialFile}
+              />
             </div>
-            <div className="sm:pt-4 md:pt-0">
+            <div
+              className="sm:pt-4 md:pt-0 cursor-pointer"
+              onClick={handleSearchClick}
+            >
               <SearchIcon w={35} h={35} fill={"#646464"} />
             </div>
           </div>

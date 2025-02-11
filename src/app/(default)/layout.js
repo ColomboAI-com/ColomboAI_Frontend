@@ -48,6 +48,8 @@ const font = Montserrat({
   subsets: ["latin"],
 });
 
+let myWindow = typeof window !== "undefined" ? window : null;
+
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
 
@@ -160,7 +162,9 @@ const DefaultLayout = ({ children }) => {
   //   }
 
   // },[]);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(
+    myWindow ? myWindow?.innerWidth <= 768 : null
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -170,6 +174,7 @@ const DefaultLayout = ({ children }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   return (
     <FeedContextProvider>
       <div
@@ -186,7 +191,7 @@ const DefaultLayout = ({ children }) => {
               } sticky top-0 z-[50] xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0`}
             >
               <div className="sm:pt-[14px] md:py-[14px] bg-white">
-                {isSmallScreen ? (
+                {/* {isSmallScreen ? (
                   <Header
                     setIsShowChatMenu={setIsShowChatMenu}
                     isShowChatMenu={isShowChatMenu}
@@ -195,17 +200,30 @@ const DefaultLayout = ({ children }) => {
                   <img
                     src="/images/home/ColomboAI-logo.svg"
                     alt="logo-image"
-                    className="mx-auto w-[174px]"
+                    className="mx-auto w-[174px] lg:opacity-100 opacity-0"
                   />
-                )}
+                )} */}
+                <div className="block md:hidden">
+                  <Header
+                    setIsShowChatMenu={setIsShowChatMenu}
+                    isShowChatMenu={isShowChatMenu}
+                  />
+                </div>
+                <img
+                  src="/images/home/ColomboAI-logo.svg"
+                  alt="logo-image"
+                  className="mx-auto w-[174px] hidden md:block"
+                />
               </div>
             </header>
-            {!isSmallScreen && (
+            {/* {isSmallScreen === false && ( */}
+            <div className="hidden md:block">
               <Header
                 setIsShowChatMenu={setIsShowChatMenu}
                 isShowChatMenu={isShowChatMenu}
               />
-            )}
+            </div>
+            {/* )} */}
 
             {!isSelectedFromComputer && (
               <div className="flex xl:flex-row sm:flex-col sm:items-center border-purple-400">
