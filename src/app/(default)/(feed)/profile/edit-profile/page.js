@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { MessageBox } from "@/components/MessageBox";
 import ProfilePicture from "@/components/elements/ProfilePicture";
 import { UserProfileContext } from "@/context/UserProfileContext";
@@ -14,19 +14,20 @@ const EditProfile = () => {
   const [bio, setBio] = useState("");
   const [file, setFile] = useState(null);
   const [mediaUrl, setMediaUrl] = useState("");
-  const { loadings, editProfile } = useContext(UserProfileContext);
-  const router = useRouter()
+  const { loadings, editProfile, getUserDetails } =
+    useContext(UserProfileContext);
+  const router = useRouter();
 
   useEffect(() => {
-    const userData = JSON.parse(getSessionStorage('user-details'))
+    const userData = JSON.parse(getSessionStorage("user-details"));
     if (userData && userData) {
-      setUsername(userData?.user_name)
-      setDisplayName(userData?.name)
-      setBio(userData?.bio)
-      setMediaUrl(userData?.profile_picture)
-      setFile(userData?.profile_picture)
+      setUsername(userData?.user_name);
+      setDisplayName(userData?.name);
+      setBio(userData?.bio);
+      setMediaUrl(userData?.profile_picture);
+      setFile(userData?.profile_picture);
     }
-  }, [])
+  }, []);
 
   const handleFileInputClick = () => {
     document.querySelector('input[type="file"][accept="image/*"]').click();
@@ -35,7 +36,7 @@ const EditProfile = () => {
   const handleFileChange = (event) => {
     const selectedFiles = event.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
-      const newFiles = selectedFiles[0]
+      const newFiles = selectedFiles[0];
       setFile(newFiles);
       setMediaUrl(URL.createObjectURL(newFiles));
     }
@@ -46,19 +47,26 @@ const EditProfile = () => {
       user_name: username,
       name: displayName,
       profile_picture: file,
-      bio: bio || ''
+      bio: bio || "",
     });
     if (res) {
-      MessageBox('success', res.message)
-      setCookie('username', username)
-      router.push('/profile')
+      getUserDetails(username);
+      MessageBox("success", res.message);
+      setCookie("username", username);
+      router.push("/profile");
     }
   };
 
-
   return (
     <div className=" font-sans flex flex-col items-center max-w-lg my-12 mx-auto">
-      <ProfilePicture size={110} image={mediaUrl !== "" && file !== null ? mediaUrl : `/images/home/profile-img.png`} />
+      <ProfilePicture
+        size={110}
+        image={
+          mediaUrl !== "" && file !== null
+            ? mediaUrl
+            : `/images/home/profile-img.png`
+        }
+      />
       <span onClick={handleFileInputClick}>
         <input
           className="hidden"
@@ -66,9 +74,7 @@ const EditProfile = () => {
           accept="image/*"
           onChange={(e) => handleFileChange(e, "file")}
         />
-        <button className=" text-brandprimary">
-          Change Picture
-        </button>
+        <button className=" text-brandprimary">Change Picture</button>
       </span>
       <div>
         <input
@@ -101,14 +107,16 @@ const EditProfile = () => {
           onChange={(e) => setBio(e.target.value)}
         />
         <Button
-          title={'UPDATE'}
-          className={'mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[30px] py-[22px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
+          title={"UPDATE"}
+          className={
+            "mt-[17px] block w-full rounded-[40px] font-sans font-[700] bg-brandprimary px-[30px] py-[22px] text-white focus:bg-brandprimary transition duration-300 ease-in"
+          }
           loading={loadings.editProfile}
           onClick={handleSubmit}
         />
       </div>
     </div>
   );
-}
+};
 
 export default EditProfile;

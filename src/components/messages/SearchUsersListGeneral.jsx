@@ -6,9 +6,15 @@ import { UserProfileContext } from "@/context/UserProfileContext";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useMessages } from "@/context/MessagesContext";
 import { getCookie } from "cookies-next";
+import { FeedContext } from "@/context/FeedContext";
 
-const SearchUsersList = () => {
-  const { isNewMessageOpen, setIsNewMessageOpen } = useContext(GlobalContext);
+const SearchUsersListGeneral = () => {
+  const { isNewMessageOpen, setIsNewMessageOpen, setIsSearchUserOpen } =
+    useContext(GlobalContext);
+  const { searchUsers, topUsers, topUsersDetails, searchUsersDetails } =
+    useContext(FeedContext);
+
+  const [query, setQuery] = useState("d");
 
   const { getFollowers, followersData, followingsData } =
     useContext(UserProfileContext);
@@ -25,6 +31,10 @@ const SearchUsersList = () => {
   }, []);
 
   useEffect(() => {
+    searchUsers(query);
+  }, [query]);
+
+  useEffect(() => {
     const uniqueUserIds = new Set();
 
     let contact_list = [];
@@ -36,7 +46,11 @@ const SearchUsersList = () => {
 
     if (followersData) {
       for (let user of followersData) {
-        if (user._id && !uniqueUserIds.has(user._id) && !existingConversationUsers.has(user._id)) {
+        if (
+          user._id &&
+          !uniqueUserIds.has(user._id) &&
+          !existingConversationUsers.has(user._id)
+        ) {
           uniqueUserIds.add(user._id);
           contact_list.push(user);
         }
@@ -45,7 +59,11 @@ const SearchUsersList = () => {
 
     if (followingsData) {
       for (let user of followingsData) {
-        if (user._id && !uniqueUserIds.has(user._id) && !existingConversationUsers.has(user._id)) {
+        if (
+          user._id &&
+          !uniqueUserIds.has(user._id) &&
+          !existingConversationUsers.has(user._id)
+        ) {
           uniqueUserIds.add(user._id);
           contact_list.push(user);
         }
@@ -69,21 +87,38 @@ const SearchUsersList = () => {
     setIsNewMessageOpen(false);
   };
 
+  console.log("searchUsers: ", searchUsersDetails);
+
   return (
     <div className=" max-h-[70vh]">
       <div className=" flex justify-between px-8 py-6 border-b-2">
         <div></div>
-        <p className="text-2xl">New Message</p>
+        <p className="text-2xl">Search Users</p>
         <button
           className="outline-none focus:ring-offset-0 focus:ring-0"
-          onClick={() => setIsNewMessageOpen(false)}
+          onClick={() => {
+            setIsNewMessageOpen(false);
+            setIsSearchUserOpen(false);
+          }}
         >
           <CrossIcon w={20} h={20} fill={"#646464"} />
         </button>
       </div>
+      <div className="relative mb-2 flex justify-center mt-4">
+        {/* <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" /> */}
+        <input
+          type="text"
+          placeholder="Search music and artists"
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
+          className="w-[95%] self-center px-4 py-3 rounded-full text-black focus:outline-none border border-px border-brandprimary"
+        />
+      </div>
       <div className=" max-h-[60vh] border- overflow-y-auto no-scrollbar py-4 px-6 ">
-        {contactList.length ? (
-          contactList.map((person) => {
+        {searchUsersDetails.length ? (
+          searchUsersDetails.map((person) => {
             return (
               <div key={person._id}>
                 <div
@@ -93,9 +128,9 @@ const SearchUsersList = () => {
                     <div className="flex items-center">
                       <div className="relative flex-shrink-0">
                         <ProfilePicture
-                          image={`${person.profile_picture}`}
+                          image={person.profile_picture}
                           className="h-12 w-12 rounded-full object-cover"
-                        ></ProfilePicture>
+                        />
                       </div>
                       <div className="mx-3 text-left">
                         <p className="font-semibold flex">
@@ -123,15 +158,11 @@ const SearchUsersList = () => {
             );
           })
         ) : (
-          <div className="text-center">
-            {" "}
-            You do not follow any people. <br /> Follow users for them to show
-            up here
-          </div>
+          <div className="text-center">Loading...</div>
         )}
       </div>
     </div>
   );
 };
 
-export default SearchUsersList;
+export default SearchUsersListGeneral;

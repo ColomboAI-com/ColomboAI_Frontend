@@ -36,19 +36,22 @@ export default function Conversations() {
 
   return (
     <div
-      className={`bg-white shadow absolute z-10 border-r-[1px] border-brandprimary hidden h-full w-full max-w-xs flex-none space-y-4 overflow-hidden lg:relative lg:block ${
+      className={`bg-white shadow absolute z-10 border-r-[1px] md:border-brandprimary border-transparent h-full w-full lg:max-w-xs flex-none space-y-4 overflow-hidden lg:relative block ${
         isShowChatMenu ? "!block" : ""
       }`}
     >
       <div className="Chat-list">
-        <div className="chat-users border- border-purple-400 overflow-y-auto no-scrollbar relative h-full min-h-[100px] max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
+        <div className="chat-users border- border-purple-400 overflow-y-auto relative h-full min-h-[100px] max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
           {loadings.conversations ? (
             <Loader className={"mt-5"} />
           ) : conversations?.length > 0 ? (
             conversations.map((conversation, index) => {
               let user = conversation?.participants?.[0];
               let userId = getCookie("userid");
-              if (conversation?.participants && conversation?.participants.length > 1) {
+              if (
+                conversation?.participants &&
+                conversation?.participants.length > 1
+              ) {
                 for (let p of conversation?.participants) {
                   if (p._id != userId) {
                     user = p;
@@ -60,8 +63,10 @@ export default function Conversations() {
                 return (
                   <div key={index}>
                     <button
-                      className={`flex w-full items-center border-b-2 justify-between p-2 hover:bg-gray-100 hover:text-brandprimary${
-                        user?._id === selectedChat?._id ? " bg-brandprimary/20 text-brandprimary" : ""
+                      className={`flex w-full items-center border-b-[1px] justify-between p-2 hover:bg-gray-100 hover:text-brandprimary${
+                        user?._id === selectedChat?._id
+                          ? " bg-brandprimary/20 text-brandprimary"
+                          : ""
                       }`}
                       onClick={() => handleSelectChat(user, conversation)}
                     >
@@ -82,15 +87,24 @@ export default function Conversations() {
                             )}
                           </div>
                           <div className="mx-3 text-left">
-                            <p className="mb-1 font-semibold">{user?.name || user?.user_name || "User"}</p>
+                            <p className="mb-1 font-semibold">
+                              {user?.name || user?.user_name || "User"}
+                            </p>
                             <p className="max-w-[160px] truncate text-xs text-gray-500">
                               {conversation.lastMessage?.text
                                 ? conversation.lastMessage?.text === DUMMY_TEXT
                                   ? ""
                                   : conversation.lastMessage?.text
-                                : conversation.lastMessage?.img && "Sent a photo"}
+                                : conversation.lastMessage?.img &&
+                                  "Sent a photo"}
                             </p>
                           </div>
+                          {/* <div className="mx-auto">
+                            <div className="bg-[#eb5757] h-6 w-6 rounded-full text-white text-sm flex justify-center items-center">
+                              9
+                            </div>
+                            <div className="text-xs mt-1 text-gray-500">2m</div>
+                          </div> */}
                         </div>
                       </div>
                       {/* <div>

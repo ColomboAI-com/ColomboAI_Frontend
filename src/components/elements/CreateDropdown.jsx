@@ -14,7 +14,7 @@ import UploadStoryModal from "../story/UploadStoryModal";
 import VerificationPopup from "./VerificationPopup";
 import { UserProfileContext } from "@/context/UserProfileContext";
 
-export default function CreateDropdown({ w, h, filyl }) {
+export default function CreateDropdown({ w, h, filyl, icon }) {
   const { setIsCreatePostOpen } = useContext(GlobalContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
   const { isCreateVibeOpen } = useContext(GlobalContext);
@@ -96,17 +96,28 @@ export default function CreateDropdown({ w, h, filyl }) {
         </Modal>
       )}
 
-      <Menu as="div" className="relative inline-block text-left z-50 sm:pt-3 md:pt-0">
+      <Menu
+        as="div"
+        className="relative inline-block text-left z-50 sm:pt-3 md:pt-0"
+      >
         {({ open }) => (
           <>
-            <div>
+            <div className="flex items-center justify-center">
               <Menu.Button>
                 {/* Optiouns
               <ChevronDownIcon
                 className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
                 aria-hidden="true"
               /> */}
-                <CreateIcon w={30} h={30} fill={open ? "#1E71F2" : "#646464"} />
+                {icon ? (
+                  icon
+                ) : (
+                  <CreateIcon
+                    w={30}
+                    h={30}
+                    fill={open ? "#1E71F2" : "#646464"}
+                  />
+                )}
               </Menu.Button>
             </div>
             <Transition
@@ -131,11 +142,17 @@ export default function CreateDropdown({ w, h, filyl }) {
                       <button
                         onClick={() => handleOpen("post")}
                         className={`${
-                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                          active
+                            ? "bg-brandprimary text-white"
+                            : "text-brandprimary"
                         } group flex w-full items-center justify-between rounded-t-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Post
-                        <CreatePostIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
+                        <CreatePostIcon
+                          w={25}
+                          h={25}
+                          fill={active ? "#fff" : "#1E71F2"}
+                        />
                       </button>
                     )}
                   </Menu.Item>
@@ -146,11 +163,17 @@ export default function CreateDropdown({ w, h, filyl }) {
                       <button
                         onClick={() => handleOpen("story")}
                         className={`${
-                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                          active
+                            ? "bg-brandprimary text-white"
+                            : "text-brandprimary"
                         } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Story
-                        <CreateStoryIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
+                        <CreateStoryIcon
+                          w={25}
+                          h={25}
+                          fill={active ? "#fff" : "#1E71F2"}
+                        />
                       </button>
                     )}
                   </Menu.Item>
@@ -163,11 +186,17 @@ export default function CreateDropdown({ w, h, filyl }) {
                           handleOpen("vibe");
                         }}
                         className={`${
-                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                          active
+                            ? "bg-brandprimary text-white"
+                            : "text-brandprimary"
                         } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Vibe
-                        <CreateVibeIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
+                        <CreateVibeIcon
+                          w={25}
+                          h={25}
+                          fill={active ? "#fff" : "#1E71F2"}
+                        />
                       </button>
                     )}
                   </Menu.Item>
@@ -178,11 +207,17 @@ export default function CreateDropdown({ w, h, filyl }) {
                       <button
                         onClick={() => handleOpen("post")}
                         className={`${
-                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                          active
+                            ? "bg-brandprimary text-white"
+                            : "text-brandprimary"
                         } group flex w-full items-center justify-between p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         Thought
-                        <CreateThoughtIcon w={25} h={25} fill={active ? "#fff" : "#1E71F2"} />
+                        <CreateThoughtIcon
+                          w={25}
+                          h={25}
+                          fill={active ? "#fff" : "#1E71F2"}
+                        />
                       </button>
                     )}
                   </Menu.Item>
@@ -195,11 +230,14 @@ export default function CreateDropdown({ w, h, filyl }) {
                           handleOpen("magicP");
                         }}
                         className={`${
-                          active ? "bg-brandprimary text-white" : "text-brandprimary"
+                          active
+                            ? "bg-brandprimary text-white"
+                            : "text-brandprimary"
                         } group flex w-full items-center justify-between rounded-b-md p-3 text-lg text-[21px] font-sans font-[500]`}
                       >
                         <p>
-                          Magic Pen <span className="text-xs">(Generative AI)</span>
+                          Magic Pen{" "}
+                          <span className="text-xs">(Generative AI)</span>
                         </p>
                         <CreateMagicPenIcon
                           w={25}

@@ -54,9 +54,13 @@ const CreateVibe = ({
   const defaultPostType = "thought";
   const [postType, setPostType] = useState(uploadedPostType);
   const [nextStep, setNextStep] = useState(uploadedNextStep);
-  const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
-  const { setIsCreateVibeOpen, isSelectedFromComputer, setIsSelectedFromComputer } =
-    useContext(GlobalContext);
+  const { generatePost, createPost, loadings, posts, setPosts } =
+    useContext(FeedContext);
+  const {
+    setIsCreateVibeOpen,
+    isSelectedFromComputer,
+    setIsSelectedFromComputer,
+  } = useContext(GlobalContext);
   const { createVibe, vibes, setVibes } = useContext(VibeContext);
 
   const [isTrimming, setIsTrimming] = useState(false);
@@ -248,7 +252,7 @@ const CreateVibe = ({
     <main className={font.className}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
-        <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[20vh] no-scrollbar overflow-y-auto">
+        <div className="border-[1px] border-brandprimary flex flex-col justify-between rounded-[10px] h-[calc(100vh-200px)] no-scrollbar overflow-y-auto">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
               {nextStep && (
@@ -263,12 +267,93 @@ const CreateVibe = ({
               )}
             </div>
             <div className="flex-grow flex justify-center">
-              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">Create New Vibes</p>
+              <p className="pl-[17px]  text-2xl font-sans tracking-wider ">
+                Create New Vibes
+              </p>
             </div>
             <button onClick={() => setIsCreateVibeOpen(false)}>
               <CrossIcon w={20} h={20} fill={"#1E71F2"} />
             </button>
           </div>
+          {nextStep === false && (
+            <>
+              {mediaUrl === "" && postType === defaultPostType && (
+                <div
+                  className="flex flex-col items-center py-2 rounded-xl "
+                  onDrop={handleDrop}
+                  onDragOver={(event) => event.preventDefault()}
+                >
+                  <p className="text-xl mt-4">Drag photos and videos here</p>
+
+                  <div className="py-5 text-center">
+                    {file ? (
+                      <>
+                        <img
+                          src={mediaUrl}
+                          alt="media"
+                          className="object-contain w-48 h-48"
+                        />
+                        <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
+                          <button
+                            onClick={clearFileHandler}
+                            className="text-red-500"
+                          >
+                            <CloseDocumentIcon w={20} h={20} />
+                          </button>
+                          <button
+                            onClick={() => {
+                              if (postType === "video") {
+                                setIsTrimming(true); // Open the trimming modal
+                              } else {
+                                handleCreateVibe();
+                              }
+                            }}
+                            className="text-blue-500"
+                          >
+                            <SendIcon w={20} h={20} />
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <button
+                        onClick={handleFileInputClick}
+                        className={
+                          "w-fit sm2:text-xl hover:bg-brandprimary/80 text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+                        }
+                      >
+                        Select from computer
+                      </button>
+                    )}
+                    <input
+                      type="file"
+                      accept="media_type" // Adjust media type as needed
+                      style={{ display: "none" }}
+                      onChange={handleFileChange}
+                    />
+                  </div>
+
+                  {/* {isDropdownVisible && (
+                <MusicDropdown onClose={() => setDropdownVisible(false)} />
+              )} */}
+
+                  {/* <span onClick={handleFileInputClick}>
+                  <input
+                    className="hidden"
+                    type="file"
+                    accept="media_type"
+                    onChange={(e) => handleFileChange(e, "file")}
+                  />
+                  <Button
+                    title={"Select from computer"}
+                    className={
+                      "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+                    }
+                  />
+                </span> */}
+                </div>
+              )}
+            </>
+          )}
         </div>
       ) : null}
       <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
@@ -300,13 +385,17 @@ const CreateVibe = ({
               wrapperClass=""
             />
           ) : (
-            <SendIcon w={32} h={32} fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"} />
+            <SendIcon
+              w={32}
+              h={32}
+              fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"}
+            />
           )}
         </button>
       </div>
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-6 pb-8 ${
+          className={`relative my-6 ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -322,13 +411,13 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative max-h-[35rem] overflow-hidden">
+          <div className="relative h-[calc(100vh-250px)] md:w-[470px] overflow-hidden">
             <img
               key={mediaUrl}
               ref={imgRef}
               src={mediaUrl}
               alt="File Preview"
-              className="w-full h-full object-contain max-h-[35rem] rounded-[1rem]"
+              className="w-full h-full object-cover max-h-[35rem] rounded-[1rem]"
               onClick={handleTextClick}
               onLoad={handleImageLoad}
             />
@@ -351,7 +440,11 @@ const CreateVibe = ({
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
+                  <MusicDropdown
+                    setSongId={setSongId}
+                    width={imageWidth}
+                    onSongSelect={handleSongSelect}
+                  />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -404,7 +497,10 @@ const CreateVibe = ({
             )}
           </div>
           <div className="flex flex-col">
-            <div className="ml-4" onClick={(e) => console.log(isSelectedFromComputer)}>
+            <div
+              className="ml-4"
+              onClick={(e) => console.log(isSelectedFromComputer)}
+            >
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -521,7 +617,7 @@ const CreateVibe = ({
         //           </video>
 
         <div
-          className={`relative my-6 pb-8 ${
+          className={`relative my-6 ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -569,7 +665,11 @@ const CreateVibe = ({
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
-                  <MusicDropdown setSongId={setSongId} width={imageWidth} onSongSelect={handleSongSelect} />
+                  <MusicDropdown
+                    setSongId={setSongId}
+                    width={imageWidth}
+                    onSongSelect={handleSongSelect}
+                  />
                 </div>
               </div>
             ) : !nextStep ? (
@@ -620,7 +720,10 @@ const CreateVibe = ({
             )}
           </div>
           <div className="flex flex-col">
-            <div className="ml-4" onClick={(e) => console.log(isSelectedFromComputer)}>
+            <div
+              className="ml-4"
+              onClick={(e) => console.log(isSelectedFromComputer)}
+            >
               <ThreeDotMenu setIsCreateVibeOpen={setIsCreateVibeOpen} />
             </div>
             <div className="flex flex-col h-full justify-center ml-4 gap-3">
@@ -719,76 +822,6 @@ const CreateVibe = ({
         </div>
       ) : (
         ""
-      )}
-      {nextStep === false && (
-        <>
-          {mediaUrl === "" && postType === defaultPostType && (
-            <div
-              className="flex flex-col items-center py-2 rounded-xl "
-              onDrop={handleDrop}
-              onDragOver={(event) => event.preventDefault()}
-            >
-              <p className="text-xl my-4">Drag photos and videos here</p>
-
-              <div className="pt-3 text-center">
-                {file ? (
-                  <>
-                    <img src={mediaUrl} alt="media" className="object-contain w-48 h-48" />
-                    <div className="flex justify-between items-center w-full px-4 py-2 border-t border-gray-200">
-                      <button onClick={clearFileHandler} className="text-red-500">
-                        <CloseDocumentIcon w={20} h={20} />
-                      </button>
-                      <button
-                        onClick={() => {
-                          if (postType === "video") {
-                            setIsTrimming(true); // Open the trimming modal
-                          } else {
-                            handleCreateVibe();
-                          }
-                        }}
-                        className="text-blue-500"
-                      >
-                        <SendIcon w={20} h={20} />
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <button
-                    onClick={handleFileInputClick}
-                    className="text-blue-500 border border-blue-500 px-4 py-2 rounded"
-                  >
-                    Select from computer
-                  </button>
-                )}
-                <input
-                  type="file"
-                  accept="media_type" // Adjust media type as needed
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
-                />
-              </div>
-
-              {/* {isDropdownVisible && (
-                <MusicDropdown onClose={() => setDropdownVisible(false)} />
-              )} */}
-
-              {/* <span onClick={handleFileInputClick}>
-                  <input
-                    className="hidden"
-                    type="file"
-                    accept="media_type"
-                    onChange={(e) => handleFileChange(e, "file")}
-                  />
-                  <Button
-                    title={"Select from computer"}
-                    className={
-                      "w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
-                    }
-                  />
-                </span> */}
-            </div>
-          )}
-        </>
       )}
     </main>
   );
