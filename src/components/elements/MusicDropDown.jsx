@@ -105,10 +105,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   };
 
   return (
-    <div
-      className="max-h-[20rem] overflow-y-scroll bg-blue-600 hide-scrollbar rounded-t-[15.22px] rounded-b-[0.9rem] flex flex-col p-6 text-white shadow-lg"
-      style={{ width: width ? `${width}px` : `auto` }}
-    >
+    <div className="max-h-[35rem] w-auto overflow-y-scroll bg-blue-600 hide-scrollbar rounded-t-[15.22px] rounded-b-[0.9rem] flex flex-col p-6 text-white shadow-lg">
       <h1 className="text-2xl font-bold mb-4 text-center">Add Music</h1>
       <div className="relative mb-6">
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />

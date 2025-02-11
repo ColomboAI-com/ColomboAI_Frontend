@@ -253,10 +253,10 @@ const CreateVibe = ({
     return true;
   };
 
-  console.log(song_id);
+  console.log(song_id, selectedSong);
 
   return (
-    <main className={font.className}>
+    <main className={`h-[calc(100%-50px)] ${font.className}`}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
         <div className="border-[1px] border-brandprimary flex flex-col justify-between rounded-[10px] h-[calc(100vh-200px)] no-scrollbar overflow-y-auto">
@@ -370,7 +370,7 @@ const CreateVibe = ({
       ) : null}
       {mediaUrl !== "" && postType.includes("image") ? (
         <div
-          className={`relative my-6 ${
+          className={`relative my-6 h-full ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -457,7 +457,7 @@ const CreateVibe = ({
                 className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
                 onClick={toggleDropdown}
               >
-                <div onClick={(e) => e.stopPropagation()}>
+                <div className="w-full" onClick={(e) => e.stopPropagation()}>
                   <MusicDropdown
                     setSongId={setSongId}
                     width={imageWidth}
@@ -466,7 +466,7 @@ const CreateVibe = ({
                 </div>
               </div>
             ) : !nextStep ? (
-              <div className="absolute bottom-0">
+              <div className="absolute bottom-0 left-0 right-0">
                 <CaptionBox
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
@@ -543,7 +543,7 @@ const CreateVibe = ({
                   fill5={isMagicPenOpen ? "#fff" : "#58268B"}
                 />
               </button>
-              <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
+              <div className="flex flex-col rounded-full py-5 self-start">
                 {!postType.includes("image") && (
                   <button
                     className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
@@ -637,7 +637,7 @@ const CreateVibe = ({
         //           </video>
 
         <div
-          className={`relative my-6 ${
+          className={`relative my-6 h-full ${
             isSelectedTextIcon ? "opacity-50" : ""
           } flex flex-row w-full justify-center`}
         >
@@ -653,19 +653,21 @@ const CreateVibe = ({
             className={`h-[32rem] object-contain rounded-[0.9rem]`}
             onClick={handleTextClick}
           /> */}
-          <div className="relative max-h-[34rem] overflow-hidden">
+          <div className="relative overflow-hidden h-full max-w-[470px] bg-black rounded-[20px]">
             {!isTrimming && (
               <ReactPlayer
                 key={mediaUrl}
                 ref={imgRef}
                 url={mediaUrl}
                 alt="File Preview"
-                className="w-full h-full object-contain max-h-[34rem] rounded-[0.9rem]"
+                width="100%"
+                height="100%"
+                className="w-full !h-full object-contain rounded-[0.9rem]"
                 onClick={handleTextClick}
                 onLoad={handleImageLoad}
                 playing={true}
                 loop={true}
-                controls={true}
+                controls={false}
               />
             )}
             {isTrimming ? (
@@ -682,7 +684,7 @@ const CreateVibe = ({
               />
             ) : isDropdownVisible ? (
               <div
-                className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10"
+                className="absolute bottom-0 rounded-b-[0.9rem] flex items-center justify-center z-10 w-full left-0 right-0"
                 onClick={toggleDropdown}
               >
                 <div onClick={(e) => e.stopPropagation()}>
@@ -694,7 +696,7 @@ const CreateVibe = ({
                 </div>
               </div>
             ) : !nextStep ? (
-              <div className="absolute bottom-0">
+              <div className="absolute bottom-0 left-0 right-0">
                 <CaptionBox
                   captionInput={captionInput}
                   setCaptionInput={setCaptionInput}
@@ -771,7 +773,7 @@ const CreateVibe = ({
                   fill5={isMagicPenOpen ? "#fff" : "#58268B"}
                 />
               </button>
-              <div className="flex flex-col rounded-full bg-gray-400 py-5 self-start">
+              <div className="flex flex-col rounded-full py-5 self-start">
                 <button
                   className={`w-10 h-10 flex flex-row justify-center items-center pt-1 pl-0.5 ${
                     isTrimming && `rounded-full bg-[#245FDF]`
