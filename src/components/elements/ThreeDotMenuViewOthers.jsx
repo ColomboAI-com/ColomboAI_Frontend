@@ -10,7 +10,7 @@ import UserProfile from "../profile/Profile.jsx";
 const ThreeDotMenuViewOthers = ({ vibe }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
-  const { vibes, deleteVibe, saveVibe,archiveVibe } = useContext(VibeContext);
+  const { vibes, deleteVibe, saveVibe, archiveVibe } = useContext(VibeContext);
   const { userDetails } = useContext(UserProfileContext);
   const [name, Setname] = useState();
 
@@ -59,10 +59,9 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
   };
 
   // const handleRepost = () => {};
-  const handleArchive=()=>{
-  console.log("Handling Archive");
-  archiveVibe(vibe._id);
-
+  const handleArchive = () => {
+    console.log("Handling Archive");
+    archiveVibe(vibe._id);
   };
   const handleDelete = () => {
     console.log("Handling delete.");
@@ -72,30 +71,30 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
   };
 
   const isUserCreator = getCookie("name") === vibe.creator.name;
-  const creatorMenuItems=[
+  const creatorMenuItems = [
     {
-      label:"Archive"
+      label: "Archive",
     },
     {
-      label:"Archive",
-    className: "justify-center text-gray-500"
+      label: "Archive",
+      className: "justify-center text-gray-500",
     },
     {
-      label:"Edit",
-    className: "justify-center text-gray-500"
+      label: "Edit",
+      className: "justify-center text-gray-500",
     },
     {
-      label:"Hide like counts",
-    className: "justify-center text-gray-500"
+      label: "Hide like counts",
+      className: "justify-center text-gray-500",
     },
     {
-      label:"Turn off Commenting",
-    className: "justify-center text-gray-500"
+      label: "Turn off Commenting",
+      className: "justify-center text-gray-500",
     },
     {
-      label:"Delete",
-    className: "justify-center text-red-500"
-    }
+      label: "Delete",
+      className: "justify-center text-red-500",
+    },
   ];
   const generalMenuItems = [
     { icon: "M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z", label: "Save" },
@@ -111,14 +110,17 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
       icon: "M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
       label: "Why are you seeing this",
     },
-    { icon: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z", label: "About this account" },
+    {
+      icon: "M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+      label: "About this account",
+    },
     {
       icon: "M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9",
       label: "Report",
       className: "text-red-500",
     },
   ];
-  
+
   const handleFunctions = {
     Save: handleSave,
     Unfollow: handleUnfollow,
@@ -140,9 +142,9 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
         <DotsVerticalIcon className="h-8 w-10 text-white" />
       </button>
       {isMenuOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl z-10">
+        <div className="absolute right-0 mt-2 w-56 flex flex-col items-center bg-white rounded-lg shadow-xl z-10">
           {menuItems.map((item, index) => (
-            <React.Fragment>
+            <React.Fragment key={index}>
               {index == 0 && isUserCreator ? null : (
                 <button
                   key={index}
@@ -151,9 +153,21 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
                   }`}
                   onClick={() => handleFunctions[item.label]()}
                 >
-                  <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
-                  </svg>
+                  {item.icon && (
+                    <svg
+                      className="h-5 w-5 mr-3"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d={item.icon}
+                      />
+                    </svg>
+                  )}
                   {item.label}
                 </button>
               )}

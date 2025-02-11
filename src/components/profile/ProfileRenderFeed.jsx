@@ -92,19 +92,25 @@ export default function ProfileRenderFeed({ username, filter }) {
   return (
     <div>
       {posts.length ? (
-        <div className="flex flex-col md:flex-row flex-wrap gap-2 md:gap-0">
-          {posts.map((i, index) =>
-            filter === "thought" ? (
-              <Post post={i} key={index} />
-            ) : (
-              <PostCard
-                post={i}
-                key={index}
-                onClick={() => setSpecificPost(i)}
-              />
-            )
+        <>
+          {filter === "thought" ? (
+            <>
+              {posts.map((i, index) => (
+                <Post post={i} key={index} />
+              ))}
+            </>
+          ) : (
+            <div className="flex flex-col md:flex-row flex-wrap gap-0.5">
+              {posts.map((i, index) => (
+                <PostCard
+                  post={i}
+                  key={index}
+                  onClick={() => setSpecificPost(i)}
+                />
+              ))}
+            </div>
           )}
-        </div>
+        </>
       ) : (
         <div className="flex flex-col justify-center items-center gap-2 h-[calc(100vh-725px)] min-h-[200px]">
           <img src={metaInfo.image} />
