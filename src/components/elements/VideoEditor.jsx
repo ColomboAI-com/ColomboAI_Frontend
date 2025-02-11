@@ -217,12 +217,12 @@ export const VideoEditor = ({ videoUrl, onClose, onTrim }) => {
   console.log(videoUrl);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center">
-      <div className="bg-[#2563EB] rounded-lg overflow-hidden w-[600px]">
+    <div className="inset-0 flex items-center justify-center h-full">
+      <div className="bg-[#2563EB] rounded-lg overflow-hidden max-w-[470px] h-full flex flex-col">
         <ReactPlayer
           ref={videoRef}
           url={videoUrl}
-          className="w-full aspect-video object-cover"
+          className="w-full aspect-video object-cover bg-black"
           onClick={togglePlayPause}
           onDuration={(duration) => {
             console.log(duration);
@@ -230,6 +230,8 @@ export const VideoEditor = ({ videoUrl, onClose, onTrim }) => {
             setTrimEnd(duration);
             generateThumbnails();
           }}
+          width="100%"
+          height="100%"
           onProgress={(progress) => {
             console.log(progress);
             handleTimeUpdate(progress.playedSeconds);

@@ -67,6 +67,11 @@ export default function Vibe({ vibe, index }) {
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
     setShowPlayerStatus(true);
+    if (audioRef.current.paused) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
     setTimeout(() => {
       setShowPlayerStatus(false);
     }, 2000);
@@ -200,7 +205,17 @@ export default function Vibe({ vibe, index }) {
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-0px)] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} vibe={vibe} />}
-      {showShare && <ShareVibe currentState={showShare} vibeId={vibe._id} />}
+      {showShare && (
+        <div className="fixed [&>div>div]:!relative top-0 left-0 w-full h-full z-50 flex justify-center items-center">
+          <div className="h-full mr-12">
+            <ShareVibe
+              currentState={showShare}
+              vibeId={vibe._id}
+              onClose={() => setShowShare(false)}
+            />
+          </div>
+        </div>
+      )}
       <div className=" flex items-center justify-center object-contain w-full bg-[#333] h-full">
         {/* Main Content */}
 
@@ -208,7 +223,7 @@ export default function Vibe({ vibe, index }) {
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
         <div
-          className={` relative overflow-clip bg-black rounded-[20px] hide-scrollbar border-green-400 sm:h-[calc(100vh-0px)] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
+          className={` relative overflow-clip bg-black md:rounded-[20px] hide-scrollbar border-green-400 sm:h-[calc(100dvh-0px)] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
           onClick={() => {
             console.log("clicked");
             handlePlayPause();
@@ -296,7 +311,7 @@ export default function Vibe({ vibe, index }) {
           >
             <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
           </div>
-          <div className=" absolute bottom-0 left-4">
+          <div className="absolute bottom-0 left-0 right-0 px-4">
             {/* whenever there is sponsored ad uncomment and call this component */}
 
             {/* <SponsoredAdComponent/> */}
@@ -324,11 +339,11 @@ export default function Vibe({ vibe, index }) {
             }
 
             <div
-              className={`flex flex-wrap flex-col md:mx-4 sm:mx-8 ${
+              className={`flex flex-wrap flex-col mt-2 ${
                 vibe.type == "video" ? `sm:mb-4` : `sm:mb-2`
               }`}
             >
-              <p className="leading-5">
+              <p className="leading-5 text-base tracking-[0.30px]">
                 {vibe.content.length > 130
                   ? seeMore
                     ? vibe.content
@@ -346,9 +361,9 @@ export default function Vibe({ vibe, index }) {
               {song &&
                 song.name &&
                 song.artist_name && ( // Check if song and properties exist
-                  <div className="flex gap-2 my-1">
+                  <div className="flex gap-2 mb-1 mt-2">
                     <IoIosMusicalNotes className="w-[20px] h-[20px]" />
-                    <p>
+                    <p className="text-base font-semibold">
                       {song.name} - by {song.artist_name}
                     </p>
                   </div>

@@ -22,11 +22,14 @@ import {
 import { copyValue } from "@/utlils/commonFunctions";
 import Link from "next/link";
 
-export default function ShareVibe({ currentState, vibeId }) {
+export default function ShareVibe({ currentState, vibeId, onClose }) {
   const [isVisible, setIsVisible] = useState(currentState);
   const vibeURL = `${window.location.href}/${vibeId}`;
   const handleVisibility = () => {
     setIsVisible(!isVisible);
+    if (isVisible) {
+      onClose?.();
+    }
   };
   const dialogRef = useRef(null);
 
