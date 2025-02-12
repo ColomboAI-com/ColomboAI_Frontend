@@ -53,16 +53,10 @@ const Message = ({ message }) => {
   return (
     <div
       ref={messageRef}
-      className={`flex items-start gap-3 ${
-        userId === message.sender ? "justify-end" : ""
-      }`}
+      className={`flex items-start gap-3 ${userId === message.sender ? "justify-end" : ""}`}
     >
       <div className="space-y-2">
-        <div
-          className={`flex items-center gap-3 ${
-            userId === message.sender ? "justify-end" : ""
-          }`}
-        >
+        <div className={`flex items-center gap-3 ${userId === message.sender ? "justify-end" : ""}`}>
           {message.content && (
             <React.Fragment>
               {!isEditing ? (
@@ -79,19 +73,11 @@ const Message = ({ message }) => {
                   </div>
                   {!isEditing && message.sender === userId && (
                     <div className="hidden group-hover:visible group-hover:flex items-center gap-3 absolute top-0 -left-[80px] bottom-2 bg-[#dedede] px-4 py-2 rounded-lg">
-                      <button
-                        onClick={deleteMessage}
-                        type="button"
-                        className="text-sm"
-                      >
+                      <button onClick={() => deleteMessage(message)} type="button" className="text-sm">
                         <BsFillTrash3Fill />
                       </button>
                       <div className="mb-1 text-gray-400">|</div>
-                      <button
-                        onClick={toggelEdit}
-                        type="button"
-                        className="text-sm"
-                      >
+                      <button onClick={toggelEdit} type="button" className="text-sm">
                         <MdModeEdit />
                       </button>
                     </div>
@@ -154,11 +140,7 @@ const Message = ({ message }) => {
                   : "rounded-tl-none"
               }`}
             >
-              <video
-                src={message.media}
-                className="aspect-video object-cover rounded-2xl"
-                controls
-              >
+              <video src={message.media} className="aspect-video object-cover rounded-2xl" controls>
                 Your browser does not support the video tag.
               </video>
             </div>
