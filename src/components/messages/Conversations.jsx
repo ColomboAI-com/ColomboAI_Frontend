@@ -22,6 +22,8 @@ export default function Conversations() {
   const { setIsUserProfileOpen } = useContext(GlobalContext);
 
   const handleSelectChat = (user, conversation) => {
+    console.log("user convo: " + JSON.stringify(user));
+    console.log("user conversation: " + JSON.stringify(conversation));
     setSelectedChat(user);
     setCurrentConversation(conversation);
     setIsShowChatMenu(false);
