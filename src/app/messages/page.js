@@ -73,15 +73,6 @@ const ComponentsAppsChat = () => {
         },
       };
       createConversation(data);
-      // setTimeout(() => {
-      //   setSelectedChat({
-      //     _id: userId,
-      //     name: userName,
-      //     user_name: userName,
-      //     profile_picture:
-      //       "https://gerpstorage.s3.us-west-2.amazonaws.com/264267dba7f8a23de39d567b6d6da6f4",
-      //   });
-      // }, 2000);
     }
   }, [searchParams]);
 
