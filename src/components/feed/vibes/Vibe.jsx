@@ -255,9 +255,9 @@ export default function Vibe({ vibe, index }) {
                   url={vibe.media[0]}
                   className="w-full h-full overflow-visible"
                   controls={false}
-                  playing={isPlaying}
+                  playing={true}
                   loop={true}
-                  muted={false}
+                  muted={!isPlaying}
                   width="100%"
                   height="100%"
                   playsinline={true}
@@ -282,7 +282,7 @@ export default function Vibe({ vibe, index }) {
           ) : (
             <img
               src={vibe?.media?.[0]}
-              className="w-full h-full"
+              className="w-full h-full object-cover"
               alt="vibes_content"
             />
           )}
