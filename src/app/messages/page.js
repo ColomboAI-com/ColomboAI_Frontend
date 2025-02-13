@@ -59,22 +59,22 @@ const ComponentsAppsChat = () => {
 
   const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (searchParams) {
-      const userId = searchParams.get("user_id");
-      const userName = searchParams.get("user_name");
-      let data = {
-        participants: [getCookie("userid"), userId],
-        lastMessage: {
-          img: "",
-          seen: true,
-          sender: getCookie("userid"),
-          text: "DUMMY_TEXT",
-        },
-      };
-      createConversation(data);
-    }
-  }, [searchParams]);
+  // useEffect(() => {
+  //   if (searchParams) {
+  //     const userId = searchParams.get("user_id");
+  //     const userName = searchParams.get("user_name");
+  //     let data = {
+  //       participants: [getCookie("userid"), userId],
+  //       lastMessage: {
+  //         img: "",
+  //         seen: true,
+  //         sender: getCookie("userid"),
+  //         text: "DUMMY_TEXT",
+  //       },
+  //     };
+  //     createConversation(data);
+  //   }
+  // }, [searchParams]);
 
   return (
     <div className="font-sans">
