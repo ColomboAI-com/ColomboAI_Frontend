@@ -10,17 +10,26 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   const [songs, setSongs] = useState([]);
   const [displayCount, setDisplayCount] = useState(10);
   const [playing, setPlaying] = useState(null);
+  const [selectedGenre, setSelectedGenre] = useState(null);
   const audioRef = useRef(new Audio());
 
   const CLIENT_ID = "de0269ba";
 
   const genres = [
-    { name: "Pop", image: "../../../images/music/pop.png" },
-    { name: "Rock", image: "../../../images/music/rock.png" },
-    { name: "Hip-hop", image: "../../../images/music/hip-hop.png" },
-    { name: "Jazz", image: "../../../images/music/jazz.png" },
-    { name: "R&B", image: "../../../images/music/r&b.png" },
-    { name: "Classical", image: "../../../images/music/classical.png" },
+    { name: "Pop", value: "pop", image: "../../../images/music/pop.png" },
+    { name: "Rock", value: "rock", image: "../../../images/music/rock.png" },
+    {
+      name: "Hip-hop",
+      value: "hip-hop",
+      image: "../../../images/music/hip-hop.png",
+    },
+    { name: "Jazz", value: "jazz", image: "../../../images/music/jazz.png" },
+    { name: "R&B", value: "rnb", image: "../../../images/music/r&b.png" },
+    {
+      name: "Classical",
+      value: "classical",
+      image: "../../../images/music/classical.png",
+    },
   ];
 
   const stopAudio = () => {
@@ -46,6 +55,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
           limit: 50,
           search: type,
           include: "musicinfo",
+          ...(selectedGenre && { tags: [selectedGenre] }),
         },
       });
       return response.data.results;
@@ -67,7 +77,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
     };
 
     fetchSongs();
-  }, [searchTerm]);
+  }, [searchTerm, selectedGenre]);
 
   useEffect(() => {
     const handleAudioEnd = () => setPlaying(null);
@@ -124,6 +134,8 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
         {genres.map((genre) => (
           <div
             key={genre.name}
+            onClick={() => setSelectedGenre(genre.value)}
+            role="button"
             className="relative w-[65px] h-[65px] rounded-xl overflow-hidden transition-transform duration-200 transform hover:scale-105"
           >
             <img src={genre.image} className="w-full h-full object-cover" />

@@ -52,11 +52,16 @@ export default function VibeContextProvider({ children }) {
       // taggedPeople
       // tag: “DRAFT” if saving a post as draft
 
-      const response = await axios.post(`${ROOT_URL_FEED}/vibes/create`, formData, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const response = await axios.post(
+        `${ROOT_URL_FEED}/vibes/create`,
+        formData,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
+      setLoadings((prev) => ({ ...prev, createVibe: false }));
 
       if (response.data.success === true) {
         router.push("/vibes");
@@ -65,13 +70,14 @@ export default function VibeContextProvider({ children }) {
 
       if (response.status === 201) {
         console.log("Response:", response.data);
-        MessageBox("success", "Vibe created successfully");
+        // MessageBox("success", "Vibe created successfully");
+        // setVibes((prev) => [...prev, {_id: response.data.data.vibeId, }]);
+        return response;
       }
     } catch (error) {
       handleError(error);
-      //   MessageBox("error", "Failed to create vibe. Please try again.");
-    } finally {
       setLoadings((prev) => ({ ...prev, createVibe: false }));
+      //   MessageBox("error", "Failed to create vibe. Please try again.");
     }
   };
 
@@ -105,7 +111,9 @@ export default function VibeContextProvider({ children }) {
       });
       if (res.data.success) {
         //Remove the deleted post from the posts array
-        setVibes((prevPosts) => prevPosts.filter((vibe) => vibe._id !== vibeId));
+        setVibes((prevPosts) =>
+          prevPosts.filter((vibe) => vibe._id !== vibeId)
+        );
       }
       return res.data;
     } catch (err) {
@@ -136,13 +144,18 @@ export default function VibeContextProvider({ children }) {
   const discardVibe = async (postId = "") => {
     try {
       setLoadings((prev) => ({ ...prev, deleteVibe: true }));
-      const res = await axios.delete(`${ROOT_URL_FEED}/vibes/${postId}/discard`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const res = await axios.delete(
+        `${ROOT_URL_FEED}/vibes/${postId}/discard`,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       if (res.data.success) {
-        setVibes((prevPosts) => prevPosts.filter((vibe) => vibe._id !== vibeId));
+        setVibes((prevPosts) =>
+          prevPosts.filter((vibe) => vibe._id !== vibeId)
+        );
       }
       return res.data;
     } catch (err) {
@@ -186,11 +199,15 @@ export default function VibeContextProvider({ children }) {
 
   const likeVibe = async (vibeId = "") => {
     try {
-      const res = await axios.put(`${`${ROOT_URL_FEED}/vibes/${vibeId}/like`}`, null, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const res = await axios.put(
+        `${`${ROOT_URL_FEED}/vibes/${vibeId}/like`}`,
+        null,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       return res.data;
     } catch (err) {
       handleError(err);
@@ -220,11 +237,14 @@ export default function VibeContextProvider({ children }) {
   const getVibeImpressions = async (vibeId) => {
     try {
       setLoadings((prev) => ({ ...prev, getImpressions: true }));
-      const res = await axios.get(`${ROOT_URL_FEED}/vibes/${vibeId}/get-impressions`, {
-        headers: {
-          Authorization: getCookie("token"),
-        },
-      });
+      const res = await axios.get(
+        `${ROOT_URL_FEED}/vibes/${vibeId}/get-impressions`,
+        {
+          headers: {
+            Authorization: getCookie("token"),
+          },
+        }
+      );
       return res.data;
     } catch (err) {
       handleError(err);

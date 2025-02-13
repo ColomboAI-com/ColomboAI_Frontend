@@ -25,6 +25,7 @@ const CaptionBox = ({
   width,
   handleCreateVibe,
   selectedSong,
+  loading: vibeLoading,
 }) => {
   const [promptInput, setPromptInput] = useState("");
   const { generatePost, loadings } = useContext(FeedContext);
@@ -254,10 +255,20 @@ const CaptionBox = ({
       {!showUsers && (
         <div className="flex justify-center mt-4">
           <button
-            className="bg-brandprimary w-full text-white font-semibold py-[13px] px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
+            className="bg-brandprimary w-full flex items-center justify-center gap-1 text-white font-semibold py-[13px] px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
             onClick={handleCreateVibe}
           >
             Share VIBE
+            {vibeLoading && (
+              <ThreeDots
+                visible={true}
+                height="24"
+                width="24"
+                color="#3B82F6"
+                radius="9"
+                ariaLabel="three-dots-loading"
+              />
+            )}
           </button>
         </div>
       )}
