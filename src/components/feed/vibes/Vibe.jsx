@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import RepostVibe from "./Repost";
 import ShareVibe from "./Share";
 import Image from "next/image";
-import { IoIosMusicalNotes } from "react-icons/io";
+import { IoIosMusicalNotes, IoMdAddCircleOutline } from "react-icons/io";
 import LikeVibe from "./LikeVibe";
 import { useMediaQuery } from "react-responsive";
 import FollowButton from "@/components/elements/FollowButton";
@@ -20,7 +20,7 @@ import wallet from "../../../../public/images/icons/vibes_mobile/wallet.svg";
 import pen from "../../../../public/images/icons/vibes_mobile/pen.svg";
 import { useRouter } from "next/navigation";
 import ReactPlayer from "react-player";
-
+import axios from "axios";
 import {
   GenAIPen,
   StatsIcon,
@@ -31,9 +31,14 @@ import {
   VibesRepostIcon,
   GenAiIcon,
   WalletIcon,
+  PlusIcon,
 } from "@/components/Icons";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import { MdOutlineArrowBack } from "react-icons/md";
+import { ROOT_URL_FEED, ROOT_URL_LLM } from "@/utlils/rootURL";
+import { getCookie } from "@/utlils/cookies";
+import CreateDropdown from "@/components/elements/CreateDropdown";
+import { GlobalContext } from "@/context/GlobalContext";
 
 const walletIcon = "/images/icons/wallet_icon.svg";
 
@@ -48,6 +53,7 @@ export default function Vibe({ vibe, index }) {
     getVibeImpressions,
     fetchVibeWallet,
   } = useContext(VibeContext);
+  const { setIsCreateVibeOpen } = useContext(GlobalContext);
 
   const { userDetails } = useContext(UserProfileContext);
   const [song, setSong] = useState({});
@@ -200,7 +206,20 @@ export default function Vibe({ vibe, index }) {
     setIsFollowing(updatedFollowState); // Update the follow state when the button is toggled
   };
 
-  console.log(vibe);
+  useEffect(() => {
+    console.log(vibe);
+    axios
+      .get(`${ROOT_URL_FEED}/vibes/feed/${vibe._id}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res, "vibe details");
+      });
+  }, [vibe]);
+
+  console.log(song, "song");
 
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-0px)] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
@@ -247,7 +266,13 @@ export default function Vibe({ vibe, index }) {
               loop
             />
           )} */}
-
+          {showPlayerStatus && (
+            <div className="absolute top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center">
+              <div className="flex items-center justify-center rounded-full bg-white/20 p-4">
+                {isPlaying ? <Play size={32} /> : <Pause size={32} />}
+              </div>
+            </div>
+          )}
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
@@ -271,13 +296,6 @@ export default function Vibe({ vibe, index }) {
                   }}
                 />
               ) : null}
-              {showPlayerStatus && (
-                <div className="absolute top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center">
-                  <div className="flex items-center justify-center rounded-full bg-white/20 p-4">
-                    {isPlaying ? <Play size={32} /> : <Pause size={32} />}
-                  </div>
-                </div>
-              )}
             </React.Fragment>
           ) : (
             <img
@@ -310,6 +328,12 @@ export default function Vibe({ vibe, index }) {
             onClick={(e) => e.stopPropagation()}
           >
             <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
+            <button onClick={() => setIsCreateVibeOpen(true)}>
+              <IoMdAddCircleOutline
+                className="w-7 h-7 tall:w-6 tall:h-6"
+                fill={"#FFFFFF"}
+              />
+            </button>
           </div>
           <div className="absolute bottom-0 left-0 right-0 px-4">
             {/* whenever there is sponsored ad uncomment and call this component */}
@@ -338,11 +362,7 @@ export default function Vibe({ vibe, index }) {
               </div>
             }
 
-            <div
-              className={`flex flex-wrap flex-col mt-2 ${
-                vibe.type == "video" ? `sm:mb-4` : `sm:mb-2`
-              }`}
-            >
+            <div className={`flex flex-wrap flex-col mt-2 mb-3`}>
               <p className="leading-5 text-base tracking-[0.30px]">
                 {vibe.content.length > 130
                   ? seeMore
@@ -361,7 +381,7 @@ export default function Vibe({ vibe, index }) {
               {song &&
                 song.name &&
                 song.artist_name && ( // Check if song and properties exist
-                  <div className="flex gap-2 mb-1 mt-2">
+                  <div className="flex gap-2 mt-2">
                     <IoIosMusicalNotes className="w-[20px] h-[20px]" />
                     <p className="text-base font-semibold">
                       {song.name} - by {song.artist_name}
@@ -382,7 +402,7 @@ export default function Vibe({ vibe, index }) {
             <div className="flex flex-col gap-[0.5rem]">
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
-                  <Image src={play} alt="colombo" className="w-[1rem]" />
+                  <Image src={play} alt="colombo" className="w-7" />
                 ) : (
                   <VibesViewIcon w={25} h={25} fill={"#ffffff"} />
                 )}
@@ -392,7 +412,7 @@ export default function Vibe({ vibe, index }) {
               <LikeVibe vibe={vibe} />
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
-                  <Image src={comment} alt="colombo" className="w-[1rem]" />
+                  <Image src={comment} alt="colombo" className="w-7" />
                 ) : (
                   <VibesCommentIcon w={25} h={25} fill={"#ffffff"} />
                 )}
@@ -401,7 +421,7 @@ export default function Vibe({ vibe, index }) {
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
-                  <Image src={stats} alt="colombo" className="w-[1rem]" />
+                  <Image src={stats} alt="colombo" className="w-7" />
                 ) : (
                   <StatsIcon />
                 )}
@@ -413,7 +433,7 @@ export default function Vibe({ vibe, index }) {
                 role="button"
               >
                 {useMediaQuery({ query: "(max-width: 767px)" }) ? (
-                  <Image src={share} alt="colombo" className="w-[1rem]" />
+                  <Image src={share} alt="colombo" className="w-7" />
                 ) : (
                   <VibesShareIcon w={25} h={24} fill={"#ffffff"} />
                 )}
@@ -421,11 +441,15 @@ export default function Vibe({ vibe, index }) {
               </div>
               <div className="flex flex-col items-center gap-[2px] md:gap-1">
                 {/* <VibesCommentIcon w={30} h={30} fill={"#ffffff"} /> */}
-                {useMediaQuery({ query: "(max-width: 767px)" }) ? (
-                  <img src={walletIcon} alt="colombo" className="w-[1rem]" />
-                ) : (
-                  <WalletIcon />
-                )}
+                {/* {useMediaQuery({ query: "(max-width: 767px)" }) ? (
+                  <img
+                    src={walletIcon}
+                    alt="colombo"
+                    className="w-7 [&_path]:fill-white"
+                  />
+                ) : ( */}
+                <WalletIcon className="w-7 [&_path]:fill-white" />
+                {/* )} */}
                 <p className="text-[10px]">{wallet}</p>
               </div>
               {/* <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full"> */}
@@ -438,67 +462,90 @@ export default function Vibe({ vibe, index }) {
                 )}
               </div>
               {/* </div> */}
-              <div className="flex flex-col items-center gap-[2px] md:gap-1">
-                <img
-                  src="/images/vibes/vibes_music.jpeg"
-                  alt="vibes-music"
-                  className="w-[2rem] md:w-[35px] rounded-full"
-                />
-              </div>
+              {song?.name && (
+                <div className="flex flex-col items-center gap-[2px] md:gap-1">
+                  <img
+                    src={song?.album_image || "/images/vibes/vibes_music.jpeg"}
+                    alt="vibes-music"
+                    className="w-[2rem] md:w-[35px] rounded-full"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
         {/* Side Options */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute sm:hidden md:block md:relative md:right-[unset] md:top-[unset] md:bottom-[unset] md:ml-2"
+          className="h-[calc(100%-50px)] top-0 bottom-[24px] absolute sm:hidden md:block md:relative md:right-[unset] md:top-[0px] md:bottom-[24px] md:ml-2"
         >
-          <div className="flex flex-col gap-[5px] md:gap-2 justify-center items-center text-[12px]">
+          <div className="flex flex-col justify-between gap-[2px] h-full">
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <ThreeDotMenuViewOthers vibe={vibe} />
+              <button onClick={() => setIsCreateVibeOpen(true)}>
+                <IoMdAddCircleOutline
+                  className="w-7 h-7 tall:w-6 tall:h-6"
+                  fill={"#FFFFFF"}
+                />
+              </button>
             </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesViewIcon w={30} h={30} fill={"#ffffff"} />
-              <p>{impressions}</p>
-            </div>
-            <LikeVibe vibe={vibe} />
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <VibesCommentIcon w={30} h={30} fill={"#ffffff"} />
-              <p>{vibe?.counts?.comments || 0}</p>
-            </div>
-            <div
-              className="flex flex-col items-center gap-[2px] md:gap-1 cursor-pointer"
-              onClick={() => handleRepost()}
-            >
-              <VibesRepostIcon w={30} h={30} fill={"#ffffff"} />
-              <p>{vibe?.counts?.reposts || 0}</p>
-            </div>
-            <div
-              className="flex flex-col items-center gap-[2px] md:gap-1"
-              onClick={() => handleShare()}
-              role="button"
-            >
-              <VibesShareIcon w={30} h={30} fill={"#ffffff"} />
-              <p>121.5k</p>
-            </div>
-            <div className="flex flex-col items-center gap-[2px] md:gap-1">
-              <img
-                src={walletIcon}
-                alt="wallet-icon"
-                className="w-[30px] h-[30px]"
-              />
-              <p>{wallet}</p>
-            </div>
+            <div className="flex flex-col gap-[5px] md:gap-2 justify-between items-center text-[12px]">
+              <div
+                className="flex flex-col items-center gap-[2px]"
+                onClick={() => handleRepost()}
+                role="button"
+              >
+                <VibesViewIcon
+                  className="w-[30px] h-[30px] tall:w-6 tall:h-6"
+                  fill={"#ffffff"}
+                />
+                <p>{vibe?.counts?.reposts || 0}</p>
+              </div>
+              <LikeVibe vibe={vibe} />
+              <div className="flex flex-col items-center gap-[2px] ">
+                <VibesCommentIcon
+                  className="w-[30px] h-[30px] tall:w-6 tall:h-6"
+                  fill={"#ffffff"}
+                />
+                <p>{vibe?.counts?.comments || 0}</p>
+              </div>
+              <div className="flex flex-col items-center gap-[2px]">
+                <StatsIcon className="w-[30px] h-[30px] tall:w-6 tall:h-6 [&_path]:stroke-white" />
+                <p>{impressions}</p>
+              </div>
+              <div
+                className="flex flex-col items-center gap-[2px] "
+                onClick={() => handleShare()}
+                role="button"
+              >
+                <VibesShareIcon
+                  className="w-[30px] h-[30px] tall:w-6 tall:h-6"
+                  fill={"#ffffff"}
+                />
+                {/* <p>121.5k</p> */}
+              </div>
+              <div className="flex flex-col items-center gap-[2px] ">
+                {/* <img
+                  src={walletIcon}
+                  alt="wallet-icon"
+                  className="w-[30px] h-[30px] [&_path]:fill-white"
+                /> */}
+                <WalletIcon className="w-[30px] h-[30px] [&_path]:fill-white" />
+                <p>{wallet}</p>
+              </div>
 
-            <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
-              <GenAiIcon w={30} h={30} fill={"#ffffff"} />
-            </div>
-            <div>
-              <img
-                src="/images/vibes/vibes_music.jpeg"
-                alt="vibes-music"
-                className="w-[41px] rounded-full"
-              />
+              <div className="bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] p-[4px] rounded-full">
+                <GenAiIcon w={30} h={30} fill={"#ffffff"} />
+              </div>
+              {song?.name && (
+                <div>
+                  <img
+                    src={song?.album_image || "/images/vibes/vibes_music.jpeg"}
+                    alt="vibes-music"
+                    className="w-[41px] rounded-full"
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>

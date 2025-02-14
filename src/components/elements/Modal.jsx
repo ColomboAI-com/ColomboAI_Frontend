@@ -1,14 +1,14 @@
-'use client'
-import { FeedContext } from '@/context/FeedContext'
-import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useContext, useState } from 'react'
-import Post from './cards/Post';
+"use client";
+import { FeedContext } from "@/context/FeedContext";
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useContext, useState } from "react";
+import Post from "./cards/Post";
 import { GlobalContext } from "@/context/GlobalContext";
 
-export default function Modal({isOpen, setIsOpen, className, children}) {
+export default function Modal({ isOpen, setIsOpen, className, children }) {
+  const { isSelectedFromComputer, setIsSelectedFromComputer } =
+    useContext(GlobalContext);
 
-  const { isSelectedFromComputer, setIsSelectedFromComputer } = useContext(GlobalContext);
-  
   function closeModal() {
     setIsOpen(false);
     setIsSelectedFromComputer(false);
@@ -17,7 +17,7 @@ export default function Modal({isOpen, setIsOpen, className, children}) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={closeModal}>
+        <Dialog as="div" className="relative z-[101]" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -41,14 +41,12 @@ export default function Modal({isOpen, setIsOpen, className, children}) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className={className} >
-                  {children}
-                </Dialog.Panel>
+                <Dialog.Panel className={className}>{children}</Dialog.Panel>
               </Transition.Child>
             </div>
           </div>
         </Dialog>
       </Transition>
     </>
-  )
+  );
 }

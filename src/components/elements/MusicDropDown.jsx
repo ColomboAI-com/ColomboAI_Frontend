@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Search, Play, Pause, ChevronDown } from "lucide-react";
 import "../../app/globals.css";
 import axios from "axios";
+import { ThreeDots } from "react-loader-spinner";
 
 // const https = require("https");
 
 const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [songs, setSongs] = useState([]);
   const [displayCount, setDisplayCount] = useState(10);
   const [playing, setPlaying] = useState(null);
@@ -48,6 +50,7 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
 
   const getMusicUrl = async (type) => {
     try {
+      setIsLoading(true);
       const response = await axios.get(`https://api.jamendo.com/v3.0/tracks/`, {
         params: {
           client_id: CLIENT_ID,
@@ -62,6 +65,8 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
     } catch (error) {
       console.error("Error fetching music:", error);
       return [];
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -149,6 +154,18 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
 
       <h2 className="text-xl font-semibold mb-3">Trending Songs</h2>
       <div className="flex flex-col space-y-4">
+        {isLoading && (
+          <div className="flex items-center justify-center">
+            <ThreeDots
+              visible={true}
+              height="24"
+              width="24"
+              color="#3B82F6"
+              radius="9"
+              ariaLabel="three-dots-loading"
+            />
+          </div>
+        )}
         {songs.slice(0, displayCount).map((song) => (
           <div
             key={song.id}
@@ -178,6 +195,9 @@ const MusicDropDown = ({ onSongSelect, setSongId, width }) => {
             </button>
           </div>
         ))}
+        {songs.length === 0 && !isLoading && (
+          <div className="text-center text-sm">No songs found</div>
+        )}
       </div>
       {displayCount < songs.length && (
         <button
