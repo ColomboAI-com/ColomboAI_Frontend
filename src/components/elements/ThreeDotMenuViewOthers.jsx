@@ -139,7 +139,7 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
         className="pb-2 rounded-full  focus:outline-none"
         aria-label="More options"
       >
-        <DotsVerticalIcon className="h-8 w-10 text-white" />
+        <DotsVerticalIcon className="h-[30px] w-10 text-white" />
       </button>
       {isMenuOpen && (
         <div className="absolute right-0 mt-2 w-56 flex flex-col items-center bg-white rounded-lg shadow-xl z-10">

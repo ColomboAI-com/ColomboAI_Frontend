@@ -298,16 +298,24 @@ const DefaultLayout = ({ children }) => {
               </div>
             )}
             {isCreateVibeOpen && isSelectedFromComputer && (
-              <div className="bg-[#333] w-full h-[calc(100vh-50px)]">
-                <CreateVibe
-                  uploadedFile={uploadedFile}
-                  onFileUpload={handleFileUpload}
-                  uploadedPostType={uploadedPostType}
-                  uploadedMediaUrl={uploadedMediaUrl}
-                  uploadedNextStep={uploadedNextStep}
-                  onReset={handleReset}
-                />
-              </div>
+              <Modal
+                isOpen={isCreateVibeOpen && isSelectedFromComputer}
+                setIsOpen={() => {
+                  setIsSelectedFromComputer(false);
+                }}
+                className="absolute top-0 bottom-0 p-0 md:bottom-[unset] md:top-[unset] md:relative w-full z-[100] transform overflow-hidden md:rounded-[20px] bg-white md:py-[7px] md:px-[9px] text-left align-middle shadow-xl transition-all"
+              >
+                <div className="bg-[#333] w-full h-full md:h-[calc(100vh-50px)] md:rounded-[20px]">
+                  <CreateVibe
+                    uploadedFile={uploadedFile}
+                    onFileUpload={handleFileUpload}
+                    uploadedPostType={uploadedPostType}
+                    uploadedMediaUrl={uploadedMediaUrl}
+                    uploadedNextStep={uploadedNextStep}
+                    onReset={handleReset}
+                  />
+                </div>
+              </Modal>
             )}
             {storyMediaURL != "" && isSelectedFromComputer && (
               <div className="bg-[#333333] w-full h-full">
