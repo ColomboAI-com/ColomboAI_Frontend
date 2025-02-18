@@ -28,6 +28,9 @@ export const NotificationsContextProvider = ({ children }) => {
         case "recentNotifications":
           loadRecentNotifications(data.payload);
           break;
+        case "markedNotificationAsRead":
+          markedNotificationAsReadConfirmation(data.payload);
+          break;
         default:
           console.log("Unknown message type:", data.type);
           console.log(data);
@@ -68,21 +71,48 @@ export const NotificationsContextProvider = ({ children }) => {
     }
   };
 
-  // RECEIVEING FROM SERVER TO CLIENT
+  const markNotificationAsRead = (notification) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      const message = {
+        token: getCookie("token"),
+        type: "markNotificationAsRead",
+        payload: { notificationId: notification._id },
+      };
+      socketRef.current.send(JSON.stringify(message));
+    }
+  };
+
+  // RECEIVING FROM SERVER TO CLIENT
   const confirmAuthentication = (payload) => {
     console.log(payload.message);
     fetchRecentNotifications();
   };
 
-  const loadRecentNotifications = (notifications) => {
-    console.log(notifications);
-    setNotifications(notifications);
+  const loadRecentNotifications = (payloadNotifications) => {
+    console.log(payloadNotifications);
+    setNotifications(payloadNotifications);
+  };
+
+  const markedNotificationAsReadConfirmation = (payloadNotification) => {
+    console.log(payloadNotification);
+
+    if (!payloadNotification) return;
+
+    setNotifications((prevNotifications) => {
+      const updatedNotifications = prevNotifications.map((notification) => {
+        return notification._id === payloadNotification._id
+          ? { ...notification, wasRead: payloadNotification.wasRead }
+          : notification;
+      });
+      return updatedNotifications;
+    });
   };
 
   return (
     <NotificationsContext.Provider
       value={{
         notifications,
+        markNotificationAsRead,
       }}
     >
       {children}
