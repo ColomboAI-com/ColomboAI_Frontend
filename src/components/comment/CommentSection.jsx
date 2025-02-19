@@ -11,10 +11,15 @@ import Picker from "emoji-picker-react";
 import Image from "next/image";
 import comment_x_button from "../../../public/images/icons/comment_x_button.svg";
 import ReactPlayer from "react-player";
+import Modal from "../elements/Modal";
+import React from "react";
+import AIMessageGenerator from "../messages/AIMessageGenerator";
 
 const CommentSection = ({ specificPostId, posts, onClose }) => {
   const magicBoxInputRef = useRef();
   const commentBoxInputRef = useRef();
+  const [showAIPromptModal, setShowAIPromptModal] = useState(false);
+
   const {
     addComment: addCommentContext,
     deleteComment: deleteCommentContext,
@@ -136,20 +141,9 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
 
   useEffect(() => {
     if (isClick) {
-      magicBoxInputRef.current.focus();
-    } else {
-      commentBoxInputRef.current.focus();
+      setShowAIPromptModal(true);
     }
   }, [isClick]);
-
-  const handleInputGenerateComment = (e) => {
-    if (e.target.value.trim() === "") {
-      setIsInputFocused(false);
-    } else {
-      setIsInputFocused(true);
-    }
-    setGenerateCommentData(e.target.value);
-  };
 
   const handleMegicPen = () => {
     setIsClick(!isClick);
@@ -177,6 +171,11 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
 
   const onEmojiClick = (event) => {
     setCommentData((prev) => prev + event.emoji);
+  };
+
+  const handleUseAIMessage = (msg) => {
+    setGeneratedComment(msg);
+    setShowAIPromptModal(false);
   };
 
   useEffect(() => {
@@ -391,12 +390,24 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
               </button>
             </div>
             <button
-              onClick={handleMegicPen}
+              onClick={() => {
+                setShowAIPromptModal(true);
+              }}
               className="w-[53px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] absolute right-0 top-[0px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px]"
             >
               <img src="/images/icons/Magic-pen.svg" />
             </button>
           </div>
+
+          {showAIPromptModal && (
+            <Modal
+              isOpen={showAIPromptModal}
+              setIsOpen={setShowAIPromptModal}
+              className="w-full font-sans max-w-lg md:max-w-lg lg:max-w-lg transform overflow-hidden rounded-[26px] bg-white p-6 text-left align-middle shadow-xl transition-all"
+            >
+              <AIMessageGenerator onConfirm={handleUseAIMessage} />
+            </Modal>
+          )}
 
           {/* <div className="relative ">
             <div className="absolute w-[40px] top-[11px] left-[15px]">
@@ -443,7 +454,7 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
               </button>
             </div>
           </div> */}
-          {isClick && (
+          {/* {isClick && (
             <div className="relative right-0 left-0 bottom-0 top-auto mb-[10px]">
               <div className="absolute w-[30px] top-[11px] left-[15px]">
                 <img src="/images/comment/aicommenticon.svg" />
@@ -490,7 +501,7 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

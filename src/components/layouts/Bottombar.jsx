@@ -10,10 +10,9 @@ import {
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg"
-import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg"
-import genai from "../../../public/images/icons/sidebar/gen-ai-icon.svg"
-
+import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg";
+import blue_vibes_icon from "../../../public/images/icons/sidebar/blue_vibes_icon.svg";
+import genai from "../../../public/images/icons/sidebar/gen-ai-icon.svg";
 
 import Image from "next/image";
 
@@ -32,18 +31,19 @@ const Bottombar = () => {
 
   return (
     <div className=" md:hidden bg-white fixed bottom-0 z-50 border-t-2 border-brandprimary rounded-xl w-full">
-      <div className="shadow-[0px_2px_4px_0px_#0000001A]">
-        <div className="py-1 flex flex-wrap items-center justify-evenly">
+      <div className="shadow-[0px_2px_4px_0px_#0000001A] w-full">
+        <div className="py-4 flex flex-wrap items-center justify-evenly w-full">
           <Link href="/genai-search">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
-                <Image src={genai} alt="colombo"/>
+                <Image src={genai} alt="colombo" />
               </div>
               <p
-                className={`${pathname === "/genai-search"
+                className={`${
+                  pathname === "/genai-search"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-2 font-sans`}
+                } text-center text-[14px] mt-3 font-sans`}
               >
                 Gen AI
               </p>
@@ -53,7 +53,10 @@ const Bottombar = () => {
           <Link href="/vibes">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
-                <Image src={pathname === "/vibes" ? blue_vibes_icon : vibes_icon} alt="colombo"/>
+                <Image
+                  src={pathname === "/vibes" ? blue_vibes_icon : vibes_icon}
+                  alt="colombo"
+                />
                 {/* <TaskBotIcon
                   w="30"
                   h="30"
@@ -61,10 +64,11 @@ const Bottombar = () => {
                 /> */}
               </div>
               <p
-                className={`${pathname === "/task-bot"
+                className={`${
+                  pathname === "/task-bot"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-2 font-sans`}
+                } text-center text-[14px] mt-3 font-sans`}
               >
                 Vibes
               </p>
@@ -83,10 +87,11 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${feedSections.includes(`${pathname}`)
+                className={`${
+                  feedSections.includes(`${pathname}`)
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-2 font-sans`}
+                } text-center text-[14px] mt-3 font-sans`}
               >
                 Feed
               </p>
@@ -103,10 +108,11 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${pathname === "/shop"
+                className={`${
+                  pathname === "/shop"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-2 font-sans`}
+                } text-center text-[14px] mt-3 font-sans`}
               >
                 Shop
               </p>
@@ -123,10 +129,11 @@ const Bottombar = () => {
                 />
               </div>
               <p
-                className={`${pathname === "/news"
+                className={`${
+                  pathname === "/news"
                     ? "text-brandprimary"
                     : "text-sidebaricon"
-                  } text-center text-[14px] mt-2 font-sans`}
+                } text-center text-[14px] mt-3 font-sans`}
               >
                 News
               </p>

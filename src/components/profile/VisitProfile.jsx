@@ -125,7 +125,7 @@ const VisitProfile = ({ userData }) => {
     setIsBlocked(!isBlocked);
   };
 
-  console.log(userData, "userData", stories);
+  console.log(JSON.stringify(userData) + "userData");
 
   return (
     <div className="pt-8">
@@ -212,7 +212,7 @@ const VisitProfile = ({ userData }) => {
             {isFollowing ? "Following" : "Follow"}
           </button>
           <Link
-            href="/messages"
+            href={`/messages?user_id=${userData?._id}&user_name=${userData?.user_name}`}
             className="bg-brandprimary text-center flex-1 text-white text-lg font-semibold py-2 px-4 rounded-full"
           >
             Message
