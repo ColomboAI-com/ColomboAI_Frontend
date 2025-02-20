@@ -4,7 +4,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import InputBar from "./InputBar.jsx";
-import { ChatBubbleIcon, CreateIcon, NotificationIcon, SearchIcon } from "../Icons";
+import {
+  ChatBubbleIcon,
+  CreateIcon,
+  NotificationIcon,
+  SearchIcon,
+} from "../Icons";
 import FeedFilter from "./FeedFilter";
 import CreateDropdown from "../elements/CreateDropdown";
 import Modal from "../elements/Modal";
@@ -21,6 +26,7 @@ import ProfilePicture from "../elements/ProfilePicture";
 import { useRouter } from "next/navigation";
 import Dropdown from "../messages/Dropdown.jsx";
 import { clearCookie } from "@/utlils/cookies.js";
+import { useNotifications } from "@/context/NotificationContext.js";
 
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
@@ -29,7 +35,9 @@ const font = Montserrat({
 });
 
 const Header = () => {
-  const { isShareOpen, setIsShareOpen } = useContext(GlobalContext);
+  const { isShareOpen, setIsShareOpen, setIsNotificationOpen } =
+    useContext(GlobalContext);
+  const { notifications } = useNotifications();
   const pathname = usePathname();
   const [chatId, setChatId] = useState(null);
   const [showChat, setShowChat] = useState(false);
@@ -65,6 +73,8 @@ const Header = () => {
     router.push("/messages");
   };
 
+  const unreadNotifications = notifications?.filter((notif) => !notif?.wasRead);
+
   return (
     <div className={`bg-white sticky top-14 z-40 ${font.className}`}>
       {/* Desktop view */}
@@ -91,14 +101,26 @@ const Header = () => {
         <div className=" hidden md:flex items-center justify-between">
           <div className="w-[100%] lg:w-[75%]   px-5 lg:px-28 border-">
             {/* <InputBar/> */}
-            {pathname === "/gen-search" ? <GenSearch /> : <InputBar setUploadedFile={setInitialFile} />}
+            {pathname === "/gen-search" ? (
+              <GenSearch />
+            ) : (
+              <InputBar setUploadedFile={setInitialFile} />
+            )}
           </div>
           <div className="flex gap-4 mr-9 justify-evenly w-[20%] ">
             <span className="cursor-pointer" onClick={handleSearchClick}>
               <SearchIcon w={35} h={35} fill={"#646464"} />
             </span>
             {pathname != "/shop" && <CreateDropdown />}
-            <NotificationIcon w={35} h={35} fill={"#646464"} />
+            <div
+              onClick={() => setIsNotificationOpen((prev) => !prev)}
+              className="relative"
+            >
+              <NotificationIcon w={35} h={35} fill={"#646464"} />
+              {unreadNotifications?.length > 0 && (
+                <div className="w-2 h-2 rounded-full bg-[#FF212E] absolute top-0 right-2" />
+              )}
+            </div>
             <span onClick={handleMessagingClick} className="cursor-pointer">
               <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
             </span>
@@ -126,18 +148,36 @@ const Header = () => {
               >
                 <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
                   <Link href="/profile">
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">
+                      {name}
+                    </li>
                   </Link>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer "
+                    onClick={handleSignOut}
+                  >
                     Log out
                   </li>
                 </ul>
               </Dropdown>
               <CreateDropdown />
             </div>
-            <img src="/images/home/ColomboAI-logo.svg" alt="logo-image" className="mx-auto" />
+            <img
+              src="/images/home/ColomboAI-logo.svg"
+              alt="logo-image"
+              className="mx-auto"
+            />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
-              <NotificationIcon w={35} h={35} fill={"#646464"} />
+              <div
+                onClick={() => setIsNotificationOpen((prev) => !prev)}
+                className="relative"
+              >
+                <NotificationIcon w={35} h={35} fill={"#646464"} />
+
+                {unreadNotifications?.length > 0 && (
+                  <div className="w-2 h-2 rounded-full bg-[#FF212E] absolute top-0 right-2" />
+                )}
+              </div>
               <span onClick={handleMessagingClick} className="cursor-pointer">
                 <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
               </span>
@@ -145,7 +185,10 @@ const Header = () => {
           </div>
           <div className="w-full flex flex-row justify-center gap-x-8 items-center">
             <div className="w-[85%]">
-              <InputBar sendMessage={handleStartChat} setUploadedFile={setInitialFile} />
+              <InputBar
+                sendMessage={handleStartChat}
+                setUploadedFile={setInitialFile}
+              />
             </div>
             <div className="sm:pt-4 md:pt-0">
               <SearchIcon w={35} h={35} fill={"#646464"} />

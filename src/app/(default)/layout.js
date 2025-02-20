@@ -78,6 +78,8 @@ const DefaultLayout = ({ children }) => {
     setIsSelectedFromComputer,
     storyMediaURL,
     storyMediaType,
+    isNotificationOpen,
+    setIsNotificationOpen,
   } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -170,6 +172,8 @@ const DefaultLayout = ({ children }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  console.log(isNotificationOpen);
   return (
     <FeedContextProvider>
       <div
@@ -453,6 +457,7 @@ const DefaultLayout = ({ children }) => {
       </div>
       {/* Bottombar Mobile View */}
       {/* <Bottombar /> */}
+      {isNotificationOpen && <NotificationBar />}
     </FeedContextProvider>
   );
 };
