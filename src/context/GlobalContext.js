@@ -23,6 +23,7 @@ export default function GlobalContextProvider({ children }) {
   let [openMagicPenWithIcon, setOpenMagicPenWithIcon] = useState(false);
   let [popupImage, setPopupImage] = useState("");
   let [popupVideo, setPopupVideo] = useState("");
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -61,6 +62,8 @@ export default function GlobalContextProvider({ children }) {
         setPopupImage,
         popupVideo,
         setPopupVideo,
+        isNotificationOpen,
+        setIsNotificationOpen,
         isSearchUserOpen,
         setIsSearchUserOpen,
         isSearchConversationOpen,

@@ -26,6 +26,7 @@ import ProfilePicture from "../elements/ProfilePicture";
 import { useRouter } from "next/navigation";
 import Dropdown from "../messages/Dropdown.jsx";
 import { clearCookie } from "@/utlils/cookies.js";
+import { useNotifications } from "@/context/NotificationContext.js";
 
 const font = Montserrat({
   weight: ["400", "500", "600", "700"],
@@ -34,7 +35,9 @@ const font = Montserrat({
 });
 
 const Header = () => {
-  const { isShareOpen, setIsShareOpen } = useContext(GlobalContext);
+  const { isShareOpen, setIsShareOpen, setIsNotificationOpen } =
+    useContext(GlobalContext);
+  const { notifications } = useNotifications();
   const pathname = usePathname();
   const [chatId, setChatId] = useState(null);
   const [showChat, setShowChat] = useState(false);
@@ -69,6 +72,8 @@ const Header = () => {
   const handleMessagingClick = () => {
     router.push("/messages");
   };
+
+  const unreadNotifications = notifications?.filter((notif) => !notif?.wasRead);
 
   return (
     <div className={`bg-white sticky top-14 z-40 ${font.className}`}>
@@ -107,8 +112,16 @@ const Header = () => {
               <SearchIcon w={35} h={35} fill={"#646464"} />
             </span>
             {pathname != "/shop" && <CreateDropdown />}
-            <NotificationIcon w={35} h={35} fill={"#646464"} />
-            <span className="cursor-pointer" onClick={handleMessagingClick}>
+            <div
+              onClick={() => setIsNotificationOpen((prev) => !prev)}
+              className="relative"
+            >
+              <NotificationIcon w={35} h={35} fill={"#646464"} />
+              {unreadNotifications?.length > 0 && (
+                <div className="w-2 h-2 rounded-full bg-[#FF212E] absolute top-0 right-2" />
+              )}
+            </div>
+            <span onClick={handleMessagingClick} className="cursor-pointer">
               <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
             </span>
           </div>
@@ -155,7 +168,16 @@ const Header = () => {
               className="mx-auto"
             />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
-              <NotificationIcon w={35} h={35} fill={"#646464"} />
+              <div
+                onClick={() => setIsNotificationOpen((prev) => !prev)}
+                className="relative"
+              >
+                <NotificationIcon w={35} h={35} fill={"#646464"} />
+
+                {unreadNotifications?.length > 0 && (
+                  <div className="w-2 h-2 rounded-full bg-[#FF212E] absolute top-0 right-2" />
+                )}
+              </div>
               <span onClick={handleMessagingClick} className="cursor-pointer">
                 <ChatBubbleIcon w={35} h={35} fill={"#646464"} />
               </span>

@@ -1,10 +1,11 @@
+"use client";
 import { ROOT_URL_NOTIFICATION } from "@/utlils/rootURL";
 import { getCookie } from "cookies-next";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
-const NotificationsContext = createContext();
+export const NotificationsContext = createContext();
 
-export const NotificationsContextProvider = ({ children }) => {
+export default function NotificationsContextProvider({ children }) {
   const [notifications, setNotifications] = useState([]);
 
   const socketRef = useRef(null); // this is where the reference to the socket will be stored
@@ -118,7 +119,7 @@ export const NotificationsContextProvider = ({ children }) => {
       {children}
     </NotificationsContext.Provider>
   );
-};
+}
 
 export const useNotifications = () => {
   return useContext(NotificationsContext);

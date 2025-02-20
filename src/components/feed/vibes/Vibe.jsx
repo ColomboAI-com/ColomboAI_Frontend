@@ -78,9 +78,6 @@ export default function Vibe({ vibe, index }) {
     } else {
       audioRef.current.pause();
     }
-    setTimeout(() => {
-      setShowPlayerStatus(false);
-    }, 2000);
   };
 
   const handleRepost = () => {
@@ -266,13 +263,6 @@ export default function Vibe({ vibe, index }) {
               loop
             />
           )} */}
-          {showPlayerStatus && (
-            <div className="absolute top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center">
-              <div className="flex items-center justify-center rounded-full bg-white/20 p-4">
-                {isPlaying ? <Play size={32} /> : <Pause size={32} />}
-              </div>
-            </div>
-          )}
           {vibe.type === "video" ? (
             <React.Fragment>
               {isVibeInView ? (
@@ -328,7 +318,7 @@ export default function Vibe({ vibe, index }) {
             onClick={(e) => e.stopPropagation()}
           >
             <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
-            <button onClick={() => setIsCreateVibeOpen(true)}>
+            <button className="mt-1" onClick={() => setIsCreateVibeOpen(true)}>
               <IoMdAddCircleOutline
                 className="w-7 h-7 tall:w-6 tall:h-6"
                 fill={"#FFFFFF"}
@@ -471,6 +461,15 @@ export default function Vibe({ vibe, index }) {
                   />
                 </div>
               )}
+              <div
+                role="button"
+                onClick={handlePlayPause}
+                className="flex items-center justify-center"
+              >
+                <div className="flex items-center justify-center rounded-full bg-black p-1.5">
+                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -546,6 +545,16 @@ export default function Vibe({ vibe, index }) {
                   />
                 </div>
               )}
+
+              <div
+                role="button"
+                onClick={handlePlayPause}
+                className="flex items-center justify-center"
+              >
+                <div className="flex items-center justify-center rounded-full bg-black p-1.5">
+                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
+                </div>
+              </div>
             </div>
           </div>
         </div>

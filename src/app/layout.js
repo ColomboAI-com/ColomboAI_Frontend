@@ -1,14 +1,16 @@
-import ProviderComponent from "@/components/provider-component"
-import "./globals.css"
-import GlobalContextProvider from "@/context/GlobalContext"
-import FeedContextProvider from "@/context/FeedContext"
-import StoryContextProvider from "@/context/StoryContext"
-import VibeContextProvider from "@/context/VibeContext"
+import ProviderComponent from "@/components/provider-component";
+import "./globals.css";
+import GlobalContextProvider from "@/context/GlobalContext";
+import FeedContextProvider from "@/context/FeedContext";
+import StoryContextProvider from "@/context/StoryContext";
+import VibeContextProvider from "@/context/VibeContext";
+import NotificationsContextProvider from "@/context/NotificationContext";
 
 export const metadata = {
   title: "ColomboAI",
-  description: "Your All-In-One Platform, Revolutionizing How You Search, Socialize, Shop, And Interact All Powered By Generative AI Technologies.",
-}
+  description:
+    "Your All-In-One Platform, Revolutionizing How You Search, Socialize, Shop, And Interact All Powered By Generative AI Technologies.",
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -22,7 +24,9 @@ export default function RootLayout({ children }) {
             <FeedContextProvider>
               <StoryContextProvider>
                 <VibeContextProvider>
-                  {children}
+                  <NotificationsContextProvider>
+                    {children}
+                  </NotificationsContextProvider>
                 </VibeContextProvider>
               </StoryContextProvider>
             </FeedContextProvider>
@@ -30,5 +34,5 @@ export default function RootLayout({ children }) {
         </ProviderComponent>
       </body>
     </html>
-  )
+  );
 }
