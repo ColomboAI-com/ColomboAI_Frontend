@@ -29,15 +29,6 @@ const DefaultLayout = ({ children }) => {
     <MessagesContextProvider>
       <UserProfileContextProvider>
         <div className="min-w-screen border- border-yellow-400">
-          {/* <header className="sticky top-0 z-50 xl:border-b-[1px] lg:border-b-[1px] border-[#E3E3E3] bg-white sm:border-0">
-            <div className="py-[14px]">
-              <img
-                src="/images/home/ColomboAI-logo.svg"
-                alt="logo-image"
-                className="mx-auto w-[174px] h-[50px]"
-              />
-            </div>
-          </header> */}
           <div className="flex border- border-green-400">
             <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100vh)] sticky z-50 hidden md:block border-r-[1px] border-brandprimary">
               <Sidebar />
@@ -79,9 +70,7 @@ const DefaultLayout = ({ children }) => {
                       setIsOpen={setIsSearchConversationOpen}
                       className="w-full max-w-2xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                     >
-                      <SearchConversation
-                        setIsOpen={setIsSearchConversationOpen}
-                      />
+                      <SearchConversation setIsOpen={setIsSearchConversationOpen} />
                     </Modal>
                   )}
                   {children}
@@ -90,7 +79,7 @@ const DefaultLayout = ({ children }) => {
             </div>
           </div>
           {/* Bottombar Mobile View */}
-          <Bottombar />
+          {/* <Bottombar /> */}
         </div>
       </UserProfileContextProvider>
     </MessagesContextProvider>
