@@ -2,15 +2,21 @@ import { handleError } from "@/utlils/handleError";
 import { ROOT_URL_MESSAGES } from "@/utlils/rootURL";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import React from "react";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const MessagesContext = createContext();
 
 export const MessagesContextProvider = ({ children }) => {
+  const currentConvoRef = useRef(null);
   const [conversations, setConversations] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);
   const [currentConversation, setCurrentConversation] = useState(null);
   const [chatHistory, setChatHistory] = useState([]);
+  const [editingState, setEditingState] = useState({
+    value: false,
+    message_id: null,
+  });
 
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [disconnectedUser, setDisconnectedUser] = useState(null);
@@ -20,7 +26,7 @@ export const MessagesContextProvider = ({ children }) => {
   const [messageInput, setMessageInput] = useState("");
   const [messageFile, setMessageFile] = useState(null);
   const [loadings, setLoadings] = useState({
-    conversations: false,
+    conversations: true,
     history: false,
     sendMsg: false,
   });
@@ -40,7 +46,9 @@ export const MessagesContextProvider = ({ children }) => {
     //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGViMzYyM2U2ODQ5NDJhN2JjZGZjZiIsImlhdCI6MTczMzI3MzAxMSwiZXhwIjoxNzY0ODA5MDExfQ.XYK893FAtv_dpY2OyB2XVZpMjW_JQOZ1OMED_NZmkX8";
 
     // socketRef.current = new WebSocket(`${ROOT_URL_MESSAGES}?token=${token}`);
-    socketRef.current = new WebSocket(`${ROOT_URL_MESSAGES}?token=${encodeURIComponent(token)}`);
+    socketRef.current = new WebSocket(
+      `${ROOT_URL_MESSAGES}?token=${encodeURIComponent(token)}`
+    );
 
     socketRef.current.onopen = () => {
       console.log("WebSocket connection established");
@@ -97,15 +105,34 @@ export const MessagesContextProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    currentConvoRef.current = currentConversation;
+  }, [currentConversation]);
+
+  const updateCurrentConversation = (convo) => {
+    console.log("sads: updateCurrentConversation: ", convo);
+    setCurrentConversation(convo);
+  };
+
+  useEffect(() => {
     if (disconnectedUser) {
+      setLoadings((prev) => ({
+        ...prev,
+        conversations: true,
+      }));
       let allChats = [...conversations];
-      let findChat = allChats.find((e) => e.participants?.[0]?._id == disconnectedUser.userId);
+      let findChat = allChats.find(
+        (e) => e.participants?.[0]?._id == disconnectedUser.userId
+      );
       if (findChat?.participants?.[0]?.lastActiveTime) {
         const index = allChats.indexOf(findChat);
         findChat.participants[0].lastActiveTime = disconnectedUser.time;
         allChats[index] = findChat;
       }
       setConversations(allChats);
+      setLoadings((prev) => ({
+        ...prev,
+        conversations: false,
+      }));
     }
   }, [disconnectedUser]);
 
@@ -149,7 +176,10 @@ export const MessagesContextProvider = ({ children }) => {
       const message = {
         token: getCookie("token"),
         type: "fetchMessages",
-        payload: { conversationId: currentConversation._id, privateKey: currentConversation.privateKey },
+        payload: {
+          conversationId: currentConversation._id,
+          privateKey: currentConversation.privateKey,
+        },
       };
       socketRef.current.send(JSON.stringify(message));
     }
@@ -161,11 +191,15 @@ export const MessagesContextProvider = ({ children }) => {
       if (messageFile) {
         const formData = new FormData();
         formData.append("file", messageFile);
-        mediaUploadResp = await axios.post(ROOT_URL_MESSAGES + "/upload-media", formData, {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        });
+        mediaUploadResp = await axios.post(
+          ROOT_URL_MESSAGES + "/upload-media",
+          formData,
+          {
+            headers: {
+              Authorization: getCookie("token"),
+            },
+          }
+        );
       }
       let userId = getCookie("userid");
       let recipientId = null;
@@ -196,6 +230,7 @@ export const MessagesContextProvider = ({ children }) => {
           sender: userId,
           recipient: recipientId,
           content: messageInput,
+          img: messageFile,
           recipientPublicKey: currentConversation.publicKey,
           messageType,
           media: fileUrl,
@@ -247,6 +282,10 @@ export const MessagesContextProvider = ({ children }) => {
 
   const loadConversations = (payload) => {
     setConversations(payload);
+    setLoadings((prev) => ({
+      ...prev,
+      conversations: false,
+    }));
   };
 
   const conversationCreated = (payload) => {
@@ -280,15 +319,15 @@ export const MessagesContextProvider = ({ children }) => {
   };
 
   const afterMessageEdited = (message) => {
-    console.log(message);
-
-    if (currentConversation._id === message.conversationId) {
+    console.log("currentconvo: ", currentConvoRef.current);
+    if (currentConvoRef?.current?._id === message.conversationId) {
       setChatHistory((prev) => {
         let updatedMessages = prev.map((mess) => {
           if (mess._id === message._id) {
             return {
               ...mess,
               content: message.content,
+              edited: true,
             };
           }
           return mess;
@@ -296,13 +335,16 @@ export const MessagesContextProvider = ({ children }) => {
 
         return updatedMessages;
       });
+      requestAnimationFrame(() => {
+        setEditingState({
+          message_id: null,
+        });
+      });
     }
   };
 
   const afterMessageDeleted = (message) => {
-    console.log(message);
-
-    if (currentConversation._id === message.conversationId) {
+    if (currentConvoRef?.current?._id === message.conversationId) {
       setChatHistory((prev) => {
         let updatedMessages = prev.map((mess) => {
           if (mess._id === message._id) {
@@ -316,6 +358,11 @@ export const MessagesContextProvider = ({ children }) => {
         });
 
         return updatedMessages;
+      });
+      requestAnimationFrame(() => {
+        setEditingState({
+          message_id: null,
+        });
       });
     }
   };
@@ -355,6 +402,10 @@ export const MessagesContextProvider = ({ children }) => {
         messageFile,
         setMessageFile,
         editMessage,
+        deleteMessage,
+        updateCurrentConversation,
+        editingState,
+        setEditingState,
       }}
     >
       {children}

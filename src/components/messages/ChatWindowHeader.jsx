@@ -1,21 +1,22 @@
 import React from "react";
 import ProfilePicture from "../elements/ProfilePicture";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { IoArrowBack } from "react-icons/io5";
 import { useMessages } from "@/context/MessagesContext";
 
-export default function ChatWindowHeader() {
-  const { isShowChatMenu, setIsShowChatMenu, selectedChat, onlineUsers } = useMessages();
+export default function ChatWindowHeader({ closeChat }) {
+  const { isShowChatMenu, setIsShowChatMenu, selectedChat, onlineUsers } =
+    useMessages();
 
   return (
     <div>
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 py-2">
         <div className="flex items-center space-x-2">
-          {/* <button
+          <button
             className="hover:text-brandprimary xl:hidden"
-            onClick={() => setIsShowChatMenu(!isShowChatMenu)}
+            onClick={closeChat}
           >
-            <BsThreeDotsVertical />
-          </button> */}
+            <IoArrowBack size={30} className="text-black" />
+          </button>
           <div className="relative flex-none">
             <ProfilePicture
               size={46}
@@ -30,7 +31,9 @@ export default function ChatWindowHeader() {
           </div>
           <div className="mx-3">
             <p className="font-semibold">{selectedChat?.name || "User"}</p>
-            <p className="text-xs text-gray-500">@{selectedChat?.user_name || "username"}</p>
+            <p className="text-xs text-gray-500">
+              @{selectedChat?.user_name || "username"}
+            </p>
           </div>
         </div>
         {/* <ChatUserActionsDropdown /> */}

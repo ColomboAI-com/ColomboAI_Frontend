@@ -9,6 +9,8 @@ export default function GlobalContextProvider({ children }) {
   let [isRepostOpen, setIsRepostOpen] = useState(false);
   let [isCommentOpen, setIsCommentOpen] = useState(false);
   let [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
+  let [isSearchUserOpen, setIsSearchUserOpen] = useState(false);
+  let [isSearchConversationOpen, setIsSearchConversationOpen] = useState(false);
   let [isUserProfileOpen, setIsUserProfileOpen] = useState(false);
   let [specificPostId, setSpecificPostId] = useState();
   let [posts, setPosts] = useState();
@@ -62,6 +64,10 @@ export default function GlobalContextProvider({ children }) {
         setPopupVideo,
         isNotificationOpen,
         setIsNotificationOpen,
+        isSearchUserOpen,
+        setIsSearchUserOpen,
+        isSearchConversationOpen,
+        setIsSearchConversationOpen,
       }}
     >
       {children}

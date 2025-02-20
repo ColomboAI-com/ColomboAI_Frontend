@@ -109,7 +109,6 @@ export default function NotificationsContextProvider({ children }) {
     });
   };
 
-  console.log("notification", notifications);
   return (
     <NotificationsContext.Provider
       value={{

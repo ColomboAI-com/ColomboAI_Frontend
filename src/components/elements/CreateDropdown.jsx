@@ -102,7 +102,7 @@ export default function CreateDropdown({ w, h, filyl, icon }) {
       >
         {({ open }) => (
           <>
-            <div>
+            <div className="flex items-center justify-center">
               <Menu.Button>
                 {/* Optiouns
               <ChevronDownIcon

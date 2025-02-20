@@ -28,7 +28,7 @@ export const VideoJS = (props) => {
       const options = {
         autoplay: false,
         muted: true,
-        controls: true,
+        controls: false,
         responsive: true,
         fluid: true,
         playsinline: true,

@@ -1,6 +1,13 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon, StarIcon } from "../Icons";
+import {
+  FeedIcon,
+  GenAiIcon,
+  NewsIcon,
+  ShopIcon,
+  TaskBotIcon,
+  StarIcon,
+} from "../Icons";
 import { clearCookie, getCookie } from "@/utlils/cookies";
 import Dropdown from "../messages/Dropdown";
 
@@ -27,7 +34,15 @@ const Sidebar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const feedSections = ["/feed", "/video", "/vibes", "/thoughts", "/images", "/explore", "/profile"];
+  const feedSections = [
+    "/feed",
+    "/video",
+    "/vibes",
+    "/thoughts",
+    "/images",
+    "/explore",
+    "/profile",
+  ];
 
   useEffect(() => {
     Setname(getCookie("name"));
@@ -42,19 +57,31 @@ const Sidebar = () => {
   return (
     <>
       {/* Desktop View */}
-      <div className={` xl:w-[100%]  lg:w-[3.5rem] md:w-[3.5rem] bg-white  ${font.className}`}>
+      <div
+        className={` xl:w-[100%]  lg:w-[3.5rem] md:w-[3.5rem] bg-white  ${font.className}`}
+      >
         <div className="lg:mb-[40px] md:mt-[1.5rem] md:mb-[46px] xl:mt-[1.5rem] lg:mt-[1.5rem] relative">
           <Dropdown
             offset={[0, 10]}
             placement="bottom-start"
             btnClassName="flex z-50 justify-center items-center rounded-full hover:text-brandprimary cursor-pointer mx-auto"
-            button={<ProfilePicture size="xl:w-[42px] lg:w-[42px] md:w-[30px] " image={profilePic} />}
+            button={
+              <ProfilePicture
+                size="xl:w-[42px] lg:w-[42px] md:w-[30px] "
+                image={profilePic}
+              />
+            }
           >
             <ul className="min-w-[160px] rounded-lg bg-white shadow-md">
               <Link href="/profile">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">{name}</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer  text-brandprimary">
+                  {name}
+                </li>
               </Link>
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer " onClick={handleSignOut}>
+              <li
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer "
+                onClick={handleSignOut}
+              >
                 Log out
               </li>
             </ul>
@@ -74,7 +101,9 @@ const Sidebar = () => {
               />
               <p
                 className={`${
-                  pathname === "/genai-search" ? "text-brandprimary" : "text-sidebaricon"
+                  pathname === "/genai-search"
+                    ? "text-brandprimary"
+                    : "text-sidebaricon"
                 } text-center text-[10px] mt-[5px] `}
               >
                 Gen AI
@@ -84,13 +113,20 @@ const Sidebar = () => {
           <Link href="/vibes">
             <div className="mb-[34px] flex flex-col items-center">
               {pathname === "/vibes" ? (
-                <Image src={blue_vibes_icon} width={24} height={24} alt="colombo" />
+                <Image
+                  src={blue_vibes_icon}
+                  width={24}
+                  height={24}
+                  alt="colombo"
+                />
               ) : (
                 <Image width={24} height={24} src={vibes_icon} alt="colombo" />
               )}
               <p
                 className={`${
-                  pathname === "/vibes" ? "text-brandprimary" : "text-sidebaricon"
+                  pathname === "/vibes"
+                    ? "text-brandprimary"
+                    : "text-sidebaricon"
                 } text-center text-[10px] mt-[5px] `}
               >
                 Vibes
@@ -100,10 +136,18 @@ const Sidebar = () => {
 
           <Link href="/feed">
             <div className="mb-[34px] flex flex-col items-center">
-              <FeedIcon w="24" h="24" fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"} />
+              <FeedIcon
+                w="24"
+                h="24"
+                fill={
+                  feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"
+                }
+              />
               <p
                 className={`${
-                  feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"
+                  feedSections.includes(`${pathname}`)
+                    ? "text-brandprimary"
+                    : "text-sidebaricon"
                 } text-center text-[10px] mt-[5px] `}
               >
                 Feed
@@ -113,10 +157,16 @@ const Sidebar = () => {
 
           <Link href="/shop">
             <div className="mb-[34px] flex flex-col items-center">
-              <ShopIcon w="24" h="24" fill={pathname === "/shop" ? "#1E71F2" : "#8E8E93"} />
+              <ShopIcon
+                w="24"
+                h="24"
+                fill={pathname === "/shop" ? "#1E71F2" : "#8E8E93"}
+              />
               <p
                 className={`${
-                  pathname === "/shop" ? "text-brandprimary" : "text-sidebaricon"
+                  pathname === "/shop"
+                    ? "text-brandprimary"
+                    : "text-sidebaricon"
                 } text-center text-[10px] mt-[5px] `}
               >
                 Shop
@@ -126,10 +176,16 @@ const Sidebar = () => {
 
           <Link href="/news">
             <div className="mb-[34px] flex flex-col items-center">
-              <NewsIcon w="24" h="24" fill={pathname === "/news" ? "#1E71F2" : "#8E8E93"} />
+              <NewsIcon
+                w="24"
+                h="24"
+                fill={pathname === "/news" ? "#1E71F2" : "#8E8E93"}
+              />
               <p
                 className={`${
-                  pathname === "/news" ? "text-brandprimary" : "text-sidebaricon"
+                  pathname === "/news"
+                    ? "text-brandprimary"
+                    : "text-sidebaricon"
                 } text-center text-[10px] mt-[5px] `}
               >
                 News
@@ -138,7 +194,11 @@ const Sidebar = () => {
           </Link>
           {/* <Link> */}
           <div className="mb-[34px] flex flex-col items-center">
-            <StarIcon w="24" h="24" fill={pathname === "/star" ? "#1E71F2" : "#8E8E93"} />
+            <StarIcon
+              w="24"
+              h="24"
+              fill={pathname === "/star" ? "#1E71F2" : "#8E8E93"}
+            />
           </div>
           {/* </Link> */}
         </div>
