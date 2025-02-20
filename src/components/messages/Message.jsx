@@ -7,16 +7,18 @@ import { BsFillTrash3Fill } from "react-icons/bs";
 const Message = ({ message }) => {
   const messageRef = useRef();
 
-  const { editMessage, deleteMessage, editingState, setEditingState } =
-    useMessages();
+  const { editMessage, deleteMessage, editingState, setEditingState } = useMessages();
   const [isEditing, setIsEditing] = useState(false);
   const [editMessageValue, setEditMessageValue] = useState(message.content);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   let userId = getCookie("userid");
 
   useEffect(() => {
     messageRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
   const toggelEdit = () => {
     setIsEditing((prev) => !prev);
@@ -57,16 +59,10 @@ const Message = ({ message }) => {
   return (
     <div
       ref={messageRef}
-      className={`flex items-start gap-3 ${
-        userId === message.sender ? "justify-end" : ""
-      }`}
+      className={`flex items-start gap-3 ${userId === message.sender ? "justify-end" : ""}`}
     >
       <div className="space-y-2">
-        <div
-          className={`flex items-center gap-3 ${
-            userId === message.sender ? "justify-end" : ""
-          }`}
-        >
+        <div className={`flex items-center gap-3 ${userId === message.sender ? "justify-end" : ""}`}>
           {message.content && (
             <React.Fragment>
               {editingState?.message_id != message?._id ? (
@@ -85,28 +81,18 @@ const Message = ({ message }) => {
                   </div>
                   {message?.edited ? (
                     <div className="flex justify-end">
-                      <span className="text-[10px] mt-1 mr-2 text-gray-500">
-                        Edited
-                      </span>
+                      <span className="text-[10px] mt-1 mr-2 text-gray-500">Edited</span>
                     </div>
                   ) : null}
                   {!message?.isDeleted &&
                     editingState?.message_id != message?._id &&
                     message.sender === userId && (
                       <div className="hidden group-hover:visible group-hover:flex items-center gap-3 absolute top-0 -left-[80px] bottom-2 bg-[#dedede] px-4 py-2 rounded-lg">
-                        <button
-                          onClick={() => deleteMessage(message)}
-                          type="button"
-                          className="text-sm"
-                        >
+                        <button onClick={() => deleteMessage(message)} type="button" className="text-sm">
                           <BsFillTrash3Fill />
                         </button>
                         <div className="mb-1 text-gray-400">|</div>
-                        <button
-                          onClick={toggelEdit}
-                          type="button"
-                          className="text-sm"
-                        >
+                        <button onClick={toggelEdit} type="button" className="text-sm">
                           <MdModeEdit />
                         </button>
                       </div>
@@ -153,6 +139,7 @@ const Message = ({ message }) => {
                 src={message.media}
                 className=" aspect-video object-cover rounded-2xl"
                 alt={"Broken Image :("}
+                onClick={toggleModal}
               />
             </div>
           )}
@@ -164,17 +151,46 @@ const Message = ({ message }) => {
                   : "rounded-tl-none"
               }`}
             >
-              <video
-                src={message.media}
-                className="aspect-video object-cover rounded-2xl"
-                controls
-              >
+              <video src={message.media} className="aspect-video object-cover rounded-2xl" controls>
                 Your browser does not support the video tag.
               </video>
             </div>
           )}
         </div>
       </div>
+      {/* {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-[100000] flex items-center justify-center p-4">
+          <div className="relative max-w-full max-h-full">
+            <img
+              src={message.media}
+              alt="Full screen image"
+              className="max-w-full max-h-[90vh] object-contain"
+            />
+            <button
+              onClick={toggleModal}
+              className="absolute top-4 right-4 text-white text-xl bg-black bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )} */}
+
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-0 z-50 flex items-center justify-center p-4">
+          <div className="relative bg-white rounded-lg overflow-hidden max-w-full max-h-full w-full sm:w-4/5 md:w-3/4 lg:w-2/3 xl:w-1/2">
+            <div className="aspect-w-16 aspect-h-9">
+              <img src={message.media} alt="Full screen image" className="object-contain w-full h-full" />
+            </div>
+            <button
+              onClick={toggleModal}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 text-xl bg-white bg-opacity-75 hover:bg-opacity-100 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-200"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

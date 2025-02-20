@@ -14,7 +14,7 @@ export const ROOT_URL_LLM = "https://magicpen.colomboai.com";
 export const COOKIE_OPTIONS = {
   path: "/",
   expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000 * 365),
-  sameSite: "lax",
-  secure: true,
-  domain: ".colomboai.com",
+  // sameSite: "lax",
+  // secure: true,
+  // domain: ".colomboai.com",
 };

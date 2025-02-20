@@ -1,31 +1,31 @@
 import { useState, useContext } from "react";
 import Link from "next/link";
-import {
-  ChatBubbleIcon,
-  NewChatIcon,
-  NotificationIcon,
-  SearchIcon,
-} from "../Icons";
+import { ChatBubbleIcon, NewChatIcon, NotificationIcon, SearchIcon } from "../Icons";
 import CreateDropdown from "../elements/CreateDropdown";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { GlobalContext } from "@/context/GlobalContext";
-//import SearchAll from './searchall'; // Import your SearchAll component
+import { IoArrowBack } from "react-icons/io5";
 
 const MessageHeader = () => {
-  const { setIsNewMessageOpen, setIsSearchConversationOpen } =
-    useContext(GlobalContext);
+  const { setIsNewMessageOpen, setIsSearchConversationOpen } = useContext(GlobalContext);
   const pathname = usePathname();
   const [showSearchPage, setShowSearchPage] = useState(false); // State to toggle SearchAll visibility
 
+  const router = useRouter();
+
   const handleSearchClick = () => {
-    // setShowSearchPage(true); // Show the SearchAll component when SearchIcon is clicked
     setIsSearchConversationOpen(true);
   };
 
   return (
     <div className=" border-y-[1px] py-[14px] z-50 bg-white ">
-      <div className="hidde flex items-center justify-between mx-2 lg:mx-4">
+      <div className="flex items-center justify-between mx-2 lg:mx-4">
         <div className="flex w-[30%] md:w-[305px] justify-between">
+          <p>
+            <button className="hover:text-brandprimary xl:hidden" onClick={() => router.push("/")}>
+              <IoArrowBack size={30} className="text-black" />
+            </button>
+          </p>
           <p className="hidden lg:block text-2xl font-semibold">Messages</p>
           <button
             onClick={() => setIsNewMessageOpen(true)}
@@ -35,10 +35,7 @@ const MessageHeader = () => {
           </button>
         </div>
         <div className="flex gap-2 lg:gap-4 xl:gap-6 mr-8 justify-evenly items-center">
-          <button
-            className="text-[#646464] hover:text-brandprimary"
-            onClick={handleSearchClick}
-          >
+          <button className="text-[#646464] hover:text-brandprimary" onClick={handleSearchClick}>
             <SearchIcon w={30} h={30} fill={"currentcolor"} />
           </button>
           <div className="text-[#646464] hover:text-brandprimary md:mt-2">
