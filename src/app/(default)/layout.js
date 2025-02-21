@@ -15,13 +15,7 @@ import CommentSection from "@/components/comment/CommentSection";
 import Bottombar from "@/components/layouts/Bottombar";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import {
-  FeedIcon,
-  GenAiIcon,
-  NewsIcon,
-  ShopIcon,
-  TaskBotIcon,
-} from "@/components/Icons";
+import { FeedIcon, GenAiIcon, NewsIcon, ShopIcon, TaskBotIcon } from "@/components/Icons";
 import NotificationBar from "@/components/notifications/NotificationBar";
 import { messaging } from "@/utlils/firebaseConfig";
 import { getToken } from "firebase/messaging";
@@ -53,15 +47,7 @@ let myWindow = typeof window !== "undefined" ? window : null;
 const DefaultLayout = ({ children }) => {
   const pathname = usePathname();
 
-  const feedSections = [
-    "/feed",
-    "/video",
-    "/vibes",
-    "/thoughts",
-    "/images",
-    "/explore",
-    "/profile",
-  ];
+  const feedSections = ["/feed", "/video", "/vibes", "/thoughts", "/images", "/explore", "/profile"];
 
   const {
     isShareOpen,
@@ -133,8 +119,7 @@ const DefaultLayout = ({ children }) => {
       if (permission === "granted") {
         // Generate Token
         const token = await getToken(messaging, {
-          vapidKey:
-            "BEOQAvPUbuQu2BqlLZWaURQL0T1KqitVlTyUXJ-fRfxkVPkuYKgxnz7927ycs2L2-O1az1MyA1Tv6ZEkD2Nimlo",
+          vapidKey: "BEOQAvPUbuQu2BqlLZWaURQL0T1KqitVlTyUXJ-fRfxkVPkuYKgxnz7927ycs2L2-O1az1MyA1Tv6ZEkD2Nimlo",
         });
         console.log("Token Gen", token);
         try {
@@ -164,9 +149,7 @@ const DefaultLayout = ({ children }) => {
   //   }
 
   // },[]);
-  const [isSmallScreen, setIsSmallScreen] = useState(
-    myWindow ? myWindow?.innerWidth <= 768 : null
-  );
+  const [isSmallScreen, setIsSmallScreen] = useState(myWindow ? myWindow?.innerWidth <= 768 : null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -179,9 +162,7 @@ const DefaultLayout = ({ children }) => {
 
   return (
     <FeedContextProvider>
-      <div
-        className={`min-w-screen border-yellow-400 md:relative  ${font.className}`}
-      >
+      <div className={`min-w-screen border-yellow-400 md:relative  ${font.className}`}>
         <div className="flex h-screen lg:max-h-[100vh] border-green-400">
           <div className="lg:min-w-[4%]  xl:min-w-[5%] max-h-[calc(100vh-0px)] bg-white fixed h-screen  z-[100] hidden md:block border-r-[1px] border-brandprimary ">
             <Sidebar />
@@ -206,10 +187,7 @@ const DefaultLayout = ({ children }) => {
                   />
                 )} */}
                 <div className="block md:hidden">
-                  <Header
-                    setIsShowChatMenu={setIsShowChatMenu}
-                    isShowChatMenu={isShowChatMenu}
-                  />
+                  <Header setIsShowChatMenu={setIsShowChatMenu} isShowChatMenu={isShowChatMenu} />
                 </div>
                 <img
                   src="/images/home/ColomboAI-logo.svg"
@@ -220,10 +198,7 @@ const DefaultLayout = ({ children }) => {
             </header>
             {/* {isSmallScreen === false && ( */}
             <div className="hidden md:block">
-              <Header
-                setIsShowChatMenu={setIsShowChatMenu}
-                isShowChatMenu={isShowChatMenu}
-              />
+              <Header setIsShowChatMenu={setIsShowChatMenu} isShowChatMenu={isShowChatMenu} />
             </div>
             {/* )} */}
 
@@ -264,11 +239,7 @@ const DefaultLayout = ({ children }) => {
                   </Modal>
                 )}
                 {isCommentOpen && (
-                  <Modal
-                    isOpen={isCommentOpen}
-                    setIsOpen={setIsCommentOpen}
-                    className="mx-[150px]"
-                  >
+                  <Modal isOpen={isCommentOpen} setIsOpen={setIsCommentOpen} className="mx-[150px]">
                     <CommentSection
                       setIsCommentOpen={setIsCommentOpen}
                       specificPostId={specificPostId}
@@ -285,18 +256,11 @@ const DefaultLayout = ({ children }) => {
                 <div
                   id="scroll-section"
                   className={`w-[100%] lg:w-[100%] ${
-                    pathname === "/vibes"
-                      ? ` sm:max-h-full sm:h-full`
-                      : `sm:max-h-[calc((100vh-175px))]`
+                    pathname === "/vibes" ? ` sm:max-h-full sm:h-full` : `sm:max-h-[calc((100vh-175px))]`
                   } nsm:max-h-[calc((100vh-175px))] ${
                     pathname === "/explore" && `md:h-full overflow-y-visible`
-                  } ${
-                    pathname === "/vibes" &&
-                    `md:max-h-[calc(100vh-0px)] flex flex-col`
-                  } ${
-                    pathname !== "/vibes" && pathname !== "/explore"
-                      ? `md:max-h-[calc(100vh-192.28px)]`
-                      : ""
+                  } ${pathname === "/vibes" && `md:max-h-[calc(100vh-0px)] flex flex-col`} ${
+                    pathname !== "/vibes" && pathname !== "/explore" ? `md:max-h-[calc(100vh-192.28px)]` : ""
                   } hide-scrollbar no-scrollbar overflow-y-auto self-start`}
                 >
                   {children}
@@ -365,9 +329,7 @@ const DefaultLayout = ({ children }) => {
                     </div>
                     <p
                       className={`${
-                        pathname === "/genai-search"
-                          ? "text-brandprimary"
-                          : "text-sidebaricon"
+                        pathname === "/genai-search" ? "text-brandprimary" : "text-sidebaricon"
                       } text-center text-[14px] mt-2`}
                     >
                       Gen AI
@@ -386,9 +348,7 @@ const DefaultLayout = ({ children }) => {
                     </div>
                     <p
                       className={`${
-                        pathname === "/vibes"
-                          ? "text-brandprimary"
-                          : "text-sidebaricon"
+                        pathname === "/vibes" ? "text-brandprimary" : "text-sidebaricon"
                       } text-center text-[14px] mt-2`}
                     >
                       Vibes
@@ -402,18 +362,12 @@ const DefaultLayout = ({ children }) => {
                       <FeedIcon
                         w="30"
                         h="30"
-                        fill={
-                          feedSections.includes(`${pathname}`)
-                            ? "#1E71F2"
-                            : "#8E8E93"
-                        }
+                        fill={feedSections.includes(`${pathname}`) ? "#1E71F2" : "#8E8E93"}
                       />
                     </div>
                     <p
                       className={`${
-                        feedSections.includes(`${pathname}`)
-                          ? "text-brandprimary"
-                          : "text-sidebaricon"
+                        feedSections.includes(`${pathname}`) ? "text-brandprimary" : "text-sidebaricon"
                       } text-center text-[14px] mt-2`}
                     >
                       Feed
@@ -424,10 +378,7 @@ const DefaultLayout = ({ children }) => {
                 <Link href="/shop">
                   <div className="mx-4">
                     <div className="w-[29px] mx-auto">
-                      <Image
-                        src={pathname === "/shop" ? shop_blue : shop_grey}
-                        alt="colombo"
-                      />
+                      <Image src={pathname === "/shop" ? shop_blue : shop_grey} alt="colombo" />
                       {/* <ShopIcon
                       w="30"
                       h="30"
@@ -436,9 +387,7 @@ const DefaultLayout = ({ children }) => {
                     </div>
                     <p
                       className={`${
-                        pathname === "/shop"
-                          ? "text-brandprimary"
-                          : "text-sidebaricon"
+                        pathname === "/shop" ? "text-brandprimary" : "text-sidebaricon"
                       } text-center text-[14px] mt-2`}
                     >
                       Shop
@@ -449,17 +398,11 @@ const DefaultLayout = ({ children }) => {
                 <Link href="/news">
                   <div className="mx-4">
                     <div className="w-[29px] mx-auto">
-                      <NewsIcon
-                        w="30"
-                        h="30"
-                        fill={pathname === "/news" ? "#1E71F2" : "#8E8E93"}
-                      />
+                      <NewsIcon w="30" h="30" fill={pathname === "/news" ? "#1E71F2" : "#8E8E93"} />
                     </div>
                     <p
                       className={`${
-                        pathname === "/news"
-                          ? "text-brandprimary"
-                          : "text-sidebaricon"
+                        pathname === "/news" ? "text-brandprimary" : "text-sidebaricon"
                       } text-center text-[14px] mt-2`}
                     >
                       News
@@ -473,7 +416,7 @@ const DefaultLayout = ({ children }) => {
       </div>
       {/* Bottombar Mobile View */}
       {/* <Bottombar /> */}
-      {isNotificationOpen && <NotificationBar />}
+      {isNotificationOpen && <NotificationBar onClose={() => setIsNotificationOpen(false)} />}
     </FeedContextProvider>
   );
 };
