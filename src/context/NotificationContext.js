@@ -90,7 +90,6 @@ export default function NotificationsContextProvider({ children }) {
   };
 
   const loadRecentNotifications = (payloadNotifications) => {
-    console.log(payloadNotifications);
     setNotifications(payloadNotifications);
   };
 
@@ -113,6 +112,7 @@ export default function NotificationsContextProvider({ children }) {
     <NotificationsContext.Provider
       value={{
         notifications,
+        fetchRecentNotifications,
         markNotificationAsRead,
       }}
     >
