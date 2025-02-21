@@ -1,6 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { useContext, useState, useEffect, useRef } from "react";
-import { BackButtonIcon, CloseDocumentIcon, CreateMagicPenIcon, CrossIcon, SendIcon } from "../Icons";
+import {
+  BackButtonIcon,
+  CloseDocumentIcon,
+  CreateMagicPenIcon,
+  CrossIcon,
+  SendIcon,
+} from "../Icons";
 import { FeedContext } from "@/context/FeedContext";
 import { GlobalContext } from "@/context/GlobalContext";
 import { ThreeDots } from "react-loader-spinner";
@@ -18,7 +24,8 @@ const CreatePost = () => {
   const defaultPostType = "thought";
   const [postType, setPostType] = useState(defaultPostType);
   const [nextStep, setNextStep] = useState(false);
-  const { generatePost, createPost, loadings, posts, setPosts } = useContext(FeedContext);
+  const { generatePost, createPost, loadings, posts, setPosts } =
+    useContext(FeedContext);
   const { setIsCreatePostOpen } = useContext(GlobalContext);
   // Open Magic Pen if it came from drop down
   const { openMagicPenWithIcon } = useContext(GlobalContext);
@@ -92,7 +99,12 @@ const CreatePost = () => {
   };
 
   const handleCreatePost = async () => {
-    const res = await createPost({ type: postType, files: file, mediaUrl, content: postInput });
+    const res = await createPost({
+      type: postType,
+      files: file,
+      mediaUrl,
+      content: postInput,
+    });
     console.log(res);
     if (res) {
       MessageBox("success", res.message);
@@ -124,15 +136,18 @@ const CreatePost = () => {
             )}
           </div>
           <div className="flex items-center">
-            <p className="pl-[17px] text-2xl font-sans tracking-wider">Create New Post</p>
+            <p className="pl-[17px] text-2xl font-sans tracking-wider">
+              Create New Post
+            </p>
           </div>
           <div className="flex items-center gap-6">
             <button
               onClick={toggleMagicPen}
-              className={`p-2 rounded-full ${isMagicPenOpen
-                ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
-                : "bg-white"
-                } outline-none focus:ring-offset-0 focus:ring-0`}
+              className={`p-2 rounded-full ${
+                isMagicPenOpen
+                  ? "bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]"
+                  : "bg-white"
+              } outline-none focus:ring-offset-0 focus:ring-0`}
             >
               <CreateMagicPenIcon
                 w={25}
@@ -152,7 +167,9 @@ const CreatePost = () => {
 
         <div className="px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh]">
           <div className={`flex flex-col ${isMagicPenOpen ? "gap-5" : ""}`}>
-            <div className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}>
+            <div
+              className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}
+            >
               <div className="items-start w-full rounded-2xl p-[1px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B]">
                 <textarea
                   value={promptInput}
@@ -174,11 +191,17 @@ const CreatePost = () => {
                     wrapperClass=""
                   />
                 ) : (
-                  <SendIcon w={32} h={32} fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"} />
+                  <SendIcon
+                    w={32}
+                    h={32}
+                    fill={promptInput !== "" ? "#1E71F2" : "#E3E3E3"}
+                  />
                 )}
               </button>
             </div>
-            <div className={` flex flex-col items-end ${isMagicPenOpen ? "" : ""}`}>
+            <div
+              className={` flex flex-col items-end ${isMagicPenOpen ? "" : ""}`}
+            >
               <div className="flex items-start w-full">
                 <textarea
                   value={postInput}
@@ -199,11 +222,20 @@ const CreatePost = () => {
                         className="w-full h-full object-cover rounded-xl"
                       />
                     ) : postType.includes("video") ? (
-                      <ReactPlayer url={url} playing={true} loop={true} controls={true} className="w-full h-full object-cover rounded-xl"/>
+                      <ReactPlayer
+                        url={url}
+                        playing={true}
+                        loop={true}
+                        controls={true}
+                        className="w-full h-full object-cover rounded-xl"
+                      />
                     ) : null}
                     <div className="absolute top-3 right-2">
                       <div className="flex flex-row items-center justify-center">
-                        <span onClick={() => clearFileHandler(index)} className="px-2 cursor-pointer">
+                        <span
+                          onClick={() => clearFileHandler(index)}
+                          className="px-2 cursor-pointer"
+                        >
                           <CloseDocumentIcon />
                         </span>
                       </div>
@@ -211,7 +243,10 @@ const CreatePost = () => {
                   </div>
                 ))}
                 {!nextStep && (
-                  <button onClick={() => setNextStep(true)} className="text-brandprimary w-full flex flex-row justify-end font-semibold mt-1">
+                  <button
+                    onClick={() => setNextStep(true)}
+                    className="text-brandprimary w-full flex flex-row justify-end font-semibold mt-1"
+                  >
                     Next
                   </button>
                 )}
@@ -221,27 +256,39 @@ const CreatePost = () => {
             {nextStep === false && (
               <>
                 {mediaUrl.length === 0 && postType === defaultPostType && (
-                  <div
-                    className="flex flex-col items-center py-2 rounded-xl"
-                    onDrop={handleDrop}
-                    onDragOver={(event) => event.preventDefault()}
-                  >
-                    <p className="text-xl my-4">Drag photos and videos here</p>
-                    <span onClick={handleFileInputClick}>
-                      <input
-                        className="hidden"
-                        type="file"
-                        accept="image/, video/"
-                        onChange={handleFileChange}
-                        ref={InputFile}
-                        multiple
-                      />
-                      <Button
-                        title="Select from computer"
-                        className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
-                      />
-                    </span>
-                  </div>
+                  <>
+                    <div
+                      className="flex flex-col items-center py-2 rounded-xl"
+                      onDrop={handleDrop}
+                      onDragOver={(event) => event.preventDefault()}
+                    >
+                      <p className="text-xl my-4">
+                        Drag photos and videos here
+                      </p>
+                      <span onClick={handleFileInputClick}>
+                        <input
+                          className="hidden"
+                          type="file"
+                          accept="image/, video/"
+                          onChange={handleFileChange}
+                          ref={InputFile}
+                          multiple
+                        />
+                        <Button
+                          title="Select from computer"
+                          className="w-fit sm2:text-xl text-white shadow-[5px_5px_10px_0px_rgba(0,0,0,0.3)] rounded-full bg-brandprimary py-4 px-14"
+                        />
+                      </span>
+                    </div>
+                    {!nextStep && ["thought", "post"].includes(postType) && (
+                      <button
+                        onClick={() => setNextStep(true)}
+                        className="text-brandprimary w-full flex flex-row justify-end font-semibold mt-8"
+                      >
+                        Next
+                      </button>
+                    )}
+                  </>
                 )}
               </>
             )}
