@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import { useInView } from "react-intersection-observer";
+import { Play, Pause } from "lucide-react";
 
 export const VideoJS = (props) => {
   const { ref, inView } = useInView();
@@ -9,9 +10,10 @@ export const VideoJS = (props) => {
   const playerRef = React.useRef(null);
   const { src, onReady, isPlayerClickable = true } = props;
 
-  let lastScrollPosition = useRef<number>(0);
+  let lastScrollPosition = useRef(0);
 
-  const [isReady, setIsReady] = useState<boolean>(false);
+  const [isReady, setIsReady] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   React.useEffect(() => {
     // Make sure Video.js player is only initialized once
@@ -27,7 +29,7 @@ export const VideoJS = (props) => {
 
       const options = {
         autoplay: false,
-        muted: true,
+        muted: isMuted,
         controls: false,
         responsive: true,
         fluid: true,
@@ -47,7 +49,7 @@ export const VideoJS = (props) => {
         {
           ...options,
           autoplay: false,
-          muted: true,
+          muted: isMuted,
           playsinline: true,
           // poster:
           //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGPajftntxU93XKwxVQjFYiasz8qcWQa9Xqw&s",
@@ -62,7 +64,7 @@ export const VideoJS = (props) => {
       const player = playerRef.current;
 
       player.autoplay(false);
-      player.muted(true);
+      player.muted(isMuted);
       player.src([
         {
           src: src,
@@ -124,19 +126,38 @@ export const VideoJS = (props) => {
   }, []);
 
   return (
-    <div data-vjs-player className="h-full w-[100%] relative">
-      {!playerRef?.current?.isFullscreen() && (
+    <>
+      <div data-vjs-player className="h-full w-[100%] relative">
+        {!playerRef?.current?.isFullscreen() && (
+          <div
+            className="h-[100%] w-[100%] absolute z-[99]"
+            onClick={handlPlayerClick}
+          />
+        )}
         <div
-          className="h-[100%] w-[100%] absolute z-[99]"
-          onClick={handlPlayerClick}
+          className="intersection-observer-element h-10 w-10 mt-[100px] absolute bg-red-500"
+          ref={ref}
         />
-      )}
-      <div
-        className="intersection-observer-element h-10 w-10 mt-[100px] absolute bg-red-500"
-        ref={ref}
-      />
-      <div ref={videoRef} className="h-full w-[100%]" />
-    </div>
+        <div ref={videoRef} className="h-full w-[100%]" />
+        <div
+          role="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            playerRef.current.muted(!isMuted);
+            setIsMuted(!isMuted);
+          }}
+          className="flex items-center justify-center absolute bottom-1 right-2 z-[999]"
+        >
+          <div className="flex items-center justify-center rounded-full bg-black p-1.5 [&_path]:stroke-white">
+            {isMuted ? (
+              <Play size={16} className="!text-white" />
+            ) : (
+              <Pause size={16} className="!text-white" />
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
