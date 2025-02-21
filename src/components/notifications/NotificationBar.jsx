@@ -112,7 +112,7 @@ const dummyData = [
   },
 ];
 
-const NotificationBar = () => {
+const NotificationBar = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState("Activities");
   const { notifications, markNotificationAsRead } =
     useContext(NotificationsContext);
@@ -184,9 +184,17 @@ const NotificationBar = () => {
       {/* Sticky Header */}
       <div style={headerStyle} className="header">
         <div className="flex justify-between items-center mb-4">
-          <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>
-            Notifications
-          </h2>
+          <div className="flex justify-between items-center">
+            <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>
+              Notifications
+            </h2>
+            <button
+              className="text-base text-[#8B8B8B]"
+              onClick={() => onClose()}
+            >
+              X
+            </button>
+          </div>
         </div>
         <div
           style={{
