@@ -76,7 +76,11 @@ const NotificationBar = ({ onClose }) => {
       <div style={headerStyle} className="header">
         <div className="flex justify-between items-center">
           <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>Notifications</h2>
-          <button className="text-base text-[#8B8B8B]" onClick={onClose}>
+          <button 
+            className="text-base text-[#8B8B8B]"
+            style={{ fontsize: '24px', marginLeft: '0px' }}
+            onClick={onClose}
+          >
             X
           </button>
         </div>
@@ -141,5 +145,4 @@ const NotificationBar = ({ onClose }) => {
     </div>
   );
 };
-
 export default NotificationBar;
