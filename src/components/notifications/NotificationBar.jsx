@@ -78,7 +78,7 @@ const NotificationBar = ({ onClose }) => {
           <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>Notifications</h2>
           <button 
             className="text-base text-[#8B8B8B]"
-            style={{ fontsize: '24px', marginLeft: '0px' }}
+            style={{ fontsize: '24px', border: '1px solid #ccc', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer', marginLeft: '-10px' }}
             onClick={onClose}
           >
             X
