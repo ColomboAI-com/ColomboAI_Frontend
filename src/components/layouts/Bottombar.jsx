@@ -33,7 +33,7 @@ const Bottombar = () => {
     <div className=" md:hidden bg-white fixed bottom-0 z-50 border-t-2 border-brandprimary rounded-xl w-full">
       <div className="shadow-[0px_2px_4px_0px_#0000001A] w-full">
         <div className="py-4 flex flex-wrap items-center justify-evenly w-full">
-          <Link href="/genai-search">
+          <Link href="https://colomboai.com/genai-search/">
             <div className="sm:mx-2 md:mx-4">
               <div className="w-[29px] mx-auto">
                 <Image src={genai} alt="colombo" />
