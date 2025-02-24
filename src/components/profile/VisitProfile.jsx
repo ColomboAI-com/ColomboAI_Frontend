@@ -14,6 +14,7 @@ import UserStoryModal from "./UserStoryModal";
 import axios from "axios";
 import { ROOT_URL_AUTH, ROOT_URL_FEED } from "@/utlils/rootURL";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/navigation";
 
 function ThreeDotMenu({ onReport, onRestrict, onBlock, isBlocked }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -83,22 +84,21 @@ const VisitProfile = ({ userData }) => {
 
   const user = getCookie("username");
 
-  const [isCreateStorySignleOpen, setIsCreateStorySignleOpen] = useState(false);
+  const [isCreateStorySingleOpen, setIsCreateStorySingleOpen] = useState(false);
   const [stories, setStories] = useState([]);
 
   let [isFollowing, setIsFollowing] = useState(false);
   let [isBlocked, setIsBlocked] = useState(false);
 
+  const router = useRouter();
+
   const getStories = async () => {
     try {
-      const res = await axios.get(
-        `${ROOT_URL_FEED}/stories/users/${userData?._id}`,
-        {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        }
-      );
+      const res = await axios.get(`${ROOT_URL_FEED}/stories/users/${userData?._id}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
       console.log(res.data, "getStories");
       setStories(res.data);
     } catch (err) {
@@ -118,21 +118,24 @@ const VisitProfile = ({ userData }) => {
     getStories();
   }, [userData]);
 
-  const toogleFollowing = () => {
+  const toggleFollowing = () => {
     setIsFollowing(!isFollowing);
   };
-  const toogleBlock = () => {
+  const toggleBlock = () => {
     setIsBlocked(!isBlocked);
   };
 
-  console.log(JSON.stringify(userData) + "userData");
+  const goToUserMessageConversation = () => {
+    localStorage.setItem("userToMessage", JSON.stringify(userData));
+    router.push("/messages/dm-user");
+  };
 
   return (
     <div className="pt-8">
       <div className="lg:px-12">
         <div className="flex justify-center items-center gap-4 md:gap-6 lg:gap-8">
           <button
-            onClick={() => setIsCreateStorySignleOpen(true)}
+            onClick={() => setIsCreateStorySingleOpen(true)}
             className="min-w-[120px] w-[120px] h-[120px] rounded-full flex justify-center p-[2.5px] bg-[linear-gradient(180deg,#6237FF_30.5%,#258EFF_100%)] items-center relative"
           >
             <div className="w-full h-full bg-white rounded-full flex justify-center items-center">
@@ -148,12 +151,8 @@ const VisitProfile = ({ userData }) => {
 
           <div className="flex lg:gap-6 gap-4 flex-1 justify-center">
             <div className="text-center">
-              <div className="text-[21px] text-[#333333] font-bold">
-                {postsCount}
-              </div>
-              <div className="text-[21px] font-medium text-[#333333]">
-                Posts
-              </div>
+              <div className="text-[21px] text-[#333333] font-bold">{postsCount}</div>
+              <div className="text-[21px] font-medium text-[#333333]">Posts</div>
             </div>
             <button
               // onClick={() => setIsFollowerModalOpen(true)}
@@ -164,9 +163,7 @@ const VisitProfile = ({ userData }) => {
                   ? userData?.counts?.followers.toLocaleString()
                   : 0}
               </div>
-              <div className="text-[21px] font-medium text-[#333333]">
-                Followers
-              </div>
+              <div className="text-[21px] font-medium text-[#333333]">Followers</div>
             </button>
             <button
               // onClick={() => setIsFollowingModalOpen(true)}
@@ -177,9 +174,7 @@ const VisitProfile = ({ userData }) => {
                   ? userData?.counts?.followings.toLocaleString()
                   : 0}
               </div>
-              <div className="text-[21px] font-medium text-[#333333]">
-                Following
-              </div>
+              <div className="text-[21px] font-medium text-[#333333]">Following</div>
             </button>
           </div>
         </div>
@@ -194,10 +189,7 @@ const VisitProfile = ({ userData }) => {
 
           <p className="text-gray-800 text-[18px]">{userData?.bio}</p>
           <div>
-            <a
-              href={userData?.website}
-              className="text-brandprimary text-base font-bold"
-            >
+            <a href={userData?.website} className="text-brandprimary text-base font-bold">
               {userData?.website}
             </a>
           </div>
@@ -206,23 +198,24 @@ const VisitProfile = ({ userData }) => {
           <button
             className="bg-white text-brandprimary font-semibold text-lg py-2 px-4 flex-1 text-center rounded-full border border-brandprimary"
             onClick={() => {
-              followUnfollowUser(userData?._id), toogleFollowing();
+              followUnfollowUser(userData?._id), toggleFollowing();
             }}
           >
             {isFollowing ? "Following" : "Follow"}
           </button>
-          <Link
-            href={`/messages?user_id=${userData?._id}&user_name=${userData?.user_name}`}
+          <button
+            // href={`/messages?user_id=${userData?._id}&user_name=${userData?.user_name}`}
+            onClick={goToUserMessageConversation}
             className="bg-brandprimary text-center flex-1 text-white text-lg font-semibold py-2 px-4 rounded-full"
           >
             Message
-          </Link>
+          </button>
           <ThreeDotMenu
             onReport={() => {}}
             onRestrict={() => {}}
             onBlock={() => {
               blockUser(userData?._id);
-              toogleBlock();
+              toggleBlock();
             }}
             isBlocked={isBlocked}
           />
@@ -251,17 +244,17 @@ const VisitProfile = ({ userData }) => {
           ))}
         </div>
       </div> */}
-      {isCreateStorySignleOpen && (
+      {isCreateStorySingleOpen && (
         <StoryModal
-          isOpen={isCreateStorySignleOpen}
-          setIsOpen={setIsCreateStorySignleOpen}
+          isOpen={isCreateStorySingleOpen}
+          setIsOpen={setIsCreateStorySingleOpen}
           className="sm:w-[100%] xl:ml-[68px] lg:ml-[62px] md:ml-[34px] transform overflow-hidden text-left align-middle shadow-xl transition-all"
         >
           <UserStoryModal
-            setIsCreateStorySignleOpen={setIsCreateStorySignleOpen}
+            setIsCreateStorySingleOpen={setIsCreateStorySingleOpen}
             storyData={stories}
             data_user={userData}
-            onClose={() => setIsCreateStorySignleOpen(false)}
+            onClose={() => setIsCreateStorySingleOpen(false)}
           />
         </StoryModal>
       )}
@@ -290,7 +283,7 @@ const VisitProfile = ({ userData }) => {
   //         :
   //         <>
   //           {/* button of Condition for following */}
-  //           <button onClick={() => { followUnfollowUser(userData?._id), toogleFollowing() }} className={`absolute top-16 left-4 -translate-y-1/2 ${isFollowing ? "bg-brandprimary text-white" : "bg-white text-brandprimary"} font-bold py-2 px-4 rounded-full border-2 border-brandprimary`}>
+  //           <button onClick={() => { followUnfollowUser(userData?._id), toggleFollowing() }} className={`absolute top-16 left-4 -translate-y-1/2 ${isFollowing ? "bg-brandprimary text-white" : "bg-white text-brandprimary"} font-bold py-2 px-4 rounded-full border-2 border-brandprimary`}>
   //             {isFollowing ? "Following" : "Follow"}
   //           </button>
   //           <Link href='/messages' className="absolute top-16 right-4 -translate-y-1/2 bg-brandprimary text-white font-bold py-2 px-4 rounded-full">
@@ -341,7 +334,7 @@ const VisitProfile = ({ userData }) => {
   //               placement={"right"}
   //               btnClassName=" flex flex-col text-gray-600 my-1  rounded-full !flex justify-center items-center hover:text-brandprimary"
   //               button={
-  //                 <BsThreeDotsVertical className=" flex mt-1 mb-3 w-[32px] h-[32px] opacity-70 hover:text-brandprimar" />
+  //                 <BsThreeDotsVertical className=" flex mt-1 mb-3 w-[32px] h-[32px] opacity-70 hover:text-brandprimary" />
   //               }
   //             >
   //               <ul className="my-1 min-w-[200px] px-2 rounded-lg bg-white p-0 py-2 text-red-500 shadow-[6px_6px_6px_6px_#0000001A] ">
@@ -362,7 +355,7 @@ const VisitProfile = ({ userData }) => {
   //                   </button>
   //                 </li>
   //                 <li>
-  //                   <button onClick={() => {blockUser(userData?._id), toogleBlock()}} className="flex w-full items-center px-4 py-2 gap-5 hover:text-red-600">
+  //                   <button onClick={() => {blockUser(userData?._id), toggleBlock()}} className="flex w-full items-center px-4 py-2 gap-5 hover:text-red-600">
   //                     <BlockIcon w={25} h={25} fill={"currentcolor"} />
   //                     {isBlocked ? "Unblock" : "Block"}
   //                   </button>

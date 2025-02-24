@@ -8,73 +8,16 @@ import { useMessages } from "@/context/MessagesContext";
 import ChatWindowHeader from "@/components/messages/ChatWindowHeader";
 import ChatHistory from "@/components/messages/ChatHistory";
 import MessageInput from "@/components/messages/MessageInput";
-import { ROOT_URL_MESSAGES } from "@/utlils/rootURL";
-import { getCookie, getCookies } from "cookies-next";
-import { useParams, useSearchParams } from "next/navigation";
-// import { io } from "socket.io-client"
 
 const ComponentsAppsChat = () => {
   const { selectedChat } = useMessages();
   const { isUserProfileOpen, setIsUserProfileOpen } = useContext(GlobalContext);
-  const {
-    setOnlineUsers,
-    setDisconnectedUser,
-    setNewMessage,
-    setSelectedChat,
-    createConversation,
-  } = useMessages();
+  const { setSelectedChat } = useMessages();
 
   const closeChat = () => {
     setIsUserProfileOpen(false);
     setSelectedChat(false);
   };
-
-  // useEffect(() => {
-  //   const connectSocket = io(`${ROOT_URL_MESSAGES}`, {
-  //     auth: {
-  //       token: getCookie('token')
-  //     }
-  //   })
-
-  //   connectSocket.on('connect', () => {
-  //     // console.log('Connected to socket.io server')
-  //   })
-
-  //   connectSocket.on('getOnlineUsers', (data) => {
-  //     setOnlineUsers(data)
-  //   })
-
-  //   connectSocket.on('userDisconnected', (data) => {
-  //     setDisconnectedUser(data)
-  //   })
-
-  //   connectSocket.on('newMessage', (data) => {
-  //     setNewMessage(data)
-  //   })
-
-  //   return () => {
-  //   connectSocket.disconnect()
-  //   }
-  // }, [])
-
-  const searchParams = useSearchParams();
-
-  // useEffect(() => {
-  //   if (searchParams) {
-  //     const userId = searchParams.get("user_id");
-  //     const userName = searchParams.get("user_name");
-  //     let data = {
-  //       participants: [getCookie("userid"), userId],
-  //       lastMessage: {
-  //         img: "",
-  //         seen: true,
-  //         sender: getCookie("userid"),
-  //         text: "DUMMY_TEXT",
-  //       },
-  //     };
-  //     createConversation(data);
-  //   }
-  // }, [searchParams]);
 
   return (
     <div className="font-sans">

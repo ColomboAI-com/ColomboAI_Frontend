@@ -23,19 +23,17 @@ export default function Conversations() {
   const { setIsUserProfileOpen } = useContext(GlobalContext);
 
   const handleSelectChat = (user, conversation) => {
-    // console.log("user convo: " + JSON.stringify(user));
-    // console.log("user conversation: " + JSON.stringify(conversation));
     setSelectedChat(user);
     updateCurrentConversation(conversation);
     setIsShowChatMenu(false);
     setIsUserProfileOpen(false);
   };
 
-  useEffect(() => {
-    console.log("IN CONVERSATION COMPONENT");
-    console.log("CONVO LENGTH: " + conversations.length);
-    console.log(conversations);
-  }, [conversations]);
+  // useEffect(() => {
+  //   console.log("IN CONVERSATION COMPONENT");
+  //   console.log("CONVO LENGTH: " + conversations.length);
+  //   console.log(conversations);
+  // }, [conversations]);
 
   return (
     <div
@@ -51,10 +49,7 @@ export default function Conversations() {
             conversations.map((conversation, index) => {
               let user = conversation?.participants?.[0];
               let userId = getCookie("userid");
-              if (
-                conversation?.participants &&
-                conversation?.participants.length > 1
-              ) {
+              if (conversation?.participants && conversation?.participants.length > 1) {
                 for (let p of conversation?.participants) {
                   if (p._id != userId) {
                     user = p;
@@ -67,9 +62,7 @@ export default function Conversations() {
                   <div key={index}>
                     <button
                       className={`flex w-full items-center border-b-[1px] justify-between p-2 hover:bg-gray-100 hover:text-brandprimary${
-                        user?._id === selectedChat?._id
-                          ? " bg-brandprimary/20 text-brandprimary"
-                          : ""
+                        user?._id === selectedChat?._id ? " bg-brandprimary/20 text-brandprimary" : ""
                       }`}
                       onClick={() => handleSelectChat(user, conversation)}
                     >
@@ -90,16 +83,13 @@ export default function Conversations() {
                             )}
                           </div>
                           <div className="mx-3 text-left">
-                            <p className="mb-1 font-semibold">
-                              {user?.name || user?.user_name || "User"}
-                            </p>
+                            <p className="mb-1 font-semibold">{user?.name || user?.user_name || "User"}</p>
                             <p className="max-w-[160px] truncate text-xs text-gray-500">
                               {conversation.lastMessage?.text
                                 ? conversation.lastMessage?.text === DUMMY_TEXT
                                   ? ""
                                   : conversation.lastMessage?.text
-                                : conversation.lastMessage?.img &&
-                                  "Sent a photo"}
+                                : conversation.lastMessage?.img && "Sent a photo"}
                             </p>
                           </div>
                           {/* <div className="mx-auto">
