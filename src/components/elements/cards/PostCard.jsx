@@ -109,7 +109,7 @@ const PostCard = ({ post }) => {
               </div>
               <Dropdown
                 offset={[0, 10]}
-                placement="bottom-start"
+                placement="bottom-end"
                 btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
                 button={<PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"} />}
               >
