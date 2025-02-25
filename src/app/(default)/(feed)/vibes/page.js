@@ -104,13 +104,17 @@ export default function Vibes({ filter }) {
       {isSmallScreen ? (
         <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black">
           <Slider ref={sliderRef} {...settings}>
-            {vibes.map((vibe, index) =>
+            {/* {vibes.map((vibe, index) =>
               (index + 1) % 4 === 0 ? (
                 <VibesAd key={`ad-${index}`} />
               ) : (
                 <Vibe vibe={vibe} key={vibe._id} index={index} />
               )
-            )}
+            )} */}
+
+            {vibes.map((vibe, index) => (
+              <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
           </Slider>
         </div>
       ) : (
