@@ -11,7 +11,7 @@ import SuggestedVibes from "@/components/layouts/SuggestedVibes";
 import LargeAdComponent from "@/components/ads/LargeAd";
 import VideoAd from "@/components/ads/VideoAd";
 
-export default function RenderFeedBuName({ filter , CreatorName}) {
+export default function RenderFeedBuName({ filter, CreatorName }) {
   const { posts, getPosts, loadings, page, resetFeedValues } = useContext(FeedContext);
 
   const { getUserDetails } = useContext(UserProfileContext);
@@ -124,31 +124,35 @@ export default function RenderFeedBuName({ filter , CreatorName}) {
   return (
     <div className="sm:px-0 md:px-0" id="posts_container_infy_scroll">
       {posts.length ? (
-        posts.map((i, index) => (
-          <Fragment key={index}>
-            <PostforName post={i} index={index} CreatorName={CreatorName}/>
-            {(index + 1) % 4 === 0 && (
-              <>
-                {Math.floor((index + 1) / 4) % 2 === 0 ? (
-                  <div className="overflow-x-hidden rounded-[10px] mt-5">
-                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                      <VideoAd />
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className="overflow-x-hidden rounded-[10px] mt-5"
-                    onClick={() => handleAdClick(index + 1)}
-                  >
-                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
-                      <LargeAdComponent divid={`feed-ad-${index}`} />
-                    </div>
-                  </div>
+        posts.map((i, index) => {
+          return (
+            i.creator?.user_name === CreatorName && (
+              <Fragment key={index}>
+                <PostforName post={i} index={index} CreatorName={CreatorName} />
+                {(index + 1) % 4 === 0 && (
+                  <>
+                    {Math.floor((index + 1) / 4) % 2 === 0 ? (
+                      <div className="overflow-x-hidden rounded-[10px] mt-5">
+                        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                          <VideoAd />
+                        </div>
+                      </div>
+                    ) : (
+                      <div
+                        className="overflow-x-hidden rounded-[10px] mt-5"
+                        onClick={() => handleAdClick(index + 1)}
+                      >
+                        <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                          <LargeAdComponent divid={`feed-ad-${index}`} />
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
-              </>
-            )}
-          </Fragment>
-        ))
+              </Fragment>
+            )
+          );
+        })
       ) : (
         <NoDataFound className={"mt-5"} />
       )}
