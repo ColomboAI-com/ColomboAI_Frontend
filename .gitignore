@@ -34,7 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.githuv/workflows/
+.github/workflows/
 
 # VS Code
 .vscode
