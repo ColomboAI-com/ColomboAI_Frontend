@@ -314,16 +314,19 @@ export default function Vibe({ vibe, index }) {
           </div>
 
           <div
-            className="md:hidden absolute top-8 right-2"
+            className="md:hidden absolute top-8 right-2 flex flex-row md:flex-col items-center gap-2"
             onClick={(e) => e.stopPropagation()}
           >
-            <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
-            <button className="mt-1" onClick={() => setIsCreateVibeOpen(true)}>
+            <button
+              className="md:mt-1"
+              onClick={() => setIsCreateVibeOpen(true)}
+            >
               <IoMdAddCircleOutline
                 className="w-7 h-7 tall:w-6 tall:h-6"
                 fill={"#FFFFFF"}
               />
             </button>
+            <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
           </div>
           <div className="absolute bottom-0 left-0 right-0 px-4">
             {/* whenever there is sponsored ad uncomment and call this component */}

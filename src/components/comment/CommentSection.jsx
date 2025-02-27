@@ -239,7 +239,7 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
 
       </div> */}
       </div>
-      <div className="xl:w-[40%] md:w-[40rem] sm:w-[20rem] overflow-y-scroll sm:h-[30rem] md:h-[40rem] bg-white px-4 flex flex-col">
+      <div className="xl:w-[40%] md:w-[40rem] sm:w-[100vw] overflow-y-scroll sm:h-[100vh] md:h-[40rem] bg-white px-4 flex flex-col">
         <div className="flex items-center justify-between py-[12px]">
           <a
             className="flex items-center"
@@ -259,6 +259,27 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
               {formatTimeAgo(posts?.createdAt)}
             </p>
           </div>
+        </div>
+        <div className="h-full w-full md:hidden max-h-[50vh]">
+          {posts?.type === "image" && (
+            <img
+              src={posts?.media[0]}
+              className="w-full h-full aspect-video object-contain"
+            />
+          )}
+          {posts?.type === "video" && (
+            <ReactPlayer
+              className="inset-0 !w-full !h-auto !aspect-video"
+              url={posts?.media[0]}
+              controls={true}
+            />
+          )}
+          {posts?.type === "" && (
+            <img
+              src="/images/home/feed-banner-img.png"
+              className="w-full h-full aspect-video"
+            />
+          )}
         </div>
         <div className="border-b-[1px] border-[#E3E3E3]">
           <p className="text-[#515151] text-[16px] font-sans text-left">
