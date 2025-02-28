@@ -108,13 +108,17 @@ export default function Vibes({ filter }) {
           className="w-full sm:h-[calc(100dvh-0px)] hide-scrollbar md:hidden bg-black"
         >
           <Slider ref={sliderRef} {...settings}>
-            {vibes.map((vibe, index) =>
+            {/* {vibes.map((vibe, index) =>
               (index + 1) % 4 === 0 ? (
                 <VibesAd key={`ad-${index}`} />
               ) : (
                 <Vibe vibe={vibe} key={vibe._id} index={index} />
               )
-            )}
+            )} */}
+
+            {vibes.map((vibe, index) => (
+              <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
           </Slider>
         </div>
       ) : (
@@ -137,13 +141,16 @@ export default function Vibes({ filter }) {
               handleSlideChange(currentSlide)
             }
           >
-            {vibes.map((vibe, index) =>
+            {/* {vibes.map((vibe, index) =>
               (index + 1) % 4 === 0 ? (
                 <VibesAd key={`ad-${index}`} />
               ) : (
                 <Vibe vibe={vibe} key={vibe._id} index={index} />
               )
-            )}
+            )} */}
+            {vibes.map((vibe, index) => (
+              <Vibe vibe={vibe} key={vibe._id} index={index} />
+            ))}
           </Carousel>
         </div>
       )}

@@ -70,7 +70,7 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
     deleteVibe(vibe._id);
   };
 
-  const isUserCreator = getCookie("name") === vibe.creator.name;
+  const isUserCreator = getCookie("username") === vibe.creator.user_name;
   const creatorMenuItems = [
     {
       label: "Archive",
@@ -154,18 +154,8 @@ const ThreeDotMenuViewOthers = ({ vibe }) => {
                   onClick={() => handleFunctions[item.label]()}
                 >
                   {item.icon && (
-                    <svg
-                      className="h-5 w-5 mr-3"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d={item.icon}
-                      />
+                    <svg className="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
                     </svg>
                   )}
                   {item.label}

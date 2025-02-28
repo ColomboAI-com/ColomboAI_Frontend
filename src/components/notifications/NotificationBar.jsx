@@ -157,5 +157,4 @@ const NotificationBar = ({ onClose }) => {
     </div>
   );
 };
-
 export default NotificationBar;
