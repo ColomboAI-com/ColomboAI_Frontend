@@ -44,7 +44,7 @@ export default function Conversations() {
       }`}
     >
       <div className="Chat-list">
-        <div className="chat-users border- border-purple-400 overflow-y-auto relative h-full min-h-[100px] max-h-[calc(100vh_-_190px)] md:max-h-[calc(100vh_-_145px)]">
+        <div className="chat-users border- border-purple-400 overflow-y-auto relative h-full min-h-[100px] max-h-[calc(100dvh_-_190px)] md:max-h-[calc(100dvh_-_145px)]">
           {loadings.conversations ? (
             <Loader className={"mt-5"} />
           ) : conversations?.length > 0 ? (

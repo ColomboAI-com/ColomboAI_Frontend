@@ -78,7 +78,7 @@ const ComponentsAppsChat = () => {
 
   return (
     <div className="font-sans">
-      <div className="relative overflow-x-hidden flex h-[calc(100vh_-_155px)] md:h-[calc(100vh_-_140px)] sm:min-h-0 max-h-[calc(100vh_-_240px)] md:max-h-[calc(100vh_-_140px)]">
+      <div className="relative overflow-x-hidden flex h-[calc(100dvh_-_155px)] md:h-[calc(100dvh_-_140px)] sm:min-h-0 max-h-[calc(100dvh_-_240px)] md:max-h-[calc(100dvh_-_140px)]">
         <Conversations />
         {selectedChat && !isUserProfileOpen ? (
           <div className="Chat-window bg-white shadow flex-1 p-0 lg:relative absolute w-[100%] h-[100%] lg:z-[1] z-[11]">

@@ -271,7 +271,7 @@ const CreateVibe = ({
     <main className={`h-full ${font.className}`}>
       {showError && <CreateVibeErrorComponent currentState={showError} />}
       {!isSelectedFromComputer ? (
-        <div className="border-[1px] border-brandprimary flex flex-col justify-between rounded-[10px] h-[calc(100vh-200px)] no-scrollbar overflow-y-auto">
+        <div className="border-[1px] border-brandprimary flex flex-col justify-between rounded-[10px] h-[calc(100dvh-200px)] no-scrollbar overflow-y-auto">
           <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
             <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
               {nextStep && (
@@ -500,7 +500,7 @@ const CreateVibe = ({
                       onChange={(e) => setPromptInput(e.target.value)}
                       // onKeyDown={handleKeyDown}
                       placeholder="Create using Magic Pen"
-                      className="flex  p-3 pr-12 rounded-2xl w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
+                      className="flex  p-3 pr-12 rounded-2xl w-[calc(100%-2px)] min-h-[14dvh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0"
                     />
                   </div>
                   <button

@@ -112,7 +112,7 @@ export default function ProfileRenderFeed({ username, filter }) {
           )}
         </>
       ) : (
-        <div className="flex flex-col justify-center items-center gap-2 h-[calc(100vh-725px)] min-h-[200px]">
+        <div className="flex flex-col justify-center items-center gap-2 h-[calc(100dvh-725px)] min-h-[200px]">
           <img src={metaInfo.image} />
           <p className="text-center text-sm text-gray-500">
             {metaInfo.title || "No data found"}

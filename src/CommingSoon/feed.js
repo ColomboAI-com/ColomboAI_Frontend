@@ -1,23 +1,21 @@
-import React from 'react';
+import React from "react";
 // import logoImage from './CommingSoon/images/feedimage/image.png'; // Import the image from the src folder
 // import logoog from './CommingSoon/images/logoimage/image.png';
-import logoog from './images/logoimage/image.png'
-import logoImage from './images/feedimage/image.png'
+import logoog from "./images/logoimage/image.png";
+import logoImage from "./images/feedimage/image.png";
 const App = () => {
   // Inline Styles
   const appStyle = {
-    minHeight: '80vh',
-    background: 'linear-gradient(to bottom, #3577eb, #1e1a8a)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-    padding: '36px',
+    minHeight: "80dvh",
+    background: "linear-gradient(to bottom, #3577eb, #1e1a8a)",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    padding: "36px",
     // marginTop:'40px',
-    marginBottom:'0' ,
-
-    
+    marginBottom: "0",
   };
 
   return (
@@ -31,21 +29,21 @@ const App = () => {
 const Header = () => {
   // Inline Styles for Header
   const headerStyle = {
-    color: 'white',
-    fontSize: '1rem',
-    fontWeight: 'bold',
-    marginBottom: '20px'
+    color: "white",
+    fontSize: "1rem",
+    fontWeight: "bold",
+    marginBottom: "20px",
   };
 
   const logoStyle = {
-    width: '230px',
-    height: '66px'
+    width: "230px",
+    height: "66px",
   };
 
   return (
     <header style={headerStyle}>
-      <img 
-        src={logoog.src}  // Use the imported image here
+      <img
+        src={logoog.src} // Use the imported image here
         alt="ColomboAI Logo"
         style={logoStyle}
       />
@@ -56,51 +54,47 @@ const Header = () => {
 const FeedPlaceholder = () => {
   // Inline Styles for Feed Placeholder
   const imageContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: '-130px', 
-    zIndex: '1',  
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "-130px",
+    zIndex: "1",
   };
 
   const imageStyle = {
-    width: '420px',
-    height: '420px',
-    marginTop:'-50px',
-    zIndex: '1',  
-   
+    width: "420px",
+    height: "420px",
+    marginTop: "-50px",
+    zIndex: "1",
   };
 
   const cardStyle = {
-    backgroundColor: 'white',
-    padding: '20px',
-    borderRadius: '14px',
-    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
-    display: 'inline-block',
-    position: 'relative', 
-    marginTop:'-30px',
-    zIndex: '0' 
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "14px",
+    boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+    display: "inline-block",
+    position: "relative",
+    marginTop: "-30px",
+    zIndex: "0",
   };
 
   const cardTextStyle = {
-    fontSize: '1.125rem',
-    color: '#6237FF',
-    fontWeight: '600',
-     zIndex: '0'
+    fontSize: "1.125rem",
+    color: "#6237FF",
+    fontWeight: "600",
+    zIndex: "0",
   };
 
   const subTextStyle = {
-    marginTop: '8px',
-    color: '#258EFF',
-    font:'60px'
-    
-    
+    marginTop: "8px",
+    color: "#258EFF",
+    font: "60px",
   };
 
   const comingSoonStyle = {
-    marginTop: '32px',
-    color: 'white',
-    fontSize: '1.5rem',
-    
+    marginTop: "32px",
+    color: "white",
+    fontSize: "1.5rem",
   };
 
   return (
@@ -108,15 +102,15 @@ const FeedPlaceholder = () => {
       {/* Robot Image and Placeholder Text */}
       <div style={imageContainerStyle}>
         <img
-          src={logoImage.src}  // Use the imported image for the robot too
+          src={logoImage.src} // Use the imported image for the robot too
           alt="Robot"
           style={imageStyle}
         />
       </div>
       <div style={cardStyle}>
         <p style={cardTextStyle}>
-          Hang tight! Your personalized feed is still on its way. 🚀 We’re working
-          to bring you all the content you love.
+          Hang tight! Your personalized feed is still on its way. 🚀 We’re
+          working to bring you all the content you love.
         </p>
         <p style={subTextStyle}>Stay tuned for the perfect scroll!</p>
       </div>

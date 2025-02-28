@@ -105,7 +105,7 @@ export default function Vibes({ filter }) {
       {isSmallScreen ? (
         <div
           {...swipeHandlers}
-          className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black"
+          className="w-full sm:h-[calc(100dvh-0px)] hide-scrollbar md:hidden bg-black"
         >
           <Slider ref={sliderRef} {...settings}>
             {vibes.map((vibe, index) =>

@@ -14,7 +14,7 @@ const ProviderComponent = ({ children }) => {
 export default ProviderComponent;
 
 const SplashLogo = () => (
-  <div className="h-[100vh] w-full flex justify-center">
+  <div className="h-[100dvh] w-full flex justify-center">
     <img
       src="/images/home/ColomboAI-logo.svg"
       alt="logo-image"

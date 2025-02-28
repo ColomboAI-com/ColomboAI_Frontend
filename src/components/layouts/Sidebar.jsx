@@ -90,7 +90,7 @@ const Sidebar = () => {
         {/* <div className="mb-[46px] mt-[20px]">
                     <img src={getCookie('profilePic')} alt="profile-image" className="w-[42px] mx-auto rounded-full" />
                 </div> */}
-        <div className="h-[75vh] overflow-auto flex flex-col items-center">
+        <div className="h-[75dvh] overflow-auto flex flex-col items-center">
           <Link href="https://caidev.colomboai.com/genai-search/">
             <div className="mb-[34px] flex flex-col items-center">
               <GenAiIcon
