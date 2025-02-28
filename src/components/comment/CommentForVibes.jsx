@@ -223,7 +223,7 @@ const CommentForVibe = ({ specificPostId, posts }) => {
             />
           )}
         </div>
-        {/* <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85vh] lg:h-screen md:w-full sm:w-full sm:hidden">
+        {/* <div className="xl:block w-[60%] xl:w-[70%] xl:h-[85dvh] lg:h-screen md:w-full sm:w-full sm:hidden">
         <div className="h-full  flex items-center relative min-w-[651px] max-w-[1200px] xl:w-full lg-max:w-[651px]">
           <button
             onClick={() => setIsCommentOpen(false)}
@@ -269,7 +269,7 @@ const CommentForVibe = ({ specificPostId, posts }) => {
         </div>
         <div
           ref={containerRef}
-          className="comment-section flex-1 no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54vh] lg:h-[61vh] md:h-[44vh]"
+          className="comment-section flex-1 no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54dvh] lg:h-[61dvh] md:h-[44dvh]"
         >
           {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">

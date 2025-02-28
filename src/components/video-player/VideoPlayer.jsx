@@ -146,7 +146,7 @@ export const VideoJS = (props) => {
             playerRef.current.muted(!isMuted);
             setIsMuted(!isMuted);
           }}
-          className="flex items-center justify-center absolute bottom-1 right-2 z-[999]"
+          className="flex items-center justify-center absolute bottom-1 right-2 z-[9]"
         >
           <div className="flex items-center justify-center rounded-full bg-black p-1.5 [&_path]:stroke-white">
             {isMuted ? (

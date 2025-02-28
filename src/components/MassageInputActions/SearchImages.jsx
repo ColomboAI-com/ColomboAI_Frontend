@@ -16,7 +16,7 @@
 //   const [messageNum, setMessageNum] = useState(messages)
 
 //   return (
-//     <div className=" fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+//     <div className=" fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100dvh-110px)] hide-scrollbar overflow-y-auto">
 //       <div className="grid grid-cols-2 gap-2">
 
 //         {images.slice(0, 4).map((image, i) => (
@@ -107,7 +107,7 @@
 //   }, [query]);
 
 //   return (
-//     <div className="fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+//     <div className="fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100dvh-110px)] hide-scrollbar overflow-y-auto">
 //       <div className="grid grid-cols-2 gap-2">
 //         {images.slice(0, 4).map((image, i) => (
 //           <a key={i} href={image.url} target="_blank" rel="noopener noreferrer">
@@ -176,7 +176,7 @@
 //   }, [chatId]); // Dependency on chatId ensures that the effect runs when chatId changes
 
 //   return (
-//     <div className="fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
+//     <div className="fixed top-[220px] right-5 w-[351px] flex flex-col items-center gap-2.5 h-[calc(100dvh-110px)] hide-scrollbar overflow-y-auto">
 //       <div className="grid grid-cols-2 gap-2">
 //         {/* {images.map((image, i) => ( */}
 //         {images.slice(0, 4).map((image, i) => (
@@ -259,11 +259,11 @@ const SearchImages = ({ chatId, query }) => {
         ))}
       </div>
       <div className="w-[300px]  h-[250px] cursor-pointer">
-          <SideTopAdComponent divid={"top1"} />
-        </div>
-        <div className="w-[300px] h-[600px] cursor-pointer">
-          <SideAdComponent divid={"bottom1"} />
-        </div>
+        <SideTopAdComponent divid={"top1"} />
+      </div>
+      <div className="w-[300px] h-[600px] cursor-pointer">
+        <SideAdComponent divid={"bottom1"} />
+      </div>
       {/* <div className="md:w-[8rem] md:h-[6.666667rem] lg:w-[12rem] lg:h-[10rem] xl:w-[18.75rem] xl:h-[15.625rem] border-[1px] border-black cursor-pointer">
         <SideTopAdComponent divid={"top1"} />
       </div>

@@ -100,7 +100,7 @@ const EditProfile = () => {
         />
         <textarea
           type="text"
-          className="mt-4 w-full h-[20vh] resize-none rounded-[40px] border-[1px] border-[#ACACAC] bg-[#EEEEEE] px-[30px] py-[22px] text-black placeholder:text-brandplaceholder focus:border-[#ACACAC] focus:bg-[#EEEEEE] focus:outline-none"
+          className="mt-4 w-full h-[20dvh] resize-none rounded-[40px] border-[1px] border-[#ACACAC] bg-[#EEEEEE] px-[30px] py-[22px] text-black placeholder:text-brandplaceholder focus:border-[#ACACAC] focus:bg-[#EEEEEE] focus:outline-none"
           placeholder="Edit Bio"
           autoComplete="off"
           name={"email"}

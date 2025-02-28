@@ -17,7 +17,7 @@ const VisitLayout = ({ children }) => {
           </div>
         </header>
         <div className="flex border- border-green-400">
-          <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100vh-56.28px)] sticky top-14 z-50 hidden md:block border-r-2 border-brandprimary">
+          <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100dvh-56.28px)] sticky top-14 z-50 hidden md:block border-r-2 border-brandprimary">
             <Sidebar />
           </div>
           <div className="flex justify-center flex-1 border- border-purple-400">

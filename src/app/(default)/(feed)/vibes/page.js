@@ -91,7 +91,8 @@ export default function Vibes({ filter }) {
     return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
-  const { vibes, getVibes, page, loadings, resetFeedValues } = useContext(VibeContext);
+  const { vibes, getVibes, page, loadings, resetFeedValues } =
+    useContext(VibeContext);
 
   useEffect(() => {
     getVibes();
@@ -102,7 +103,10 @@ export default function Vibes({ filter }) {
   return (
     <>
       {isSmallScreen ? (
-        <div {...swipeHandlers} className="w-full sm:h-[calc(100vh-0px)] hide-scrollbar md:hidden bg-black">
+        <div
+          {...swipeHandlers}
+          className="w-full sm:h-[calc(100dvh-0px)] hide-scrollbar md:hidden bg-black"
+        >
           <Slider ref={sliderRef} {...settings}>
             {/* {vibes.map((vibe, index) =>
               (index + 1) % 4 === 0 ? (
@@ -133,7 +137,9 @@ export default function Vibes({ filter }) {
             removeArrowOnDeviceType={["mobile"]}
             dotListClass="custom-dot-list-style"
             itemClass="w-full md:h-full !bg-[#333]"
-            afterChange={(previousSlide, { currentSlide }) => handleSlideChange(currentSlide)}
+            afterChange={(previousSlide, { currentSlide }) =>
+              handleSlideChange(currentSlide)
+            }
           >
             {/* {vibes.map((vibe, index) =>
               (index + 1) % 4 === 0 ? (

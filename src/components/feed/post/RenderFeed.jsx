@@ -99,12 +99,14 @@ export default function RenderFeed({ filter }) {
       posts.forEach((_, index) => {
         if ((index + 1) % 4 === 0) {
           const adSlotId = `feed-ad-${index}`;
-          const adSlot = window.googletag
-            .pubads()
-            .getSlots()
-            .find((slot) => slot.getSlotElementId() === adSlotId);
-          if (adSlot) {
-            window.googletag.destroySlots([adSlot]);
+          if (window.googletag) {
+            const adSlot = window.googletag
+              .pubads()
+              .getSlots()
+              .find((slot) => slot.getSlotElementId() === adSlotId);
+            if (adSlot) {
+              window.googletag.destroySlots([adSlot]);
+            }
           }
         }
       });

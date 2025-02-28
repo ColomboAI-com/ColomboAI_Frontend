@@ -1,51 +1,58 @@
-"use client"
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import leftArrow from "../../../public/images/icons/leftArrow.png";
-import Image from 'next/image';
-
+import Image from "next/image";
 
 const History = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [history, setHistory] = useState([
     {
-      date: '11th May, 2024',
+      date: "11th May, 2024",
       queries: [
-        { id: 1, query: 'What is a Video', checked: false },
-        { id: 2, query: 'What is the capital of Sri Lanka?', checked: false },
-        { id: 3, query: 'How does quantum computing work?', checked: false },
+        { id: 1, query: "What is a Video", checked: false },
+        { id: 2, query: "What is the capital of Sri Lanka?", checked: false },
+        { id: 3, query: "How does quantum computing work?", checked: false },
       ],
     },
     {
-      date: '10th May, 2024',
+      date: "10th May, 2024",
       queries: [
-        { id: 4, query: 'Will Gojo Sataru come back?', checked: false },
-        { id: 5, query: 'Best ramyeon recipe?', checked: false },
-        { id: 6, query: 'Who is the best vocalist in K-pop?', checked: false },
+        { id: 4, query: "Will Gojo Sataru come back?", checked: false },
+        { id: 5, query: "Best ramyeon recipe?", checked: false },
+        { id: 6, query: "Who is the best vocalist in K-pop?", checked: false },
       ],
     },
     {
-      date: '9th May, 2024',
+      date: "9th May, 2024",
       queries: [
-        { id: 7, query: 'How to learn React quickly?', checked: false },
-        { id: 8, query: 'Best practices for coding interviews?', checked: false },
+        { id: 7, query: "How to learn React quickly?", checked: false },
+        {
+          id: 8,
+          query: "Best practices for coding interviews?",
+          checked: false,
+        },
       ],
     },
     {
-      date: '8th May, 2024',
+      date: "8th May, 2024",
       queries: [
-        { id: 9, query: 'What are the latest trends in AI?', checked: false },
-        { id: 10, query: 'How to manage time effectively?', checked: false },
+        { id: 9, query: "What are the latest trends in AI?", checked: false },
+        { id: 10, query: "How to manage time effectively?", checked: false },
       ],
     },
 
     {
-        date: '7th May, 2024',
-        queries: [
-          { id: 11, query: 'what to work effectively?', checked: false },
-          { id: 12, query: 'How to complete work before deadline?', checked: false },
-        ],
-      },
+      date: "7th May, 2024",
+      queries: [
+        { id: 11, query: "what to work effectively?", checked: false },
+        {
+          id: 12,
+          query: "How to complete work before deadline?",
+          checked: false,
+        },
+      ],
+    },
   ]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showClearAllModal, setShowClearAllModal] = useState(false);
@@ -53,7 +60,7 @@ const History = () => {
 
   const handleClearHistory = () => {
     setShowClearAllModal(true);
-  }
+  };
 
   const toggleCheckbox = (dayIndex, queryId) => {
     const newHistory = [...history];
@@ -94,7 +101,8 @@ const History = () => {
 
       {/* Main Content */}
       <div style={styles.mainContent}>
-        <button onClick={e => router.push('/gen-search')}><Image src={leftArrow} alt="colombo" className="w-2" />
+        <button onClick={(e) => router.push("/gen-search")}>
+          <Image src={leftArrow} alt="colombo" className="w-2" />
         </button>
         {/* Title */}
         <h2 style={styles.heading}>GenAI Search History</h2>
@@ -127,10 +135,7 @@ const History = () => {
             </div>
           ))}
         </div>
-        <button
-          style={styles.clearAllBtn}
-          onClick={() => handleClearHistory()}
-        >
+        <button style={styles.clearAllBtn} onClick={() => handleClearHistory()}>
           Clear All History
         </button>
 
@@ -190,7 +195,7 @@ const History = () => {
 const styles = {
   container: {
     display: "flex",
-    height: "100vh",
+    height: "100dvh",
   },
   sidebar: {
     width: "15%",

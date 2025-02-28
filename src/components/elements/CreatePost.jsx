@@ -126,7 +126,7 @@ const CreatePost = () => {
 
   return (
     <>
-      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82vh] no-scrollbar overflow-y-auto font-sans">
+      <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[82dvh] no-scrollbar overflow-y-auto font-sans">
         <div className="flex items-center justify-between pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
           <div className={`${!nextStep ? "p-[10px]" : " justify-center"}`}>
             {nextStep && (
@@ -165,7 +165,7 @@ const CreatePost = () => {
           </div>
         </div>
 
-        <div className="px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70vh]">
+        <div className="px-[18px] py-[22px] font-sans flex flex-col justify-between h-[70dvh]">
           <div className={`flex flex-col ${isMagicPenOpen ? "gap-5" : ""}`}>
             <div
               className={`${isMagicPenOpen ? "flex" : "hidden"} items-start`}
@@ -175,7 +175,7 @@ const CreatePost = () => {
                   value={promptInput}
                   onChange={(e) => setPromptInput(e.target.value)}
                   placeholder="Create using Magic Pen"
-                  className="flex p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14vh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm resize-none outline-none focus:ring-offset-0 focus:ring-0"
+                  className="flex p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] min-h-[14dvh] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm resize-none outline-none focus:ring-offset-0 focus:ring-0"
                 />
               </div>
               <button className="-ml-12 mt-3" onClick={handleGeneratePost}>
@@ -207,7 +207,7 @@ const CreatePost = () => {
                   value={postInput}
                   onChange={(e) => setPostInput(e.target.value)}
                   placeholder="Create Your Post"
-                  className="w-full p-3 pr-12 rounded-2xl m-[2px] min-h-[30vh] border-2 border-brandprimary text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm resize-none outline-none focus:ring-offset-0 focus:ring-0"
+                  className="w-full p-3 pr-12 rounded-2xl m-[2px] min-h-[30dvh] border-2 border-brandprimary text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm resize-none outline-none focus:ring-offset-0 focus:ring-0"
                 />
               </div>
             </div>
