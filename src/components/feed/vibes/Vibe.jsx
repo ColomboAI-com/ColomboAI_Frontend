@@ -232,14 +232,14 @@ export default function Vibe({ vibe, index }) {
           </div>
         </div>
       )}
-      <div className=" flex items-center justify-center object-contain w-full bg-[#333] h-full">
+      <div className=" flex items-center justify-center object-contain w-full bg-black h-full">
         {/* Main Content */}
 
         {/* to view the repostvibe dialog box uncomment this component */}
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
         <div
-          className={` relative overflow-clip bg-black md:rounded-[20px] hide-scrollbar border-green-400 sm:h-[calc(100ddvh-0px)] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
+          className={` relative overflow-clip bg-black md:rounded-[20px] hide-scrollbar border-green-400 sm:h-[calc(100dvh-0px)] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
           onClick={() => {
             console.log("clicked");
             handlePlayPause();
@@ -290,7 +290,7 @@ export default function Vibe({ vibe, index }) {
           ) : (
             <img
               src={vibe?.media?.[0]}
-              className="w-full h-full object-fill"
+              className="w-full h-full object-cover"
               alt="vibes_content"
             />
           )}
