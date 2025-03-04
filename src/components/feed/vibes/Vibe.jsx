@@ -290,7 +290,7 @@ export default function Vibe({ vibe, index }) {
           ) : (
             <img
               src={vibe?.media?.[0]}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-fill"
               alt="vibes_content"
             />
           )}
