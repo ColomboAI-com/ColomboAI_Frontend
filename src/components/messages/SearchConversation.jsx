@@ -7,15 +7,9 @@ import { useMessages } from "@/context/MessagesContext";
 import { getCookie } from "cookies-next";
 
 const SearchConversation = ({ setIsOpen }) => {
-  const { setIsNewMessageOpen, setIsSearchUserOpen, setIsUserProfileOpen } =
-    useContext(GlobalContext);
+  const { setIsNewMessageOpen, setIsSearchUserOpen, setIsUserProfileOpen } = useContext(GlobalContext);
   const [query, setQuery] = useState("");
-  const {
-    conversations,
-    setSelectedChat,
-    updateCurrentConversation,
-    setIsShowChatMenu,
-  } = useMessages();
+  const { conversations, setSelectedChat, updateCurrentConversation, setIsShowChatMenu } = useMessages();
   const [filteredData, setFilteredData] = useState([]);
   const [initialData, setInitialData] = useState([]);
 
@@ -42,10 +36,7 @@ const SearchConversation = ({ setIsOpen }) => {
     let initData = [];
     for (const conversation of conversations) {
       for (const participant of conversation.participants) {
-        if (
-          participant._id !== getCookie("userid") &&
-          !userIdSet.has(participant._id)
-        ) {
+        if (participant._id !== getCookie("userid") && !userIdSet.has(participant._id)) {
           userIdSet.add(participant._id);
           initData.push(participant);
         }
@@ -76,22 +67,14 @@ const SearchConversation = ({ setIsOpen }) => {
     conversations?.forEach((conversation) => {
       if (
         conversation?.participants?.[0].user_name != getCookie("username") &&
-        (conversation?.participants?.[0]?.user_name
-          ?.toLowerCase()
-          .includes(query.toLowerCase()) ||
-          conversation?.participants?.[0]?.name
-            ?.toLowerCase()
-            .includes(query.toLowerCase()))
+        (conversation?.participants?.[0]?.user_name?.toLowerCase().includes(query.toLowerCase()) ||
+          conversation?.participants?.[0]?.name?.toLowerCase().includes(query.toLowerCase()))
       ) {
         users.push(conversation?.participants?.[0]);
       } else if (
         conversation?.participants?.[1].user_name != getCookie("username") &&
-        (conversation?.participants?.[1]?.user_name
-          ?.toLowerCase()
-          .includes(query.toLowerCase()) ||
-          conversation?.participants?.[1]?.name
-            ?.toLowerCase()
-            .includes(query.toLowerCase()))
+        (conversation?.participants?.[1]?.user_name?.toLowerCase().includes(query.toLowerCase()) ||
+          conversation?.participants?.[1]?.name?.toLowerCase().includes(query.toLowerCase()))
       )
         users.push(conversation?.participants?.[1]);
     });
@@ -127,10 +110,8 @@ const SearchConversation = ({ setIsOpen }) => {
         />
       </div>
       <div className="max-h-[60dvh] border- overflow-y-auto no-scrollbar py-4 px-6 min-h-[100px]">
-        {fileteredData?.length === 0 && (
-          <div className="flex font-sans items-center justify-center text-center h-full">
-            No data found
-          </div>
+        {filteredData?.length === 0 && (
+          <div className="flex font-sans items-center justify-center text-center h-full">No data found</div>
         )}
         {conversations?.length ? (
           filteredData?.map((user) => (
@@ -148,9 +129,7 @@ const SearchConversation = ({ setIsOpen }) => {
                     </div>
                     <div className="mx-3 text-left">
                       <p className="font-semibold flex">@{user?.user_name}</p>
-                      <p className="max-w-[160px] truncate text-xs text-gray-500">
-                        {user?.name}
-                      </p>
+                      <p className="max-w-[160px] truncate text-xs text-gray-500">{user?.name}</p>
                     </div>
                   </div>
                 </div>
