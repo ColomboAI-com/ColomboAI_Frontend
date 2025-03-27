@@ -90,7 +90,7 @@ const SearchUsersListGeneral = () => {
   console.log("searchUsers: ", searchUsersDetails);
 
   return (
-    <div className=" max-h-[70vh]">
+    <div className=" max-h-[70dvh]">
       <div className=" flex justify-between px-8 py-6 border-b-2">
         <div></div>
         <p className="text-2xl">Search Users</p>
@@ -116,7 +116,7 @@ const SearchUsersListGeneral = () => {
           className="w-[95%] self-center px-4 py-3 rounded-full text-black focus:outline-none border border-px border-brandprimary"
         />
       </div>
-      <div className=" max-h-[60vh] border- overflow-y-auto no-scrollbar py-4 px-6 ">
+      <div className=" max-h-[60dvh] border- overflow-y-auto no-scrollbar py-4 px-6 ">
         {searchUsersDetails.length ? (
           searchUsersDetails.map((person) => {
             return (

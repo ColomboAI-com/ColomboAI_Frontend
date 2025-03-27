@@ -31,7 +31,7 @@ const SelectPicture = () => {
   };
 
   return (
-    <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[62vh] no-scrollbar overflow-y-auto font-sans">
+    <div className="border-[1px] border-brandprimary rounded-[10px] min-h-[62dvh] no-scrollbar overflow-y-auto font-sans">
       <div className="relative flex items-center justify-center pl-[37px] pr-[41px] pt-[22px] pb-[17px] border-b-2 border-#BCB9B9">
         <div className="flex items-center">
           <p className="pl-[17px] md:text-2xl text-base font-sans tracking-wider text-center">
@@ -47,7 +47,7 @@ const SelectPicture = () => {
           </button>
         </div>
       </div>
-      <div className=" px-10 font-sans border- border-purple-400 flex flex-col justify-between h-[50vh] ">
+      <div className=" px-10 font-sans border- border-purple-400 flex flex-col justify-between h-[50dvh] ">
         {messageFile ? (
           <div className="flex justify-center relative my-8 w-[350px] mx-auto">
             {!messageFile?.type?.includes("video") ? (

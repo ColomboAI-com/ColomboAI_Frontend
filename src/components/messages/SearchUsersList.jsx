@@ -36,7 +36,11 @@ const SearchUsersList = () => {
 
     if (followersData) {
       for (let user of followersData) {
-        if (user._id && !uniqueUserIds.has(user._id) && !existingConversationUsers.has(user._id)) {
+        if (
+          user._id &&
+          !uniqueUserIds.has(user._id) &&
+          !existingConversationUsers.has(user._id)
+        ) {
           uniqueUserIds.add(user._id);
           contact_list.push(user);
         }
@@ -45,7 +49,11 @@ const SearchUsersList = () => {
 
     if (followingsData) {
       for (let user of followingsData) {
-        if (user._id && !uniqueUserIds.has(user._id) && !existingConversationUsers.has(user._id)) {
+        if (
+          user._id &&
+          !uniqueUserIds.has(user._id) &&
+          !existingConversationUsers.has(user._id)
+        ) {
           uniqueUserIds.add(user._id);
           contact_list.push(user);
         }
@@ -70,7 +78,7 @@ const SearchUsersList = () => {
   };
 
   return (
-    <div className=" max-h-[70vh]">
+    <div className=" max-h-[70dvh]">
       <div className=" flex justify-between px-8 py-6 border-b-2">
         <div></div>
         <p className="text-2xl">New Message</p>
@@ -81,7 +89,7 @@ const SearchUsersList = () => {
           <CrossIcon w={20} h={20} fill={"#646464"} />
         </button>
       </div>
-      <div className=" max-h-[60vh] border- overflow-y-auto no-scrollbar py-4 px-6 ">
+      <div className=" max-h-[60dvh] border- overflow-y-auto no-scrollbar py-4 px-6 ">
         {contactList.length ? (
           contactList.map((person) => {
             return (

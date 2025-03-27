@@ -15,11 +15,18 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const [nextStep, setNextStep] = useState(false);
   const { loadings } = useContext(StoryContext);
 
-  const { setStoryMediaURL, setStoryMediaType, setIsSelectedFromComputer, storyMediaURL, setStoryFile } =
-    useContext(GlobalContext);
+  const {
+    setStoryMediaURL,
+    setStoryMediaType,
+    setIsSelectedFromComputer,
+    storyMediaURL,
+    setStoryFile,
+  } = useContext(GlobalContext);
 
   const handleFileInputClick = () => {
-    document.querySelector('input[type="file"][accept="image/*, video/*"]').click();
+    document
+      .querySelector('input[type="file"][accept="image/*, video/*"]')
+      .click();
   };
 
   const clearFileHandler = () => {
@@ -62,7 +69,11 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
   const { createStory, getRecentStories } = useContext(StoryContext);
 
   const createPostSubmitButton = async () => {
-    const res = await createStory({ fileType: mediaType, file: file, content: inputText });
+    const res = await createStory({
+      fileType: mediaType,
+      file: file,
+      content: inputText,
+    });
     if (res) {
       MessageBox("success", res.message);
       setIsCreateStoryOpen(false);
@@ -72,7 +83,7 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
 
   return (
     <>
-      <div className="flex flex-col justify-between border-[1px] border-brandprimary rounded-[10px] lg:min-h-[74vh] lg:max-h-[74vh] overflow-y-auto font-sans">
+      <div className="flex flex-col justify-between border-[1px] border-brandprimary rounded-[10px] lg:min-h-[74dvh] lg:max-h-[74dvh] overflow-y-auto font-sans">
         <div className="flex items-center justify-between p-[22px] border-b-2 border-gray-300">
           <div>
             {nextStep ? (
@@ -99,8 +110,11 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
         </div>
         <div className="flex flex-col">
           {!nextStep && mediaUrl !== "" && mediaType.includes("image") && (
-            <div className="px-10 pt-[15px] pb-[35px] flex flex-col justify-between h-[0vh]">
-              <button onClick={() => setNextStep(true)} className="ml-auto text-brandprimary font-semibold">
+            <div className="px-10 pt-[15px] pb-[35px] flex flex-col justify-between h-[0dvh]">
+              <button
+                onClick={() => setNextStep(true)}
+                className="ml-auto text-brandprimary font-semibold"
+              >
                 Next
               </button>
             </div>
@@ -108,32 +122,45 @@ const UploadStoryModal = ({ setIsCreateStoryOpen, getStory }) => {
           {/* <div className="flex items-start w-full px-[20px]">
           <input className="flex  p-3 pr-12 rounded-2xl m-[1px] w-[calc(100%-2px)] text-brandprimary bg-[#F7F7F7] placeholder:text-[#D1D1D1] text-sm  text- resize-none outline-none focus:ring-offset-0 focus:ring-0 border-[1px] border-brandprimary" placeholder="Type a message" value={inputText} onChange={(e) => setInputText(e.target.value)} name="text" />
         </div> */}
-          {mediaUrl !== "" && (mediaType.includes("image") || mediaType.includes("video")) && (
-            <div className="relative my-6 h-full">
-              {mediaType.includes("image") ? (
-                <img
-                  key={mediaUrl}
-                  src={mediaUrl}
-                  alt="File Preview"
-                  className="w-full h-[66vh] object-contain"
-                />
-              ) : (
-                <ReactPlayer url={mediaUrl} key={mediaUrl} playing={true} loop={true} controls={true} className="w-full aspect-video"/>
-              )}
-              <div className="absolute top-3 right-2">
-                <div className="flex flex-row items-center justify-center">
-                  <span onClick={clearFileHandler} className="px-2 pointer">
-                    <CloseDocumentIcon />
-                  </span>
+          {mediaUrl !== "" &&
+            (mediaType.includes("image") || mediaType.includes("video")) && (
+              <div className="relative my-6 h-full">
+                {mediaType.includes("image") ? (
+                  <img
+                    key={mediaUrl}
+                    src={mediaUrl}
+                    alt="File Preview"
+                    className="w-full h-[66dvh] object-contain"
+                  />
+                ) : (
+                  <ReactPlayer
+                    url={mediaUrl}
+                    key={mediaUrl}
+                    playing={true}
+                    loop={true}
+                    controls={true}
+                    className="w-full aspect-video"
+                  />
+                )}
+                <div className="absolute top-3 right-2">
+                  <div className="flex flex-row items-center justify-center">
+                    <span onClick={clearFileHandler} className="px-2 pointer">
+                      <CloseDocumentIcon />
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
           {!nextStep && (
             <div className="flex flex-col h-full items-center pb-[20px] pt-2 justify-end ">
               <p className="text-xl my-4">Drag photos and videos here</p>
               <span onClick={handleFileInputClick}>
-                <input className="hidden" type="file" accept="image/*, video/*" onChange={handleFileChange} />
+                <input
+                  className="hidden"
+                  type="file"
+                  accept="image/*, video/*"
+                  onChange={handleFileChange}
+                />
                 <Button
                   title={"Select from computer"}
                   className={

@@ -30,7 +30,7 @@ const DefaultLayout = ({ children }) => {
       <UserProfileContextProvider>
         <div className="min-w-screen border- border-yellow-400">
           <div className="flex border- border-green-400">
-            <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100vh)] sticky z-50 hidden md:block border-r-[1px] border-brandprimary">
+            <div className="min-w-[10%] xl:min-w-[5%] h-[calc(100dvh)] sticky z-50 hidden md:block border-r-[1px] border-brandprimary">
               <Sidebar />
             </div>
             <div className="w-full flex flex-col relative">
@@ -70,7 +70,9 @@ const DefaultLayout = ({ children }) => {
                       setIsOpen={setIsSearchConversationOpen}
                       className="w-full max-w-2xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
                     >
-                      <SearchConversation setIsOpen={setIsSearchConversationOpen} />
+                      <SearchConversation
+                        setIsOpen={setIsSearchConversationOpen}
+                      />
                     </Modal>
                   )}
                   {children}

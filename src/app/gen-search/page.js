@@ -277,17 +277,17 @@ function GenSearch() {
       </div>
 
       {/* do not change this ad components */}
-      
-      {(messages.length===0 || isUploading) &&
-      <div className="fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100vh-110px)] hide-scrollbar overflow-y-auto">
-        <div className="w-[300px]  h-[250px] cursor-pointer">
-          <SideTopAdComponent divid={"top2"} />
+
+      {(messages.length === 0 || isUploading) && (
+        <div className="fixed top-[220px] right-5 w-[300px] flex flex-col items-center gap-2.5 h-[calc(100dvh-110px)] hide-scrollbar overflow-y-auto">
+          <div className="w-[300px]  h-[250px] cursor-pointer">
+            <SideTopAdComponent divid={"top2"} />
+          </div>
+          <div className="w-[300px] h-[600px] cursor-pointer">
+            <SideAdComponent divid={"bottom2"} />
+          </div>
         </div>
-        <div className="w-[300px] h-[600px] cursor-pointer">
-          <SideAdComponent divid={"bottom2"} />
-        </div>
-      </div>
-}
+      )}
     </>
   );
 }

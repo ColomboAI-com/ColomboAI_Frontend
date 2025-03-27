@@ -4,7 +4,8 @@ import { formatDistanceToNow } from "date-fns";
 
 const NotificationBar = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState("Activities");
-  const { notifications, markNotificationAsRead, fetchRecentNotifications } = useNotifications();
+  const { notifications, markNotificationAsRead, fetchRecentNotifications } =
+    useNotifications();
   const [unreadNotifications, setUnreadNotifications] = useState([]);
 
   const containerStyle = {
@@ -56,7 +57,9 @@ const NotificationBar = ({ onClose }) => {
   }, []);
 
   useEffect(() => {
-    const unreadNotificationList = notifications?.filter((notification) => !notification.wasRead);
+    const unreadNotificationList = notifications?.filter(
+      (notification) => !notification.wasRead
+    );
     setUnreadNotifications(unreadNotificationList);
     return () => setUnreadNotifications([]);
   }, [notifications]);
@@ -70,17 +73,15 @@ const NotificationBar = ({ onClose }) => {
   return (
     <div
       style={containerStyle}
-      className="fixed top-[78px] left-[72px] z-[999] h-[calc(100vh-78px)] w-[350px]"
+      className="fixed top-[78px] left-[72px] z-[999] h-[calc(100dvh-78px)] w-[350px]"
     >
       {/* Sticky Header */}
       <div style={headerStyle} className="header">
         <div className="flex justify-between items-center">
-          <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>Notifications</h2>
-          <button 
-            className="text-base text-[#8B8B8B]"
-            style={{ fontsize: '24px', border: '1px solid #ccc', borderRadius: '4px', padding: '4px 8px', cursor: 'pointer', marginLeft: '-10px' }}
-            onClick={onClose}
-          >
+          <h2 style={{ fontSize: "18px", fontWeight: "bold" }}>
+            Notifications
+          </h2>
+          <button className="text-base text-[#8B8B8B]" onClick={onClose}>
             X
           </button>
         </div>
@@ -97,10 +98,16 @@ const NotificationBar = ({ onClose }) => {
           >
             Activities
           </button>
-          <button style={tabButtonStyle(activeTab === "mentions")} onClick={() => setActiveTab("mentions")}>
+          <button
+            style={tabButtonStyle(activeTab === "mentions")}
+            onClick={() => setActiveTab("mentions")}
+          >
             Mentions
           </button>
-          <button style={tabButtonStyle(activeTab === "notices")} onClick={() => setActiveTab("notices")}>
+          <button
+            style={tabButtonStyle(activeTab === "notices")}
+            onClick={() => setActiveTab("notices")}
+          >
             Notices
           </button>
         </div>
@@ -115,11 +122,16 @@ const NotificationBar = ({ onClose }) => {
             </div>
           )}
           {notifications?.map((notification) => (
-            <li key={notification.id} style={{ padding: "12px 0", borderBottom: "1px solid #e5e7eb" }}>
+            <li
+              key={notification.id}
+              style={{ padding: "12px 0", borderBottom: "1px solid #e5e7eb" }}
+            >
               <div style={{ display: "flex", alignItems: "center" }}>
                 <div className="text-sm text-[#8B8B8B] ">
                   <p>{notification.content}</p>
-                  <span>{formatDistanceToNow(new Date(notification.createdAt))}</span>
+                  <span>
+                    {formatDistanceToNow(new Date(notification.createdAt))}
+                  </span>
                 </div>
                 {/* Conditionally render follow back button */}
                 {notification.action === "started following you" && (

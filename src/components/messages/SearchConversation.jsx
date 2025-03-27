@@ -83,8 +83,8 @@ const SearchConversation = ({ setIsOpen }) => {
   }, [query]);
 
   return (
-    <div className="flex flex-col h-[70vh]">
-      <div className="flex justify-between px-8 py-6 border-b-2">
+    <div className="max-h-[70dvh]">
+      <div className=" flex justify-between px-8 py-6 border-b-2">
         <div></div>
         <p className="text-2xl font-sans">Search conversation</p>
         <button
@@ -109,7 +109,7 @@ const SearchConversation = ({ setIsOpen }) => {
           className="w-[95%] self-center px-4 py-3 rounded-full text-black focus:outline-none border border-px border-brandprimary"
         />
       </div>
-      <div className="flex-1 overflow-y-auto no-scrollbar py-4 px-6">
+      <div className="max-h-[60dvh] border- overflow-y-auto no-scrollbar py-4 px-6 min-h-[100px]">
         {filteredData?.length === 0 && (
           <div className="flex font-sans items-center justify-center text-center h-full">No data found</div>
         )}

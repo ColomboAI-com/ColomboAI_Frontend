@@ -47,8 +47,12 @@ export default function Vibe({ vibe, index }) {
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
-  const { fetchSongById, incrementVibeImpressions, getVibeImpressions, fetchVibeWallet } =
-    useContext(VibeContext);
+  const {
+    fetchSongById,
+    incrementVibeImpressions,
+    getVibeImpressions,
+    fetchVibeWallet,
+  } = useContext(VibeContext);
   const { setIsCreateVibeOpen } = useContext(GlobalContext);
 
   const { userDetails } = useContext(UserProfileContext);
@@ -215,16 +219,20 @@ export default function Vibe({ vibe, index }) {
   console.log(song, "song");
 
   return (
-    <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100vh-0px)] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100dvh-0px)] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} vibe={vibe} />}
       {showShare && (
         <div className="fixed [&>div>div]:!relative top-0 left-0 w-full h-full z-50 flex justify-center items-center">
           <div className="h-full mr-12">
-            <ShareVibe currentState={showShare} vibeId={vibe._id} onClose={() => setShowShare(false)} />
+            <ShareVibe
+              currentState={showShare}
+              vibeId={vibe._id}
+              onClose={() => setShowShare(false)}
+            />
           </div>
         </div>
       )}
-      <div className=" flex items-center justify-center object-contain w-full bg-[#333] h-full">
+      <div className=" flex items-center justify-center object-contain w-full bg-black h-full">
         {/* Main Content */}
 
         {/* to view the repostvibe dialog box uncomment this component */}
@@ -280,7 +288,11 @@ export default function Vibe({ vibe, index }) {
               ) : null}
             </React.Fragment>
           ) : (
-            <img src={vibe?.media?.[0]} className="w-full h-full object-cover" alt="vibes_content" />
+            <img
+              src={vibe?.media?.[0]}
+              className="w-full h-full object-cover"
+              alt="vibes_content"
+            />
           )}
 
           {/* {
@@ -301,11 +313,20 @@ export default function Vibe({ vibe, index }) {
             <p className="text-lg">Vibes</p>
           </div>
 
-          <div className="md:hidden absolute top-8 right-2" onClick={(e) => e.stopPropagation()}>
-            <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
-            <button className="mt-1" onClick={() => setIsCreateVibeOpen(true)}>
-              <IoMdAddCircleOutline className="w-7 h-7 tall:w-6 tall:h-6" fill={"#FFFFFF"} />
+          <div
+            className="md:hidden absolute top-8 right-2 flex flex-row md:flex-col items-center gap-2"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="md:mt-1"
+              onClick={() => setIsCreateVibeOpen(true)}
+            >
+              <IoMdAddCircleOutline
+                className="w-7 h-7 tall:w-6 tall:h-6"
+                fill={"#FFFFFF"}
+              />
             </button>
+            <ThreeDotMenuViewOthersHorizontal vibe={vibe} />
           </div>
           <div className="absolute bottom-0 left-0 right-0 px-4">
             {/* whenever there is sponsored ad uncomment and call this component */}
@@ -313,7 +334,10 @@ export default function Vibe({ vibe, index }) {
             {/* <SponsoredAdComponent/> */}
 
             {
-              <div className="flex items-center gap-2  " onClick={(e) => e.stopPropagation()}>
+              <div
+                className="flex items-center gap-2  "
+                onClick={(e) => e.stopPropagation()}
+              >
                 <img
                   src={vibe.creator.profile_picture}
                   alt="profile-image"
@@ -339,7 +363,10 @@ export default function Vibe({ vibe, index }) {
                     : `${vibe.content.slice(0, 130)}... `
                   : vibe.content}
                 {vibe.content.length > 130 && (
-                  <span onClick={toggleSeeMore} style={{ color: "#276ab3", cursor: "pointer" }}>
+                  <span
+                    onClick={toggleSeeMore}
+                    style={{ color: "#276ab3", cursor: "pointer" }}
+                  >
                     {seeMore ? "see less" : "see more"}
                   </span>
                 )}
@@ -437,7 +464,11 @@ export default function Vibe({ vibe, index }) {
                   />
                 </div>
               )}
-              <div role="button" onClick={handlePlayPause} className="flex items-center justify-center">
+              <div
+                role="button"
+                onClick={handlePlayPause}
+                className="flex items-center justify-center"
+              >
                 <div className="flex items-center justify-center rounded-full bg-black p-1.5">
                   {isPlaying ? <Play size={16} /> : <Pause size={16} />}
                 </div>
@@ -454,7 +485,10 @@ export default function Vibe({ vibe, index }) {
             <div className="flex flex-col items-center gap-[2px] md:gap-1">
               <ThreeDotMenuViewOthers vibe={vibe} />
               <button onClick={() => setIsCreateVibeOpen(true)}>
-                <IoMdAddCircleOutline className="w-7 h-7 tall:w-6 tall:h-6" fill={"#FFFFFF"} />
+                <IoMdAddCircleOutline
+                  className="w-7 h-7 tall:w-6 tall:h-6"
+                  fill={"#FFFFFF"}
+                />
               </button>
             </div>
             <div className="flex flex-col gap-[5px] md:gap-2 justify-between items-center text-[12px]">
@@ -463,12 +497,18 @@ export default function Vibe({ vibe, index }) {
                 onClick={() => handleRepost()}
                 role="button"
               >
-                <VibesViewIcon className="w-[30px] h-[30px] tall:w-6 tall:h-6" fill={"#ffffff"} />
+                <VibesViewIcon
+                  className="w-[30px] h-[30px] tall:w-6 tall:h-6"
+                  fill={"#ffffff"}
+                />
                 <p>{vibe?.counts?.reposts || 0}</p>
               </div>
               <LikeVibe vibe={vibe} />
               <div className="flex flex-col items-center gap-[2px] ">
-                <VibesCommentIcon className="w-[30px] h-[30px] tall:w-6 tall:h-6" fill={"#ffffff"} />
+                <VibesCommentIcon
+                  className="w-[30px] h-[30px] tall:w-6 tall:h-6"
+                  fill={"#ffffff"}
+                />
                 <p>{vibe?.counts?.comments || 0}</p>
               </div>
               <div className="flex flex-col items-center gap-[2px]">
@@ -480,7 +520,10 @@ export default function Vibe({ vibe, index }) {
                 onClick={() => handleShare()}
                 role="button"
               >
-                <VibesShareIcon className="w-[30px] h-[30px] tall:w-6 tall:h-6" fill={"#ffffff"} />
+                <VibesShareIcon
+                  className="w-[30px] h-[30px] tall:w-6 tall:h-6"
+                  fill={"#ffffff"}
+                />
                 {/* <p>121.5k</p> */}
               </div>
               <div className="flex flex-col items-center gap-[2px] ">
@@ -506,7 +549,11 @@ export default function Vibe({ vibe, index }) {
                 </div>
               )}
 
-              <div role="button" onClick={handlePlayPause} className="flex items-center justify-center">
+              <div
+                role="button"
+                onClick={handlePlayPause}
+                className="flex items-center justify-center"
+              >
                 <div className="flex items-center justify-center rounded-full bg-black p-1.5">
                   {isPlaying ? <Play size={16} /> : <Pause size={16} />}
                 </div>
