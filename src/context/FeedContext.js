@@ -346,6 +346,22 @@ export default function FeedContextProvider({ children }) {
     }
   };
 
+  const getPostById = async (postId) => {
+    try {
+      setLoadings((prev) => ({ ...prev, getPost: true }));
+      const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      });
+      return res.data;
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setLoadings((prev) => ({ ...prev, getPost: false }));
+    }
+  };
+
   // const generateWallet = async (postIds, adRevenue) => {
   //   try {
   //     setLoadings((prev) => ({ ...prev, calcWallet: true }));
@@ -401,6 +417,7 @@ export default function FeedContextProvider({ children }) {
         getPostImpressions,
         incrementPostImpressions,
         getPostWallet,
+        getPostById,
         // generateWallet,
       }}
     >
