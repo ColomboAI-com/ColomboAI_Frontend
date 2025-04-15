@@ -16,7 +16,7 @@ const InputBar = ({ sendMessage, setUploadedFile, uploading, uploadedFile }) => 
       e.preventDefault();
       // router.push(`https://caidev.colomboai.com/genai-search/?q=${message}`);
       if (message.trim() || file) {
-        window.location.href = `https://caidev.colomboai.com/genai-search/?q=${message}`;
+        window.location.href = `https://colomboai.com/genai-search/?q=${message}`;
         // window.location.href = `http://localhost:3001/genai-search/?q=${message}`;
         sendMessage(message, file);
         setMessage("");
