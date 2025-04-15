@@ -3,6 +3,7 @@ import { getCookie } from "@/utlils/cookies";
 import React, { useEffect, useRef, useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { BsFillTrash3Fill } from "react-icons/bs";
+import LinkifiedText from "./LinkifyText";
 
 const Message = ({ message }) => {
   const messageRef = useRef();
@@ -77,7 +78,7 @@ const Message = ({ message }) => {
                          : "rounded-tl-none"
                      }`}
                   >
-                    {message.content}
+                    <LinkifiedText text={message.content} />
                   </div>
                   {message?.edited ? (
                     <div className="flex justify-end">
