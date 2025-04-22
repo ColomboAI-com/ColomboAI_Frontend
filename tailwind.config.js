@@ -14,6 +14,7 @@ module.exports = {
       },
       colors: {
         'brandprimary': '#1E71F2',
+        'brandsecondary': '#E0E0E0',
         'brandplaceholder': '#BDBDBD',
         'error': '#ff4949',
         'sidebaricon': '#8E8E93',

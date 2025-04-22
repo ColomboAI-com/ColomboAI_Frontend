@@ -88,7 +88,7 @@ const PostCard = ({ post }) => {
   return (
     <>
       <div
-        className={`overflow-x-hidden border-[0.5px] border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5 pb-4`}
+        className={`overflow-x-hidden border-[1px] border-brandsecondary sm:rounded-[10px] md:rounded-[10px] mt-5 pb-4`}
       >
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <div className="flex items-center justify-start w-full">
