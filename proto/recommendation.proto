@@ -1,0 +1,25 @@
+// Syntax.
+syntax = "proto3";
+
+// Package.
+package recommendations;
+
+// Messages.
+/* Specification for the data needed when requesting recommendations from the
+ * recommendations engine.
+ */
+message RecommendationRequest {
+  /* ID of the user to receive the recommendations.
+   */
+  string user_id = 1;
+}
+
+/* Specification for a single recommendation provided by the recommendations
+ * engine when replying to a recommendation request made by a client. Use this
+ * message as a stream when specifying RPC returns.
+ */
+message RecommendationResponse {
+  /* ID of the content to be recommended to the user.
+   */
+  string content_id = 1;
+}

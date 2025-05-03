@@ -1,0 +1,20 @@
+// Syntax.
+syntax = "proto3";
+
+// Package.
+package recommendations;
+
+// Imports.
+import "recommendation.proto";
+
+// Services.
+/* Service definitions related to user posts on the ColomboAI platform.
+ */
+service Posts {
+  // RPCs.
+  /* Acquires post recommendations for a given user. See "recommendation.proto"
+   * protobuf file for more details into the RecommendationRequest and into the
+   * RecommendationResponse message specifications.
+   */
+  rpc getRecommendations (RecommendationRequest) returns (stream RecommendationResponse);
+}

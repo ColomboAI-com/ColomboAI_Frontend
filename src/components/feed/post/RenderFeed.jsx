@@ -12,8 +12,7 @@ import LargeAdComponent from "@/components/ads/LargeAd";
 import VideoAd from "@/components/ads/VideoAd";
 
 export default function RenderFeed({ filter }) {
-  const { posts, getPosts, loadings, page, resetFeedValues } =
-    useContext(FeedContext);
+  const { posts, getPosts, loadings, page, resetFeedValues, getRecommendedPosts } = useContext(FeedContext);
 
   const { getUserDetails } = useContext(UserProfileContext);
 
@@ -24,7 +23,8 @@ export default function RenderFeed({ filter }) {
   const userName = getCookie("username");
 
   useEffect(() => {
-    getPosts(filter);
+    // getPosts(filter);
+    getRecommendedPosts();
     return () => resetFeedValues();
   }, [filter]);
 
@@ -55,7 +55,7 @@ export default function RenderFeed({ filter }) {
   // INFINTIE SCROLLING NEW CODE - START
   const handleLoadMore = () => {
     if (!loadings.getPost) {
-      getPosts(filter, page);
+      // getPosts(filter, page);
     }
   };
 

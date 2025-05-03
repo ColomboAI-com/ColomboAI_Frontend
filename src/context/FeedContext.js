@@ -383,6 +383,44 @@ export default function FeedContextProvider({ children }) {
   //   }
   // };
 
+  // Helper to fetch posts from array of IDs
+  const fetchAllPostsByIds = async (recommendations) => {
+    try {
+      setLoadings((prev) => ({ ...prev, getPost: true }));
+
+      const postPromises = recommendations.map((rec) => getPostById(rec.content_id));
+
+      const posts_data = await Promise.all(postPromises);
+      return posts_data; // array of post data in the same order as recommendations
+    } catch (err) {
+      handleError(err);
+      return [];
+    } finally {
+      setLoadings((prev) => ({ ...prev, getPost: false }));
+    }
+  };
+
+  const getRecommendedPosts = async () => {
+    try {
+      setLoadings((prev) => ({ ...prev, getPost: true }));
+      const response = await fetch(`/api/grpc?user_id=${getCookie("userid")}&type=posts`);
+      const data = await response.json();
+
+      let posts_data = await fetchAllPostsByIds(data.recommendations);
+      setPosts(posts_data || []);
+
+      if (response.ok) {
+        // setPosts(data.recommendations || []);
+      } else {
+        console.error("Failed to fetch recommendations:", data.error);
+      }
+    } catch (error) {
+      handleError(error);
+    } finally {
+      setLoadings((prev) => ({ ...prev, getPost: false }));
+    }
+  };
+
   const resetFeedValues = () => {
     setPosts([]);
     setPage(1);
@@ -418,6 +456,7 @@ export default function FeedContextProvider({ children }) {
         incrementPostImpressions,
         getPostWallet,
         getPostById,
+        getRecommendedPosts,
         // generateWallet,
       }}
     >
