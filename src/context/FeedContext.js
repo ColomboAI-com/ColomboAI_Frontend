@@ -406,8 +406,11 @@ export default function FeedContextProvider({ children }) {
       const response = await fetch(`/api/grpc?user_id=${getCookie("userid")}&type=posts`);
       const data = await response.json();
 
-      let posts_data = await fetchAllPostsByIds(data.recommendations);
-      setPosts(posts_data || []);
+      let posts_data = await fetchAllPostsByIds(data.recommendations.slice(0, 10));
+      await setPosts(posts_data || []);
+
+      posts_data = await fetchAllPostsByIds(data.recommendations.slice(10));
+      await setPosts((prev) => [...prev, ...posts_data]);
 
       if (response.ok) {
         // setPosts(data.recommendations || []);
