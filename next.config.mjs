@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    swcMinify: false,
-    reactStrictMode: false,
-    eslint: { ignoreDuringBuilds: true },
+    swcMinify: true,
+    reactStrictMode: true,
 };
 
 export default nextConfig;

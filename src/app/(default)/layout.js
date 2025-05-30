@@ -2,7 +2,7 @@
 "use client";
 import Header from "@/components/layouts/Header";
 import RightSidebar from "@/components/layouts/RightSidebar";
-import SuggestedVibes from "@/components/layouts/SuggestedVibes";
+// import SuggestedVibes from "@/components/layouts/SuggestedVibes"; // Unused import
 import Sidebar from "@/components/layouts/Sidebar";
 import FeedContextProvider from "@/context/FeedContext";
 import Modal from "@/components/elements/Modal";
@@ -30,7 +30,7 @@ import vibes_icon from "../../../public/images/icons/sidebar/vibes_icon.svg";
 import { handleError } from "@/utlils/handleError";
 import axios from "axios";
 import { getCookie } from "@/utlils/cookies";
-import { MessageBox } from "@/components/MessageBox";
+// import { MessageBox } from "@/components/MessageBox"; // Unused import
 import CreateVibe from "@/components/elements/CreateVibe";
 import CreateStory from "@/components/elements/CreateStory";
 import Image from "next/image";
@@ -85,9 +85,9 @@ const DefaultLayout = ({ children }) => {
   } = useContext(GlobalContext);
 
   useEffect(() => {
-    console.log(storyMediaURL);
-    console.log(storyMediaType);
-  }, [storyMediaURL]);
+    // console.log(storyMediaURL); // Kept for potential debugging
+    // console.log(storyMediaType); // Kept for potential debugging
+  }, [storyMediaURL, storyMediaType]); // Added storyMediaType
   const [uploadedFile, setUploadedFile] = useState(null);
   const defaultPostType = "thought";
   const [uploadedPostType, setUploadedPostType] = useState(defaultPostType);
@@ -153,7 +153,7 @@ const DefaultLayout = ({ children }) => {
   useEffect(() => {
     // Request user for notification permission
     requestPermission();
-  }, [isShowChatMenu]);
+  }, [isShowChatMenu, requestPermission]); // Added requestPermission
 
   // useEffect(() => {
   //   const re = window.sessionStorage.getItem("redirect");
@@ -303,14 +303,14 @@ const DefaultLayout = ({ children }) => {
                 </div>
                 {pathname === "/shop" || pathname === "/news" ? null : (
                   <div
-                    className={`${
-                      (pathname === `/vibes` ||
-                        pathname === "/feed" ||
-                        pathname === "/videos" ||
-                        pathname === "/thoughts" ||
-                        pathname === "/explore") &&
-                      "sm:hidden lg:hidden xl:block"
-                    } lg:max-h-[calc(100dvh-192.28px)] overflow-y-auto no-scrollbar self-start sm:w-[100%] lg:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative lg:ml-[1px]`}
+                    className={`
+                      lg:max-h-[calc(100dvh-192.28px)] overflow-y-auto no-scrollbar self-start
+                      sm:w-[100%] xl:w-[30%] pt-[13px] px-2 shadow-[-11px_-9px_2px_-10px_#00000033] relative
+                      ${(pathname === "/vibes" || pathname === "/feed" || pathname === "/videos" || pathname === "/thoughts" || pathname === "/explore")
+                        ? "sm:hidden lg:hidden xl:block" // Specific paths: sm:hidden, lg:hidden, xl:block (xl:w-[30%] from base applies)
+                        : "lg:w-[100%] lg:ml-[1px] lg:block" // Other paths: lg visible with 100% width. sm:w-[100%] and xl:w-[30%] from base apply.
+                      }
+                    `}
                   >
                     <RightSidebar />
                   </div>

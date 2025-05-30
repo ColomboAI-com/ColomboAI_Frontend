@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Image from "next/image"; // Import next/image
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import InputBar from "./InputBar.jsx";
@@ -162,9 +162,11 @@ const Header = () => {
               </Dropdown>
               <CreateDropdown />
             </div>
-            <img
+            <Image
               src="/images/home/ColomboAI-logo.svg"
-              alt="logo-image"
+              alt="ColomboAI Logo"
+              width={150} // Example width, adjust as needed
+              height={35} // Example height, adjust as needed
               className="mx-auto"
             />
             <div className="flex items-center gap-4 lg:gap-8 lg:mx-9 ">
