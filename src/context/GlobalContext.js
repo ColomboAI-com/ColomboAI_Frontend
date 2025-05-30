@@ -24,6 +24,11 @@ export default function GlobalContextProvider({ children }) {
   let [popupImage, setPopupImage] = useState("");
   let [popupVideo, setPopupVideo] = useState("");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [isGloballyMuted, setIsGloballyMuted] = useState(true);
+
+  const toggleGlobalMuteState = () => {
+    setIsGloballyMuted(prev => !prev);
+  };
 
   return (
     <GlobalContext.Provider
@@ -68,6 +73,8 @@ export default function GlobalContextProvider({ children }) {
         setIsSearchUserOpen,
         isSearchConversationOpen,
         setIsSearchConversationOpen,
+        isGloballyMuted,
+        toggleGlobalMuteState,
       }}
     >
       {children}

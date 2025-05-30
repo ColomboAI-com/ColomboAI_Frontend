@@ -46,14 +46,15 @@ export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true); // Default to wanting to play
+  // const [isMuted, setIsMuted] = useState(true); // Removed local mute state
   const {
     fetchSongById,
     incrementVibeImpressions,
     getVibeImpressions,
     fetchVibeWallet,
   } = useContext(VibeContext);
-  const { setIsCreateVibeOpen } = useContext(GlobalContext);
+  const { setIsCreateVibeOpen, isGloballyMuted, toggleGlobalMuteState } = useContext(GlobalContext);
 
   const { userDetails } = useContext(UserProfileContext);
   const [song, setSong] = useState({});
@@ -71,29 +72,11 @@ export default function Vibe({ vibe, index }) {
   const [showPlayerStatus, setShowPlayerStatus] = useState(false);
 
   const handlePlayPause = () => {
-    const newIsPlaying = !isPlaying;
-    setIsPlaying(newIsPlaying);
-    setShowPlayerStatus(true); // Consider toggling based on actual play success/failure if needed
-
-    try {
-      if (newIsPlaying) {
-        // Attempt to play audio if present and source is set
-        if (audioRef.current && audioRef.current.src && audioRef.current.paused) {
-          audioRef.current.play().catch(error => {
-            console.error("Error playing song audio:", error);
-            // Optionally, revert isPlaying state here or set an error state
-            // setIsPlaying(false);
-          });
-        }
-      } else {
-        // Pause audio if present and source is set
-        if (audioRef.current && audioRef.current.src && !audioRef.current.paused) {
-          audioRef.current.pause();
-        }
-      }
-    } catch (error) {
-      console.error("Error in handlePlayPause with audioRef:", error);
+    if (!isPlaying) { // If it was paused completely
+      setIsPlaying(true); // Start playing again
     }
+    toggleGlobalMuteState(); // Toggle the global mute state
+    setShowPlayerStatus(true);
   };
 
   const handleRepost = () => {
@@ -160,6 +143,7 @@ export default function Vibe({ vibe, index }) {
         if (entry.isIntersecting) {
           // VIBE IS IN VIEW
           setIsVibeInView(true);
+          setIsPlaying(true); // Ensure we intend to play when it becomes visible
           handleIncreaseViewCount();
           handleFetchImpressions();
 
@@ -167,28 +151,21 @@ export default function Vibe({ vibe, index }) {
             try {
               hasFetchedSong.current = true;
               const result = await fetchSongById(vibe.song_id);
-              setSong(result[0]);
+              setSong(result[0]); // This will trigger the audio control useEffect
 
               if (audioRef.current && result[0]?.audio) {
                 audioRef.current.src = result[0].audio;
-                //  Removed automatic playback:
-                //  audioRef.current.play().catch((error) => {
-                //    console.log("Playback requires user interaction:", error);
-                //  });
               }
             } catch (error) {
               console.log("Error fetching song:", error);
             }
-          } else if (audioRef.current && audioRef.current.src) {
-            //  Removed automatic playback:
-            //  audioRef.current.play().catch((error) => {
-            //    console.log("Playback requires user interaction:", error);
-            //  });
           }
+          // No direct play/pause for audioRef here, handled by the new useEffect
         } else {
           // VIBE IS NOT IN VIEW
           setIsVibeInView(false);
-          if (audioRef.current) {
+          setIsPlaying(false); // Stop playing when out of view
+          if (audioRef.current) { // Immediate pause for audioRef on scroll out
             audioRef.current.pause();
           }
         }
@@ -209,7 +186,25 @@ export default function Vibe({ vibe, index }) {
         observer.unobserve(VibeViewedRef.current);
       }
     };
-  }, [vibe.song_id]);
+  }, [vibe.song_id, fetchSongById]); // Added fetchSongById as it's used in effect
+
+  // Effect for controlling song audio playback and mute state
+  useEffect(() => {
+    if (audioRef.current && audioRef.current.src) {
+      audioRef.current.muted = isGloballyMuted; // Use global mute state
+      if (isVibeInView && isPlaying) {
+        // Check if audio is already playing to avoid interrupting or restarting
+        if (audioRef.current.paused) {
+          audioRef.current.play().catch(error => {
+            console.error("Error auto-playing song audio:", error);
+            // Autoplay was prevented, user will need to interact (click)
+          });
+        }
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isVibeInView, isPlaying, isGloballyMuted, song]); // Use global mute state in dependency array
 
   const handleIncreaseViewCount = async () => {
     try {
@@ -303,9 +298,9 @@ export default function Vibe({ vibe, index }) {
                   url={vibe.media[0]}
                   className="w-full h-full overflow-visible"
                   controls={false}
-                  playing={isPlaying}
+                  playing={isVibeInView && isPlaying}
                   loop={true}
-                  muted={!isPlaying}
+                  muted={isGloballyMuted} // Use global mute state
                   width="100%"
                   height="100%"
                   playsinline={true}
@@ -515,7 +510,7 @@ export default function Vibe({ vibe, index }) {
                 className="flex items-center justify-center"
               >
                 <div className="flex items-center justify-center rounded-full bg-black p-1.5">
-                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
+                  {isGloballyMuted ? <Play size={16} /> : <Pause size={16} />}
                 </div>
               </div>
             </div>
@@ -600,7 +595,7 @@ export default function Vibe({ vibe, index }) {
                 className="flex items-center justify-center"
               >
                 <div className="flex items-center justify-center rounded-full bg-black p-1.5">
-                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
+                  {isGloballyMuted ? <Play size={16} /> : <Pause size={16} />}
                 </div>
               </div>
             </div>
