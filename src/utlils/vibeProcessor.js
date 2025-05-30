@@ -38,13 +38,17 @@ export const processVideoWithAudio = async (videoFile, audioUrl) => {
     await ffmpeg.writeFile('audio.mp3', new Uint8Array(audioArrayBuffer));
 
     await ffmpeg.exec([
-      '-i', 'input.mp4',
-      '-i', 'audio.mp3',
-      '-map', '0:v',           
-      '-map', '1:a',           
-      '-c:v', 'copy',          
-      '-shortest',             
-      'output.mp4'
+      '-i', 'input.mp4', // Input video file
+      '-i', 'audio.mp3', // Input audio file
+      '-map', '0:v', // Select video stream from the first input (input.mp4)
+      '-map', '1:a', // Select audio stream from the second input (audio.mp3)
+      '-c:v', 'libx264', // Re-encode video to H.264 for wider compatibility
+      '-profile:v', 'main', // Use H.264 Main profile for broader device support
+      '-pix_fmt', 'yuv420p', // Set pixel format to yuv420p, common for H.264
+      '-c:a', 'aac', // Explicitly set audio codec to AAC
+      '-shortest', // Finish encoding when the shortest input stream ends
+      '-movflags', '+faststart', // Optimize for web streaming (allows playback before full download)
+      'output.mp4' // Output file name
     ]);
 
     

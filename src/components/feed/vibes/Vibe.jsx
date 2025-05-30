@@ -46,7 +46,7 @@ export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const {
     fetchSongById,
     incrementVibeImpressions,
@@ -71,12 +71,28 @@ export default function Vibe({ vibe, index }) {
   const [showPlayerStatus, setShowPlayerStatus] = useState(false);
 
   const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
-    setShowPlayerStatus(true);
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
+    const newIsPlaying = !isPlaying;
+    setIsPlaying(newIsPlaying);
+    setShowPlayerStatus(true); // Consider toggling based on actual play success/failure if needed
+
+    try {
+      if (newIsPlaying) {
+        // Attempt to play audio if present and source is set
+        if (audioRef.current && audioRef.current.src && audioRef.current.paused) {
+          audioRef.current.play().catch(error => {
+            console.error("Error playing song audio:", error);
+            // Optionally, revert isPlaying state here or set an error state
+            // setIsPlaying(false);
+          });
+        }
+      } else {
+        // Pause audio if present and source is set
+        if (audioRef.current && audioRef.current.src && !audioRef.current.paused) {
+          audioRef.current.pause();
+        }
+      }
+    } catch (error) {
+      console.error("Error in handlePlayPause with audioRef:", error);
     }
   };
 
@@ -89,6 +105,15 @@ export default function Vibe({ vibe, index }) {
 
   useEffect(() => {
     audioRef.current = typeof Audio !== "undefined" ? new Audio() : null;
+    if (audioRef.current) {
+      audioRef.current.onerror = (e) => {
+        console.error("Audio element error:", e);
+        // More detailed error:
+        if (e.target && e.target.error) {
+          console.error("Audio error code:", e.target.error.code, "message:", e.target.error.message);
+        }
+      };
+    }
 
     return () => {
       if (audioRef.current) {
@@ -146,17 +171,19 @@ export default function Vibe({ vibe, index }) {
 
               if (audioRef.current && result[0]?.audio) {
                 audioRef.current.src = result[0].audio;
-                audioRef.current.play().catch((error) => {
-                  console.log("Playback requires user interaction:", error);
-                });
+                //  Removed automatic playback:
+                //  audioRef.current.play().catch((error) => {
+                //    console.log("Playback requires user interaction:", error);
+                //  });
               }
             } catch (error) {
               console.log("Error fetching song:", error);
             }
           } else if (audioRef.current && audioRef.current.src) {
-            audioRef.current.play().catch((error) => {
-              console.log("Playback requires user interaction:", error);
-            });
+            //  Removed automatic playback:
+            //  audioRef.current.play().catch((error) => {
+            //    console.log("Playback requires user interaction:", error);
+            //  });
           }
         } else {
           // VIBE IS NOT IN VIEW
@@ -219,7 +246,13 @@ export default function Vibe({ vibe, index }) {
   console.log(song, "song");
 
   return (
-    <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100dvh-0px)] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
+    // CSS Compatibility Notes:
+    // - `sm:h-[100vh]` was changed from `sm:h-[calc(100dvh-0px)]` for broader iOS compatibility (dvh unit support).
+    // - `aspect-[9/16]` (used below) relies on aspect-ratio CSS property, may not be supported on iOS < 15. Layout might break.
+    // - `gap-2` (used in flex containers) might not be supported in flexbox for iOS < 14.1. Spacing might be affected.
+    // - `hide-scrollbar` is a custom utility, assumed to use ::-webkit-scrollbar for Safari compatibility.
+    // - `overflow-clip` (used below) is supported Safari >= 16. Older versions will treat as auto/hidden.
+    <div className="relative border-green-400 hide-scrollbar sm:h-[100vh] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} vibe={vibe} />}
       {showShare && (
         <div className="fixed [&>div>div]:!relative top-0 left-0 w-full h-full z-50 flex justify-center items-center">
@@ -239,7 +272,7 @@ export default function Vibe({ vibe, index }) {
 
         {/* THIS IS USED FOR IMPRESSION AND TO MAKE SURE VIBE PLAYS AFTER THE USER SCROLLS */}
         <div
-          className={` relative overflow-clip bg-black md:rounded-[20px] hide-scrollbar border-green-400 sm:h-[calc(100dvh-0px)] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
+          className={` relative overflow-clip bg-black md:rounded-[20px] hide-scrollbar border-green-400 sm:h-[100vh] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
           onClick={() => {
             console.log("clicked");
             handlePlayPause();
@@ -270,13 +303,25 @@ export default function Vibe({ vibe, index }) {
                   url={vibe.media[0]}
                   className="w-full h-full overflow-visible"
                   controls={false}
-                  playing={true}
+                  playing={isPlaying}
                   loop={true}
                   muted={!isPlaying}
                   width="100%"
                   height="100%"
                   playsinline={true}
                   ref={playerRef}
+                  onError={(e, data) => {
+                    console.error("ReactPlayer error:", e);
+                    if (data && data.details) {
+                         console.error("ReactPlayer error details:", data.details);
+                    }
+                    if (data && data.fatal !== undefined) {
+                        console.error("ReactPlayer fatal error:", data.fatal);
+                        // if (data.fatal) {
+                        // Potentially attempt to recover or show a message
+                        // }
+                    }
+                  }}
                   config={{
                     file: {
                       attributes: {
