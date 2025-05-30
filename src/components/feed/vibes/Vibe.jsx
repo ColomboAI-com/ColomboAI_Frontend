@@ -47,7 +47,8 @@ export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
   const [showShare, setShare] = useState(false); // State for GenericShareModal
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isVideoPlayerActive, setIsVideoPlayerActive] = useState(true); // New
+  const [isContentMuted, setIsContentMuted] = useState(true);
   const {
     fetchSongById,
     incrementVibeImpressions,
@@ -72,12 +73,26 @@ export default function Vibe({ vibe, index }) {
   const [showPlayerStatus, setShowPlayerStatus] = useState(false);
 
   const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
-    setShowPlayerStatus(true);
-    if (audioRef.current.paused) {
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
+    setShowPlayerStatus(true); // Keep this if it manages icon visibility
+
+    if (vibe.type === "video") {
+      if (isContentMuted) { // If content is currently muted
+        setIsContentMuted(false);    // Unmute it
+        setIsVideoPlayerActive(true); // Ensure it's set to play
+      } else { // Content is already unmuted, so toggle play/pause
+        setIsVideoPlayerActive(prev => !prev);
+      }
+    } else { // For image vibes with an audio track (non-video vibes)
+      // Let isVideoPlayerActive control the play/pause state for the audioRef as well
+      if (audioRef.current) {
+        if (audioRef.current.paused) {
+          audioRef.current.play().catch(e => console.error("Audio play failed", e));
+          setIsVideoPlayerActive(true);
+        } else {
+          audioRef.current.pause();
+          setIsVideoPlayerActive(false);
+        }
+      }
     }
   };
 
@@ -147,23 +162,36 @@ export default function Vibe({ vibe, index }) {
 
               if (audioRef.current && result[0]?.audio) {
                 audioRef.current.src = result[0].audio;
-                audioRef.current.play().catch((error) => {
-                  // console.log("Playback requires user interaction:", error); // Keep for potential debug
-                });
+                if (vibe.type !== "video") {
+                  audioRef.current.play()
+                    .then(() => setIsVideoPlayerActive(true))
+                    .catch((error) => {
+                      setIsVideoPlayerActive(false);
+                      // console.log("Playback requires user interaction:", error); // Keep for potential debug
+                    });
+                }
               }
             } catch (error) {
               // console.log("Error fetching song:", error); // Keep for potential debug
             }
           } else if (audioRef.current && audioRef.current.src) {
-            audioRef.current.play().catch((error) => {
-              // console.log("Playback requires user interaction:", error); // Keep for potential debug
-            });
+            if (vibe.type !== "video") {
+              audioRef.current.play()
+                .then(() => setIsVideoPlayerActive(true))
+                .catch((error) => {
+                  setIsVideoPlayerActive(false);
+                  // console.log("Playback requires user interaction:", error); // Keep for potential debug
+                });
+            }
           }
         } else {
           // VIBE IS NOT IN VIEW
           setIsVibeInView(false);
           if (audioRef.current) {
             audioRef.current.pause();
+            if (vibe.type !== "video") {
+              setIsVideoPlayerActive(false); // Update icon to "Play" for audio-only vibes
+            }
           }
         }
       },
@@ -276,9 +304,9 @@ export default function Vibe({ vibe, index }) {
                   url={vibe.media[0]}
                   className="w-full h-full overflow-visible"
                   controls={false}
-                  playing={true}
+                  playing={isVideoPlayerActive} // Ensure this uses the new state
                   loop={true}
-                  muted={!isPlaying}
+                  muted={isContentMuted}
                   width="100%"
                   height="100%"
                   playsinline={true}
@@ -480,7 +508,7 @@ export default function Vibe({ vibe, index }) {
                 className="flex items-center justify-center"
               >
                 <div className="flex items-center justify-center rounded-full bg-black p-1.5">
-                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
+                  {isVideoPlayerActive ? <Pause size={16} /> : <Play size={16} />}
                 </div>
               </div>
             </div>
@@ -566,7 +594,7 @@ export default function Vibe({ vibe, index }) {
                 className="flex items-center justify-center"
               >
                 <div className="flex items-center justify-center rounded-full bg-black p-1.5">
-                  {isPlaying ? <Play size={16} /> : <Pause size={16} />}
+                  {isVideoPlayerActive ? <Pause size={16} /> : <Play size={16} />}
                 </div>
               </div>
             </div>
