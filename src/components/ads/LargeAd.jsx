@@ -99,11 +99,13 @@ const LargeAdComponent = ({divid, filter}) => {
             />
           </div>
         </div>
-        <script
+        {/* The GPT script is loaded asynchronously in the useEffect hook.
+            This duplicate script tag is not necessary here and can cause issues. */}
+        {/* <script
           async
           src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
-        ></script>
-        <div id={divid} className="h-auto"></div>
+        ></script> */}
+        <div id={divid} className="h-auto min-h-[100px]"></div> {/* Added min-h for when ad is loading */}
 
         <div className="flex items-center justify-between pt-2 px-3">
           <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]">

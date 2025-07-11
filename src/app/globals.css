@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "";
-}
+/* body {
+  font-family: ""; // This will be handled by next/font via className on body
+} */
 
 .slick-next,
 .slick-prev {
@@ -103,4 +103,9 @@ body {
 
 .story-detail-box div > div {
   justify-content: center !important;
+}
+
+/* Ensure videos within our VideoPlayer component cover their container */
+.video-js-wrapper .vjs-tech {
+  object-fit: cover !important; /* Important to override Video.js inline styles if any */
 }

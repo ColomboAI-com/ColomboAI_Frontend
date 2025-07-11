@@ -16,6 +16,7 @@ export default function StoryContextProvider({ children }) {
     reactStory: true,
     incrementImpression: false,
   });
+  const [lastViewedStoryUserId, setLastViewedStoryUserId] = useState(null);
 
   const createStory = async ({ fileType, file, content, isHideLikes = false, isHideComments = false }) => {
     try {
@@ -85,11 +86,17 @@ export default function StoryContextProvider({ children }) {
           },
         }
       );
+      if (res?.data) { // Check if res and res.data exist
+        // Assuming success if res.data is present, adjust if backend has specific success flag
+        setLastViewedStoryUserId(userid);
+      }
       return res.data;
     } catch (err) {
-      //handleError(err)
+      handleError(err); // It's good practice to handle errors consistently
+      // Optionally re-throw or return an error indicator
     } finally {
-      //setLoadings(prev => ({ ...prev, getUserStory: false }))
+      // setLoading can be done here if it was set at the start of try
+      // setLoadings(prev => ({ ...prev, getUserStory: false }))
     }
   };
 
@@ -124,6 +131,7 @@ export default function StoryContextProvider({ children }) {
         getStoriesOfUser,
         viewStoryoFUser,
         incrementStoryImpressions,
+        lastViewedStoryUserId, // Expose the new state
       }}
     >
       {children}

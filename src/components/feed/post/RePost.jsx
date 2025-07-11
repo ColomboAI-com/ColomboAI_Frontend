@@ -1,4 +1,5 @@
-import { RePostIcon } from "@/components/Icons";
+// import { RePostIcon } from "@/components/Icons"; // Remove custom icon
+import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline"; // Or ArrowUturnRightIcon
 import { FeedContext } from "@/context/FeedContext";
 import { useState, useContext, useEffect } from "react";
 import Modal from "@/components/elements/Modal";
@@ -13,13 +14,47 @@ export default function RePost({ post }) {
   const [isRepostOpen, setIsRepostOpen] = useState(false);
   const [isUserVerified, setIsUserVerified] = useState(false);
 
-  const onRepost = async () => {
-    const res = await rePost(post?._id);
-    if (res) {
-      setIsReposted(true);
-      setRepostCounts((prev) => prev + 1);
-      setIsRepostOpen(false);
-      MessageBox("success", res.message);
+  // Sync with post prop changes from context/backend
+  useEffect(() => {
+    setRepostCounts(post?.counts?.reposts || 0);
+    setIsReposted(post?.interactions?.isReposted || false);
+  }, [post?.counts?.reposts, post?.interactions?.isReposted]);
+
+  const onRepost = async (caption) => { // Updated to accept caption
+    // Optimistic UI update (local to this instance)
+    const originalIsReposted = isReposted;
+    const originalRepostCounts = repostCounts;
+
+    // For repost, usually it just increments and stays "reposted" by current user once.
+    // The icon might not toggle back visually unless it's a "undo repost" action,
+    // which is not standard for a simple repost count.
+    // So, only update if not already reposted by this user on this instance.
+    if (!isReposted) {
+        setIsReposted(true); // Visually mark as action taken
+        setRepostCounts((prev) => prev + 1); // Optimistically increment for this specific button press
+    }
+    setIsRepostOpen(false); // Close modal immediately
+
+    try {
+      const res = await rePost(post?._id, caption); // Pass caption to context
+      if (res && res.success) {
+        MessageBox("success", res.message || "Reposted successfully!");
+        // No need to set isReposted/repostCounts here again if context update handles it via props
+      } else {
+        // Revert optimistic UI if backend indicates failure but didn't throw an error handled by catch
+        if (!isReposted) { // only revert if we optimistically changed it
+            setIsReposted(originalIsReposted);
+            setRepostCounts(originalRepostCounts);
+        }
+        MessageBox("error", res?.message || "Failed to repost.");
+      }
+    } catch (error) {
+        // Revert optimistic UI on caught error
+        if (!isReposted) { // only revert if we optimistically changed it
+            setIsReposted(originalIsReposted);
+            setRepostCounts(originalRepostCounts);
+        }
+        MessageBox("error", "An error occurred while reposting.");
     }
   };
 
@@ -67,12 +102,17 @@ export default function RePost({ post }) {
       <div
         onClick={() => {
           if (isReposted) return;
+          if (isReposted) return; // User has already reposted this instance, or it's their own repost.
+                                 // Future: could be an "Undo Repost" action here.
           handleClickOpen();
         }}
+        className="cursor-pointer group"
       >
-        <RePostIcon fill={"#646464"} w={iconWidth} />
+        <ArrowPathRoundedSquareIcon
+            className={`w-6 h-6 ${isReposted ? "text-brandprimary dark:text-blue-400" : "text-gray-600 dark:text-gray-400 group-hover:text-brandprimary dark:group-hover:text-blue-400"}`}
+        />
       </div>
-      <p className={`font-sans text-[14px] ${isReposted ? "text-brandprimary" : "text-sidebarlabel"}`}>
+      <p className={`font-sans text-sm ${isReposted ? "text-brandprimary dark:text-blue-400" : "text-gray-600 dark:text-gray-400"}`}>
         {repostCounts}
       </p>
       <Modal

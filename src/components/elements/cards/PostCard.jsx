@@ -8,11 +8,12 @@ import { formatTimeAgo } from "@/utlils/commonFunctions";
 import ContentBlock from "@/components/feed/post/ContentBlock";
 import VideoBlock from "@/components/feed/post/VideoBlock";
 import Link from "next/link";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid"; // For PostMoreOptionsIcon
 import {
   ExclamationIcon,
-  PostMoreOptionsIcon,
-  ReportIcon,
-  RestrictUserIcon,
+  // PostMoreOptionsIcon, // Replaced by EllipsisHorizontalIcon
+  ReportIcon, // Assuming these are custom or will be replaced if used
+  RestrictUserIcon, // Assuming these are custom or will be replaced if used
   UserProfileIcon,
 } from "@/components/Icons";
 import Dropdown from "@/components/messages/Dropdown";
@@ -26,7 +27,7 @@ import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/navigation";
 
 const PostCard = ({ post }) => {
-  const { deletePost, incrementPostImpressions } = useContext(FeedContext);
+  const { deletePost, incrementPostImpressions, likePost: likePostFromContext } = useContext(FeedContext); // Get likePost
 
   const { userDetails } = useContext(UserProfileContext);
 
@@ -88,33 +89,33 @@ const PostCard = ({ post }) => {
   return (
     <>
       <div
-        className={`overflow-x-hidden border-[0.5px] border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5 pb-4`}
+        className={`overflow-x-hidden border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg mt-5 pb-4`} // New styling: subtle border, rounded-xl, shadow-lg. Removed border-[0.5px] in favor of standard border.
       >
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <div className="flex items-center justify-start w-full">
-            <div onClick={() => goToProfile(`/profile/${post?.creator?.user_name || ""}`)}>
+            <div onClick={() => goToProfile(`/profile/${post?.creator?.user_name || ""}`)} className="cursor-pointer">
               <ProfilePicture image={post?.creator?.profile_picture} size={"w-[2rem] h-[2rem]"} />
             </div>
             <div className="flex flex-1 items-center justify-between">
               <div className="flex md:flex-row flex-col md:items-center flex-1">
                 <div
-                  className="flex-1"
+                  className="flex-1 cursor-pointer"
                   onClick={() => goToProfile(`/profile/${post?.creator?.user_name || ""}`)}
                 >
-                  <Username username={post?.creator?.user_name} className="text-[12px]" />
+                  <Username username={post?.creator?.user_name} className="text-sm" />
                 </div>
-                <p className="font-sans text-sidebarlabel text-[12px] text-[#8B8B8B] mr-2 pl-[12px]">
+                <p className="font-sans text-xs text-[#8B8B8B] mr-2 pl-[12px]">
                   {formatTimeAgo(post?.createdAt)}
                 </p>
               </div>
               <Dropdown
                 offset={[0, 10]}
                 placement="bottom-end"
-                btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
-                button={<PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"} />}
+                btnClassName="flex justify-center items-center rounded-full text-gray-500 hover:text-brandprimary dark:text-gray-400 dark:hover:text-blue-400 cursor-pointer"
+                button={<EllipsisHorizontalIcon className="w-6 h-6" />} {/* Replaced PostMoreOptionsIcon */}
               >
                 {userDetails?.user_name === post?.creator?.user_name ? (
-                  <ul className="rounded bg-white shadow-md text-center ring-1 ring-gray-100">
+                  <ul className="rounded bg-white dark:bg-gray-800 shadow-md text-center ring-1 ring-black ring-opacity-5 text-sm">
                     <li className="rounded px-4 py-2 hover:bg-gray-100 cursor-pointer">Archive</li>
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Hide Like Counts</li>
@@ -127,7 +128,7 @@ const PostCard = ({ post }) => {
                     </li>
                   </ul>
                 ) : (
-                  <ul className="rounded bg-white shadow-md ring-1 ring-gray-100">
+                  <ul className="rounded bg-white shadow-md ring-1 ring-gray-100 text-sm"> {/* Added text-sm */}
                     <li className="rounded flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
                       <SaveIcon w={25} h={25} fill={"currentcolor"} />
                       <span className="ml-2">Save</span>
@@ -159,17 +160,71 @@ const PostCard = ({ post }) => {
           </div>
         </div>
 
-        {post?.type === "image" && <ImageBlock image={post.media} />}
-        {post?.type === "video" && <VideoBlock video={post.media} />}
-        {post?.content && <ContentBlock content={post.content} />}
-        <div ref={postViewedRef} style={{ height: "1px" }}></div>
-        <div className="px-[12px] py-[2px]">
-          {post && (
+        {/* Prepare slides for gallery view. Assuming post.media is an array of media objects. */}
+        {/* Each item in post.media should have: url, type, width, height, poster (for video) */}
+        {(() => {
+          const gallerySlides = Array.isArray(post?.media)
+            ? post.media.map(item => ({
+                src: item.url, // Ensure 'url' is the correct field name from your data
+                type: item.type, // 'image' or 'video'
+                width: item.width,
+                height: item.height,
+                poster: item.type === 'video' ? item.poster : undefined,
+              }))
+            : post?.media?.url // Handle case where post.media might be a single object
+            ? [{
+                src: post.media.url,
+                type: post.type, // post.type should align with media.type
+                width: post.media.width,
+                height: post.media.height,
+                poster: post.type === 'video' ? post.media.poster : undefined,
+              }]
+            : [];
+
+          const currentMediaItemForDisplay = gallerySlides.length > 0 ? gallerySlides[0] : null;
+
+          if (!currentMediaItemForDisplay) return null;
+
+          return (
             <>
-              <PostActions post={post} />
-              <RecentComments comments={post.comments} />
+              {currentMediaItemForDisplay.type === "image" && (
+                <ImageBlock
+                  mediaItem={currentMediaItemForDisplay}
+                  allMediaItems={gallerySlides}
+                  currentIndexInPost={0}
+                  postId={post._id}
+                  onMediaLike={likePostFromContext} // Pass the like function
+                />
+              )}
+              {currentMediaItemForDisplay.type === "video" && (
+                <VideoBlock
+                  mediaItem={currentMediaItemForDisplay}
+                  allMediaItems={gallerySlides}
+                  currentIndexInPost={0}
+                  postId={post._id}
+                  onMediaLike={likePostFromContext} // Pass the like function
+                />
+              )}
             </>
-          )}
+          );
+        })()}
+
+        {/* PostActions: Horizontal padding px-4 (16px), margin-top mt-2 (8px) */}
+        <div className="px-4 mt-2">
+          {post && <PostActions post={post} />}
+        </div>
+
+        {/* Engagement Stats Row - Placeholder for now. If implemented, would need its own spacing. */}
+        {/* Example: <div className="px-4 py-2 text-sm font-semibold"> {post?.likesCount} likes </div> */}
+
+        {/* ContentBlock (caption): Horizontal padding px-4, top padding pt-2, bottom padding pb-1 */}
+        {post?.content && <div className="px-4 pt-2 pb-1"><ContentBlock content={post.content} /></div>}
+
+        <div ref={postViewedRef} style={{ height: "1px" }}></div>
+
+        {/* RecentComments: Horizontal padding px-4, vertical padding py-2 */}
+        <div className="px-4 py-2">
+          {post && <RecentComments comments={post.comments} />}
         </div>
       </div>
     </>

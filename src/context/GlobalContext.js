@@ -21,9 +21,29 @@ export default function GlobalContextProvider({ children }) {
   let [storyCaptionBool, setStoryCaptionBool] = useState(false);
   let [storyFile, setStoryFile] = useState(null);
   let [openMagicPenWithIcon, setOpenMagicPenWithIcon] = useState(false);
-  let [popupImage, setPopupImage] = useState("");
-  let [popupVideo, setPopupVideo] = useState("");
+  // let [popupImage, setPopupImage] = useState(""); // Replaced by mediaViewerState
+  // let [popupVideo, setPopupVideo] = useState(""); // Replaced by mediaViewerState
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+  const initialMediaViewerState = {
+    open: false,
+    slides: [], // Array of { src, type, width?, height?, poster? }
+    currentIndex: 0,
+  };
+  const [mediaViewerState, setMediaViewerState] = useState(initialMediaViewerState);
+
+  const openMediaViewer = (slides, startIndex = 0) => {
+    setMediaViewerState({
+      open: true,
+      slides: slides,
+      currentIndex: startIndex,
+    });
+  };
+
+  const closeMediaViewer = () => {
+    setMediaViewerState(initialMediaViewerState);
+  };
+
 
   return (
     <GlobalContext.Provider
@@ -42,8 +62,8 @@ export default function GlobalContextProvider({ children }) {
         setIsUserProfileOpen,
         specificPostId,
         setSpecificPostId,
-        posts,
-        setPosts,
+        shareModalPostContent: posts, // Renamed 'posts' to 'shareModalPostContent' for clarity
+        setShareModalPostContent: setPosts, // Renamed 'setPosts'
         setIsCreateVibeOpen,
         isCreateVibeOpen,
         isSelectedFromComputer,
@@ -58,10 +78,13 @@ export default function GlobalContextProvider({ children }) {
         setStoryFile,
         openMagicPenWithIcon,
         setOpenMagicPenWithIcon,
-        popupImage,
-        setPopupImage,
-        popupVideo,
-        setPopupVideo,
+        // popupImage, // Replaced
+        // setPopupImage, // Replaced
+        // popupVideo, // Replaced
+        // setPopupVideo, // Replaced
+        mediaViewerState,
+        openMediaViewer,
+        closeMediaViewer,
         isNotificationOpen,
         setIsNotificationOpen,
         isSearchUserOpen,
