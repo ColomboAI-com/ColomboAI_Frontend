@@ -11,11 +11,13 @@ import ProfilePicture from "../elements/ProfilePicture";
 import { useSwipeable } from "react-swipeable";
 import { formatTimeAgo } from "@/utlils/commonFunctions"; // Import formatTimeAgo
 
+import { XMarkIcon, ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"; // Import Heroicons
+// import { MdOutlineArrowBack, MdOutlineArrowForward, MdOutlineClose } from "react-icons/md"; // Remove react-icons
+
 export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData, data_user, index }) {
   const [data, setData] = useState(storyData)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userData, setUserData] = useState(data_user)
-  // const storiesRef = useRef(null); // react-insta-stories manages its own refs internally for navigation usually
   const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
 
   // Default styles from react-insta-stories are usually fine.
@@ -130,34 +132,35 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   return (
     <div {...handlers} className="bg-[#1a1a1af0] sm:flex sm:flex-row sm:justify-center sm:space-x-0 space-x-2 h-screen  md:p-4 flex justify-center  flex-col ">
       {/* Left Section */}
-      <div className="flex flex-col  h-full justify-between p-4  sm:hidden w-fit md:flex">
-      {/* <div className="flex flex-col items-end h-full justify-between p-4  sm:hidden border border-pink-500 w-fit md:flex lg:flex"> */}
-        <div className="text-3xl md:block opacity-0 sm:hidden">
-          <MdOutlineClose
-            style={{ color: "#fff", cursor: "pointer" }}
-          />
+      <div className="flex flex-col h-full justify-between p-4 sm:hidden w-fit md:flex">
+        {/* Invisible placeholder for spacing, actual close is on the right */}
+        <div className="opacity-0">
+          <XMarkIcon className="w-7 h-7 text-white" />
         </div>
-        <div className="text-3xl md:block sm:hidden ">
-          <MdOutlineArrowBack
+        <button
             onClick={handlePreviousStory}
             disabled={currentStoryIndex === 0}
-            style={{ color: "#fff", cursor: "pointer" }}
-          />
-        </div>
-        <div className="opacity-0  md:block sm:hidden">
-          <MdOutlineArrowBack
-          />
+            className="text-white disabled:opacity-50"
+            aria-label="Previous user's stories"
+        >
+          <ArrowLeftIcon className="w-7 h-7" />
+        </button>
+        <div className="opacity-0"> {/* Invisible placeholder for spacing */}
+          <ArrowLeftIcon className="w-7 h-7 text-white" />
         </div>
       </div>
       {/* Middle Section */}
-      <div className=" relative mx-auto h-full ">
+      <div className="relative mx-auto h-full">
         <div className="h-full w-full rounded-[5px] justify-center story-detail-box">
-          {/* Mobile back button - can be kept if desired, or rely on swipe/corner tap */}
-          <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
-            <MdOutlineArrowBack
+          {/* Mobile close button (top-left for mobile, as back is often bottom-left swipe area) */}
+          <div className="absolute top-4 left-4 p-1 z-[50] md:hidden">
+            <button
               onClick={() => setIsCreateStorySignleOpen(false)}
-              style={{ color: "#fff", cursor: "pointer" }}
-            />
+              className="text-white"
+              aria-label="Close story viewer"
+            >
+              <XMarkIcon className="w-7 h-7" />
+            </button>
           </div>
           {/* Header is now part of each story object for react-insta-stories */}
           <Stories
@@ -216,25 +219,24 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
       </div>
 
       {/* Right Section */}
-      <div className="sm:hidden md:flex flex-col items-end h-full justify-between  p-4  w-fit">
-      
-             {/* <div className="flex flex-col items-end h-full justify-between p-4 lg:pr-16 sm:hidden md:flex lg:flex"> */}
-        <div className="text-3xl md:block sm:hidden">
-          <MdOutlineClose
+      <div className="sm:hidden md:flex flex-col h-full justify-between p-4 w-fit items-end">
+        <button
             onClick={() => setIsCreateStorySignleOpen(false)}
-            style={{ color: "#fff", cursor: "pointer" }}
-          />
-        </div>
-        <div className="text-3xl md:block sm:hidden ">
-          <MdOutlineArrowForward
+            className="text-white"
+            aria-label="Close story viewer"
+        >
+          <XMarkIcon className="w-7 h-7" />
+        </button>
+        <button
             onClick={handleNextStory}
             disabled={currentStoryIndex === allStories.length - 1}
-            style={{ color: "#fff", cursor: "pointer" }}
-          />
-        </div>
-        <div className="opacity-0  md:block sm:hidden">
-          <MdOutlineArrowBack
-          />
+            className="text-white disabled:opacity-50"
+            aria-label="Next user's stories"
+        >
+          <ArrowRightIcon className="w-7 h-7" />
+        </button>
+        <div className="opacity-0"> {/* Invisible placeholder for spacing */}
+          <ArrowRightIcon className="w-7 h-7 text-white" />
         </div>
       </div>
       {/* <div className="flex pt-8 pr-4">

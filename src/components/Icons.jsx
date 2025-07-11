@@ -1569,34 +1569,12 @@ export const SettingIcon = ({ w = 26, h = 26, fill }) => {
   );
 };
 
-export const LikeIcon = ({ w = 32, h = 33, fill }) => {
-  return (
-    <svg
-      width={w}
-      height={h}
-      viewBox="0 0 32 32"
-      fill={fill || "none"}
-      xmlns="http://www.w3.org/2000/svg"
-      className="cursor-pointer"
-    >
-      <g clipPath="url(#clip0_4774_37412)">
-        <path
-          d="M16 28C16 28 3 21 3 12.75C3 10.9598 3.71116 9.2429 4.97703 7.97703C6.2429 6.71116 7.95979 6 9.75 6C12.5738 6 14.9925 7.53875 16 10C17.0075 7.53875 19.4262 6 22.25 6C24.0402 6 25.7571 6.71116 27.023 7.97703C28.2888 9.2429 29 10.9598 29 12.75C29 21 16 28 16 28Z"
-          stroke={fill || "#646464"}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0_4774_37412">
-          <rect width="32" height="32" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-};
-export const WalletIcon = ({}) => {
+// LikeIcon is now replaced by Heroicons HeartIcon (Outline/Solid) in LikePost.jsx
+
+export const WalletIcon = ({}) => { // WalletIcon from Heroicons is now used in PostActions.jsx
+  // This custom SVG might still be used elsewhere or can be removed if fully replaced.
+  // For now, keeping definition if other parts of app use it.
+  // To make it consistent: add className prop, use currentColor.
   return (
     <svg
       width="25"

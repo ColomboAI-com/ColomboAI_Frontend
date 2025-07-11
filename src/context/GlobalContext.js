@@ -62,8 +62,8 @@ export default function GlobalContextProvider({ children }) {
         setIsUserProfileOpen,
         specificPostId,
         setSpecificPostId,
-        posts,
-        setPosts,
+        shareModalPostContent: posts, // Renamed 'posts' to 'shareModalPostContent' for clarity
+        setShareModalPostContent: setPosts, // Renamed 'setPosts'
         setIsCreateVibeOpen,
         isCreateVibeOpen,
         isSelectedFromComputer,

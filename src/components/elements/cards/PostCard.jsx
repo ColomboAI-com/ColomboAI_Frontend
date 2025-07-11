@@ -8,11 +8,12 @@ import { formatTimeAgo } from "@/utlils/commonFunctions";
 import ContentBlock from "@/components/feed/post/ContentBlock";
 import VideoBlock from "@/components/feed/post/VideoBlock";
 import Link from "next/link";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/solid"; // For PostMoreOptionsIcon
 import {
   ExclamationIcon,
-  PostMoreOptionsIcon,
-  ReportIcon,
-  RestrictUserIcon,
+  // PostMoreOptionsIcon, // Replaced by EllipsisHorizontalIcon
+  ReportIcon, // Assuming these are custom or will be replaced if used
+  RestrictUserIcon, // Assuming these are custom or will be replaced if used
   UserProfileIcon,
 } from "@/components/Icons";
 import Dropdown from "@/components/messages/Dropdown";
@@ -26,7 +27,7 @@ import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/navigation";
 
 const PostCard = ({ post }) => {
-  const { deletePost, incrementPostImpressions } = useContext(FeedContext);
+  const { deletePost, incrementPostImpressions, likePost: likePostFromContext } = useContext(FeedContext); // Get likePost
 
   const { userDetails } = useContext(UserProfileContext);
 
@@ -88,7 +89,7 @@ const PostCard = ({ post }) => {
   return (
     <>
       <div
-        className={`overflow-x-hidden border-[0.5px] border-brandprimary sm:rounded-[10px] md:rounded-[10px] mt-5 pb-4`}
+        className={`overflow-x-hidden border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg mt-5 pb-4`} // New styling: subtle border, rounded-xl, shadow-lg. Removed border-[0.5px] in favor of standard border.
       >
         <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between px-[16px] py-[10px]">
           <div className="flex items-center justify-start w-full">
@@ -110,11 +111,11 @@ const PostCard = ({ post }) => {
               <Dropdown
                 offset={[0, 10]}
                 placement="bottom-end"
-                btnClassName="flex justify-center items-center rounded-full hover:text-brandprimary cursor-pointer"
-                button={<PostMoreOptionsIcon w={30} h={30} fill={"#A7A7A7"} />}
+                btnClassName="flex justify-center items-center rounded-full text-gray-500 hover:text-brandprimary dark:text-gray-400 dark:hover:text-blue-400 cursor-pointer"
+                button={<EllipsisHorizontalIcon className="w-6 h-6" />} {/* Replaced PostMoreOptionsIcon */}
               >
                 {userDetails?.user_name === post?.creator?.user_name ? (
-                  <ul className="rounded bg-white shadow-md text-center ring-1 ring-gray-100 text-sm"> {/* Added text-sm */}
+                  <ul className="rounded bg-white dark:bg-gray-800 shadow-md text-center ring-1 ring-black ring-opacity-5 text-sm">
                     <li className="rounded px-4 py-2 hover:bg-gray-100 cursor-pointer">Archive</li>
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit</li>
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Hide Like Counts</li>
@@ -191,6 +192,8 @@ const PostCard = ({ post }) => {
                   mediaItem={currentMediaItemForDisplay}
                   allMediaItems={gallerySlides}
                   currentIndexInPost={0}
+                  postId={post._id}
+                  onMediaLike={likePostFromContext} // Pass the like function
                 />
               )}
               {currentMediaItemForDisplay.type === "video" && (
@@ -198,6 +201,8 @@ const PostCard = ({ post }) => {
                   mediaItem={currentMediaItemForDisplay}
                   allMediaItems={gallerySlides}
                   currentIndexInPost={0}
+                  postId={post._id}
+                  onMediaLike={likePostFromContext} // Pass the like function
                 />
               )}
             </>

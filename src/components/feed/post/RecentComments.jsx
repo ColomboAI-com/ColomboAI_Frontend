@@ -1,25 +1,31 @@
-import Link from "next/link"
+import CommentItem from "@/components/comment/CommentItem"; // Import the new CommentItem
+// Removed Link import as it's handled within CommentItem
 
-export default function RecentComments({ comments }) {
-  if (!comments?.length) return null
+// Assuming comments prop is an array of comment objects
+// [{ _id, creator: { user_name, profile_picture }, content, createdAt }, ...]
+// currentUserId might be needed if RecentComments should show edit/delete, but typically not for this preview.
+export default function RecentComments({ comments, currentUserId }) {
+  if (!comments?.length) {
+    // Optionally, show "No comments yet" or "Be the first to comment" if it's a main view,
+    // but for "RecentComments" in a feed card, null is fine if empty.
+    return null;
+  }
+
+  // Typically, RecentComments shows only a few, e.g., the latest 2-3.
+  // The `comments` prop should ideally already be sliced by the parent if so.
+  // For this component, we'll just map what's given.
+
   return (
-    <div className="mt-[16px]">
-      {
-        comments?.map((i, index) =>
-          <div className="flex column gap-2 mt-2" key={index}>
-            <Link
-              className="text-[#333333] tex-[16px] font-sans font-[700]"
-              href={`/profile/${i?.creator?.user_name || ''}`}
-              target="_blank"
-            >
-              {i?.creator?.user_name}
-            </Link>
-            <p className="text-[#515151] tex-[16px] font-sans font-[450]">
-              {i.content}
-            </p>
-          </div>
-        )
-      }
+    <div className="mt-2 space-y-1"> {/* Adjusted margin and added space-y for CommentItem spacing */}
+      {comments.map((comment) => (
+        <CommentItem
+          key={comment._id}
+          comment={comment}
+          currentUserId={currentUserId} // Pass currentUserId if available and needed by CommentItem
+        />
+      ))}
+      {/* Optionally, add a "View all X comments" link here if not all comments are shown */}
+      {/* This would typically trigger opening the full CommentSection modal */}
     </div>
-  )
+  );
 }
