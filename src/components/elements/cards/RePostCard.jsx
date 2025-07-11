@@ -128,16 +128,62 @@ const RePostCard = ({ post, index }) => {
                         </div>
                     </div>
 
-                    {post?.type === "image" && <ImageBlock image={post.media} />}
-                    {post?.type === "video" && <VideoBlock video={post.media} />}
-                    {post?.content && <ContentBlock content={post.content} />}
-                    <div className="px-[12px] py-[2px]">
-                        {post && (
-                            <>
-                                <PostActions post={post} />
-                                <RecentComments comments={post.comments} />
-                            </>
-                        )}
+                    {/* Media Block, Actions, Stats, Caption, Comments for the original post content */}
+                    {(() => {
+                      const gallerySlides = Array.isArray(post?.media)
+                        ? post.media.map(item => ({
+                            src: item.url,
+                            type: item.type,
+                            width: item.width,
+                            height: item.height,
+                            poster: item.type === 'video' ? item.poster : undefined,
+                          }))
+                        : post?.media?.url
+                        ? [{
+                            src: post.media.url,
+                            type: post.type, // Assuming original post's type
+                            width: post.media.width,
+                            height: post.media.height,
+                            poster: post.type === 'video' ? post.media.poster : undefined,
+                          }]
+                        : [];
+
+                      const currentMediaItemForDisplay = gallerySlides.length > 0 ? gallerySlides[0] : null;
+
+                      return (
+                        <>
+                          {currentMediaItemForDisplay && currentMediaItemForDisplay.type === "image" && (
+                            <ImageBlock
+                              mediaItem={currentMediaItemForDisplay}
+                              allMediaItems={gallerySlides}
+                              currentIndexInPost={0}
+                            />
+                          )}
+                          {currentMediaItemForDisplay && currentMediaItemForDisplay.type === "video" && (
+                            <VideoBlock
+                              mediaItem={currentMediaItemForDisplay}
+                              allMediaItems={gallerySlides}
+                              currentIndexInPost={0}
+                            />
+                          )}
+                        </>
+                      );
+                    })()}
+
+                    {/* PostActions: Horizontal padding px-4 (16px), margin-top mt-2 (8px) */}
+                    <div className="px-4 mt-2">
+                        {post && <PostActions post={post} />}
+                    </div>
+
+                    {/* Engagement Stats Row - Placeholder */}
+                    {/* e.g., <div className="px-4 py-2 text-sm font-semibold"> {post?.likesCount} likes </div> */}
+
+                    {/* ContentBlock (caption): Horizontal padding px-4, top padding pt-2, bottom padding pb-1 */}
+                    {post?.content && <div className="px-4 pt-2 pb-1"><ContentBlock content={post.content} /></div>}
+
+                    {/* RecentComments: Horizontal padding px-4, vertical padding py-2 */}
+                    <div className="px-4 py-2">
+                        {post && <RecentComments comments={post.comments} />}
                     </div>
                 </div>
             </div>

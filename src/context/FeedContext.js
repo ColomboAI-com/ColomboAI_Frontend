@@ -347,8 +347,8 @@ export default function FeedContextProvider({ children }) {
   };
 
   const getPostById = async (postId) => {
+    // setLoading state will be handled by the calling function e.g. fetchAllPostsByIds or getRecommendedPosts
     try {
-      setLoadings((prev) => ({ ...prev, getPost: true }));
       const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/`, {
         headers: {
           Authorization: getCookie("token"),
@@ -357,8 +357,8 @@ export default function FeedContextProvider({ children }) {
       return res.data;
     } catch (err) {
       handleError(err);
-    } finally {
-      setLoadings((prev) => ({ ...prev, getPost: false }));
+      // It's important to re-throw or return a specific error indicator if needed by the caller
+      throw err;
     }
   };
 
@@ -406,19 +406,22 @@ export default function FeedContextProvider({ children }) {
       const response = await fetch(`/api/grpc?user_id=${getCookie("userid")}&type=posts`);
       const data = await response.json();
 
-      let posts_data = await fetchAllPostsByIds(data.recommendations.slice(0, 10));
-      await setPosts(posts_data || []);
-
-      posts_data = await fetchAllPostsByIds(data.recommendations.slice(10));
-      await setPosts((prev) => [...prev, ...posts_data]);
-
-      if (response.ok) {
-        // setPosts(data.recommendations || []);
+      if (response.ok && data.recommendations && data.recommendations.length > 0) {
+        // Fetch only the first 10 posts for the initial load.
+        // More posts will be loaded via infinite scrolling.
+        const initialRecommendations = data.recommendations.slice(0, 10);
+        const posts_data = await fetchAllPostsByIds(initialRecommendations);
+        setPosts(posts_data || []); // Set posts once with the initial batch
       } else {
-        console.error("Failed to fetch recommendations:", data.error);
+        if (!response.ok) {
+          console.error("Failed to fetch recommendations:", data.error);
+        }
+        // Set posts to empty array if no recommendations or if there was an error
+        setPosts([]);
       }
     } catch (error) {
       handleError(error);
+      setPosts([]); // Ensure posts is empty on error
     } finally {
       setLoadings((prev) => ({ ...prev, getPost: false }));
     }

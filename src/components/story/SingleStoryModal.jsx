@@ -9,20 +9,24 @@ import Link from "next/link";
 import Username from "../elements/Username";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useSwipeable } from "react-swipeable";
+import { formatTimeAgo } from "@/utlils/commonFunctions"; // Import formatTimeAgo
 
 export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData, data_user, index }) {
   const [data, setData] = useState(storyData)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userData, setUserData] = useState(data_user)
-  const storiesRef = useRef(null);
+  // const storiesRef = useRef(null); // react-insta-stories manages its own refs internally for navigation usually
   const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
-  const storyStyles = {
-    
-    objectFit: "cover",
-    borderRadius: "10px",
-    justifyContent: "center",
-    filter: "grayscale(30%)",
-  };
+
+  // Default styles from react-insta-stories are usually fine.
+  // Custom styling can be done via props if needed.
+  // const storyStyles = {
+  //   objectFit: "cover",
+  //   borderRadius: "10px",
+  //   justifyContent: "center",
+  //   filter: "grayscale(30%)",
+  // };
+
   const handleAllStoriesEnd = async () => {
     const res = await viewStoryoFUser(data[0]._id);
     if (res) {
@@ -40,6 +44,15 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   const { getStoriesOfUser } = useContext(StoryContext);
   const [allStories, SetAllStories] = useState([]);
 
+  // Call viewStoryoFUser when the modal opens for a specific user's stories
+  useEffect(() => {
+    if (userData?._id) {
+      viewStoryoFUser(userData._id);
+      // This marks the user's stories as viewed on the backend.
+      // StoryContext might need a way to signal this change to Stories.jsx for UI update.
+    }
+  }, [userData, viewStoryoFUser]);
+
   const getRecentStory = async () => {
     const res = await getRecentStories();
     if (res) {
@@ -49,7 +62,8 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
 
   useEffect(() => {
     getRecentStory();
-  }, []);
+  }, []); // Fetches all users with stories for next/prev user navigation
+
   const handlePreviousStory = () => {
     if (currentStoryIndex > 0) {
       console.log(currentIndex)
@@ -137,42 +151,48 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
       </div>
       {/* Middle Section */}
       <div className=" relative mx-auto h-full ">
-        <div className="h-full  w-full rounded-[5px] justify-center story-detail-box">
+        <div className="h-full w-full rounded-[5px] justify-center story-detail-box">
+          {/* Mobile back button - can be kept if desired, or rely on swipe/corner tap */}
           <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
-          
             <MdOutlineArrowBack
               onClick={() => setIsCreateStorySignleOpen(false)}
               style={{ color: "#fff", cursor: "pointer" }}
             />
           </div>
-          <div className="absolute top-10 left-0 right-0 p-5 z-[49]	w-20">
-            <Link className="flex items-start" href={`/profile/${userData?.user_name || ""}`} target="_blank">
-              <ProfilePicture image={userData?.profile_picture} />
-              <Username username={userData?.user_name} color={"text-[#fff]"} />
-            </Link>
-          </div>
+          {/* Header is now part of each story object for react-insta-stories */}
           <Stories
-            stories={data.map((story) => story.media[0])}
-            defaultInterval={5000}
+            stories={data.map((storyItem) => {
+              // Assuming storyItem.type exists and is 'image' or 'video'
+              // Assuming storyItem.media[0] is the URL
+              // Assuming storyItem.createdAt is available for subheading
+              let storyType = storyItem.type || (storyItem.media && storyItem.media[0]?.includes('.mp4') ? 'video' : 'image'); // Basic type inference
+              return {
+                url: storyItem.media && storyItem.media[0],
+                type: storyType,
+                duration: storyType === 'image' ? 5000 : undefined, // duration for images, undefined for video (plays actual length)
+                header: {
+                  heading: userData?.user_name || 'User',
+                  subheading: `Posted ${storyItem.createdAt ? formatTimeAgo(storyItem.createdAt) : ''}`, // Requires formatTimeAgo
+                  profileImage: userData?.profile_picture,
+                },
+                // storyStyles: storyStyles, // Use global storyStyles if defined, or remove for default
+              };
+            })}
+            defaultInterval={5000} // This will be overridden by individual story duration for images if set
             preventDefault={true}
-            // width={432}
             width={storiesWidth}
             height={storiesHeight}
-            // height={768}
-            justifyContent={"center"}
-            ref={storiesRef}
-            onStoryEnd={(index, story) => {
-              setCurrentIndex(index + 1);
+            // ref={storiesRef} // Not typically needed to be set manually
+            onStoryEnd={(s, st) => { // Params might be different, check docs
+              // This callback is when a single story item ends.
+              // setCurrentIndex might be for the library's internal index of the current user's stories.
             }}
-            onNext={(index, story) => {
-              setCurrentIndex(index + 1);
-            }}
-            onPrevious={(index, story) => {
-              setCurrentIndex(index - 1);
-            }}
-            storyStyles={storyStyles}
-            onStoryStart={(index, imageDetails) => handleStoryStart(index, imageDetails)}
-            currentIndex={currentIndex}
+            onAllStoriesEnd={handleAllStoriesEnd} // This is when all stories for the current user end.
+            // onNext and onPrevious are for item navigation, library handles this.
+            // We use currentStoryIndex for USER navigation.
+            // storyStyles={storyStyles} // Apply global story styles if any
+            onStoryStart={(storyIndex, story) => handleStoryStart(storyIndex, story)} // storyIndex is for current user's items
+            currentIndex={currentIndex} // Controls the current item within the user's stories
           />
         </div>
         <div className="absolute bottom-10 left-0 right-0 p-5 z-[49]	">

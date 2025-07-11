@@ -58,7 +58,8 @@
     "swiper": "^11.1.14",
     "uuid": "^10.0.0",
     "video.js": "^8.21.0",
-    "wavesurfer.js": "^7.8.6"
+    "wavesurfer.js": "^7.8.6",
+    "yet-another-react-lightbox": "^3.24.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

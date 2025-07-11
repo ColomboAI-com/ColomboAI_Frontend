@@ -11,30 +11,35 @@ var settings = {
   arrows: true,
   infinite: false,
   speed: 500,
-  slidesToShow: 5,
-  slidesToScroll: 1,
+  slidesToShow: 5, // Number of slides to show at once
+  slidesToScroll: 1, // Number of slides to scroll at a time
+  centerMode: true, // Enables center view with partial prev/next slides shown
+  centerPadding: "40px", // Padding for center mode (shows part of next/prev slides)
+  focusOnSelect: true, // Centers the slide on click
   responsive: [
     {
-      breakpoint: 1024,
+      breakpoint: 1024, // Medium desktops
       settings: {
         slidesToShow: 5,
         slidesToScroll: 1,
-      },
-    },
-    
-    {
-      breakpoint: 800,
-      settings: {
-        slidesToShow: 4,
-        slidesToScroll: 2,
-        initialSlide: 2,
+        centerPadding: "40px",
       },
     },
     {
-      breakpoint: 767,
+      breakpoint: 800, // Tablets
       settings: {
-        slidesToShow: 3,
+        slidesToShow: 3, // Show fewer slides on smaller screens
         slidesToScroll: 1,
+        centerPadding: "30px",
+        initialSlide: 1, // Adjust initial slide if slidesToShow changes
+      },
+    },
+    {
+      breakpoint: 767, // Mobile
+      settings: {
+        slidesToShow: 3, // Even fewer, or adjust to make one central item prominent
+        slidesToScroll: 1,
+        centerPadding: "20px",
       },
     },
   ],
@@ -42,6 +47,9 @@ var settings = {
 
 const Stories = () => {
   const { getRecentStories, loadings } = useContext(StoryContext);
+  // TODO: The ViewStory component now expects an `isUnread` prop.
+  // This needs to be sourced from `allStories` items.
+  // For now, ViewStory defaults isUnread to true.
   const [allStories, SetAllStories] = useState([]);
 
   const gerRecentStory = async () => {

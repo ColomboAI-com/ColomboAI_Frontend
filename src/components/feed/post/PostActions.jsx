@@ -116,7 +116,8 @@ export default function PostActions({ post }) {
           title="Share Post"
         />
       )}
-      <div className="flex items-center justify-between">
+      {/* Main container for all action icons, changed from justify-between to start or allow natural flow */}
+      <div className="flex items-center gap-x-4 sm:gap-x-3 py-2"> {/* Adjust gap as needed */}
         {userNotVerifiedModal && (
           <Modal
             isOpen={userNotVerifiedModal}
@@ -126,41 +127,51 @@ export default function PostActions({ post }) {
             <VerificationPopup setIsOpen={setUserNotVerifiedModal} />
           </Modal>
         )}
-        <div className="flex items-center gap-[10px] lg:gap-[19px] md:gap-[19px] xl:gap-[19px]">
-          <LikePost post={post} setUserNotVerifiedModal={setUserNotVerifiedModal} />
-          <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-            <button onClick={() => handleComments(post._id)}>
-              <Image src={post_comment} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-            </button>
-            <p className="text-sidebarlabel font-sans text-[14px]">{post?.counts?.comments || 0}</p>
-          </div>
-          <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-            <Image src={post_stats} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-            <p className="text-sidebarlabel font-sans text-[14px]">{impressions}</p>
-          </div>
-          <button
-            onClick={() => handleShare(post._id)}
-            className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1"
-          >
-            <Image src={reply_icon} alt="colombo" className="md:w-full sm:w-[1.2rem]" />
-          </button>
-          <button onClick={() => handleRepost(post._id)} className="">
-            {/* <RePostIcon fill={'#646464'}/> */}
-            <RePost post={post} setUserNotVerifiedModal={setUserNotVerifiedModal} />
-          </button>
+
+        {/* 1. Like */}
+        <LikePost post={post} setUserNotVerifiedModal={setUserNotVerifiedModal} />
+
+        {/* 2. Share */}
+        <button
+          onClick={() => handleShare(post._id)}
+          className="flex items-center" // Simplified classes, icon size handled by Image
+        >
+          <Image src={reply_icon} alt="Share" width={24} height={24} /> {/* Standardized icon size */}
+        </button>
+
+        {/* 3. Repost */}
+        {/* The RePost component itself might render an icon, or we wrap it if it's just logic */}
+        <RePost post={post} setUserNotVerifiedModal={setUserNotVerifiedModal} />
+
+        {/* 4. Impressions */}
+        <div className="flex items-center gap-1"> {/* Group icon and text */}
+          <Image src={post_stats} alt="Impressions" width={24} height={24} />
+          <p className="text-sidebarlabel font-sans text-sm">{impressions}</p>
         </div>
-        <div className="flex items-center lg:gap-[19px] md:gap-[19px] gap-[10px]">
-          <div
-            className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1"
-            onClick={() => handleMagicPen(post._id)}
-          >
-            <MagicPenIcon />
-          </div>
-          <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
-            <Image src={wallet_icon} alt="colombo" width={28} height={27} />
-            <p className="text-sidebarlabel font-sans text-[14px]">${wallet.toFixed(2)}</p>
-          </div>
+
+        {/* 5. MagicPen */}
+        <button
+          onClick={() => handleMagicPen(post._id)}
+          className="flex items-center"
+        >
+          <MagicPenIcon width={24} height={24} /> {/* Ensure consistent icon sizing */}
+        </button>
+
+        {/* 6. Post Wallet */}
+        <div className="flex items-center gap-1"> {/* Group icon and text */}
+          <Image src={wallet_icon} alt="Post Wallet" width={24} height={24} />
+          <p className="text-sidebarlabel font-sans text-sm">${wallet.toFixed(2)}</p>
         </div>
+
+        {/* Comment button - Omitted for now as per strict interpretation of the list.
+            If needed, it would be added here or based on further clarification.
+        <div className="flex items-center xl:gap-2 lg:gap-2 md:gap-2 gap-1">
+          <button onClick={() => handleComments(post._id)}>
+            <Image src={post_comment} alt="Comment" width={24} height={24} />
+          </button>
+          <p className="text-sidebarlabel font-sans text-sm">{post?.counts?.comments || 0}</p>
+        </div>
+        */}
       </div>
     </>
   );
