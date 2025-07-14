@@ -122,7 +122,7 @@ const GenericShareModal = ({ isOpen, onClose }) => {
       <div className="mb-4 p-3 border border-gray-200 dark:border-gray-700 rounded-lg flex items-center space-x-3 w-full bg-gray-50 dark:bg-gray-800">
         {mediaUrl && (mediaType === 'image' || mediaType === 'video') && (
           <div className="w-12 h-12 bg-gray-300 dark:bg-gray-600 rounded overflow-hidden relative">
-            <Image src={mediaUrl} alt="Post preview" layout="fill" objectFit="cover" />
+            <Image src={mediaUrl} alt="Post preview" fill style={{objectFit: 'cover'}} />
             {mediaType === 'video' && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>
@@ -180,7 +180,7 @@ const GenericShareModal = ({ isOpen, onClose }) => {
         {platformsToShow.map((platform) => (
           <Link key={platform.name} href={platform.href} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center w-[60px] sm:w-[70px] text-center group">
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-100 dark:bg-gray-700 group-hover:bg-gray-200 dark:group-hover:bg-gray-600 p-1 flex items-center justify-center overflow-hidden transition-colors">
-              <Image src={platform.icon} alt={platform.name} width={28} height={28} objectFit="contain" />
+                <Image src={platform.icon} alt={platform.name} width={28} height={28} style={{objectFit: 'contain'}} />
             </div>
             <p className="text-[10px] font-medium text-gray-600 dark:text-gray-400 group-hover:text-brandprimary dark:group-hover:text-blue-400 mt-1 truncate w-full">{platform.name}</p>
           </Link>

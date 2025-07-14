@@ -1,73 +1,95 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react'; // Added fireEvent
 import GenericShareModal from './GenericShareModal';
-import { copyValue } from '@/utlils/commonFunctions'; // To mock its usage
+import { GlobalContext } from '@/context/GlobalContext'; // Import context
 
-// Mock copyValue
-jest.mock('@/utlils/commonFunctions', () => ({
-  ...jest.requireActual('@/utlils/commonFunctions'), // Import and retain other functions
-  copyValue: jest.fn(),
-}));
+// Mock the clipboard and Web Share API
+Object.assign(navigator, {
+  clipboard: {
+    writeText: jest.fn().mockResolvedValue(undefined),
+  },
+  share: jest.fn().mockResolvedValue(undefined),
+});
 
 // Mock next/link and next/image if necessary, but often not needed for basic rendering
 // jest.mock('next/link', () => ({ children, href }) => <a href={href}>{children}</a>);
 // jest.mock('next/image', () => ({ src, alt, width, height, className }) => <img src={src} alt={alt} width={width} height={height} className={className} />);
 
 
+// Helper to render the component with a mock context provider
+const renderWithContext = (ui, { providerProps, ...renderOptions }) => {
+  return render(
+    <GlobalContext.Provider value={providerProps}>{ui}</GlobalContext.Provider>,
+    renderOptions
+  );
+};
+
+
 describe('GenericShareModal', () => {
-  const mockOnClose = jest.fn();
-  const defaultProps = {
-    shareUrl: 'https://example.com/share-this',
-    title: 'Share This Content',
-    isOpen: true,
-    onClose: mockOnClose,
-  };
+  let mockOnClose;
+  let providerProps;
+
+  beforeEach(() => {
+    mockOnClose = jest.fn();
+    providerProps = {
+      shareModalPostContent: {
+        content: 'This is a test post content for sharing.',
+        media: [{ url: '/test-image.jpg', type: 'image' }],
+        type: 'image',
+      },
+      specificPostId: '12345',
+      closeMediaViewer: () => {}, // Mock other functions if needed
+    };
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('should not render when isOpen is false', () => {
-    render(<GenericShareModal {...defaultProps} isOpen={false} />);
-    // Check for a unique element that would only be present if the modal is open
-    // For example, the modal title or the input field displaying the shareUrl
-    expect(screen.queryByText(defaultProps.title)).not.toBeInTheDocument();
-    expect(screen.queryByDisplayValue(defaultProps.shareUrl)).not.toBeInTheDocument();
+    renderWithContext(<GenericShareModal isOpen={false} onClose={mockOnClose} />, { providerProps });
+    // Check that the modal title is not in the document
+    expect(screen.queryByText('Share Post')).not.toBeInTheDocument();
   });
 
-  it('renders correctly with title and shareUrl when isOpen is true', () => {
-    render(<GenericShareModal {...defaultProps} />);
+  it('renders correctly when isOpen is true', () => {
+    renderWithContext(<GenericShareModal isOpen={true} onClose={mockOnClose} />, { providerProps });
 
-    // Check if the title is displayed
-    expect(screen.getByText(defaultProps.title)).toBeInTheDocument();
-
-    // Check if the shareUrl is displayed in the input field
-    const urlInput = screen.getByDisplayValue(defaultProps.shareUrl);
-    expect(urlInput).toBeInTheDocument();
-    expect(urlInput).toHaveAttribute('type', 'text');
-    expect(urlInput).toHaveAttribute('readOnly'); // Check if it's read-only
-
-    // Check for some social media icons by alt text (assuming img tags are used as per GenericShareModal implementation)
-    // This makes the test more robust by checking for key elements.
-    expect(screen.getByAltText('Instagram')).toBeInTheDocument();
-    expect(screen.getByAltText('Facebook')).toBeInTheDocument();
-    expect(screen.getByAltText('WhatsApp')).toBeInTheDocument();
-
-    // Check for the "Copy" button
-    expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
-
-    // Check for the close button (using text for now as per GenericShareModal)
-    // If it was an icon, would search by role/aria-label
-    expect(screen.getByRole('button', { name: /close share modal/i })).toBeInTheDocument();
-    expect(screen.getByText('×')).toBeInTheDocument();
+    // Check if the title and key elements are displayed
+    expect(screen.getByText('Share Post')).toBeInTheDocument();
+    expect(screen.getByText('Copy Link')).toBeInTheDocument();
+    // Check for the post preview content
+    expect(screen.getByText(/This is a test post content/)).toBeInTheDocument();
   });
 
-  // Add more tests later as per the original subtask description (copy button click, social links, close functionality)
-  // For example, a basic test for the copy button:
-  // it('calls copyValue with the shareUrl when copy button is clicked', () => {
-  //   render(<GenericShareModal {...defaultProps} />);
-  //   const copyButton = screen.getByRole('button', { name: /copy/i });
-  //   fireEvent.click(copyButton);
-  //   expect(copyValue).toHaveBeenCalledWith(defaultProps.shareUrl);
-  // });
+  it('copies link to clipboard and shows confirmation', async () => {
+    renderWithContext(<GenericShareModal isOpen={true} onClose={mockOnClose} />, { providerProps });
+
+    const copyButton = screen.getByRole('button', { name: /copy link/i });
+    fireEvent.click(copyButton);
+
+    // Check that clipboard API was called
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith('http://localhost/post/12345');
+
+    // Check for confirmation UI
+    expect(await screen.findByText('Link Copied!')).toBeInTheDocument();
+    expect(screen.queryByText('Copy Link')).not.toBeInTheDocument(); // Original text is gone
+  });
+
+  it('calls Web Share API when the share button is clicked', () => {
+    // Enable mock for navigator.share for this test
+    navigator.share = jest.fn().mockResolvedValue(undefined);
+
+    renderWithContext(<GenericShareModal isOpen={true} onClose={mockOnClose} />, { providerProps });
+
+    const shareButton = screen.getByRole('button', { name: /share via/i });
+    fireEvent.click(shareButton);
+
+    expect(navigator.share).toHaveBeenCalled();
+    expect(navigator.share).toHaveBeenCalledWith({
+      title: 'This is a test post content for sharing....',
+      text: 'This is a test post content for sharing....', // Corrected text to include ellipsis
+      url: 'http://localhost/post/12345',
+    });
+  });
 });

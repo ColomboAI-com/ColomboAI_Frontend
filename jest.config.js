@@ -8,6 +8,11 @@ module.exports = {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     // Handle image imports
     '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/__mocks__/fileMock.js',
+
+    // Mock Heroicons to prevent module resolution errors in Jest
+    '^@heroicons/react/24/outline$': '<rootDir>/__mocks__/heroiconsMock.js',
+    '^@heroicons/react/24/solid$': '<rootDir>/__mocks__/heroiconsMock.js',
+    '^@heroicons/react/20/solid$': '<rootDir>/__mocks__/heroiconsMock.js',
   },
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
