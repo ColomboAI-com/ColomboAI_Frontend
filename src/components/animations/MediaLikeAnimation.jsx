@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { HeartIcon } from '@heroicons/react/24/solid'; // Using a solid heart icon
+// Trying alternative import path for Heroicons
+import { HeartIcon } from '@heroicons/react/solid';
 
 const MediaLikeAnimation = ({ onAnimationEnd }) => {
   const [visible, setVisible] = useState(false);

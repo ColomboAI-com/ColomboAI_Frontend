@@ -190,7 +190,7 @@ const CommentItem = ({ comment, currentUserId, onEdit, onDelete }) => {
           )}
         </div>
       )}
-    </div>
+    </motion.div>
 
     {showDeleteConfirmModal && (
       <ConfirmActionModal

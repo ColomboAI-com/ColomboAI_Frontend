@@ -10,7 +10,7 @@ import CreatePost from "@/components/elements/CreatePost";
 
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
-import Share from "@/components/Share";
+// import Share from "@/components/Share"; // Removed non-existent import
 import CommentSection from "@/components/comment/CommentSection";
 import Bottombar from "@/components/layouts/Bottombar";
 import { usePathname } from "next/navigation";

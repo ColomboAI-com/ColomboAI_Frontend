@@ -1,70 +1,14 @@
 'use client'
-import Button from "@/elements/Button"
-import ProfilePicture from "./elements/ProfilePicture"
-import { useContext } from "react"
-import { FeedContext } from "@/context/FeedContext"
-import { PostConstants } from "@/context/PostContext";
-
-const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
-
-  const { loadings } = useContext(FeedContext)
-  // Determine the post type (Image, Video, etc.)
-  const postTypeLabel = () => {
-    switch (post?.type) {
-      case PostConstants.TYPES.IMAGE:
-        return 'image';
-      case PostConstants.TYPES.VIDEO:
-        return 'video';
-      case PostConstants.TYPES.THOUGHT:
-        return 'thought';
-      case PostConstants.TYPES.VIBE:
-        return 'vibe';
-      default:
-        return 'post'; 
-    }
-  };
-
-
-  return (
-    <div className="w-full flex flex-col items-center bg-white border-[#E3E3E3] sm2:w-[430px] md:w-[430px] z-50 rounded-t-[20px] md:mx-auto sm2:rounded-[20px] md:rounded-[20px] px-[14px] pt-[40px] pb-[29px]">
-      <div className="">
-        <div className="w-[110px] mx-auto rounded-[50%]">
-          <ProfilePicture size={110} image={post?.creator?.profile_picture} />
-        </div>
-        <div className="mt-[29px]">
-          <p className="font-sans text-[#515151] text-[22.29px] font-[450] leading-[25.57px] text-center">Are you sure you want to repost <br />
-            <span className="font-[700]">@{post?.creator?.user_name}</span>{"'s"} {postTypeLabel()} ?</p>
-        </div>
-        <div>
-          <Button
-            title={'REPOST'}
-            className={'mt-[24px] text-[16.72px] block w-full rounded-[40px] font-sans font-[450] bg-brandprimary px-[20px] py-[12px] text-white focus:bg-brandprimary transition duration-300 ease-in'}
-            loading={loadings.rePost}
-            onClick={onRepost}
-          />
-          <Button
-            title={'CANCEL'}
-            className={'mt-[17px] text-[16.72px] block w-full bg-[#E3E3E3] rounded-[40px] font-sans font-[450] px-[20px] py-[12px] text-[#333333] focus:bg-[#E3E3E3] transition duration-300 ease-in'}
-            onClick={() => setIsRepostOpen(false)}
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-'use client'
 import Button from "@/elements/Button";
-import ProfilePicture from "./elements/ProfilePicture"; // Assuming this is correct path relative to current file
+import ProfilePicture from "./elements/ProfilePicture";
 import { useContext, useState } from "react";
 import { FeedContext } from "@/context/FeedContext";
-import NextImage from "next/image"; // Using NextImage to avoid conflicts if any local 'Image' component exists
+import NextImage from "next/image";
 
 const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
   const { loadings } = useContext(FeedContext);
   const [caption, setCaption] = useState("");
 
-  // Compact Post Preview Component (Internal to RepostModal)
   const PostPreview = ({ postToPreview }) => {
     if (!postToPreview) return null;
 
@@ -96,7 +40,7 @@ const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
           </p>
         )}
         {firstMediaUrl && mediaType === 'image' && (
-          <div className="relative aspect-square w-20 h-20 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden mt-1"> {/* Fixed size preview */}
+          <div className="relative aspect-square w-20 h-20 bg-gray-200 dark:bg-gray-700 rounded overflow-hidden mt-1">
             <NextImage
               src={firstMediaUrl}
               alt="Media preview"
@@ -116,7 +60,7 @@ const RepostModal = ({ post, onRepost, setIsRepostOpen }) => {
             )}
           </div>
         )}
-         {mediaType === 'thought' && !firstMediaUrl && !postToPreview.content && ( // Simplified thought preview
+         {mediaType === 'thought' && !firstMediaUrl && !postToPreview.content && (
             <p className="text-xs text-gray-500 dark:text-gray-400 italic">A thought by @{postToPreview.creator?.user_name}</p>
         )}
       </div>
