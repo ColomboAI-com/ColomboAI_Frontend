@@ -1,5 +1,3 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -20,10 +18,7 @@ module.exports = {
         'error': '#ff4949',
         'sidebaricon': '#8E8E93',
         'navbaraction': '#646464',
-      },
-      fontFamily: {
-        sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans], // Use Inter via CSS variable, then Tailwind defaults
-      },
+      }
     },
     
     screens: {

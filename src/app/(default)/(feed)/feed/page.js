@@ -6,41 +6,32 @@ import Sugeested from "@/components/elements/sliders/Sugeested"
 import LikeThis from "@/components/elements/sliders/LikeThis"
 import SectionHeading from "@/components/elements/SectionHeading"
 import RenderFeed from "@/components/feed/post/RenderFeed"
-// import CommentSection from "@/components/comment/CommentSection" // CommentSection seems unused here
+import CommentSection from "@/components/comment/CommentSection"
 import { GlobalContext } from "@/context/GlobalContext"
 import { useContext } from "react"
-// import Image from "next/image" // No longer needed for old popup
-// import comment_x_button from "../../../../../public/images/icons/comment_x_button.svg" // No longer needed
-// import ReactPlayer from "react-player" // No longer needed for old popup
-import AdvancedMediaViewer from "@/components/media-viewer/AdvancedMediaViewer" // Import new viewer
+import Image from "next/image"
+import comment_x_button from "../../../../../public/images/icons/comment_x_button.svg"
+import ReactPlayer from "react-player"
 
 const Feed = () => {
-  // const { popupImage } = useContext(GlobalContext) // Old state
-  // const { setPopupImage } = useContext(GlobalContext) // Old state
-  // const { popupVideo } = useContext(GlobalContext); // Old state
-  // const { setPopupVideo } = useContext(GlobalContext); // Old state
-  const { mediaViewerState, closeMediaViewer } = useContext(GlobalContext);
-
+  const { popupImage } = useContext(GlobalContext)
+  const { setPopupImage } = useContext(GlobalContext)
+  const { popupVideo } = useContext(GlobalContext);
+  const { setPopupVideo } = useContext(GlobalContext);
   return (
     <>
       <div className=" relative flex flex-col mx-auto justify-center sm:w-[375px] w-[680px] md:w-[680px] lg:w-[680px]">
-        {/* Old popups removed */}
+        {popupImage != "" && <div className="z-[200] fixed top-0 left-0 right-0 bottom-0 bg-gray-100 w-full h-[50rem]">
+          <Image src={comment_x_button} onClick={e => setPopupImage("")} alt="colombo"  className="absolute top-2 right-2 cursor-pointer" />
+          <img src={popupImage} alt="post_image" className="w-full h-full object-contain" />
+        </div>}
+        {popupVideo != "" && <div className="z-[200] fixed top-0 left-0 right-0 bottom-0 bg-gray-100 w-full h-[50rem]">
+          <Image src={comment_x_button} onClick={e => setPopupVideo("")} alt="colombo"  className="absolute z-[210] top-2 right-2 cursor-pointer" />
+          <ReactPlayer url={popupVideo} controls={true} className="w-full h-full object-contain" />
+        </div>}
         <Stories />
 
-        <RenderFeed />
-
-      </div>
-      <AdvancedMediaViewer
-        open={mediaViewerState.open}
-        close={closeMediaViewer}
-        slides={mediaViewerState.slides}
-        index={mediaViewerState.currentIndex}
-      />
-    </>
-  )
-}
-// Removed commented out code for brevity
-// {/* {loadings.getPost ? <Loader /> :
+        {/* {loadings.getPost ? <Loader /> :
          posts?.map((i, index) => <Post post={i} key={index} />
          )}
        <SectionHeading title="Suggested Vibes For You" />

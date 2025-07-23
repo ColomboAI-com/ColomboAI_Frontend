@@ -6,62 +6,36 @@ import Modal from "../Modal";
 import { StoryContext } from "@/context/StoryContext"
 import { GlobalContext } from "@/context/GlobalContext";
 import { clearCookie, getCookie } from "@/utlils/cookies";
-import Image from "next/image"; // Import next/image
-import { PlusCircleIcon } from "@heroicons/react/24/solid"; // Using Heroicons for a plus icon
 
-const CreateStoryQuick = ({ reFetchingStory }) => {
-  const [isCreateStoryOpen, setIsCreateStoryOpen] = useState(false);
+const CreateStoryQuick = ({reFetchingStory}) => {
+    const [isCreateStoryOpen,setIsCreateStoryOpen] = useState(false);
 
-  const handleOpen = (e) => {
-    setIsCreateStoryOpen(!isCreateStoryOpen);
-  };
-  const profilePic = getCookie("profilePic");
+    const handleOpen = (e) => {
+        setIsCreateStoryOpen(!isCreateStoryOpen)
+    }
+    const profilePic = getCookie('profilePic')
+ 
 
-  return (
-    <>
-      {/* Container for circular avatar and text below */}
-      <div
-        className="flex flex-col items-center space-y-1 cursor-pointer mx-[5px] w-[70px] sm:w-[60px]" // Adjusted width
-        onClick={handleOpen}
-      >
-        {/* Circular Avatar / Placeholder */}
-        <div className="relative w-[56px] h-[56px] rounded-full"> {/* Avatar size consistent with ViewStory */}
-          {profilePic ? (
-            <Image
-              src={profilePic}
-              alt="Your profile"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-full"
-              loading="lazy"
-            />
-          ) : (
-            <div className="w-full h-full bg-gray-300 rounded-full flex items-center justify-center">
-              {/* Fallback if no profile pic, could be a generic user icon */}
+    return (
+        <>
+        {/* <div className="bg-[url('/images/home/create-story.svg')] bg-[length:100%] relative h-[167px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}> */}
+        <div className="relative h-[167px]  sm:w-[98px] md:w-[120px] lg:w-[120px] w-[120px] ml-[5px] mr-[5px] bg-no-repeat bg-center border-[0.25px] border-brandprimary rounded-[10px] shadow-[1px_1px_2px_0px_#0000004D] cursor-pointer" onClick={(e) => handleOpen(e)}>
+            <img src={getCookie('profilePic')} className="h-[167px] w-full object-cover rounded-[10px]" />
+            <div className="absolute w-full bottom-0 h-full rounded-[10px] bg-gradient-to-t from-[#000000cf] to-[#00000000]"></div>
+            <div className="absolute bottom-14 w-full">
+                <div className="w-[29px] h-[29px] border-[1px] border-brandprimary rounded-full mx-auto">
+                <img src="/images/home/add-new-story.svg" />
+                </div>
+                <h6 className="text-[12px] font-[450px] font-sans text-white text-center relative top-9">
+                New Story
+                
+                </h6>
             </div>
-          )}
-          {/* Add Icon Overlay */}
-          <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5">
-            <PlusCircleIcon className="w-5 h-5 text-brandprimary" />
-          </div>
         </div>
-
-        {/* Text Label */}
-        <h6 className="text-[12px] font-normal text-gray-700 dark:text-gray-300 w-full truncate text-center">
-          Your Story
-        </h6>
-      </div>
-
-      {isCreateStoryOpen && (
-        <Modal
-          isOpen={isCreateStoryOpen}
-          setIsOpen={setIsCreateStoryOpen}
-          className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all"
-        >
-          <UploadStoryModal
-            setIsCreateStoryOpen={setIsCreateStoryOpen}
-            getStory={reFetchingStory}
-          />
+                {
+                isCreateStoryOpen &&
+                <Modal isOpen={isCreateStoryOpen} setIsOpen={setIsCreateStoryOpen} className="xl:w-[602px] lg:w-[602px] sm:w-full max-w-4xl transform overflow-hidden rounded-[20px] bg-white py-[7px] px-[9px] text-left align-middle shadow-xl transition-all">
+                  <UploadStoryModal setIsCreateStoryOpen={setIsCreateStoryOpen} getStory={reFetchingStory} />
                 </Modal>
               }
         </>

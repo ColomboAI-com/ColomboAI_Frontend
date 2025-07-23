@@ -1,73 +1,33 @@
 import { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalContext";
-import Image from "next/image";
+import Image from "next/image"; // Import next/image
 
-import { useState } from "react"; // Import useState
-import MediaLikeAnimation from "@/components/animations/MediaLikeAnimation"; // Import the animation component
-
-// Expects:
-// mediaItem: { url: string, type: 'image', width?: number, height?: number }
-// allMediaItems: array of all media items in the post, for gallery view
-// currentIndexInPost: index of this mediaItem within allMediaItems
-// postId: string - ID of the post
-// onMediaLike: function - callback to trigger like action (e.g., from FeedContext via PostCard)
-export default function ImageBlock({ mediaItem, allMediaItems, currentIndexInPost, postId, onMediaLike }) {
-  const { openMediaViewer } = useContext(GlobalContext);
-  const [showHeartAnimation, setShowHeartAnimation] = useState(false);
-
-
-  if (!mediaItem || !mediaItem.url) {
-    // Optionally render a placeholder or return null if no image
-    return <div className="w-full aspect-square bg-gray-200 dark:bg-gray-800"></div>;
-  }
-
-  const { url, width: originalWidth, height: originalHeight } = mediaItem;
-
-  let aspectRatioClass = 'aspect-square'; // Default to 1:1 (square)
-
-  // Determine aspect ratio class based on original dimensions if available
-  // This logic helps choose a container aspect ratio that's close to the image's,
-  // minimizing cropping while maintaining some standard shapes.
-  if (originalWidth && originalHeight && originalHeight > 0) {
-    const ratio = originalWidth / originalHeight;
-    if (ratio > 1.3) { // Landscape (wider than ~4:3)
-      aspectRatioClass = 'aspect-video'; // 16:9
-    } else if (ratio < 0.9) { // Portrait (taller than ~10:9)
-      aspectRatioClass = 'aspect-[4/5]'; // 4:5
-    } else { // Close to square
-      aspectRatioClass = 'aspect-square'; // 1:1
-    }
-  }
-
-  const handleDoubleClick = () => {
-    if (postId && onMediaLike) {
-      onMediaLike(postId, true); // Pass true to indicate it's a like action
-      setShowHeartAnimation(true);
-    }
-  };
-
+export default function ImageBlock({ image = ['/images/home/feed-banner-img.png'] }) {
+  const { setPopupImage } = useContext(GlobalContext);
   return (
-    <div
-      onClick={() => { // Single click opens the media viewer
-        if (mediaItem && mediaItem.url) {
-          const slides = allMediaItems && allMediaItems.length > 0 ? allMediaItems : [mediaItem];
-          const startIndex = allMediaItems && allMediaItems.length > 0 ? currentIndexInPost : 0;
-          openMediaViewer(slides, startIndex);
-        }
-      }}
-      onDoubleClick={handleDoubleClick}
-      className={`w-full ${aspectRatioClass} overflow-hidden relative bg-gray-100 dark:bg-gray-700 cursor-pointer`}
-    >
+    <div onClick={e => setPopupImage(image[0])} className={`flex ${image[0] ? `md:h-[30rem] sm:h-[30rem]` : `h-[0rem]`}`}>
+      {typeof(image) === "object" ? image.map((src, index) => <Img key={index} src={src} />) : <Img src={image}/> }
+    </div>
+  )
+}
+
+
+function Img({ src }) {
+  return (
+    // Each image needs a relatively positioned container for layout="fill"
+    // If multiple images, this div will be a flex item.
+    // The w-full here means each image will try to take the full width of its flex container.
+    // If the flex container is row-based, images might appear very wide.
+    // This might need further styling adjustments depending on how multiple images should look.
+    // For a single image, this should be fine.
+    <div className="relative w-full h-full">
       <Image
-        src={url}
-        alt="Post image"
+        src={src}
+        alt="post_image"
         layout="fill"
         objectFit="cover"
-        className=""
-        loading="lazy"
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 680px"
+        className="bg-white" // className on next/image applies to the underlying <img>
       />
-      {showHeartAnimation && <MediaLikeAnimation onAnimationEnd={() => setShowHeartAnimation(false)} />}
     </div>
   );
 }

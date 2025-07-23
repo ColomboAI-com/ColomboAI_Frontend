@@ -8,10 +8,8 @@ import { useContext, useEffect, Fragment, useRef } from "react";
 import { getCookie } from "@/utlils/cookies";
 import { UserProfileContext } from "@/context/UserProfileContext";
 import SuggestedVibes from "@/components/layouts/SuggestedVibes";
-// import LargeAdComponent from "@/components/ads/LargeAd"; // Now loaded by LazyLoadAd
-// import VideoAd from "@/components/ads/VideoAd"; // Now loaded by LazyLoadAd
-import LazyLoadAd from "@/components/ads/LazyLoadAd"; // Import the lazy load wrapper
-import PostSkeleton from "@/components/skeletons/PostSkeleton";
+import LargeAdComponent from "@/components/ads/LargeAd";
+import VideoAd from "@/components/ads/VideoAd";
 
 export default function RenderFeed({ filter }) {
   const { posts, getPosts, loadings, page, resetFeedValues, getRecommendedPosts } = useContext(FeedContext);
@@ -57,11 +55,7 @@ export default function RenderFeed({ filter }) {
   // INFINTIE SCROLLING NEW CODE - START
   const handleLoadMore = () => {
     if (!loadings.getPost) {
-      // Assuming 'filter' prop is the 'type' expected by getPosts.
-      // If 'filter' can be undefined, provide a default type, e.g., "all" or "recommended".
-      // For now, we'll use the filter prop directly.
-      // The 'page' state from FeedContext will be used by getPosts.
-      getPosts(filter, page);
+      // getPosts(filter, page);
     }
   };
 
@@ -119,7 +113,7 @@ export default function RenderFeed({ filter }) {
     };
   }, [page, loadings.getPost, posts]);
 
-  // if (loadings.getPost && !posts.length) return <Loader className={"mt-5"} />;
+  if (loadings.getPost && !posts.length) return <Loader className={"mt-5"} />;
 
   // // Function to handle the ad click
   // const handleAdClick = (index) => {
@@ -132,48 +126,35 @@ export default function RenderFeed({ filter }) {
 
   return (
     <div className="sm:px-0 md:px-0" id="posts_container_infy_scroll">
-      {/* Initial Loading State */}
-      {loadings.getPost && posts.length === 0 && (
-        <>
-          <PostSkeleton />
-          <PostSkeleton />
-          <PostSkeleton />
-        </>
-      )}
-
-      {/* Display Posts */}
-      {posts.length > 0 &&
+      {posts.length ? (
         posts.map((i, index) => (
-          <Fragment key={i._id || index}> {/* Use post ID as key if available */}
+          <Fragment key={index}>
             <Post post={i} index={index} />
             {(index + 1) % 4 === 0 && (
               <>
                 {Math.floor((index + 1) / 4) % 2 === 0 ? (
-                  <LazyLoadAd componentToLoad="VideoAd" placeholderHeight="300px" adProps={{}} />
+                  <div className="overflow-x-hidden rounded-[10px] mt-5">
+                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                      <VideoAd />
+                    </div>
+                  </div>
                 ) : (
-                  <LazyLoadAd
-                    componentToLoad="LargeAd"
-                    placeholderHeight="250px"
-                    adProps={{ divid: `feed-ad-${index}`, filter: filter }}
-                  />
+                  <div
+                    className="overflow-x-hidden rounded-[10px] mt-5"
+                    onClick={() => handleAdClick(index + 1)}
+                  >
+                    <div className="flex lg:flex-row md:flex-row flex-col items-center justify-between py-[12px]">
+                      <LargeAdComponent divid={`feed-ad-${index}`} />
+                    </div>
+                  </div>
                 )}
               </>
             )}
           </Fragment>
-        ))}
-
-      {/* Loading More Posts Skeleton */}
-      {loadings.getPost && posts.length > 0 && (
-        <>
-          <PostSkeleton />
-        </>
-      )}
-
-      {/* No Data Found State */}
-      {!loadings.getPost && posts.length === 0 && (
+        ))
+      ) : (
         <NoDataFound className={"mt-5"} />
       )}
-
       {/* Invisible Load More Button */}
       <div ref={loadMoreRef} style={{ height: "1px" }}></div>
       <div style={{ color: "transparent" }}>Hello</div>

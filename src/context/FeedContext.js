@@ -49,52 +49,6 @@ export default function FeedContextProvider({ children }) {
     }
   };
 
-  const editComment = async ({ postId = "", commentId = "", content = "" }) => {
-    try {
-      setLoadings((prev) => ({ ...prev, addComment: true })); // Use addComment loading or create a new one
-      const res = await axios.put(
-        `${ROOT_URL_FEED}/post/${postId}/comment/${commentId}`, // Assuming this endpoint for edit
-        { content },
-        {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        }
-      );
-      // After successful API call, update the specific comment in the specific post
-      if (res.data && res.data.success && res.data.comment) {
-        setPosts(prevPosts =>
-          prevPosts.map(p => {
-            if (p._id === postId) {
-              const updatedComments = p.comments?.map(c =>
-                c._id === commentId ? { ...c, ...res.data.comment } : c
-              ) || []; // Ensure p.comments exists
-              // This assumes comments are part of the post object in FeedContext.posts
-              // If CommentSection fetches its own comments, it needs to update its local state
-              // or re-fetch for that specific comment.
-              // For now, let's assume we need to update a nested comment structure if it exists.
-              // This part is tricky if comments are not directly nested in FeedContext.posts[X].comments
-              // A more robust solution might involve CommentSection managing its own list and just re-fetching that single comment or updating it.
-              // For now, this is a placeholder for how context *could* update it if structure allows.
-              // The primary update will happen in CommentSection's local state after this call.
-              return {
-                ...p,
-                comments: updatedComments, // This is speculative based on data structure
-              };
-            }
-            return p;
-          })
-        );
-      }
-      return res.data; // Should include { success: true, comment: updatedCommentObject }
-    } catch (err) {
-      handleError(err);
-      throw err;
-    } finally {
-      setLoadings((prev) => ({ ...prev, addComment: false }));
-    }
-  };
-
   const createPost = async ({
     type,
     files,
@@ -159,31 +113,9 @@ export default function FeedContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-
-      // After successful API call, update the specific post in the posts state
-      if (res.data && res.data.success) { // Assuming backend returns success and new like status/counts
-        setPosts(prevPosts =>
-          prevPosts.map(p => {
-            if (p._id === postId) {
-              // Backend should ideally return the new like count and liked status
-              // For now, let's assume it returns the updated post object or necessary fields
-              // If not, we might have to infer based on current state before API call, which is less robust.
-              // Let's assume res.data.post contains the updated post or relevant like fields
-              return {
-                ...p,
-                counts: { ...p.counts, likes: res.data.likeCount !== undefined ? res.data.likeCount : p.counts.likes },
-                interactions: { ...p.interactions, isLiked: res.data.isLiked !== undefined ? res.data.isLiked : p.interactions.isLiked }
-                // Fallback to current values if backend doesn't return them, but this means UI relies on local optimistic updates for display
-              };
-            }
-            return p;
-          })
-        );
-      }
       return res.data;
     } catch (err) {
       handleError(err);
-      throw err; // Re-throw error so UI can catch it for reverting optimistic updates
     }
   };
 
@@ -216,30 +148,9 @@ export default function FeedContextProvider({ children }) {
           },
         }
       );
-      // After successful API call, update the specific post in the posts state
-      // Assuming backend returns { success: true, comment: newCommentObject }
-      if (res.data && res.data.success && res.data.comment) {
-        setPosts(prevPosts =>
-          prevPosts.map(p => {
-            if (p._id === postId) {
-              // Increment comment count and potentially add comment to a preview list if stored on post
-              const newCounts = { ...p.counts, comments: (p.counts.comments || 0) + 1 };
-              // If posts have a 'comments' array for previews (like RecentComments):
-              // const newRecentComments = [res.data.comment, ...(p.comments || [])].slice(0, 3); // Example
-              return {
-                ...p,
-                counts: newCounts,
-                // comments: newRecentComments, // If applicable
-              };
-            }
-            return p;
-          })
-        );
-      }
-      return res.data; // Should include { success: true, comment: newCommentObject }
+      return res.data;
     } catch (err) {
       handleError(err);
-      throw err; // Re-throw for UI to handle
     } finally {
       setLoadings((prev) => ({ ...prev, addComment: false }));
     }
@@ -253,71 +164,28 @@ export default function FeedContextProvider({ children }) {
           Authorization: getCookie("token"),
         },
       });
-
-      // After successful API call, update the specific post in the posts state
-      if (res.data && res.data.success) {
-        setPosts(prevPosts =>
-          prevPosts.map(p => {
-            if (p._id === postId) {
-              const newCounts = { ...p.counts, comments: Math.max(0, (p.counts.comments || 0) - 1) };
-              // If posts have a 'comments' array for previews (like RecentComments):
-              const newRecentComments = p.comments?.filter(c => c._id !== commentId) || [];
-              return {
-                ...p,
-                counts: newCounts,
-                comments: newRecentComments, // Update preview comments if structure exists
-              };
-            }
-            return p;
-          })
-        );
-      }
       return res.data;
     } catch (err) {
       handleError(err);
-      throw err; // Re-throw error for UI to handle
     } finally {
       setLoadings((prev) => ({ ...prev, deleteComment: false }));
     }
   };
 
-  const rePost = async (postId = "", caption = "") => {
+  const rePost = async (postId = "") => {
     try {
       setLoadings((prev) => ({ ...prev, rePost: true }));
-
-      const requestBody = {};
-      if (caption && caption.trim() !== "") {
-        requestBody.content = caption.trim();
-      }
-
-      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`, requestBody, { // Send requestBody
+      const res = await axios.post(`${ROOT_URL_FEED}/post/${postId}/repost`, null, {
         headers: {
           Authorization: getCookie("token"),
-          // 'Content-Type': 'application/json' // Axios usually sets this for objects
         },
       });
-
-      // Assuming backend returns the new repost object in res.data.data
-      // and a success flag like res.data.success
-      if (res.data && res.data.success) {
-        if (res.data.data) { // The new repost object itself
-          setPosts((prevPosts) => [res.data.data, ...prevPosts]); // Prepend new repost to the feed
-        }
-        // Additionally, update the original post's repost count if backend provides it
-        if (res.data.updatedOriginalPost) {
-          setPosts((prevPosts) =>
-            prevPosts.map((p) =>
-              p._id === res.data.updatedOriginalPost._id
-                ? { ...p, counts: { ...p.counts, reposts: res.data.updatedOriginalPost.counts.reposts } }
-                : p
-            )
-          );
-        }
+      if (res.data) {
+        setPosts((prevPosts) => [res.data.data, ...prevPosts]);
       }
-      return res.data; // Return the full response for handling in the component
+      return res.data;
     } catch (err) {
       handleError(err);
-      throw err; // Re-throw error for component to handle if needed (e.g., for UI feedback)
     } finally {
       setLoadings((prev) => ({ ...prev, rePost: false }));
     }
@@ -454,26 +322,9 @@ export default function FeedContextProvider({ children }) {
           },
         }
       );
-
-      // After successful API call, update the specific post in the posts state
-      // Assuming backend returns { success: true, newImpressionCount: number }
-      if (res.data && res.data.success && res.data.newImpressionCount !== undefined) {
-        setPosts(prevPosts =>
-          prevPosts.map(p => {
-            if (p._id === postId) {
-              return {
-                ...p,
-                counts: { ...p.counts, impressions: res.data.newImpressionCount }
-              };
-            }
-            return p;
-          })
-        );
-      }
       return res.data;
     } catch (err) {
       handleError(err);
-      // Optionally re-throw or return error status
     } finally {
       setLoadings((prev) => ({ ...prev, incrementImpression: false }));
     }
@@ -496,8 +347,8 @@ export default function FeedContextProvider({ children }) {
   };
 
   const getPostById = async (postId) => {
-    // setLoading state will be handled by the calling function e.g. fetchAllPostsByIds or getRecommendedPosts
     try {
+      setLoadings((prev) => ({ ...prev, getPost: true }));
       const res = await axios.get(`${ROOT_URL_FEED}/post/${postId}/`, {
         headers: {
           Authorization: getCookie("token"),
@@ -506,8 +357,8 @@ export default function FeedContextProvider({ children }) {
       return res.data;
     } catch (err) {
       handleError(err);
-      // It's important to re-throw or return a specific error indicator if needed by the caller
-      throw err;
+    } finally {
+      setLoadings((prev) => ({ ...prev, getPost: false }));
     }
   };
 
@@ -555,22 +406,19 @@ export default function FeedContextProvider({ children }) {
       const response = await fetch(`/api/grpc?user_id=${getCookie("userid")}&type=posts`);
       const data = await response.json();
 
-      if (response.ok && data.recommendations && data.recommendations.length > 0) {
-        // Fetch only the first 10 posts for the initial load.
-        // More posts will be loaded via infinite scrolling.
-        const initialRecommendations = data.recommendations.slice(0, 10);
-        const posts_data = await fetchAllPostsByIds(initialRecommendations);
-        setPosts(posts_data || []); // Set posts once with the initial batch
+      let posts_data = await fetchAllPostsByIds(data.recommendations.slice(0, 10));
+      await setPosts(posts_data || []);
+
+      posts_data = await fetchAllPostsByIds(data.recommendations.slice(10));
+      await setPosts((prev) => [...prev, ...posts_data]);
+
+      if (response.ok) {
+        // setPosts(data.recommendations || []);
       } else {
-        if (!response.ok) {
-          console.error("Failed to fetch recommendations:", data.error);
-        }
-        // Set posts to empty array if no recommendations or if there was an error
-        setPosts([]);
+        console.error("Failed to fetch recommendations:", data.error);
       }
     } catch (error) {
       handleError(error);
-      setPosts([]); // Ensure posts is empty on error
     } finally {
       setLoadings((prev) => ({ ...prev, getPost: false }));
     }
@@ -598,7 +446,6 @@ export default function FeedContextProvider({ children }) {
         rePost,
         savePost,
         addComment,
-        editComment, // Expose editComment
         deleteComment,
         generatePost,
         generateComment,

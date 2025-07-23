@@ -9,26 +9,20 @@ import Link from "next/link";
 import Username from "../elements/Username";
 import ProfilePicture from "../elements/ProfilePicture";
 import { useSwipeable } from "react-swipeable";
-import { formatTimeAgo } from "@/utlils/commonFunctions"; // Import formatTimeAgo
-
-import { XMarkIcon, ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline"; // Import Heroicons
-// import { MdOutlineArrowBack, MdOutlineArrowForward, MdOutlineClose } from "react-icons/md"; // Remove react-icons
 
 export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData, data_user, index }) {
   const [data, setData] = useState(storyData)
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userData, setUserData] = useState(data_user)
+  const storiesRef = useRef(null);
   const { viewStoryoFUser, incrementStoryImpressions } = useContext(StoryContext);
-
-  // Default styles from react-insta-stories are usually fine.
-  // Custom styling can be done via props if needed.
-  // const storyStyles = {
-  //   objectFit: "cover",
-  //   borderRadius: "10px",
-  //   justifyContent: "center",
-  //   filter: "grayscale(30%)",
-  // };
-
+  const storyStyles = {
+    
+    objectFit: "cover",
+    borderRadius: "10px",
+    justifyContent: "center",
+    filter: "grayscale(30%)",
+  };
   const handleAllStoriesEnd = async () => {
     const res = await viewStoryoFUser(data[0]._id);
     if (res) {
@@ -46,15 +40,6 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   const { getStoriesOfUser } = useContext(StoryContext);
   const [allStories, SetAllStories] = useState([]);
 
-  // Call viewStoryoFUser when the modal opens for a specific user's stories
-  useEffect(() => {
-    if (userData?._id) {
-      viewStoryoFUser(userData._id);
-      // This marks the user's stories as viewed on the backend.
-      // StoryContext might need a way to signal this change to Stories.jsx for UI update.
-    }
-  }, [userData, viewStoryoFUser]);
-
   const getRecentStory = async () => {
     const res = await getRecentStories();
     if (res) {
@@ -64,8 +49,7 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
 
   useEffect(() => {
     getRecentStory();
-  }, []); // Fetches all users with stories for next/prev user navigation
-
+  }, []);
   const handlePreviousStory = () => {
     if (currentStoryIndex > 0) {
       console.log(currentIndex)
@@ -132,70 +116,63 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
   return (
     <div {...handlers} className="bg-[#1a1a1af0] sm:flex sm:flex-row sm:justify-center sm:space-x-0 space-x-2 h-screen  md:p-4 flex justify-center  flex-col ">
       {/* Left Section */}
-      <div className="flex flex-col h-full justify-between p-4 sm:hidden w-fit md:flex">
-        {/* Invisible placeholder for spacing, actual close is on the right */}
-        <div className="opacity-0">
-          <XMarkIcon className="w-7 h-7 text-white" />
+      <div className="flex flex-col  h-full justify-between p-4  sm:hidden w-fit md:flex">
+      {/* <div className="flex flex-col items-end h-full justify-between p-4  sm:hidden border border-pink-500 w-fit md:flex lg:flex"> */}
+        <div className="text-3xl md:block opacity-0 sm:hidden">
+          <MdOutlineClose
+            style={{ color: "#fff", cursor: "pointer" }}
+          />
         </div>
-        <button
+        <div className="text-3xl md:block sm:hidden ">
+          <MdOutlineArrowBack
             onClick={handlePreviousStory}
             disabled={currentStoryIndex === 0}
-            className="text-white disabled:opacity-50"
-            aria-label="Previous user's stories"
-        >
-          <ArrowLeftIcon className="w-7 h-7" />
-        </button>
-        <div className="opacity-0"> {/* Invisible placeholder for spacing */}
-          <ArrowLeftIcon className="w-7 h-7 text-white" />
+            style={{ color: "#fff", cursor: "pointer" }}
+          />
+        </div>
+        <div className="opacity-0  md:block sm:hidden">
+          <MdOutlineArrowBack
+          />
         </div>
       </div>
       {/* Middle Section */}
-      <div className="relative mx-auto h-full">
-        <div className="h-full w-full rounded-[5px] justify-center story-detail-box">
-          {/* Mobile close button (top-left for mobile, as back is often bottom-left swipe area) */}
-          <div className="absolute top-4 left-4 p-1 z-[50] md:hidden">
-            <button
+      <div className=" relative mx-auto h-full ">
+        <div className="h-full  w-full rounded-[5px] justify-center story-detail-box">
+          <div className="absolute top-6 left-4 p-1 text-lg z-[49] md:hidden">
+          
+            <MdOutlineArrowBack
               onClick={() => setIsCreateStorySignleOpen(false)}
-              className="text-white"
-              aria-label="Close story viewer"
-            >
-              <XMarkIcon className="w-7 h-7" />
-            </button>
+              style={{ color: "#fff", cursor: "pointer" }}
+            />
           </div>
-          {/* Header is now part of each story object for react-insta-stories */}
+          <div className="absolute top-10 left-0 right-0 p-5 z-[49]	w-20">
+            <Link className="flex items-start" href={`/profile/${userData?.user_name || ""}`} target="_blank">
+              <ProfilePicture image={userData?.profile_picture} />
+              <Username username={userData?.user_name} color={"text-[#fff]"} />
+            </Link>
+          </div>
           <Stories
-            stories={data.map((storyItem) => {
-              // Assuming storyItem.type exists and is 'image' or 'video'
-              // Assuming storyItem.media[0] is the URL
-              // Assuming storyItem.createdAt is available for subheading
-              let storyType = storyItem.type || (storyItem.media && storyItem.media[0]?.includes('.mp4') ? 'video' : 'image'); // Basic type inference
-              return {
-                url: storyItem.media && storyItem.media[0],
-                type: storyType,
-                duration: storyType === 'image' ? 5000 : undefined, // duration for images, undefined for video (plays actual length)
-                header: {
-                  heading: userData?.user_name || 'User',
-                  subheading: `Posted ${storyItem.createdAt ? formatTimeAgo(storyItem.createdAt) : ''}`, // Requires formatTimeAgo
-                  profileImage: userData?.profile_picture,
-                },
-                // storyStyles: storyStyles, // Use global storyStyles if defined, or remove for default
-              };
-            })}
-            defaultInterval={5000} // This will be overridden by individual story duration for images if set
+            stories={data.map((story) => story.media[0])}
+            defaultInterval={5000}
             preventDefault={true}
+            // width={432}
             width={storiesWidth}
             height={storiesHeight}
-            // ref={storiesRef} // Not typically needed to be set manually
-            onStoryEnd={(s, st) => { // Params might be different, check docs
-              // This callback is when a single story item ends.
-              // setCurrentIndex might be for the library's internal index of the current user's stories.
+            // height={768}
+            justifyContent={"center"}
+            ref={storiesRef}
+            onStoryEnd={(index, story) => {
+              setCurrentIndex(index + 1);
             }}
-            onAllStoriesEnd={handleAllStoriesEnd} // This is when all stories for the current user end.
-            // onNext and onPrevious are for item navigation, library handles this.
-            // We use currentStoryIndex for USER navigation.
-            // storyStyles={storyStyles} // Apply global story styles if any
-            onStoryStart={(storyIndex, story) => handleStoryStart(storyIndex, story)} // storyIndex is for current user's items
-            currentIndex={currentIndex} // Controls the current item within the user's stories
+            onNext={(index, story) => {
+              setCurrentIndex(index + 1);
+            }}
+            onPrevious={(index, story) => {
+              setCurrentIndex(index - 1);
+            }}
+            storyStyles={storyStyles}
+            onStoryStart={(index, imageDetails) => handleStoryStart(index, imageDetails)}
+            currentIndex={currentIndex}
           />
         </div>
         <div className="absolute bottom-10 left-0 right-0 p-5 z-[49]	">
@@ -219,24 +196,25 @@ export default function SingleStoryModal({ setIsCreateStorySignleOpen, storyData
       </div>
 
       {/* Right Section */}
-      <div className="sm:hidden md:flex flex-col h-full justify-between p-4 w-fit items-end">
-        <button
+      <div className="sm:hidden md:flex flex-col items-end h-full justify-between  p-4  w-fit">
+      
+             {/* <div className="flex flex-col items-end h-full justify-between p-4 lg:pr-16 sm:hidden md:flex lg:flex"> */}
+        <div className="text-3xl md:block sm:hidden">
+          <MdOutlineClose
             onClick={() => setIsCreateStorySignleOpen(false)}
-            className="text-white"
-            aria-label="Close story viewer"
-        >
-          <XMarkIcon className="w-7 h-7" />
-        </button>
-        <button
+            style={{ color: "#fff", cursor: "pointer" }}
+          />
+        </div>
+        <div className="text-3xl md:block sm:hidden ">
+          <MdOutlineArrowForward
             onClick={handleNextStory}
             disabled={currentStoryIndex === allStories.length - 1}
-            className="text-white disabled:opacity-50"
-            aria-label="Next user's stories"
-        >
-          <ArrowRightIcon className="w-7 h-7" />
-        </button>
-        <div className="opacity-0"> {/* Invisible placeholder for spacing */}
-          <ArrowRightIcon className="w-7 h-7 text-white" />
+            style={{ color: "#fff", cursor: "pointer" }}
+          />
+        </div>
+        <div className="opacity-0  md:block sm:hidden">
+          <MdOutlineArrowBack
+          />
         </div>
       </div>
       {/* <div className="flex pt-8 pr-4">
