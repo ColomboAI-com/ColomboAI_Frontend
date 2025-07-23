@@ -14,9 +14,6 @@ import ReactPlayer from "react-player";
 import Modal from "../elements/Modal";
 import React from "react";
 import AIMessageGenerator from "../messages/AIMessageGenerator";
-import CommentItem from "./CommentItem";
-import { AnimatePresence } from 'framer-motion';
-import { FaceSmileIcon } from '@heroicons/react/24/outline'; // Import FaceSmileIcon
 
 const CommentSection = ({ specificPostId, posts, onClose }) => {
   const magicBoxInputRef = useRef();
@@ -28,7 +25,6 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
     deleteComment: deleteCommentContext,
     generateComment: generateCommentContext,
     getComments,
-    editComment: editCommentContext, // Get editComment from context
   } = useContext(FeedContext);
   const { setIsCommentOpen, openMagicPenWithIcon, setOpenMagicPenWithIcon } =
     useContext(GlobalContext);
@@ -53,57 +49,51 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
     if (openMagicPenWithIcon) {
       handleMegicPen();
     }
-    let active = true; // To prevent state updates if component unmounts during async op
     const fetchComments = async () => {
-      setLoading(true); // Indicate loading for the page fetch
       try {
         const res = await getComments(specificPostId, page);
-        if (active && res && res.comments) {
-          setComments((prevComments) => {
-            // Prevent duplicate comments if page is somehow re-fetched
-            const existingCommentIds = new Set(prevComments.map(c => c._id));
-            const newComments = res.comments.filter(c => !existingCommentIds.has(c._id));
-            return [...prevComments, ...newComments];
-          });
+        if (res && res.comments) {
+          setComments((prevComments) => [...prevComments, ...res.comments]);
           setHasMore(res.currentPage < res.totalPages);
         }
       } catch (error) {
         console.error("Error fetching comments:", error);
-        if (active) setHasMore(false); // Stop trying if error
-      } finally {
-        if (active) {
-          setLoading(false);
-          setIsIntersecting(false); // Reset intersection lock here
-        }
       }
     };
-
-    if (specificPostId) { // Only fetch if specificPostId is available
-        fetchComments();
-    }
-
+    fetchComments();
     return () => {
-      active = false;
       setOpenMagicPenWithIcon(false);
     };
-  }, [specificPostId, page]); // Removed getComments from deps as it's from context
+  }, [specificPostId, page]);
 
-  // const myCommentLength = comments.length; // No longer needed for scroll logic
+  const myCommentLength = comments.length;
 
   useEffect(() => {
-    const currentRef = containerRef.current; // Capture ref value
     const handleScroll = () => {
-      if (currentRef) {
-        const { scrollTop, scrollHeight, clientHeight } = currentRef;
-        // Trigger when near bottom (e.g., 100px from bottom)
-        if (scrollHeight - scrollTop - clientHeight < 100 && hasMore && !isIntersecting && !isLoading) {
-          setIsIntersecting(true); // Set lock immediately
+      if (containerRef.current) {
+        const scrollPosition =
+          containerRef.current.scrollHeight -
+          containerRef.current.scrollTop -
+          containerRef.current.clientHeight;
+
+        if (scrollPosition < 300 && hasMore && !isIntersecting) {
           setPage((prevPage) => prevPage + 1);
+          setIsIntersecting(true);
+        }
+        if (scrollPosition > 300 && hasMore && isIntersecting) {
+          if (myCommentLength > 0) {
+            const reminder = myCommentLength % 10;
+            if (reminder == 0) {
+              setIsIntersecting(false);
+            } else {
+              setIsIntersecting(true);
+            }
+          }
         }
       }
     };
 
-    if (currentRef) {
+    if (containerRef.current) {
       containerRef.current.addEventListener("scroll", handleScroll);
     }
 
@@ -114,116 +104,38 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
     };
   }, [hasMore, isIntersecting]);
 
-  const postComment = async () => { // Removed id parameter, uses specificPostId from scope
-    const contentToPost = (generatedComment || commentData).trim();
-    if (!contentToPost) return;
-
-    setLoading(true);
-
-    // Optimistic UI: Create a temporary comment object
-    const tempCommentId = `temp-${Date.now()}`;
-    const tempComment = {
-      _id: tempCommentId,
-      creator: { // Get current user info (ensure these are available, e.g. from cookies or another context)
-        _id: getCookie("userid") || "temp-user-id",
-        user_name: getCookie("username") || "You",
-        profile_picture: getCookie("profilePic") || "/images/profile/defalut_user.svg",
-      },
-      content: contentToPost,
-      createdAt: new Date().toISOString(), // Use current time for optimistic display
-      isOptimistic: true, // Flag to identify optimistic comment
-    };
-
-    setComments(prevComments => [tempComment, ...prevComments]); // Add to top of list
-    setCommentData("");
-    setGeneratedComment("");
-    // commentBoxInputRef.current.focus(); // Keep focus or not? Instagram often clears and loses focus.
-    // Consider resetting textarea height here if auto-grow is implemented
-
-    try {
-      const result = await addCommentContext({ // addCommentContext should return the confirmed comment
-        postId: specificPostId,
-        content: contentToPost,
-      });
-
-      if (result && result.success && result.comment) {
-        // Replace optimistic comment with confirmed one from backend
-        setComments(prevComments =>
-          prevComments.map(c => c._id === tempCommentId ? { ...result.comment, isOptimistic: false } : c)
-        );
-      } else {
-        // API call didn't fail but didn't return expected comment, remove optimistic one
-        console.error("Comment submission succeeded but no comment data returned, or not successful:", result);
-        setComments(prevComments => prevComments.filter(c => c._id !== tempCommentId));
-        // Optionally show an error message
+  const postComment = async (id) => {
+    if (commentData || generatedComment) {
+      setLoading(true);
+      try {
+        await addCommentContext({
+          postId: id,
+          content: commentData || generatedComment,
+        });
+        const updatedComments = await getComments(specificPostId, 1);
+        setComments(updatedComments?.comments || []);
+        setCommentData("");
+        setGeneratedComment("");
+        setGenerateCommentData("");
+        commentBoxInputRef.current.focus();
+        setPage(1);
+        setLoading(false);
+        setIsClick(false);
+      } catch (error) {
+        console.error("Error posting comment:", error);
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error posting comment:", error);
-      // Remove optimistic comment on error
-      setComments(prevComments => prevComments.filter(c => c._id !== tempCommentId));
-      // Optionally show an error message to the user
-      // Restore commentData if desired: setCommentData(contentToPost);
-    } finally {
-      setLoading(false);
-      setIsClick(false); // Assuming this relates to AI comment mode
-      // No need to call getComments(specificPostId, 1) if FeedContext handles global post update
     }
   };
 
-  };
-
-  const handleDeleteComment = async (passedPostId, commentId) => { // Renamed postId to avoid conflict with specificPostId from scope
-    // Confirmation is now handled in CommentItem.jsx before this is called.
-    // This function is now the result of confirming the deletion.
-    const originalComments = [...comments]; // Save original comments for potential revert
-
-    // Optimistic UI update
-    setComments((prevComments) =>
-      prevComments.filter((comment) => comment._id !== commentId)
-    );
-
+  const handleDeleteComment = async (postId, commentId) => {
     try {
-      // Use specificPostId from component's scope for the API call
-      const result = await deleteCommentContext({ postId: specificPostId, commentId });
-      if (!result || !result.success) {
-        // If backend indicates failure but didn't throw, revert.
-        console.error("Failed to delete comment from backend:", result?.message);
-        setComments(originalComments);
-        // TODO: Show user error message (e.g., using MessageBox or an inline error)
-      }
-      // If successful, optimistic UI already reflects the change. FeedContext also updates global post count.
+      await deleteCommentContext({ postId, commentId });
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
     } catch (error) {
       console.error("Error deleting comment:", error);
-      setComments(originalComments); // Revert optimistic UI on caught error
-      // TODO: Show user error message
-    }
-  };
-
-  const handleEditCommentInList = async (commentId, newContent) => {
-    // Optimistically update the comment in the local list
-    const originalComments = [...comments];
-    setComments(prevComments =>
-      prevComments.map(c =>
-        c._id === commentId ? { ...c, content: newContent, isOptimisticEdit: true } : c
-      )
-    );
-
-    try {
-      const result = await editCommentContext({ postId: specificPostId, commentId, content: newContent });
-      if (result && result.success && result.comment) {
-        // Replace with confirmed comment from backend
-        setComments(prevComments =>
-          prevComments.map(c => c._id === commentId ? { ...result.comment, isOptimisticEdit: false } : c)
-        );
-      } else {
-        console.error("Edit comment failed or returned unexpected data:", result);
-        setComments(originalComments); // Revert on failure
-        // Show error to user
-      }
-    } catch (error) {
-      console.error("Error editing comment:", error);
-      setComments(originalComments); // Revert on error
-      // Show error to user
     }
   };
 
@@ -384,101 +296,131 @@ const CommentSection = ({ specificPostId, posts, onClose }) => {
           ref={containerRef}
           className="comment-section flex-1 no-scrollbar h-[82%] max-xl:height: calc(100% - 318px); content-start overflow-y-auto py-1 max-xl:h-[54dvh] lg:h-[calc(100dvh-485px)] md:h-[44dvh]"
         >
-          {isLoading && comments.length === 0 && page === 1 && ( // Show loader only on initial load
+          {comments.length === 0 && (
             <div className="flex items-center justify-center h-full">
-              <p className="text-gray-500 dark:text-gray-400 text-sm">Loading comments...</p>
-            </div>
-          )}
-          {!isLoading && comments.length === 0 && (
-            <div className="flex items-center justify-center h-full">
-              <p className="text-gray-500 dark:text-gray-400 text-sm">
-                No comments yet. Be the first to comment!
+              <p className="text-[#515151] text-[16px] font-sans text-center">
+                No Comments Found
               </p>
             </div>
           )}
-          <AnimatePresence initial={false}> {/* initial={false} prevents all items animating on first load */}
-            {comments.map((comment) => (
-              // Use CommentItem, passing currentUserId for potential edit/delete later
-              <CommentItem
-                key={comment._id} // Key must be on the direct child of AnimatePresence
-                comment={comment}
-                currentUserId={userid}
-                onEdit={handleEditCommentInList}
-                onDelete={() => handleDeleteComment(specificPostId, comment._id)}
-              />
-            ))}
-          </AnimatePresence>
-          {/* Infinite scroll loader / "Load More" button can be added here if hasMore is true and not currently loading a new page */}
-          {isIntersecting && hasMore && (
-             <div className="text-center py-4 text-sm text-gray-500 dark:text-gray-400">Loading more...</div>
-          )}
-          {!hasMore && comments.length > 0 && (
-            <div className="text-center py-4 text-xs text-gray-400 dark:text-gray-500">End of comments.</div>
-          )}
-          {/* Infinite scroll loader / "Load More" button can be added here if hasMore is true and not currently loading a new page */}
-          {isIntersecting && hasMore && (
-             <div className="text-center py-4 text-sm text-gray-500 dark:text-gray-400">Loading more...</div>
-          )}
-          {!hasMore && comments.length > 0 && (
-            <div className="text-center py-4 text-xs text-gray-400 dark:text-gray-500">End of comments.</div>
-          )}
+          {comments.map((comment) => (
+            <div key={comment._id}>
+              <div className="flex items-start justify-start gap-2 my-4">
+                <div className="w-[36px] h-[36px]">
+                  <img
+                    src={comment.creator.profile_picture}
+                    className="w-[36px] h-[36px] rounded-[50%]"
+                  />
+                </div>
+                <div className="w-[85%] text-left">
+                  <div className="flex items-center justify-between">
+                    <div className="text-[#212121] font-sans font-[400] leading-[21px]">
+                      {comment.creator.user_name}
+                    </div>
+                    {comment.creator._id === userid && (
+                      <div className="flex items-center gap-[20px] right-0">
+                        <div
+                          className="text-[#212121] text-[14px] font-sans font-[450] leading-[21px] cursor-pointer right-0"
+                          onClick={() =>
+                            handleDeleteComment(specificPostId, comment._id)
+                          }
+                        >
+                          Delete
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <h3 className="text-[#212121] text-[14px] font-sans font-[400] leading-[30px] my-[4px]">
+                    {comment.content}
+                  </h3>
+                  <div className="flex items-center justify-between">
+                    <div className="text-[#828282] text-[14px] font-sans font-[400] leading-[21px]">
+                      {formatTimeAgo(comment?.createdAt)}
+                    </div>
+                    {/* <div className="flex items-center gap-[20px]">
+                      <a className="text-[#242424] text-[14px] font-sans font-[400] leading-[21px]">Reply</a>
+                      <span className="text-[#828282] text-[12px] font-sans font-[450] leading-[18px]">02</span>
+                      <img src="/images/icons/wishlist-icon.svg" />
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+              <hr className="mt-2 mb-2" />
+            </div>
+          ))}
         </div>
-
-        {/* New Comment Input Area */}
-        <div ref={pickerRef} className="sticky bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 p-2 sm:p-3 flex items-start space-x-2">
-          <ProfilePicture image={getCookie("profilePic")} size="w-8 h-8 sm:w-9 sm:h-9" />
-
-          <div className="flex-grow relative">
-            <textarea
-              ref={commentBoxInputRef} // Keep ref for focus and potentially auto-grow
-              value={commentData || generatedComment} // Retain AI comment integration for now
+        <div ref={pickerRef} className="py-[5px] flex flex-col">
+          <div className="relative right-0 left-0 bottom-0 top-auto mb-[20px]">
+            <div
+              className="absolute top-[11px] left-[15px] cursor-pointer"
+              onClick={() => setShowPicker((val) => !val)}
+            >
+              <img src="/images/icons/smile-icon.svg" />
+            </div>
+            <input
+              ref={commentBoxInputRef}
+              type="text"
+              className="w-full border-[1px] border-[#1E71F2] h-[50px] rounded-[50px] pl-[55px] outline-none focus:ring-offset-0 focus:ring-0 font-sans"
+              placeholder="Write comments..."
+              autoComplete="off"
+              value={commentData || generatedComment}
               onChange={(e) => {
                 setCommentData(e.target.value);
-                if (generatedComment) setGeneratedComment(""); // Clear AI comment if user types
-                // Implement auto-grow logic here if desired
+                setGeneratedComment("");
               }}
-              placeholder="Add a comment..."
-              className="w-full p-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-xl resize-none overflow-y-auto bg-gray-50 dark:bg-gray-800 text-sm focus:ring-brandprimary focus:border-brandprimary no-scrollbar"
-              rows={1} // Start with 1 row
-              // Removed onKeyDown: Enter key will now create newlines. Submission via "Post" button.
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  postComment(specificPostId);
+                }
+              }}
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                WebkitScrollbar: "none",
+              }}
             />
+            {showPicker && <Picker width="100%" onEmojiClick={onEmojiClick} />}
+            <div className="absolute top-[16px] right-[60px]">
+              <button
+                type="button"
+                classNa="text-white absolute w-auto right-[0] top-[0px] h-[50px p-[3px] rounded-tr-[50px] rounded-bl-[50px] rounded-tl-[50px] rounded-br-[50px]"
+                onClick={() => {
+                  postComment(specificPostId);
+                }}
+              >
+                {isLoading ? (
+                  <div className="w-4 h-4 mt-1 mb-1 ml-3 rounded-full border-t-2 border-b-2 border-white-500 animate-spin"></div>
+                ) : (
+                  <>
+                    {" "}
+                    <svg
+                      width="20"
+                      height="20"
+                      fill="#8E8E93"
+                      viewBox="0 0 17 14"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0.90918 13.3222V0.677803C0.90918 0.432578 1.0083 0.244828 1.20655 0.114553C1.4048 -0.0157229 1.61406 -0.0348811 1.83434 0.0570781L16.1963 6.35629C16.4606 6.4789 16.5928 6.69347 16.5928 7C16.5928 7.30653 16.4606 7.5211 16.1963 7.64371L1.83434 13.9429C1.61406 14.0349 1.4048 14.0157 1.20655 13.8854C1.0083 13.7552 0.90918 13.5674 0.90918 13.3222ZM2.23083 12.2187L14.2138 7L2.23083 1.71234V5.57463L7.5615 7L2.23083 8.37939V12.2187ZM2.23083 7V1.71234V12.2187V7Z"
+                        fill={isInputFocused === true ? "#1E71F2" : "#8E8E93"}
+                      ></path>
+                    </svg>{" "}
+                  </>
+                )}
+              </button>
+            </div>
             <button
-              onClick={() => setShowPicker((val) => !val)}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 p-1"
-              title="Emoji"
+              onClick={() => {
+                setShowAIPromptModal(true);
+              }}
+              className="w-[53px] bg-gradient-to-b from-[#FF0049] via-[#FFBE3B,#00BB5C,#187DC4] to-[#58268B] absolute right-0 top-[0px] h-[50px p-[3px] object-scale-down rounded-tr-[50px] rounded-bl-[0px] rounded-tl-[0px] rounded-br-[50px]"
             >
-              <FaceSmileIcon className="w-5 h-5" />
+              <img src="/images/icons/Magic-pen.svg" />
             </button>
           </div>
-          {showPicker && (
-            <div className="absolute bottom-16 left-0 right-0 z-10 sm:left-12"> {/* Adjust positioning as needed */}
-                <Picker width="100%" onEmojiClick={onEmojiClick} />
-            </div>
-           )}
 
-          <button
-            onClick={() => postComment()} // Changed from postComment(specificPostId)
-            disabled={(!commentData.trim() && !generatedComment.trim()) || isLoading}
-            className={`px-3 py-2 rounded-lg text-sm font-semibold transition-colors
-                        ${(!commentData.trim() && !generatedComment.trim()) || isLoading
-                          ? 'bg-blue-300 dark:bg-blue-700 text-white opacity-60 cursor-not-allowed'
-                          : 'bg-brandprimary hover:bg-blue-700 text-white'}`}
-          >
-            Post
-          </button>
-
-          {/* AI Magic Pen - positioned next to Post button */}
-          <button
-              onClick={() => setShowAIPromptModal(true)}
-              className="p-2 text-gray-500 hover:text-brandprimary dark:text-gray-400 dark:hover:text-brandprimary"
-              title="Generate with AI"
-            >
-              <Image src="/images/icons/Magic-pen.svg" width={22} height={22} alt="AI Generate" />
-          </button>
-        </div>
-        {/* End New Comment Input Area */}
-
-        {showAIPromptModal && (
+          {showAIPromptModal && (
             <Modal
               isOpen={showAIPromptModal}
               setIsOpen={setShowAIPromptModal}

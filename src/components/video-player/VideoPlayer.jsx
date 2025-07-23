@@ -8,7 +8,7 @@ export const VideoJS = (props) => {
   const { ref, inView } = useInView();
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
-  const { src, onReady, isPlayerClickable = true, poster } = props; // Add poster to props
+  const { src, onReady, isPlayerClickable = true } = props;
 
   let lastScrollPosition = useRef(0);
 
@@ -34,8 +34,7 @@ export const VideoJS = (props) => {
         responsive: true,
         fluid: true,
         playsinline: true,
-        preload: "metadata", // Changed from "auto" to "metadata"
-        poster: poster, // Use the poster prop
+        preload: "auto",
         sources: [
           {
             src: src,
@@ -139,8 +138,7 @@ export const VideoJS = (props) => {
           className="intersection-observer-element h-10 w-10 mt-[100px] absolute bg-red-500"
           ref={ref}
         />
-        {/* Add a specific class for styling the video tech element */}
-        <div ref={videoRef} className="h-full w-[100%] video-js-wrapper" />
+        <div ref={videoRef} className="h-full w-[100%]" />
         <div
           role="button"
           onClick={(e) => {

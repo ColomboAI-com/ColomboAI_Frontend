@@ -8,8 +8,7 @@ export default function ContentBlock({ content }) {
 
   return (
     <div className="py-[4px] px-[16px]">
-      {/* Changed font-[450] to font-normal, added leading-relaxed for better line height */}
-      <p className="text-[#515151] text-base font-sans font-normal leading-relaxed">
+      <p className="text-[#515151] text-[16px] font-sans font-[450]">
         <Linkify options={{ target: '_blank', className: '' }}>
           {
             words.map((i, index) => {
