@@ -1,10 +1,9 @@
 import ThreeDotMenuViewOthers from "@/components/elements/ThreeDotMenuViewOthers";
 import ThreeDotMenuViewOthersHorizontal from "@/components/elements/ThreeDotMenuViewOthersHorizontal";
 import { VibeContext } from "@/context/VibeContext";
-import React, { useContext, useEffect, useRef, useState, useCallback } from "react"; // Added useCallback
+import React, { useContext, useEffect, useRef, useState } from "react";
 import RepostVibe from "./Repost";
-// import ShareVibe from "./Share"; // Old component removed
-import GenericShareModal from "@/components/elements/GenericShareModal"; // New component imported
+import ShareVibe from "./Share";
 import Image from "next/image";
 import { IoIosMusicalNotes, IoMdAddCircleOutline } from "react-icons/io";
 import LikeVibe from "./LikeVibe";
@@ -41,12 +40,12 @@ import { getCookie } from "@/utlils/cookies";
 import CreateDropdown from "@/components/elements/CreateDropdown";
 import { GlobalContext } from "@/context/GlobalContext";
 
-// const walletIcon = "/images/icons/wallet_icon.svg"; // Unused variable
+const walletIcon = "/images/icons/wallet_icon.svg";
 
 export default function Vibe({ vibe, index }) {
   const router = useRouter();
   const [showRepost, setRepost] = useState(false);
-  const [showShare, setShare] = useState(false); // State for GenericShareModal
+  const [showShare, setShare] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const {
     fetchSongById,
@@ -99,17 +98,17 @@ export default function Vibe({ vibe, index }) {
     };
   }, []);
 
-  const handleFetchVibeWallet = useCallback(async () => {
-    if (!vibe?._id) return;
+  const handleFetchVibeWallet = async () => {
     try {
       const response = await fetchVibeWallet(vibe._id);
+
       if (response.success) {
         setWallet(response.data.amount);
       }
     } catch (error) {
-      // console.log("Error fetching vibe wallet:", error); // Keep for potential debug
+      console.log(error);
     }
-  }, [fetchVibeWallet, vibe?._id]);
+  };
 
   //  GENERATE WALLET REVENUE - OBSOLETE (NOT NEEDED ANYMORE)
   // const handleGenerateWalletRevenue = async (adRevenue) => {
@@ -124,9 +123,9 @@ export default function Vibe({ vibe, index }) {
   // };
 
   useEffect(() => {
-    handleFetchImpressions();
-    handleFetchVibeWallet();
-  }, [handleFetchImpressions, handleFetchVibeWallet]); // Updated dependencies
+    handleFetchImpressions(); // FETCH IMPRESSIONS - DO NOT REMOVE THIS
+    handleFetchVibeWallet(); // Fetch Wallet
+  }, []);
 
   //   IMPRESSION HANDLING AND PLAYING VIDEO WHEN THE VIBE IS IN VIEW
   useEffect(() => {
@@ -148,15 +147,15 @@ export default function Vibe({ vibe, index }) {
               if (audioRef.current && result[0]?.audio) {
                 audioRef.current.src = result[0].audio;
                 audioRef.current.play().catch((error) => {
-                  // console.log("Playback requires user interaction:", error); // Keep for potential debug
+                  console.log("Playback requires user interaction:", error);
                 });
               }
             } catch (error) {
-              // console.log("Error fetching song:", error); // Keep for potential debug
+              console.log("Error fetching song:", error);
             }
           } else if (audioRef.current && audioRef.current.src) {
             audioRef.current.play().catch((error) => {
-              // console.log("Playback requires user interaction:", error); // Keep for potential debug
+              console.log("Playback requires user interaction:", error);
             });
           }
         } else {
@@ -183,60 +182,55 @@ export default function Vibe({ vibe, index }) {
         observer.unobserve(VibeViewedRef.current);
       }
     };
-  }, [vibe?.song_id, fetchSongById, handleIncreaseViewCount, handleFetchImpressions]); // Updated dependencies
+  }, [vibe.song_id]);
 
-  const handleIncreaseViewCount = useCallback(async () => {
-    if (!vibe?._id) return;
+  const handleIncreaseViewCount = async () => {
     try {
       await incrementVibeImpressions(vibe._id);
     } catch (error) {
-      // console.log("Error incrementing vibe impressions:", error); // Keep for potential debug
+      console.log(error);
     }
-  }, [incrementVibeImpressions, vibe?._id]);
+  };
 
-  const handleFetchImpressions = useCallback(async () => {
-    if (!vibe?._id) return;
+  const handleFetchImpressions = async () => {
     const response = await getVibeImpressions(vibe._id);
+
     if (response.success) {
       setImpressions(response.impression.views);
     }
-  }, [getVibeImpressions, vibe?._id]);
-
+  };
   const handleFollowToggle = (updatedFollowState) => {
     setIsFollowing(updatedFollowState); // Update the follow state when the button is toggled
   };
 
   useEffect(() => {
-    // console.log(vibe); // Removed
-    if (vibe?._id) { // Ensure vibe and vibe._id exist before making the call
-      axios
-        .get(`${ROOT_URL_FEED}/vibes/feed/${vibe._id}`, {
-          headers: {
-            Authorization: getCookie("token"),
-          },
-        })
-        .then((res) => {
-          // console.log(res, "vibe details"); // Removed
-        })
-        .catch(err => {
-          // console.error("Error fetching vibe feed details:", err); // Optional: for debugging
-        });
-    }
+    console.log(vibe);
+    axios
+      .get(`${ROOT_URL_FEED}/vibes/feed/${vibe._id}`, {
+        headers: {
+          Authorization: getCookie("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res, "vibe details");
+      });
   }, [vibe]);
 
-  // console.log(song, "song"); // Removed
+  console.log(song, "song");
 
   return (
     <div className="relative border-green-400 hide-scrollbar sm:h-[calc(100dvh-0px)] bg-[#333] md:h-full sm:mx-0 md:mx-[-40px] lg:mx-[-80px] text-white font-sans ">
       {showRepost && <RepostVibe currentState={showRepost} vibe={vibe} />}
-      {/* Replace ShareVibe with GenericShareModal */}
       {showShare && (
-        <GenericShareModal
-          isOpen={showShare}
-          onClose={() => setShare(false)}
-          shareUrl={`${window.location.origin}/vibe/${vibe._id}`}
-          title="Share Vibe"
-        />
+        <div className="fixed [&>div>div]:!relative top-0 left-0 w-full h-full z-50 flex justify-center items-center">
+          <div className="h-full mr-12">
+            <ShareVibe
+              currentState={showShare}
+              vibeId={vibe._id}
+              onClose={() => setShowShare(false)}
+            />
+          </div>
+        </div>
       )}
       <div className=" flex items-center justify-center object-contain w-full bg-black h-full">
         {/* Main Content */}
@@ -247,7 +241,7 @@ export default function Vibe({ vibe, index }) {
         <div
           className={` relative overflow-clip bg-black md:rounded-[20px] hide-scrollbar border-green-400 sm:h-[calc(100dvh-0px)] md:h-[calc(100%-3rem)]  aspect-[9/16] sm:w-full md:w-[470px]`}
           onClick={() => {
-            // console.log("clicked"); // Removed
+            console.log("clicked");
             handlePlayPause();
           }}
           role="button"
@@ -294,16 +288,11 @@ export default function Vibe({ vibe, index }) {
               ) : null}
             </React.Fragment>
           ) : (
-            <div className="relative w-full h-full">
-              <Image
-                src={vibe?.media?.[0] || "/images/vibes/vibes_music.jpeg"} // Added fallback
-                className="object-cover" // className on Image is applied to the underlying img tag
-                alt="vibes_content"
-                layout="fill"
-                objectFit="cover"
-                priority={index === 0} // Prioritize loading for the first vibe if it's an image
-              />
-            </div>
+            <img
+              src={vibe?.media?.[0]}
+              className="w-full h-full object-cover"
+              alt="vibes_content"
+            />
           )}
 
           {/* {
@@ -349,7 +338,11 @@ export default function Vibe({ vibe, index }) {
                 className="flex items-center gap-2  "
                 onClick={(e) => e.stopPropagation()}
               >
-                <ProfilePicture image={vibe.creator.profile_picture} size="w-[36px] h-[36px]" />
+                <img
+                  src={vibe.creator.profile_picture}
+                  alt="profile-image"
+                  className="w-[36px] rounded-full"
+                />
                 <p>{vibe.creator.user_name}</p>
 
                 {/* Todo: Make this button is visible if the user is on another user's profile */}
@@ -464,14 +457,11 @@ export default function Vibe({ vibe, index }) {
               {/* </div> */}
               {song?.name && (
                 <div className="flex flex-col items-center gap-[2px] md:gap-1">
-                  <div className="relative w-[2rem] h-[2rem] md:w-[35px] md:h-[35px] rounded-full overflow-hidden">
-                    <Image
-                      src={song?.album_image || "/images/vibes/vibes_music.jpeg"}
-                      alt="vibes-music-album-art"
-                      layout="fill"
-                      objectFit="cover"
-                    />
-                  </div>
+                  <img
+                    src={song?.album_image || "/images/vibes/vibes_music.jpeg"}
+                    alt="vibes-music"
+                    className="w-[2rem] md:w-[35px] rounded-full"
+                  />
                 </div>
               )}
               <div
@@ -550,12 +540,11 @@ export default function Vibe({ vibe, index }) {
                 <GenAiIcon w={30} h={30} fill={"#ffffff"} />
               </div>
               {song?.name && (
-                <div className="relative w-[41px] h-[41px] rounded-full overflow-hidden">
-                  <Image
+                <div>
+                  <img
                     src={song?.album_image || "/images/vibes/vibes_music.jpeg"}
-                    alt="vibes-music-album-art-large"
-                    layout="fill"
-                    objectFit="cover"
+                    alt="vibes-music"
+                    className="w-[41px] rounded-full"
                   />
                 </div>
               )}
