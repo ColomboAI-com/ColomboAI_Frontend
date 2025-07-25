@@ -3,7 +3,7 @@ import { setCookie } from "./cookies";
 import { MessageBox } from "@/components/MessageBox";
 
 export const setUserCookies = (user) => {
-  // console.log(user); // Removed console.log
+  console.log(user);
   setCookie("token", user.token);
   setCookie("name", user.name);
   setCookie("profilePic", user.profile_picture);

@@ -1,6 +1,5 @@
 import { GlobalContext } from "@/context/GlobalContext";
-import { useContext, useEffect, useState, useCallback } from "react"; // Added useCallback
-import GenericShareModal from "@/components/elements/GenericShareModal"; // Import the new modal
+import { useContext, useEffect, useState } from "react";
 import LikePost from "./LikePost";
 import RePost from "./RePost";
 import SavePost from "./SavePost";
@@ -16,10 +15,8 @@ import Modal from "@/components/elements/Modal";
 
 export default function PostActions({ post }) {
   const {
-    isShareOpen, // Need this to control GenericShareModal
     setIsShareOpen,
     setIsCommentOpen,
-    specificPostId, // Need this for the shareUrl
     setSpecificPostId,
     setPosts,
     setIsRepostOpen,
@@ -67,23 +64,20 @@ export default function PostActions({ post }) {
     handleComments(postId);
   };
 
-  const handleFetchImpressions = useCallback(async () => {
-    if (post?._id) {
-      const response = await getPostImpressions(post._id);
-      if (response.success) {
-        setImpressions(response.impression.views);
-      }
+  const handleFetchImpressions = async () => {
+    const response = await getPostImpressions(post._id);
+    if (response.success) {
+      setImpressions(response.impression.views);
     }
-  }, [getPostImpressions, post?._id]);
+  };
 
-  const handleFetchWallet = useCallback(async () => {
-    if (post?._id) {
-      const response = await getPostWallet(post._id);
-      if (response?.success) {
-        setWallet(response.data.amount);
-      }
+  const handleFetchWallet = async () => {
+    const response = await getPostWallet(post._id);
+
+    if (response?.success) {
+      setWallet(response.data.amount);
     }
-  }, [getPostWallet, post?._id]);
+  };
 
   const updateUserVerifiedInfo = async () => {
     let userVerified = await localStorage.getItem("userVerified");
@@ -101,21 +95,13 @@ export default function PostActions({ post }) {
   };
 
   useEffect(() => {
-    updateUserVerifiedInfo(); // This function doesn't depend on post or its derivatives directly
+    updateUserVerifiedInfo();
     handleFetchImpressions();
     handleFetchWallet();
-  }, [handleFetchImpressions, handleFetchWallet]); // Added dependencies
+  }, []);
 
   return (
     <>
-      {isShareOpen && specificPostId && (
-        <GenericShareModal
-          isOpen={isShareOpen}
-          onClose={() => setIsShareOpen(false)}
-          shareUrl={`${window.location.origin}/post/${specificPostId}`}
-          title="Share Post"
-        />
-      )}
       <div className="flex items-center justify-between">
         {userNotVerifiedModal && (
           <Modal
